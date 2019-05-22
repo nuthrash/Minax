@@ -15,8 +15,15 @@
     <PackageIconUrl>https://raw.github.com/nuthrash/Minax/master/Images/Translator.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>WebTranslator</PackageTags>
-    <Description>Minax Web Translator Desktop WPF app on .Net Core 3. and .Net Framework 4.7.</Description>
+    <Description>Minax Web Translator Desktop WPF app on .Net Core 3 and .Net Framework 4.7.</Description>
+    <ApplicationManifest>App.manifest</ApplicationManifest>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dirkster.AvalonDock" Version="3.5.5" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="3.5.5" />
+    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0316" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Minax.Shared\Minax.Shared.csproj" />

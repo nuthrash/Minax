@@ -4,6 +4,36 @@
              xmlns:local="clr-namespace:MinaxWebTranslator.Desktop"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />-->
+                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Cobalt.xaml" />-->
+                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />-->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Cobalt.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="MyMenuItem.Highlight.Background" Color="#3D26A0DA"/>
+            <SolidColorBrush x:Key="MyMenuItem.Highlight.Border" Color="#FF26A0DA"/>
+            <SolidColorBrush x:Key="MyMenu.Disabled.Foreground" Color="#FF707070"/>
+
+            <Style x:Key="MyGroupHeaderStyle" TargetType="GroupItem" >
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="GroupItem">
+                            <Expander x:Name="exp" IsExpanded="True">
+                                <Expander.Header>
+                                    <TextBlock Text="{Binding Name}" Foreground="{DynamicResource IdealForegroundColorBrush}"/>
+                                </Expander.Header>
+                                <ItemsPresenter />
+                            </Expander>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+
     </Application.Resources>
 </Application>

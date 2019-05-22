@@ -10,10 +10,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinaxWebTranslator.iOS", "MinaxWebTranslator\MinaxWebTranslator.iOS\MinaxWebTranslator.iOS.csproj", "{E0076DCB-107A-49A1-8EF1-A5D51E9F75C6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinaxWebTranslator", "MinaxWebTranslator\MinaxWebTranslator\MinaxWebTranslator.csproj", "{4B68D3C1-8A0D-4046-8A01-A2850A56115D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FD9AD38B-2842-46CE-AE61-A1411C151D20} = {FD9AD38B-2842-46CE-AE61-A1411C151D20}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minax.Shared", "Minax.Shared\Minax.Shared.csproj", "{FD9AD38B-2842-46CE-AE61-A1411C151D20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinaxWebTranslator.Desktop", "MinaxWebTranslator\MinaxWebTranslator.Desktop\MinaxWebTranslator.Desktop.csproj", "{46E7ED60-A110-4F8B-95F9-D5B151B723E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinaxWebTranslator.Desktop", "MinaxWebTranslator\MinaxWebTranslator.Desktop\MinaxWebTranslator.Desktop.csproj", "{46E7ED60-A110-4F8B-95F9-D5B151B723E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
