@@ -117,8 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="DefaultAvalonDockLayout" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DefaultAvalonDockLayout.adconf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Str0Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Str0Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Str0Translate" xml:space="preserve">
+    <value>Translate</value>
   </data>
 </root>

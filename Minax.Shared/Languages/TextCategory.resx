@@ -117,8 +117,166 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="DefaultAvalonDockLayout" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DefaultAvalonDockLayout.adconf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Str0Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Str0Adjective" xml:space="preserve">
+    <value>Adjective</value>
+  </data>
+  <data name="Str0Adverb" xml:space="preserve">
+    <value>Adverb</value>
+  </data>
+  <data name="Str0Alchemy" xml:space="preserve">
+    <value>Alchemy</value>
+  </data>
+  <data name="Str0AliasName" xml:space="preserve">
+    <value>Alias Name</value>
+  </data>
+  <data name="Str0Animal" xml:space="preserve">
+    <value>Animal</value>
+  </data>
+  <data name="Str0BodyOrgan" xml:space="preserve">
+    <value>Body Organ</value>
+  </data>
+  <data name="Str0Book" xml:space="preserve">
+    <value>Book</value>
+  </data>
+  <data name="Str0Building" xml:space="preserve">
+    <value>Building</value>
+  </data>
+  <data name="Str0Character" xml:space="preserve">
+    <value>Character</value>
+  </data>
+  <data name="Str0City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Str0Clothing" xml:space="preserve">
+    <value>Clothing</value>
+  </data>
+  <data name="Str0Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="Str0Conjunction" xml:space="preserve">
+    <value>Conjunction</value>
+  </data>
+  <data name="Str0Determiners" xml:space="preserve">
+    <value>Determiners</value>
+  </data>
+  <data name="Str0Dialect" xml:space="preserve">
+    <value>Dialect</value>
+  </data>
+  <data name="Str0Education" xml:space="preserve">
+    <value>Education</value>
+  </data>
+  <data name="Str0Entertainment" xml:space="preserve">
+    <value>Entertainment</value>
+  </data>
+  <data name="Str0Facility" xml:space="preserve">
+    <value>Facility</value>
+  </data>
+  <data name="Str0FamilyName" xml:space="preserve">
+    <value>Family Name</value>
+  </data>
+  <data name="Str0Food" xml:space="preserve">
+    <value>Food</value>
+  </data>
+  <data name="Str0Game" xml:space="preserve">
+    <value>Game</value>
+  </data>
+  <data name="Str0HairStyle" xml:space="preserve">
+    <value>Hair Style</value>
+  </data>
+  <data name="Str0Housing" xml:space="preserve">
+    <value>Housing</value>
+  </data>
+  <data name="Str0Inventory" xml:space="preserve">
+    <value>Inventory</value>
+  </data>
+  <data name="Str0JobPosition" xml:space="preserve">
+    <value>Job Position</value>
+  </data>
+  <data name="Str0Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Str0Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="Str0Magic" xml:space="preserve">
+    <value>Magic</value>
+  </data>
+  <data name="Str0Maneuver" xml:space="preserve">
+    <value>Maneuver</value>
+  </data>
+  <data name="Str0Material" xml:space="preserve">
+    <value>Material</value>
+  </data>
+  <data name="Str0MiddleName" xml:space="preserve">
+    <value>Middle Name</value>
+  </data>
+  <data name="Str0MiscTerms" xml:space="preserve">
+    <value>Misc Terms</value>
+  </data>
+  <data name="Str0Monster" xml:space="preserve">
+    <value>Monster</value>
+  </data>
+  <data name="Str0Music" xml:space="preserve">
+    <value>Music</value>
+  </data>
+  <data name="Str0NickName" xml:space="preserve">
+    <value>Nickname</value>
+  </data>
+  <data name="Str0Noun" xml:space="preserve">
+    <value>Noun</value>
+  </data>
+  <data name="Str0Organization" xml:space="preserve">
+    <value>Organization</value>
+  </data>
+  <data name="Str0OtherName" xml:space="preserve">
+    <value>Other Name</value>
+  </data>
+  <data name="Str0Phenomenon" xml:space="preserve">
+    <value>Phenomenon</value>
+  </data>
+  <data name="Str0Preposition" xml:space="preserve">
+    <value>Preposition</value>
+  </data>
+  <data name="Str0Pronouns" xml:space="preserve">
+    <value>Pronouns</value>
+  </data>
+  <data name="Str0Property" xml:space="preserve">
+    <value>Property</value>
+  </data>
+  <data name="Str0ReincarnatedName" xml:space="preserve">
+    <value>Reincarnated Name</value>
+  </data>
+  <data name="Str0Relation" xml:space="preserve">
+    <value>Relation</value>
+  </data>
+  <data name="Str0Science" xml:space="preserve">
+    <value>Science</value>
+  </data>
+  <data name="Str0Shoe" xml:space="preserve">
+    <value>Shoe</value>
+  </data>
+  <data name="Str0Social" xml:space="preserve">
+    <value>Social</value>
+  </data>
+  <data name="Str0Species" xml:space="preserve">
+    <value>Species</value>
+  </data>
+  <data name="Str0Translator" xml:space="preserve">
+    <value>Translator</value>
+  </data>
+  <data name="Str0Transportation" xml:space="preserve">
+    <value>Transportation</value>
+  </data>
+  <data name="Str0Undefined" xml:space="preserve">
+    <value>Undefined</value>
+  </data>
+  <data name="Str0Verbs" xml:space="preserve">
+    <value>Verbs</value>
+  </data>
+  <data name="Str0Weapon" xml:space="preserve">
+    <value>Weapon</value>
   </data>
 </root>

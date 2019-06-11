@@ -117,8 +117,94 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="DefaultAvalonDockLayout" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DefaultAvalonDockLayout.adconf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Str0AccountPermissionError" xml:space="preserve">
+    <value>帳戶權限錯誤</value>
+  </data>
+  <data name="Str0AutoDetect" xml:space="preserve">
+    <value>自動偵測</value>
+  </data>
+  <data name="Str0Clear" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="Str0ConnectError" xml:space="preserve">
+    <value>連線錯誤</value>
+  </data>
+  <data name="Str0Connecting" xml:space="preserve">
+    <value>連線中...</value>
+  </data>
+  <data name="Str0FileFilterCsv" xml:space="preserve">
+    <value>CSV 檔案(*.csv)|.csv</value>
+  </data>
+  <data name="Str0LangChs" xml:space="preserve">
+    <value>簡體中文</value>
+  </data>
+  <data name="Str0LangCht" xml:space="preserve">
+    <value>繁體中文</value>
+  </data>
+  <data name="Str0LangEn" xml:space="preserve">
+    <value>英文</value>
+  </data>
+  <data name="Str0LangJapan" xml:space="preserve">
+    <value>日文</value>
+  </data>
+  <data name="Str0Message" xml:space="preserve">
+    <value>訊息</value>
+  </data>
+  <data name="Str0NetworkConnectorError" xml:space="preserve">
+    <value>網路連結器遺失！</value>
+  </data>
+  <data name="Str0NetworkError" xml:space="preserve">
+    <value>請檢查您的網路設定或向您的管理者尋求幫助！</value>
+  </data>
+  <data name="Str0NoData" xml:space="preserve">
+    <value>無資料</value>
+  </data>
+  <data name="Str0OK" xml:space="preserve">
+    <value>確認</value>
+  </data>
+  <data name="Str0OperationFailed" xml:space="preserve">
+    <value>操作失敗！</value>
+  </data>
+  <data name="Str0OperationSuccessful" xml:space="preserve">
+    <value>操作成功</value>
+  </data>
+  <data name="Str0OriginalTextCantEmpty" xml:space="preserve">
+    <value>OriginalText 不可為空！</value>
+  </data>
+  <data name="Str0PasswordMismatched" xml:space="preserve">
+    <value>密碼不合！</value>
+  </data>
+  <data name="Str0PermissionDeny" xml:space="preserve">
+    <value>無操作權限！</value>
+  </data>
+  <data name="Str0PleaseWaitCloudOperation" xml:space="preserve">
+    <value>請等候雲端操作完成</value>
+  </data>
+  <data name="Str0PleaseWaitOperation" xml:space="preserve">
+    <value>請等候操作完成</value>
+  </data>
+  <data name="Str0Processing" xml:space="preserve">
+    <value>處理中...</value>
+  </data>
+  <data name="Str0RuntimeError" xml:space="preserve">
+    <value>執行期錯誤</value>
+  </data>
+  <data name="Str0Save" xml:space="preserve">
+    <value>儲存</value>
+  </data>
+  <data name="Str0Unknown" xml:space="preserve">
+    <value>未知</value>
+  </data>
+  <data name="Str0Warning" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="Str1ArgumentIsInvalid" xml:space="preserve">
+    <value>參數 {0} 無效！</value>
+  </data>
+  <data name="Str1ConnecToFailed" xml:space="preserve">
+    <value>連線到 {0} 失敗！</value>
+  </data>
+  <data name="Str1SomethingWrongMSG" xml:space="preserve">
+    <value>某些地方出錯了！ 訊息：{0}</value>
   </data>
 </root>

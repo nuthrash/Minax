@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Minax.Properties {
+namespace MinaxWebTranslator.Desktop.Languages {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Minax.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class Global {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal Global() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Minax.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Minax.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MinaxWebTranslator.Desktop.Languages.Global", typeof(Global).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,12 +61,29 @@ namespace Minax.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Byte[] 的當地語系化資源。
+        ///   查詢類似 Cancel 的當地語系化字串。
         /// </summary>
-        internal static byte[] WebNovelsEmpty {
+        internal static string Str0Cancel {
             get {
-                object obj = ResourceManager.GetObject("WebNovelsEmpty", resourceCulture);
-                return ((byte[])(obj));
+                return ResourceManager.GetString("Str0Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 OK 的當地語系化字串。
+        /// </summary>
+        internal static string Str0Ok {
+            get {
+                return ResourceManager.GetString("Str0Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Translate 的當地語系化字串。
+        /// </summary>
+        internal static string Str0Translate {
+            get {
+                return ResourceManager.GetString("Str0Translate", resourceCulture);
             }
         }
     }

@@ -117,8 +117,100 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="DefaultAvalonDockLayout" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DefaultAvalonDockLayout.adconf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Str0AccountPermissionError" xml:space="preserve">
+    <value>Account Permission Error</value>
+  </data>
+  <data name="Str0AutoDetect" xml:space="preserve">
+    <value>Auto Detect</value>
+  </data>
+  <data name="Str0Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Str0ConnectError" xml:space="preserve">
+    <value>Connect Error</value>
+  </data>
+  <data name="Str0Connecting" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="Str0FileFilterCsv" xml:space="preserve">
+    <value>CSV file(*.csv)|.csv</value>
+  </data>
+  <data name="Str0LangChs" xml:space="preserve">
+    <value>Simplified Chinese</value>
+  </data>
+  <data name="Str0LangCht" xml:space="preserve">
+    <value>Tranditional Chinese</value>
+  </data>
+  <data name="Str0LangEn" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Str0LangJapan" xml:space="preserve">
+    <value>Japan</value>
+  </data>
+  <data name="Str0LanguageChanged" xml:space="preserve">
+    <value>Language changed... Please restart this program to take effect!</value>
+  </data>
+  <data name="Str0Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Str0NetworkConnectorError" xml:space="preserve">
+    <value>Network Connector Missing!</value>
+  </data>
+  <data name="Str0NetworkError" xml:space="preserve">
+    <value>Please check your network settings or ask your administrator for help!</value>
+  </data>
+  <data name="Str0NoData" xml:space="preserve">
+    <value>No Data</value>
+  </data>
+  <data name="Str0OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Str0OperationFailed" xml:space="preserve">
+    <value>Operation failed!</value>
+  </data>
+  <data name="Str0OperationSuccessful" xml:space="preserve">
+    <value>Operation successful.</value>
+  </data>
+  <data name="Str0OriginalTextCantEmpty" xml:space="preserve">
+    <value>OriginalText cannot be empty!</value>
+  </data>
+  <data name="Str0PasswordMismatched" xml:space="preserve">
+    <value>Password mismatched!</value>
+  </data>
+  <data name="Str0PermissionDeny" xml:space="preserve">
+    <value>Permission Deny!</value>
+  </data>
+  <data name="Str0PleaseWaitCloudOperation" xml:space="preserve">
+    <value>Please wait for cloud operation finished.</value>
+  </data>
+  <data name="Str0PleaseWaitOperation" xml:space="preserve">
+    <value>Please wait for operation finished.</value>
+  </data>
+  <data name="Str0Processing" xml:space="preserve">
+    <value>Processing...</value>
+  </data>
+  <data name="Str0RuntimeError" xml:space="preserve">
+    <value>Runtime Error</value>
+  </data>
+  <data name="Str0Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Str0Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="Str0Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Str1ArgumentIsInvalid" xml:space="preserve">
+    <value>The {0} argument is invalid!</value>
+  </data>
+  <data name="Str1ConnecToFailed" xml:space="preserve">
+    <value>Connect to {0} failed!</value>
+  </data>
+  <data name="Str1DateTimeFileNameFormat" xml:space="preserve">
+    <value>{0:yyMMdd_HHmmss}</value>
+  </data>
+  <data name="Str1SomethingWrongMSG" xml:space="preserve">
+    <value>Something wrong! Message: {0}</value>
   </data>
 </root>

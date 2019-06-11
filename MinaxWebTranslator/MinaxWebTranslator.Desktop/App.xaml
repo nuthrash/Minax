@@ -13,11 +13,14 @@
                 <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />-->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Cobalt.xaml" />
 
+                <ResourceDictionary Source="Resources/CustomControls.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <SolidColorBrush x:Key="MyMenuItem.Highlight.Background" Color="#3D26A0DA"/>
             <SolidColorBrush x:Key="MyMenuItem.Highlight.Border" Color="#FF26A0DA"/>
             <SolidColorBrush x:Key="MyMenu.Disabled.Foreground" Color="#FF707070"/>
+
+            <Style TargetType="TabItem" BasedOn="{StaticResource MetroRoundedTabItemInvert}"/>
 
             <Style x:Key="MyGroupHeaderStyle" TargetType="GroupItem" >
                 <Setter Property="Template">

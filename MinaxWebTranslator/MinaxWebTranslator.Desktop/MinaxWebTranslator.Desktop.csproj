@@ -12,17 +12,31 @@
     <Copyright>Copyright © 2019 nuthrash</Copyright>
     <PackageProjectUrl>https://github.com/nuthrash/Minax.wiki.git</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nuthrash/Minax.git</RepositoryUrl>
-    <PackageIconUrl>https://raw.github.com/nuthrash/Minax/master/Images/Translator.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.github.com/nuthrash/Minax/master/Assets/Images/Translator.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>WebTranslator</PackageTags>
     <Description>Minax Web Translator Desktop WPF app on .Net Core 3 and .Net Framework 4.7.</Description>
-    <ApplicationManifest>App.manifest</ApplicationManifest>
+    <ApplicationIcon>Resources\Translator.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dirkster.AvalonDock" Version="3.5.5" />
-    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="3.5.5" />
+    <None Remove="App.config" />
+    <None Remove="App.manifest" />
+    <None Remove="Resources\DefaultAvalonDockLayout.adconf" />
+    <None Remove="Resources\Translator.png" />
+    <None Remove="Views\MappingDockingPanel.xaml" />
+    <None Remove="Views\QuickTranslationDockingPanel.xaml" />
+    <None Remove="Views\SourceDockingPanel.xaml" />
+    <None Remove="Views\SummaryDockingPanel.xaml" />
+    <None Remove="Views\TargetDockingPanel.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dirkster.AvalonDock" Version="3.5.6" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="3.5.6" />
+    <PackageReference Include="FileHelpers" Version="3.4.0" />
     <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0316" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0146" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,18 +44,44 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\DefaultAvalonDockLayout.adconf" />
+    <Resource Include="Resources\Translator.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Languages\Global.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Global.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
+    <EmbeddedResource Update="Languages\Global.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Global.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

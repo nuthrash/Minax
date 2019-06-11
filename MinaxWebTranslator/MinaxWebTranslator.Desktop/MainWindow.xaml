@@ -4,21 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MinaxWebTranslator.Desktop"
+        xmlns:MinaxTranslation="clr-namespace:Minax.Domain.Translation;assembly=Minax.Shared"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
-        mc:Ignorable="d"
-        Title="Mergus Web Translator" Height="800" Width="1280" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"
+        mc:Ignorable="d" 
+        Dialog:DialogParticipation.Register="{Binding}"
+        Title="Minax Web Translator" Height="800" Width="1280" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"
         ShowIconOnTitleBar="True" UseLayoutRounding="True"
         LeftWindowCommandsOverlayBehavior="Never" RightWindowCommandsOverlayBehavior="Never"
-        WindowButtonCommandsOverlayBehavior="Always" IconOverlayBehavior="Never"
-        ShowInTaskbar="True" ResizeMode="CanResizeWithGrip" TitleCharacterCasing="Normal" SaveWindowPosition="True">
+        WindowButtonCommandsOverlayBehavior="Always" IconOverlayBehavior="Always"
+        Icon="Resources/Translator.png" ShowInTaskbar="True" ResizeMode="CanResizeWithGrip"
+        TitleCharacterCasing="Normal" SaveWindowPosition="True"
+        Loaded="MetroWindow_Loaded" Unloaded="MetroWindow_Unloaded">
     <Window.Resources>
         <ResourceDictionary>
-            <!--<Style TargetType="{x:Type Button}" 
-                    BasedOn="{StaticResource {x:Type Button}}">
-                <Setter Property="MahApps:ButtonHelper.PreserveTextCase" Value="True"/>
-            </Style>-->
+            <Style BasedOn="{StaticResource {x:Type Button}}" 
+                   TargetType="{x:Type Button}">
+                <Setter Property="MahApps:ControlsHelper.ContentCharacterCasing" Value="Normal"/>
+            </Style>
             <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" 
                    TargetType="{x:Type DataGridColumnHeader}">
                 <Setter Property="MahApps:ControlsHelper.ContentCharacterCasing" Value="Normal"/>
@@ -28,78 +35,149 @@
             <Style TargetType="{x:Type Paragraph}">
                 <Setter Property="Margin" Value="0" />
             </Style>
+
+            <!-- MetroWindow CommandsOverlayBehaviors -->
+            <ObjectDataProvider x:Key="WindowCommandsOverlayBehaviorValues"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type MahApps:WindowCommandsOverlayBehavior}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="MahApps:WindowCommandsOverlayBehavior" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+
+            <ObjectDataProvider x:Key="TextCategoryEnumValues" 
+                                MethodName="GetValues" 
+                                ObjectType="{x:Type System:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="MinaxTranslation:TextCategory"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
         </ResourceDictionary>
     </Window.Resources>
+
+    <MahApps:MetroWindow.WindowButtonCommands>
+        <MahApps:WindowButtonCommands Style="{DynamicResource MahApps.Metro.Styles.WindowButtonCommands.Win10}" />
+    </MahApps:MetroWindow.WindowButtonCommands>
+
+    <MahApps:MetroWindow.LeftWindowCommands>
+        <MahApps:WindowCommands ShowLastSeparator="False" HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Center" VerticalAlignment="Stretch">
+
+            <Button Margin="0" Padding="0" VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <Menu Background="Transparent" 
+                      
+                      Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}">
+                    <MenuItem Width="24" Height="24" Margin="0"  VerticalAlignment="Center" Background="Transparent"
+                              ToolTip="Menu" Icon="{IconPacks:Material Kind=Menu}" 
+                              >
+                        <MenuItem Header="_Project" Foreground="Black">
+                            <MenuItem x:Name="MiProjectNew" Header="_New" />
+                            <MenuItem x:Name="MiProjectOpen" Header="_Open"/>
+                            <MenuItem x:Name="MiProjectSave" Header="_Save" />
+                            <MenuItem x:Name="MiProjectClose" Header="_Close" />
+                            <Separator />
+                        </MenuItem>
+
+                        <Separator />
+                    </MenuItem>
+                </Menu>
+            </Button>
+        </MahApps:WindowCommands>
+    </MahApps:MetroWindow.LeftWindowCommands>
     
+    <!-- Flyout Menu, Options -->
+    <MahApps:MetroWindow.Flyouts>
+        <MahApps:FlyoutsControl>
+            <!-- Options Flyout -->
+            <MahApps:Flyout x:Name="FoOptions" Header="Options" Position="Right" AnimateOpacity="False"
+                            CloseButtonIsCancel="True" IsOpen="False" Theme="Accent"
+                            IsModal="False" HorizontalContentAlignment="Stretch" >
+                
+            </MahApps:Flyout>
+
+            <!-- Translator Selector Flyout -->
+            <MahApps:Flyout x:Name="FoTranslator" Header="Options" Position="Right" AnimateOpacity="False"
+                            CloseButtonIsCancel="True" IsOpen="False" Theme="Accent"
+                            IsModal="False" HorizontalContentAlignment="Stretch" >
+
+            </MahApps:Flyout>
+        </MahApps:FlyoutsControl>
+    </MahApps:MetroWindow.Flyouts>
+
+    <!-- Main App Grid -->
     <Grid x:Name="GdMain">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <avalonDock:DockingManager Grid.Row="1" x:Name="dockManager" AllowMixedOrientation="True" >
+        <!-- Top AutoClose Flyout -->
+        <MahApps:Flyout x:Name="FoMessage" Grid.Column="0" Grid.Row="0" AreAnimationsEnabled="False" Position="Top"
+                        IsAutoCloseEnabled="True" AutoCloseInterval="3000" CloseButtonVisibility="Collapsed"
+                        IsOpen="False" Panel.ZIndex="1" Theme="Accent" Padding="10"
+                        CloseCommand="{Binding CloseFlyoutCmd}" TitleVisibility="Collapsed"
+                        CloseButtonIsCancel="True" VerticalAlignment="Stretch">
+            <Grid Margin="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label x:Name="LblAutoCloseTitle" Grid.Column="0" Grid.Row="0" Content="Message Title" FontWeight="Bold" FontSize="18" />
+                <TextBlock x:Name="TbAutoCloseMessage" Grid.Column="0" Grid.Row="1" TextWrapping="WrapWithOverflow"
+                           MahApps:TextBoxHelper.SelectAllOnFocus="True" Margin="5 0 5 0"
+                           Text="Message body body. body &#x0a; body &#x0a; CSCSDSC &#x0a; csdcs &#x0a; csd" />
+
+                <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" FlowDirection="RightToLeft">
+                    <Button Content="OK" Command="{Binding CloseCmd}" CommandParameter="{Binding ElementName=FoMessage}" />
+                </StackPanel>
+            </Grid>
+        </MahApps:Flyout>
+
+        <!-- Main AvalonDock DockingManager -->
+        <avalonDock:DockingManager Grid.Column="0" Grid.Row="0" x:Name="dockManager"
+                                   AllowMixedOrientation="True" Panel.ZIndex="0" >
             <avalonDock:DockingManager.Theme>
                 <avalonDock:Vs2013LightTheme/>
             </avalonDock:DockingManager.Theme>
-            <avalonDock:DockingManager.DocumentHeaderTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding IconSource}" Margin="0,0,4,0"/>
-                        <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis"/>
-                    </StackPanel>
-                </DataTemplate>
-            </avalonDock:DockingManager.DocumentHeaderTemplate>
+            
             <avalonDock:LayoutRoot >
                 <avalonDock:LayoutPanel Orientation="Horizontal">
-                    <avalonDock:LayoutAnchorablePane DockWidth="100">
-                        
-                    </avalonDock:LayoutAnchorablePane>
-                    <avalonDock:LayoutDocumentPaneGroup>
-                        <avalonDock:LayoutDocumentPane x:Name="LayoutDocumentPane">
-                            <avalonDock:LayoutDocument ContentId="document1" Title="Document 1"  >
-                                <StackPanel>
-                                    <TextBox Text="Document 1 Content"/>
-                                    <Button Content="Click to add 2 documents" />
-                                </StackPanel>
-                            </avalonDock:LayoutDocument>
-                            <avalonDock:LayoutDocument ContentId="document2" Title="Document 2">
-                                <TextBox Text="{Binding TestTimer, Mode=OneWay, StringFormat='Document 2 Attached to Timer ->\{0\}'}"/>
-                            </avalonDock:LayoutDocument>
-                        </avalonDock:LayoutDocumentPane>
-                    </avalonDock:LayoutDocumentPaneGroup>
-                    <avalonDock:LayoutAnchorablePaneGroup DockWidth="150">
-                        <avalonDock:LayoutAnchorablePane>
-                            <avalonDock:LayoutAnchorable ContentId="toolWindow1" Title="Tool Window 1" >
-                                <StackPanel>
-                                    <TextBox Text="{Binding TestTimer, Mode=OneWay, StringFormat='Tool Window 1 Attached to Timer ->\{0\}'}"/>
-                                </StackPanel>
-                            </avalonDock:LayoutAnchorable>
-                            <avalonDock:LayoutAnchorable ContentId="toolWindow2" Title="Tool Window 2">
-                                <TextBlock Text="{Binding FocusedElement}"/>
-                            </avalonDock:LayoutAnchorable>
-                        </avalonDock:LayoutAnchorablePane>
+                    <avalonDock:LayoutAnchorablePaneGroup x:Name="AdlapgMain">
+                        <!-- Handy add SourceDockingPanel and TargetDockingPanel programmtically -->
                     </avalonDock:LayoutAnchorablePaneGroup>
                 </avalonDock:LayoutPanel>
 
                 <avalonDock:LayoutRoot.LeftSide>
                     <avalonDock:LayoutAnchorSide>
                         <avalonDock:LayoutAnchorGroup>
-                            <avalonDock:LayoutAnchorable Title="AutoHide1 Content" ContentId="AutoHide1Content"  >
-                                <TextBox Text="{Binding TestTimer, Mode=OneWay, StringFormat='AutoHide Attached to Timer ->\{0\}'}"/>
-                            </avalonDock:LayoutAnchorable>
-                            <avalonDock:LayoutAnchorable Title="AutoHide2 Content" ContentId="AutoHide2Content">
-                                <StackPanel Orientation="Vertical">
-                                    <TextBox/>
-                                    <TextBox/>
-                                </StackPanel>
-                            </avalonDock:LayoutAnchorable>
                         </avalonDock:LayoutAnchorGroup>
                     </avalonDock:LayoutAnchorSide>
                 </avalonDock:LayoutRoot.LeftSide>
+
+                <avalonDock:LayoutRoot.RightSide>
+                    <avalonDock:LayoutAnchorSide>
+                        <!-- Handy add MappingDockingPanel, SummaryDockingPanel and QuickTranslationDockingPanel programmtically -->
+                        <avalonDock:LayoutAnchorGroup x:Name="AdlapgRight">
+                        </avalonDock:LayoutAnchorGroup>
+                    </avalonDock:LayoutAnchorSide>
+                </avalonDock:LayoutRoot.RightSide>
             </avalonDock:LayoutRoot>
         </avalonDock:DockingManager>
+
+        <!-- Bottom StatusBar -->
+        <StatusBar Grid.Column="0" Grid.Row="1" >
+            <!--<StatusBarItem Content="cscdc" />
+            <Button Content="test"/>-->
+            <TextBlock x:Name="TbStatusMessage" Text="Status Bar"/>
+        </StatusBar>
     </Grid>
 </MahApps:MetroWindow>

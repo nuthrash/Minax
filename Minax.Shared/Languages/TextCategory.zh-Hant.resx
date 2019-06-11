@@ -117,8 +117,166 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="DefaultAvalonDockLayout" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DefaultAvalonDockLayout.adconf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Str0Action" xml:space="preserve">
+    <value>動作(Action)</value>
+  </data>
+  <data name="Str0Adjective" xml:space="preserve">
+    <value>形容詞(Adjective)</value>
+  </data>
+  <data name="Str0Adverb" xml:space="preserve">
+    <value>副詞(Adverb)</value>
+  </data>
+  <data name="Str0Alchemy" xml:space="preserve">
+    <value>鍊金術(Alchemy)</value>
+  </data>
+  <data name="Str0AliasName" xml:space="preserve">
+    <value>別名(AliasName)</value>
+  </data>
+  <data name="Str0Animal" xml:space="preserve">
+    <value>動物(Animal)</value>
+  </data>
+  <data name="Str0BodyOrgan" xml:space="preserve">
+    <value>身體器官(BodyOrgan)</value>
+  </data>
+  <data name="Str0Book" xml:space="preserve">
+    <value>書(Book)</value>
+  </data>
+  <data name="Str0Building" xml:space="preserve">
+    <value>建築(Building)</value>
+  </data>
+  <data name="Str0Character" xml:space="preserve">
+    <value>角色(Character)</value>
+  </data>
+  <data name="Str0City" xml:space="preserve">
+    <value>城鎮(City)</value>
+  </data>
+  <data name="Str0Clothing" xml:space="preserve">
+    <value>衣物(Clothing)</value>
+  </data>
+  <data name="Str0Color" xml:space="preserve">
+    <value>顏色(Color)</value>
+  </data>
+  <data name="Str0Dialect" xml:space="preserve">
+    <value>方言(Dialect)</value>
+  </data>
+  <data name="Str0Education" xml:space="preserve">
+    <value>教育(Education)</value>
+  </data>
+  <data name="Str0Entertainment" xml:space="preserve">
+    <value>娛樂(Entertainment)</value>
+  </data>
+  <data name="Str0Facility" xml:space="preserve">
+    <value>設施(Facility)</value>
+  </data>
+  <data name="Str0FamilyName" xml:space="preserve">
+    <value>家族名(FamilyName)</value>
+  </data>
+  <data name="Str0Food" xml:space="preserve">
+    <value>食物(Food)</value>
+  </data>
+  <data name="Str0Game" xml:space="preserve">
+    <value>遊戲(Game)</value>
+  </data>
+  <data name="Str0HairStyle" xml:space="preserve">
+    <value>髮型(HairStyle)</value>
+  </data>
+  <data name="Str0Housing" xml:space="preserve">
+    <value>住(Housing)</value>
+  </data>
+  <data name="Str0Inventory" xml:space="preserve">
+    <value>庫存(Inventory)</value>
+  </data>
+  <data name="Str0JobPosition" xml:space="preserve">
+    <value>職位(JobPosition)</value>
+  </data>
+  <data name="Str0Language" xml:space="preserve">
+    <value>語言(Language)</value>
+  </data>
+  <data name="Str0Location" xml:space="preserve">
+    <value>地點(Location)</value>
+  </data>
+  <data name="Str0Magic" xml:space="preserve">
+    <value>魔法(Magic)</value>
+  </data>
+  <data name="Str0Maneuver" xml:space="preserve">
+    <value>招式(Maneuver)</value>
+  </data>
+  <data name="Str0Material" xml:space="preserve">
+    <value>材質(Material)</value>
+  </data>
+  <data name="Str0MiddleName" xml:space="preserve">
+    <value>中間名(MiddleName)</value>
+  </data>
+  <data name="Str0MiscTerms" xml:space="preserve">
+    <value>其他項目(MiscTerms)</value>
+  </data>
+  <data name="Str0Monster" xml:space="preserve">
+    <value>怪物(Monster)</value>
+  </data>
+  <data name="Str0Music" xml:space="preserve">
+    <value>音樂(Music)</value>
+  </data>
+  <data name="Str0NickName" xml:space="preserve">
+    <value>暱稱(NickName)</value>
+  </data>
+  <data name="Str0Noun" xml:space="preserve">
+    <value>名詞(Noun)</value>
+  </data>
+  <data name="Str0Organization" xml:space="preserve">
+    <value>組織(Organization)</value>
+  </data>
+  <data name="Str0OtherName" xml:space="preserve">
+    <value>其他名稱(OtherName)</value>
+  </data>
+  <data name="Str0Phenomenon" xml:space="preserve">
+    <value>現象(Phenomenon)</value>
+  </data>
+  <data name="Str0Property" xml:space="preserve">
+    <value>屬性(Property)</value>
+  </data>
+  <data name="Str0ReincarnatedName" xml:space="preserve">
+    <value>轉世後名字(ReincarnatedName)</value>
+  </data>
+  <data name="Str0Relation" xml:space="preserve">
+    <value>關係(Relation)</value>
+  </data>
+  <data name="Str0Science" xml:space="preserve">
+    <value>科學(Science)</value>
+  </data>
+  <data name="Str0Shoe" xml:space="preserve">
+    <value>鞋(Shoe)</value>
+  </data>
+  <data name="Str0Social" xml:space="preserve">
+    <value>社會(Social)</value>
+  </data>
+  <data name="Str0Species" xml:space="preserve">
+    <value>種族(Species)</value>
+  </data>
+  <data name="Str0Translator" xml:space="preserve">
+    <value>翻譯器轉字(Translator)</value>
+  </data>
+  <data name="Str0Transportation" xml:space="preserve">
+    <value>運輸(Transportation)</value>
+  </data>
+  <data name="Str0Undefined" xml:space="preserve">
+    <value>未定義(Undefined)</value>
+  </data>
+  <data name="Str0Verbs" xml:space="preserve">
+    <value>動詞(Verbs)</value>
+  </data>
+  <data name="Str0Weapon" xml:space="preserve">
+    <value>武器(Weapon)</value>
+  </data>
+  <data name="Str0Conjunction" xml:space="preserve">
+    <value>連接詞(Conjunction)</value>
+  </data>
+  <data name="Str0Determiners" xml:space="preserve">
+    <value>限定詞(Determiners)</value>
+  </data>
+  <data name="Str0Preposition" xml:space="preserve">
+    <value>介係詞(Preposition)</value>
+  </data>
+  <data name="Str0Pronouns" xml:space="preserve">
+    <value>代名詞(Pronouns)</value>
   </data>
 </root>
