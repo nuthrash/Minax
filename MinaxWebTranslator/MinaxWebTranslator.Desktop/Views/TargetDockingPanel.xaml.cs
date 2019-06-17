@@ -1,9 +1,12 @@
 ﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Minax.Web.Translation;
+using MinaxWebTranslator.Desktop.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,106 +26,407 @@ namespace MinaxWebTranslator.Desktop.Views
 {
 	public partial class TargetDockingPanel : LayoutAnchorable
 	{
+		internal string SourceText {
+			get => mSourceText;
+			set {
+				BtnTargetTranslate.IsEnabled = !string.IsNullOrWhiteSpace( value );
+				mSourceText = value;
+			}
+		}
 
-		public bool IsTranslating { get; private set; }
+		internal TranslatorSelector CurrentTranslator { get; private set; }
 
-		public event PropertyChangedEventHandler StatusChanged;
+		public bool IsTranslating {
+			get => isXlating;
+			private set {
+				if( isXlating == value )
+					return;
+				isXlating = value;
+				_ = MessageHub.SendMessageAsync( this, MessageType.XlatingSections, isXlating );
+			}
+		}
 
-		public TargetDockingPanel( MetroWindow mainWindow )
+		public bool SyncTargetScroll => CbTargetSyncScroll.IsChecked == true;
+
+
+		public TargetDockingPanel( MainWindow mainWindow )
 		{
 			mMainWindow = mainWindow;
 
 			InitializeComponent();
+
+			MessageHub.MessageReceived -= MsgHub_MessageRecevied;
+			MessageHub.MessageReceived += MsgHub_MessageRecevied;
 		}
 
-		private MetroWindow mMainWindow;
+		private MainWindow mMainWindow;
+		private string mSourceText;
+		private string mCrytoKey;
+		private volatile bool isXlating = false;
 		private CancellationTokenSource mCancelTokenSrource = new CancellationTokenSource();
+		private SecureString mTmpBaiduAppId, mTmpBaiduSecretKey, mTmpYoudaoAppKey, mTmpYoudaoAppSecret, mTmpGoogleApiKey, mTmpMicrosoftSubKey;
 
-		protected void OnStatusChanged( [CallerMemberName] string propertyName = "" )
+		private async Task<(string AppId, string SecretKey)> _CheckAndAskBaiduCharged()
 		{
-			StatusChanged?.Invoke( this, new PropertyChangedEventArgs(propertyName) );
+			string appId = null, secKey = null;
+
+			if( string.IsNullOrWhiteSpace( Properties.Settings.Default.XlatorBaiduAppId ) == false &&
+				string.IsNullOrWhiteSpace( Properties.Settings.Default.XlatorBaiduSecretKey ) == false ) {
+				appId = Minax.Utils.DecryptFromBas64( Properties.Settings.Default.XlatorBaiduAppId, mCrytoKey );
+				secKey = Minax.Utils.DecryptFromBas64( Properties.Settings.Default.XlatorBaiduSecretKey, mCrytoKey );
+			} else {
+				if( mTmpBaiduAppId != null && mTmpBaiduSecretKey != null ) {
+					appId = mTmpBaiduAppId.ConvertToString();
+					secKey = mTmpBaiduSecretKey.ConvertToString();
+				} else {
+					var miDialog = new Views.MultipleInputsDialog() {
+						MainWindow = mMainWindow,
+						Title = "Fill Baidu Translation API (Charged) Settings",
+						InputFields = new List<InputFieldModel> {
+							new InputFieldModel { FieldName = "APP ID", TypeInfo = typeof(SecureString) },
+							new InputFieldModel { FieldName = "Secret Key", TypeInfo = typeof(SecureString) }
+						},
+					};
+					await mMainWindow.ShowMetroDialogAsync( miDialog );
+					await miDialog.WaitUntilUnloadedAsync();
+
+					if( miDialog.Results != null && miDialog.Results.Count >= 2 ) {
+						SecureString ssAppId = null, ssSecKey = null;
+						foreach( var rst in miDialog.Results ) {
+							if( rst.FieldName == "APP ID" && rst.Value is SecureString ss1 )
+								ssAppId = ss1;
+							else if( rst.FieldName == "Secret Key" && rst.Value is SecureString ss2 )
+								ssSecKey = ss2;
+						}
+
+						if( ssAppId != null && ssSecKey != null ) {
+							// TempSaveSecureData is not true, then app would ask setting data each time
+							if( miDialog.TempSaveSecureData ) {
+								mTmpBaiduAppId = ssAppId;
+								mTmpBaiduSecretKey = ssSecKey;
+							}
+							appId = ssAppId.ConvertToString();
+							secKey = ssSecKey.ConvertToString();
+						}
+					}
+				}
+			}
+
+			return (appId, secKey);
+		}
+
+		private async Task<(string AppKey, string AppSecret)> _CheckAndAskYoudaoCharged()
+		{
+			string appKey = null, appSecret = null;
+
+			if( string.IsNullOrWhiteSpace( Properties.Settings.Default.XlatorYoudaoAppKey ) == false &&
+				string.IsNullOrWhiteSpace( Properties.Settings.Default.XlatorYoudaoAppSecret ) == false ) {
+				appKey = Minax.Utils.DecryptFromBas64( Properties.Settings.Default.XlatorYoudaoAppKey, mCrytoKey );
+				appSecret = Minax.Utils.DecryptFromBas64( Properties.Settings.Default.XlatorYoudaoAppSecret, mCrytoKey );
+			}
+			else {
+				if( mTmpYoudaoAppKey != null && mTmpYoudaoAppSecret != null ) {
+					appKey = mTmpYoudaoAppKey.ConvertToString();
+					appSecret = mTmpYoudaoAppSecret.ConvertToString();
+				}
+				else {
+					var miDialog = new Views.MultipleInputsDialog() {
+						MainWindow = mMainWindow,
+						Title = "Fill Youdao Translation API (Charged) Settings",
+						InputFields = new List<InputFieldModel> {
+							new InputFieldModel { FieldName = "APP Key", TypeInfo = typeof(SecureString) },
+							new InputFieldModel { FieldName = "APP Secret", TypeInfo = typeof(SecureString) }
+						},
+					};
+					await mMainWindow.ShowMetroDialogAsync( miDialog );
+					await miDialog.WaitUntilUnloadedAsync();
+
+					if( miDialog.Results != null && miDialog.Results.Count >= 2 ) {
+						SecureString ssAppKey = null, ssAppSec = null;
+						foreach( var rst in miDialog.Results ) {
+							if( rst.FieldName == "APP Key" && rst.Value is SecureString ss1 )
+								ssAppKey = ss1;
+							else if( rst.FieldName == "APP Secret" && rst.Value is SecureString ss2 )
+								ssAppSec = ss2;
+						}
+
+						if( ssAppKey != null && ssAppSec != null ) {
+							// TempSaveSecureData is not true, then app would ask setting data each time
+							if( miDialog.TempSaveSecureData ) {
+								mTmpYoudaoAppKey = ssAppKey;
+								mTmpYoudaoAppSecret = ssAppSec;
+							}
+							appKey = ssAppKey.ConvertToString();
+							appSecret = ssAppSec.ConvertToString();
+						}
+					}
+				}
+			}
+
+			return (appKey, appSecret);
+		}
+
+		private async Task<string> _CheckAndAskGoogleCharged()
+		{
+			string apiKey = null;
+
+			if( string.IsNullOrWhiteSpace( Properties.Settings.Default.XlatorGoogleApiKey ) == false ) {
+				apiKey = Minax.Utils.DecryptFromBas64( Properties.Settings.Default.XlatorGoogleApiKey, mCrytoKey );
+			}
+			else {
+				if( mTmpGoogleApiKey != null ) {
+					apiKey = mTmpGoogleApiKey.ConvertToString();
+				}
+				else {
+					var miDialog = new Views.MultipleInputsDialog() {
+						MainWindow = mMainWindow,
+						Title = "Fill Google Translation API V2 (Charged) Settings",
+						InputFields = new List<InputFieldModel> {
+							new InputFieldModel { FieldName = "API Key", TypeInfo = typeof(SecureString) },
+						},
+					};
+					await mMainWindow.ShowMetroDialogAsync( miDialog );
+					await miDialog.WaitUntilUnloadedAsync();
+
+					if( miDialog.Results != null && miDialog.Results.Count >= 1 ) {
+						SecureString ssApiKey = null;
+						foreach( var rst in miDialog.Results ) {
+							if( rst.FieldName == "API Key" && rst.Value is SecureString ss1 )
+								ssApiKey = ss1;
+						}
+
+						if( ssApiKey != null ) {
+							// TempSaveSecureData is not true, then app would ask setting data each time
+							if( miDialog.TempSaveSecureData ) {
+								mTmpGoogleApiKey = ssApiKey;
+							}
+							apiKey = ssApiKey.ConvertToString();
+						}
+					}
+				}
+			}
+
+			return apiKey;
+		}
+
+		private async Task<string> _CheckAndAskMicrosoftCharged()
+		{
+			string subKey = null;
+
+			if( string.IsNullOrWhiteSpace( Properties.Settings.Default.XlatorMicrosoftSubKey ) == false ) {
+				subKey = Minax.Utils.DecryptFromBas64( Properties.Settings.Default.XlatorMicrosoftSubKey, mCrytoKey );
+			}
+			else {
+				if( mTmpMicrosoftSubKey != null ) {
+					subKey = mTmpMicrosoftSubKey.ConvertToString();
+				}
+				else {
+					var miDialog = new Views.MultipleInputsDialog() {
+						MainWindow = mMainWindow,
+						Title = "Fill Microsoft Translation API V3 (Charged) Settings",
+						InputFields = new List<InputFieldModel> {
+							new InputFieldModel { FieldName = "Subscription Key", TypeInfo = typeof(SecureString) },
+						},
+					};
+					await mMainWindow.ShowMetroDialogAsync( miDialog );
+					await miDialog.WaitUntilUnloadedAsync();
+
+					if( miDialog.Results != null && miDialog.Results.Count >= 1 ) {
+						SecureString ssSubKey = null;
+						foreach( var rst in miDialog.Results ) {
+							if( rst.FieldName == "Subscription Key" && rst.Value is SecureString ss1 )
+								ssSubKey = ss1;
+						}
+
+						if( ssSubKey != null ) {
+							// TempSaveSecureData is not true, then app would ask setting data each time
+							if( miDialog.TempSaveSecureData ) {
+								mTmpMicrosoftSubKey = ssSubKey;
+							}
+							subKey = ssSubKey.ConvertToString();
+						}
+					}
+				}
+			}
+
+			return subKey;
+		}
+
+		private void MsgHub_MessageRecevied( object sender, MessageType type, object data )
+		{
+			if( sender == this )
+				return;
+
+			switch( type ) {
+				case MessageType.XlatorSelected:
+					if( data is TranslatorSelector translatorSelector ) {
+						CurrentTranslator = translatorSelector;
+						ImgTargetTranslate.Source = CurrentTranslator.Icon;
+					}
+					break;
+
+				case MessageType.XlatingPercentOrErrorCode:
+					// update Percent string
+					if( data is int percentOrErrorCode ) {
+						if( percentOrErrorCode >= 0 && percentOrErrorCode <= 100 ) {
+							TbTargetPercent.Text = $"{percentOrErrorCode}%";
+						}
+					}
+					break;
+
+				case MessageType.SourceTextChanged:
+					if( data is string sourceText ) {
+						SourceText = sourceText;
+					}
+					break;
+			}
 		}
 
 		private async void BtnTargetTranslate_Click( object sender, RoutedEventArgs e )
 		{
-
-			/*
-			if( TbTargetTranslate.Text == Languages.Global.Str0Cancel ) {
-				//TbTargetTranslate.Text = Languages.Global.Str0Translate;
+			if( IsTranslating ) {
 				mCancelTokenSrource.Cancel();
 				return;
 			}
 
+			if( string.IsNullOrWhiteSpace( SourceText ) ) {
+				await mMainWindow.ShowMessageAsync( "Operation Cancelled", "Please input some useful text to Source box!" );
+				return;
+			}
+
+			if( CurrentTranslator == null || CurrentTranslator.RemoteType == RemoteType.None )
+				return;
+
+			IsTranslating = true;
+
+			if( mCrytoKey == null ) {
+				mCrytoKey = Properties.Settings.Default.XlatorCrypto;
+			}
+
 			try {
+
 				RtbTarget.IsReadOnly = true;
-				//MaprTargetTranslate.Visibility = Visibility.Visible;
 				MaprTargetTranslate.IsActive = true;
-				//PbTarget.Visibility = Visibility.Visible;
 				GdTargetPercent.Visibility = Visibility.Visible;
-				TbStatusMessage.Text = "";
 				TbTargetPercent.Text = "0%";
 				PbTarget.Value = 0;
 				TbTargetTranslate.Text = Languages.Global.Str0Cancel;
 
-				bool result = false;
-				switch( mCurrentRemoteTranslator ) {
+				bool result = false, isCharged = false;
+
+				var remoteType = CurrentTranslator.RemoteType;
+				switch( remoteType ) {
 					case RemoteType.Excite:
-						result = await TranslatorHelpers.XlateExcitePage( WbMain, RtbSource, RtbTarget, mCancelTokenSrource.Token, sTransProgress );
+						result = await TranslatorHelpers.XlateExcitePage( WbMain, SourceText, RtbTarget,
+										mCancelTokenSrource.Token, mMainWindow.TransProgress );
 						break;
 					case RemoteType.Weblio:
-						result = await TranslatorHelpers.XlateWeblioPage( WbMain, RtbSource, RtbTarget, mCancelTokenSrource.Token, sTransProgress );
+						result = await TranslatorHelpers.XlateWeblioPage( WbMain, SourceText, RtbTarget,
+										mCancelTokenSrource.Token, mMainWindow.TransProgress );
 						break;
 					case RemoteType.CrossLanguage:
-						result = await TranslatorHelpers.XlateCrossLangPage( WbMain, RtbSource, RtbTarget, mCancelTokenSrource.Token, sTransProgress );
+						result = await TranslatorHelpers.XlateCrossLangPage( WbMain, SourceText, RtbTarget,
+										mCancelTokenSrource.Token, mMainWindow.TransProgress );
 						break;
 					case RemoteType.Baidu:
-						result = await TranslatorHelpers.XlateBaiduPage( WbMain, RtbSource, RtbTarget, mCancelTokenSrource.Token, sTransProgress );
+						result = await TranslatorHelpers.XlateBaiduPage( WbMain, SourceText, RtbTarget,
+										mCancelTokenSrource.Token, mMainWindow.TransProgress );
 						break;
 					case RemoteType.Youdao:
-						result = await TranslatorHelpers.XlateYoudaoPage( WbMain, RtbSource, RtbTarget, mCancelTokenSrource.Token, sTransProgress );
+						result = await TranslatorHelpers.XlateYoudaoPage( WbMain, SourceText, RtbTarget,
+										mCancelTokenSrource.Token, mMainWindow.TransProgress );
 						break;
 					case RemoteType.Google:
-						result = await TranslatorHelpers.XlateGooglePage( WbMain, RtbSource, RtbTarget, mCancelTokenSrource.Token, sTransProgress );
-						//result = await TranslatorHelpers.XlateGooglePageFile( WbMain, RtbSource, RtbTarget, mCancelTokenSrource.Token, sTransProgress );
+						result = await TranslatorHelpers.XlateGooglePage( WbMain, SourceText, RtbTarget,
+										mCancelTokenSrource.Token, mMainWindow.TransProgress );
 						break;
-					case RemoteType.Bing:
-						result = await TranslatorHelpers.XlateBingPage( WbMain, RtbSource, RtbTarget, mCancelTokenSrource.Token, sTransProgress );
+					case RemoteType.Microsoft:
+						result = await TranslatorHelpers.XlateMicrosoftPage( WbMain, SourceText, RtbTarget,
+										mCancelTokenSrource.Token, mMainWindow.TransProgress );
 						break;
 
 					case RemoteType.CrossLanguageFree:
 					case RemoteType.BaiduFree:
 					case RemoteType.YoudaoFree:
 					case RemoteType.GoogleFree:
-						result = await TranslatorHelpers.XlateApiFree( mCurrentRemoteTranslator, RtbSource, RtbTarget,
-															mCancelTokenSrource.Token, sTransProgress );
+						result = await TranslatorHelpers.XlateApiFree( remoteType, SourceText, RtbTarget,
+										mCancelTokenSrource.Token, mMainWindow.TransProgress );
 						break;
 
+					// ask APP ID/Secret ... when setting is empty
 					case RemoteType.BaiduCharged:
-						result = await TranslatorHelpers.XlateApiCharged( mCurrentRemoteTranslator, RtbSource, RtbTarget,
-															mCancelTokenSrource.Token, sTransProgress,
-															TbXlatorBaiduAppId.Text, TbXlatorBaiduSecretKey.Text, null, null );
+						var tupleBaidu = await _CheckAndAskBaiduCharged();
+						if( tupleBaidu.AppId == null || tupleBaidu.SecretKey == null )
+							result = false;
+						else
+							result = await TranslatorHelpers.XlateApiCharged( remoteType, SourceText, RtbTarget,
+										mCancelTokenSrource.Token, mMainWindow.TransProgress,
+										tupleBaidu.AppId, tupleBaidu.SecretKey, null, null );
+
+						// maybe input wrong character...so clear data for next input
+						if( result != true ) {
+							mTmpBaiduAppId = null;
+							mTmpBaiduSecretKey = null;
+						}
+
+						isCharged = true;
 						break;
 					case RemoteType.YoudaoCharged:
-						result = await TranslatorHelpers.XlateApiCharged( mCurrentRemoteTranslator, RtbSource, RtbTarget,
-															mCancelTokenSrource.Token, sTransProgress,
-															TbXlatorYoudaoAppKey.Text, TbXlatorYoudaoAppSecret.Text, null, null );
+						var tupleYoudao = await _CheckAndAskYoudaoCharged();
+						if( tupleYoudao.AppKey == null || tupleYoudao.AppSecret == null )
+							result = false;
+						else
+							result = await TranslatorHelpers.XlateApiCharged( remoteType, SourceText, RtbTarget,
+										mCancelTokenSrource.Token, mMainWindow.TransProgress,
+										tupleYoudao.AppKey, tupleYoudao.AppSecret, null, null );
+
+						// maybe input wrong character...so clear data for next input
+						if( result != true ) {
+							mTmpYoudaoAppKey = null;
+							mTmpYoudaoAppSecret = null;
+						}
+						isCharged = true;
 						break;
 
 					case RemoteType.GoogleCharged:
-						result = await TranslatorHelpers.XlateApiCharged( mCurrentRemoteTranslator, RtbSource, RtbTarget,
-															mCancelTokenSrource.Token, sTransProgress,
-															TbXlatorGoogleApiKey.Text, null, null, null );
+						var apiKeyGoogle = await _CheckAndAskGoogleCharged();
+						if( apiKeyGoogle == null )
+							result = false;
+						else
+							result = await TranslatorHelpers.XlateApiCharged( remoteType, SourceText, RtbTarget,
+										mCancelTokenSrource.Token, mMainWindow.TransProgress,
+										apiKeyGoogle, null, null, null );
+						if( result != true ) {
+							mTmpGoogleApiKey = null;
+						}
+						isCharged = true;
 						break;
 
-					case RemoteType.BingCharged:
-						result = await TranslatorHelpers.XlateApiCharged( mCurrentRemoteTranslator, RtbSource, RtbTarget,
-															mCancelTokenSrource.Token, sTransProgress,
-															TbXlatorMicrosoftSubKey.Text, null,
-															(string)CbXlatorMicrosoftServer.ToolTip, TbXlatorMicrosoftSubRegion.Text );
+					case RemoteType.MicrosoftCharged:
+						var subKeyMs = await _CheckAndAskMicrosoftCharged();
+						if( subKeyMs == null )
+							result = false;
+						else
+							result = await TranslatorHelpers.XlateApiCharged( remoteType, SourceText, RtbTarget,
+										mCancelTokenSrource.Token, mMainWindow.TransProgress,
+										subKeyMs, null,
+										Properties.Settings.Default.XlatorMicrosoftServer,
+										Properties.Settings.Default.XlatorMicrosoftSubRegion );
+						if( result != true ) {
+							mTmpMicrosoftSubKey = null;
+						}
+						isCharged = true;
 						break;
 				}
 
-				await this.ShowMessageAsync( "Translating Result", result ? "Translation succeded!" : "Translation failed!" );
+				if( result )
+					mMainWindow.ShowAutoCloseMessage( "Translating Result", "Translation succeded!" );
+				else if( isCharged )
+					await mMainWindow.ShowMessageAsync( "Translating Failed",
+								"Translation failed!\nMaybe some necessary field(s) is/are missing or wrong typed when using Transaltion API (Charged)? " );
+				else
+					await mMainWindow.ShowMessageAsync( "Translating Failed",
+								"Translating failed!\nPlease retry latter! Maybe the network is disconnected, or remote web site is busy." );
 			}
 			catch( OperationCanceledException oce ) {
 				await mMainWindow.ShowMessageAsync( "Translating Cancelled", "Translation aborted! Exception: " + oce.Message );
@@ -131,24 +435,15 @@ namespace MinaxWebTranslator.Desktop.Views
 			catch( Exception ex ) {
 				await mMainWindow.ShowMessageAsync( "Translating Result", "Translation failed! Exception: " + ex.Message );
 			}
-			//ICommand ccd = new Command();
 
 			mCancelTokenSrource = new CancellationTokenSource();
 
-			//MaprTargetTranslate.Visibility = Visibility.Collapsed;
 			MaprTargetTranslate.IsActive = false;
 			PbTarget.Visibility = Visibility.Hidden;
 			GdTargetPercent.Visibility = Visibility.Hidden;
 			TbTargetTranslate.Text = Languages.Global.Str0Translate;
 			RtbTarget.IsReadOnly = false;
-
-			// https://github.com/MahApps/MahApps.Metro/issues/1710  Auto Close flyout animation...
-			//MahApps.Metro.Controls.Flyout.IsOpenProperty
-			//MahApps.Metro.Controls.Dialogs.MessageDialog.IsVisibleProperty
-			//MahApps.Metro.Controls.Dialogs.MessageDialog msgDlg = MessageDialog.
-
-
-			*/
+			IsTranslating = false;
 		}
 
 		private void CbTargetAutoTop_Click( object sender, RoutedEventArgs e )
@@ -156,9 +451,5 @@ namespace MinaxWebTranslator.Desktop.Views
 			TranslatorHelpers.AutoScrollToTop = CbTargetAutoTop.IsChecked == true;
 		}
 
-		private void RtbTarget_ScrollChanged( object sender, ScrollChangedEventArgs e )
-		{
-
-		}
 	}
 }

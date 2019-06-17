@@ -34,5 +34,196 @@ namespace MinaxWebTranslator.Desktop.Properties {
                 this["AvalonDockLayout"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection RecentProjects {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["RecentProjects"]));
+            }
+            set {
+                this["RecentProjects"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection CustomGlossaryFileListLocations {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["CustomGlossaryFileListLocations"]));
+            }
+            set {
+                this["CustomGlossaryFileListLocations"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int QuickTranslationWordMax {
+            get {
+                return ((int)(this["QuickTranslationWordMax"]));
+            }
+            set {
+                this["QuickTranslationWordMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://raw.githubusercontent.com/nuthrash/Minax/master/MinaxWebTranslator/Transl" +
+            "ationProjects/GlossaryFileList.txt")]
+        public string DefaultGlossaryFileListLocation {
+            get {
+                return ((string)(this["DefaultGlossaryFileListLocation"]));
+            }
+            set {
+                this["DefaultGlossaryFileListLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RemoteXlatorType {
+            get {
+                return ((string)(this["RemoteXlatorType"]));
+            }
+            set {
+                this["RemoteXlatorType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string XlatorCrypto {
+            get {
+                return ((string)(this["XlatorCrypto"]));
+            }
+            set {
+                this["XlatorCrypto"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string XlatorBaiduAppId {
+            get {
+                return ((string)(this["XlatorBaiduAppId"]));
+            }
+            set {
+                this["XlatorBaiduAppId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string XlatorBaiduSecretKey {
+            get {
+                return ((string)(this["XlatorBaiduSecretKey"]));
+            }
+            set {
+                this["XlatorBaiduSecretKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string XlatorYoudaoAppKey {
+            get {
+                return ((string)(this["XlatorYoudaoAppKey"]));
+            }
+            set {
+                this["XlatorYoudaoAppKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string XlatorYoudaoAppSecret {
+            get {
+                return ((string)(this["XlatorYoudaoAppSecret"]));
+            }
+            set {
+                this["XlatorYoudaoAppSecret"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string XlatorGoogleApiKey {
+            get {
+                return ((string)(this["XlatorGoogleApiKey"]));
+            }
+            set {
+                this["XlatorGoogleApiKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string XlatorMicrosoftSubKey {
+            get {
+                return ((string)(this["XlatorMicrosoftSubKey"]));
+            }
+            set {
+                this["XlatorMicrosoftSubKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string XlatorMicrosoftSubRegion {
+            get {
+                return ((string)(this["XlatorMicrosoftSubRegion"]));
+            }
+            set {
+                this["XlatorMicrosoftSubRegion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string XlatorMicrosoftServer {
+            get {
+                return ((string)(this["XlatorMicrosoftServer"]));
+            }
+            set {
+                this["XlatorMicrosoftServer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RemeberRecentProjects {
+            get {
+                return ((bool)(this["RemeberRecentProjects"]));
+            }
+            set {
+                this["RemeberRecentProjects"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public int RecentProjectCountMax {
+            get {
+                return ((int)(this["RecentProjectCountMax"]));
+            }
+            set {
+                this["RecentProjectCountMax"] = value;
+            }
+        }
     }
 }

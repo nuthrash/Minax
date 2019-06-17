@@ -35,7 +35,8 @@ namespace MinaxWebTranslator.Desktop.Models
 		}
 
 		public string Description { get; set; }
-		public bool IsSeparator { get; set; } = false;
+
+		public System.Windows.Visibility SeparatorVisibility { get; set; } = System.Windows.Visibility.Collapsed;
 
 		private RemoteType rt = RemoteType.None;
 		private string header = null;

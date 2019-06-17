@@ -120,6 +120,10 @@
   <data name="Str0Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Str0DefaultTextFontFamilyName" xml:space="preserve">
+    <value>Microsoft JhengHei UI</value>
+    <comment>微軟正黑體</comment>
+  </data>
   <data name="Str0Ok" xml:space="preserve">
     <value>OK</value>
   </data>

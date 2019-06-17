@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
@@ -55,6 +57,21 @@ namespace MinaxWebTranslator.Desktop
 		{
 			var tr = new TextRange( rtb.Document.ContentStart, rtb.Document.ContentEnd );
 			return tr.Text;
+		}
+
+		// https://stackoverflow.com/questions/818704/how-to-convert-securestring-to-system-string
+		public static string ConvertToString( this SecureString value )
+		{
+			return new System.Net.NetworkCredential( string.Empty, value ).Password;
+		}
+
+		public static SecureString ConvertToSecureString( this string value )
+		{
+			SecureString ss = new SecureString();
+			foreach( var ch in value )
+				ss.AppendChar( ch );
+
+			return ss;
 		}
 
 		public static string LayoutToString( this DockingManager dockManager )

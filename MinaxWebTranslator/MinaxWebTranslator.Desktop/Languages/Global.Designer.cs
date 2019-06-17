@@ -22,7 +22,7 @@ namespace MinaxWebTranslator.Desktop.Languages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Global {
+    public class Global {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace MinaxWebTranslator.Desktop.Languages {
         ///   傳回這個類別使用的快取的 ResourceManager 執行個體。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MinaxWebTranslator.Desktop.Languages.Global", typeof(Global).Assembly);
@@ -51,7 +51,7 @@ namespace MinaxWebTranslator.Desktop.Languages {
         ///   使用這個強類型資源類別的資源查閱。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,29 +61,110 @@ namespace MinaxWebTranslator.Desktop.Languages {
         }
         
         /// <summary>
+        ///   查詢類似 Asia Pacific 的當地語系化字串。
+        /// </summary>
+        public static string Str0AsiaPacific {
+            get {
+                return ResourceManager.GetString("Str0AsiaPacific", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Cancel 的當地語系化字串。
         /// </summary>
-        internal static string Str0Cancel {
+        public static string Str0Cancel {
             get {
                 return ResourceManager.GetString("Str0Cancel", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   查詢類似 Arial 的當地語系化字串。
+        /// </summary>
+        public static string Str0DefaultTextFontFamilyName {
+            get {
+                return ResourceManager.GetString("Str0DefaultTextFontFamilyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Europe 的當地語系化字串。
+        /// </summary>
+        public static string Str0Europe {
+            get {
+                return ResourceManager.GetString("Str0Europe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Global 的當地語系化字串。
+        /// </summary>
+        public static string Str0Global {
+            get {
+                return ResourceManager.GetString("Str0Global", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 MIT License 的當地語系化字串。
+        /// </summary>
+        public static string Str0MitLicense {
+            get {
+                return ResourceManager.GetString("Str0MitLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 No 的當地語系化字串。
+        /// </summary>
+        public static string Str0No {
+            get {
+                return ResourceManager.GetString("Str0No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 North America 的當地語系化字串。
+        /// </summary>
+        public static string Str0NorthAmerica {
+            get {
+                return ResourceManager.GetString("Str0NorthAmerica", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 OK 的當地語系化字串。
         /// </summary>
-        internal static string Str0Ok {
+        public static string Str0Ok {
             get {
                 return ResourceManager.GetString("Str0Ok", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   查詢類似 Public Domain 的當地語系化字串。
+        /// </summary>
+        public static string Str0PublicDomain {
+            get {
+                return ResourceManager.GetString("Str0PublicDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Translate 的當地語系化字串。
         /// </summary>
-        internal static string Str0Translate {
+        public static string Str0Translate {
             get {
                 return ResourceManager.GetString("Str0Translate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Yes 的當地語系化字串。
+        /// </summary>
+        public static string Str0Yes {
+            get {
+                return ResourceManager.GetString("Str0Yes", resourceCulture);
             }
         }
     }

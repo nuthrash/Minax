@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,99 +20,88 @@ namespace MinaxWebTranslator.Desktop.Views
 {
 	public partial class SourceDockingPanel : LayoutAnchorable
 	{
-		internal WebBrowser Browser => WbMain;
-		internal LayoutAnchorable AdlaQuickTranslation { get; set; }
-		internal RichTextBox RtbQuickInput { get; set; }
-		internal Button BtnQuickTrans { get; set; }
+		internal string SourceText {
+			get {
+				if( string.IsNullOrEmpty( mSourceText ) ) {
+					mSourceText = new TextRange( RtbSource.Document.ContentStart, RtbSource.Document.ContentEnd).Text;
+				}
+				return mSourceText;
+			}
+			private set => mSourceText = value;
+		}
 
-		internal RichTextBox RtbTarget { get; set; }
-		internal bool SyncTargetScroll { get; set; }
+		internal event EventHandler<EventArgs> SourceTextChanged;
 
-		public SourceDockingPanel( MetroWindow mainWindow )
+		public SourceDockingPanel( MainWindow mainWindow )
 		{
 			mMainWindow = mainWindow;
 
 			InitializeComponent();
+
+			RtbSource.Document.Blocks.Clear();
+
+			// clear mSourceText when GotFocus to get last source text when access SourceText
+			RtbSource.GotFocus += ( s1, e1 ) => {
+				SourceText = null;
+			};
+
+			MessageHub.MessageReceived -= MsgHub_MessageRecevied;
+			MessageHub.MessageReceived += MsgHub_MessageRecevied;
 		}
 
-		private readonly MetroWindow mMainWindow;
+		private readonly MainWindow mMainWindow;
+		private string mSourceText;
 
-		private volatile bool _IsScrolling = false;
-		private ScrollViewer svAfter = null, svBefore = null;
-
-		private async void RtbSource_ScrollChanged( object sender, ScrollChangedEventArgs e )
+		private void MsgHub_MessageRecevied( object sender, MessageType type, object data )
 		{
-			if( _IsScrolling || SyncTargetScroll != true )
-				return;
-			if( e.VerticalChange == 0 && e.HorizontalChange == 0 ) { return; }
 
-			_IsScrolling = true;
-
-			var rtbToSync = (sender == RtbTarget) ? RtbTarget : RtbSource;
-
-			if( svAfter == null && sender == RtbTarget )
-				svAfter = e.OriginalSource as ScrollViewer;
-			if( svBefore == null && sender == RtbSource )
-				svBefore = e.OriginalSource as ScrollViewer;
-
-			var sv = e.OriginalSource as ScrollViewer;
-
-			if( sv.ScrollableHeight <= 0.0 )
-				goto exit;
-
-			var percentV = e.VerticalOffset / sv.ScrollableHeight;
-
-			if( sender == RtbTarget ) {
-				if( svBefore != null )
-					svBefore.ScrollToVerticalOffset( percentV * svBefore.ScrollableHeight );
-				else
-					RtbSource.ScrollToVerticalOffset( percentV * RtbSource.ViewportHeight );
+			switch( type ) {
+				case MessageType.XlatingQuick:
+				//case MessageType.XlationQuickWithText:
+					if( data is bool onOff ) {
+						GdSource.IsEnabled = !onOff;
+					}
+					break;
+				case MessageType.XlatingSections:
+					if( data is bool onOff2 ) {
+						GdSource.IsEnabled = !onOff2;
+					}
+					break;
 			}
-			else {
-				if( svAfter != null )
-					svAfter.ScrollToVerticalOffset( percentV * svAfter.ScrollableHeight );
-				else
-					RtbTarget.ScrollToVerticalOffset( percentV * RtbTarget.ViewportHeight );
-			}
-
-			await Task.Delay( 100 );
-			rtbToSync.InvalidateVisual();
-
-		exit:
-			_IsScrolling = false;
 		}
 
-		private void MiSourceCopyAndTranslateSelection_Click( object sender, RoutedEventArgs e )
+		private async void MiSourceCopyAndTranslateSelection_Click( object sender, RoutedEventArgs e )
 		{
 			if( RtbSource.Selection.IsEmpty )
 				return;
 
-			if( RtbQuickInput != null ) {
-				RtbQuickInput.Document.Blocks.Clear();
-				var text = new TextRange( RtbSource.Selection.Start, RtbSource.Selection.End ).Text;
-				RtbQuickInput.AppendText( text );
-				Clipboard.SetText( text );
-			}
-
-			if( AdlaQuickTranslation != null )
-				AdlaQuickTranslation.IsActive = true;
-			BtnQuickTrans?.RaiseEvent( new RoutedEventArgs( System.Windows.Controls.Button.ClickEvent ) );
+			await MessageHub.SendMessageAsync( this, MessageType.XlatingQuickWithText, 
+						new TextRange(RtbSource.Selection.Start, RtbSource.Selection.End).Text );
 		}
 
-		private void BtnSourceClearAndPaste_Click( object sender, RoutedEventArgs e )
+		private async void BtnSourceClearAndPaste_Click( object sender, RoutedEventArgs e )
 		{
+			mSourceText = Clipboard.GetText();
 			RtbSource.Document.Blocks.Clear();
 			RtbSource.Paste();
+			SourceTextChanged?.Invoke( this, null );
+			await MessageHub.SendMessageAsync( this, MessageType.SourceTextChanged, mSourceText );
 		}
 
-		private void BtnSourceClear_Click( object sender, RoutedEventArgs e )
+		private async void BtnSourceClear_Click( object sender, RoutedEventArgs e )
 		{
+			mSourceText = string.Empty;
 			RtbSource.Document.Blocks.Clear();
+			SourceTextChanged?.Invoke( this, null );
+			await MessageHub.SendMessageAsync( this, MessageType.SourceTextChanged, mSourceText );
 		}
 
-		private void BtnSourcePaste_Click( object sender, RoutedEventArgs e )
+		private async void BtnSourcePaste_Click( object sender, RoutedEventArgs e )
 		{
+			mSourceText = Clipboard.GetText();
 			RtbSource.Paste();
+			SourceTextChanged?.Invoke( this, null );
+			await MessageHub.SendMessageAsync( this, MessageType.SourceTextChanged, mSourceText );
 		}
 	}
 }

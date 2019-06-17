@@ -20,8 +20,26 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net47'">
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Net.Http" />
+	<PackageReference Include="ChineseConverter" Version="1.0.0" />  
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0' ">
+    <PackageReference Include="CHTCHSConv" Version="1.0.0" />  
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="CHTCHSConv" Version="1.0.0" />  
+  </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="FileHelpers" Version="3.4.0" />
+	<PackageReference Include="HtmlAgilityPack" Version="1.11.7" />
+    <PackageReference Include="Jurassic" Version="3.0.0" />
+	<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,13 +66,17 @@
       <LastGenOutput>Global.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Languages\TextCategory.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TextCategory.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Web\Formats\" />
   </ItemGroup>
 
 </Project>

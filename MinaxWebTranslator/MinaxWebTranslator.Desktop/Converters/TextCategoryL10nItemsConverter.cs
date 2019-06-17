@@ -8,14 +8,17 @@ using System.Windows.Data;
 namespace MinaxWebTranslator.Desktop.Converters
 {
 	/// <summary>
-	/// Mapping text category converter
+	/// Mapping text category to L10N string converter
 	/// </summary>
 	internal class TextCategoryL10nItemsConverter : IValueConverter
 	{
 		public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
 		{
-			if( value is TextCategory ) {
-				return Minax.Utils.GetTextCategoryL10nString( (TextCategory)value );
+			if( value == null )
+				return null;
+
+			if( value is TextCategory tc ) {
+				return Minax.Utils.GetTextCategoryL10nString( tc );
 			}
 			if( value is IEnumerable<TextCategory> ) {
 				return Minax.Utils.GetAllTextCategoryL10nStrings();
@@ -26,6 +29,9 @@ namespace MinaxWebTranslator.Desktop.Converters
 
 		public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
 		{
+			if( value == null )
+				return null;
+
 			if( value is string str ) {
 				return Minax.Utils.GetTextCategoryL10nValue( str );
 			}

@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MinaxWebTranslator.Desktop.Views"
              xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
-             mc:Ignorable="d"  ContentId="sourceWindow" x:Name="AdlaSource" Title="Source" CanClose="false" CanHide="False">
+             xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d"
+             ContentId="sourceWindow" x:Name="AdlaSource" Title="Source" CanClose="false" CanHide="False">
     <Grid x:Name="GdSource">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -27,16 +29,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <!--<TextBlock Grid.Column="0" Grid.Row="0" Text="Source Language:" VerticalAlignment="Center" />
-                                        <ComboBox x:Name="CbSourceLang" Grid.Column="1" Grid.Row="0" Margin="2 0 2 0"
-                                                  IsEditable="False" IsTextSearchEnabled="True" SelectedIndex="0"
-                                                  IsSynchronizedWithCurrentItem="True">
-                                            <ComboBoxItem Content="Japanese" />
-                                            <ComboBoxItem Content="English"/>
-                                        </ComboBox>-->
-
             <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-                <WebBrowser x:Name="WbMain" Height="205" Width="205" Visibility="Collapsed" />
                 <Button x:Name="BtnSourceClearAndPaste" Content="Clear and Paste from Clipboard" Margin="3" Click="BtnSourceClearAndPaste_Click" />
                 <Button x:Name="BtnSourceClear" Content="Clear" Margin="3" Click="BtnSourceClear_Click" />
                 <Button x:Name="BtnSourcePaste" Content="Paste" Margin="3" Click="BtnSourcePaste_Click" />
@@ -44,13 +37,15 @@
         </Grid>
 
         <RichTextBox x:Name="RtbSource" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
-                                                 VerticalScrollBarVisibility="Auto" TextOptions.TextFormattingMode="Display"
-                                                 FontSize="14px"
-                                                 ScrollViewer.ScrollChanged="RtbSource_ScrollChanged">
+                     VerticalScrollBarVisibility="Auto" TextOptions.TextFormattingMode="Display"
+                     MahApps:TextBoxHelper.UseFloatingWatermark="False"
+                     MahApps:TextBoxHelper.Watermark="Input original text to be translated..."
+                     FontSize="14px">
             <RichTextBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem x:Name="MiSourceClearAndPaste" Header="Clear and Paste" />
-                    <MenuItem x:Name="MiSourceCopyAndTranslateSelection" Header="Copy and Translate Selection" Click="MiSourceCopyAndTranslateSelection_Click" />
+                    <MenuItem x:Name="MiSourceClearAndPaste" Header="Clear and Paste" Click="BtnSourceClearAndPaste_Click" />
+                    <MenuItem x:Name="MiSourceCopyAndTranslateSelection" Header="Copy and Translate Selection"
+                              Click="MiSourceCopyAndTranslateSelection_Click" />
                     <Separator />
                     <MenuItem Command="ApplicationCommands.Paste"/>
                     <MenuItem Command="ApplicationCommands.SelectAll" />

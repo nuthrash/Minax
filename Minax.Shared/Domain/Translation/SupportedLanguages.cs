@@ -4,27 +4,25 @@ using System.Text;
 
 namespace Minax.Domain.Translation
 {
-	/// <summary>
-	/// Current supported languages
-	/// </summary>
-	public static class SupportedLanguages
+
+	public enum SupportedSourceLanguage
 	{
-		public enum SupportedSourceLanguage
-		{
-			AutoDetect = 0,
+		AutoDetect = 0,
 
-			English,
-			Japanese,
-			ChineseSimplified,
-			ChineseTraditional,
-		}
+		English,
+		Japanese,
+		ChineseSimplified,
+		ChineseTraditional,
+	}
 
-		public enum SupportedTargetLanguage
-		{
-			ChineseTraditional,
-			English,
-		}
+	public enum SupportedTargetLanguage
+	{
+		ChineseTraditional,
+		English,
+	}
 
+	public static class SupportedLanguagesExtensions
+	{
 		public static string ToIso639( this SupportedSourceLanguage srcLang )
 		{
 			switch( srcLang ) {

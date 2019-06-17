@@ -26,7 +26,8 @@
         </Grid.RowDefinitions>
 
         <ToolBar x:Name="TbMappingSummaryTool" Grid.Column="0" Grid.Row="0" ToolBarTray.IsLocked="True">
-            <Button x:Name="BtnMappingSummaryToolClearSorting" Margin="3" ToolTip="Clear Sorting" Click="BtnMappingSummaryToolClearSorting_Click">
+            <Button x:Name="BtnMappingSummaryToolClearSorting" Margin="3" ToolTip="Clear Sorting"
+                    Click="BtnMappingSummaryToolClearSorting_Click">
                 <IconPacks:Modern Width="16" Height="16" Kind="Clean" />
             </Button>
             <Separator />
@@ -38,9 +39,9 @@
         </ToolBar>
 
         <DataGrid x:Name="DgMappingSummary" Grid.Column="0" Grid.Row="1"
-                                              GridLinesVisibility="Vertical" ItemsSource="{Binding}"
-                                              AutoGenerateColumns="False" CanUserAddRows="False"
-                                              CanUserDeleteRows="False" IsTextSearchEnabled="True">
+                  GridLinesVisibility="Vertical" ItemsSource="{Binding}"
+                  AutoGenerateColumns="False" CanUserAddRows="False"
+                  CanUserDeleteRows="False" IsTextSearchEnabled="True">
             <DataGrid.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource MyGroupHeaderStyle}">
                     <GroupStyle.Panel>

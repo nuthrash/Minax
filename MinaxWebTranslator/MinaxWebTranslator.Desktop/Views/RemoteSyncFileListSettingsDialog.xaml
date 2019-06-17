@@ -1,0 +1,96 @@
+﻿<Dialog:CustomDialog x:Class="MinaxWebTranslator.Desktop.Views.RemoteSyncFileListSettingsDialog"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MinaxWebTranslator.Desktop.Views"
+      xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+      xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      mc:Ignorable="d" 
+      Title="Remote Sync. File List Settings"
+      Loaded="CustomDialog_Loaded" >
+
+    <StackPanel>
+        <TextBlock Foreground="DarkRed" TextWrapping="Wrap" Margin="4"
+                   Text="NOTE: The remote File List file stores many relative paths (to the site root) of Glossary sub-folders and files. It shall be an UTF-8 pure text file!" />
+
+        <Separator />
+
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="FileListSelector" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
+                       Content="Default" FontWeight="Bold"/>
+            <TextBox x:Name="TbDefault" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4 0 0 0"
+                     IsReadOnly="True" MahApps:TextBoxHelper.SelectAllOnFocus="True"
+                     Text="https://raw.githubusercontent.com/nuthrash/AvalonDock/master/source/AvalonDock.sln"/>
+
+        </Grid>
+
+        <Separator />
+
+
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="FileListSelector" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
+                       Content="Custom" FontWeight="Bold"/>
+            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style x:Key="LvCustomHasItemStyle" TargetType="Button" BasedOn="{StaticResource MetroFlatButton}">
+                        <Setter Property="IsEnabled" Value="True" />
+                        <Setter Property="Margin" Value="3" />
+                        <Setter Property="Padding" Value="3" />
+                        <Setter Property="FontSize" Value="12px" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=LvCustom, Path=SelectedItem}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Resources>
+                <Button x:Name="BtnCustomAdd" Content="Add" Click="BtnCustomAdd_Click" FontSize="12px" Margin="3" Padding="3"
+                        ToolTip="Add remote glossary file list text file" Style="{StaticResource MetroFlatButton}" />
+                <Button x:Name="BtnCustomDelete" Content="Delete" Click="BtnCustomDelete_Click"
+                        ToolTip="Delete selected file list" Style="{DynamicResource LvCustomHasItemStyle}" />
+                <Button x:Name="BtnCustomMoveUp" Content="↑" FontWeight="Black" Click="BtnCustomMoveUp_Click"
+                        ToolTip="Move selected file list up" Style="{DynamicResource LvCustomHasItemStyle}" />
+                <Button x:Name="BtnCustomMoveDown" Content="↓" FontWeight="Black"  Click="BtnCustomMoveDown_Click"
+                        ToolTip="Move selected file list down" Style="{DynamicResource LvCustomHasItemStyle}" />
+                <Button x:Name="BtnCustomEdit" Content="🖊"  Click="BtnCustomEdit_Click"
+                        ToolTip="Modify selected file list" Style="{DynamicResource LvCustomHasItemStyle}" />
+                <Label Content="Count:" VerticalAlignment="Center" Margin="0" Padding="4 0 0 0"
+                       HorizontalContentAlignment="Right"/>
+                <Label x:Name="LblCustomCount" Content="0/20" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <ListView x:Name="LvCustom" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+                <ListViewItem Content="https://github.com/nuthrash/AvalonDock/raw/master/source/AutomationTest/Xceed.Wpf.AvalonDock.Test/Xceed.Wpf.AvalonDock.Test.csproj" />
+                <ListViewItem Content="https://github.com/nuthrash/AvalonDock/raw/master/source/AutomationTest/Xceed.Wpf.AvalonDock.Test/Xceed.Wpf.AvalonDock.Test.csproj" />
+                <ListViewItem Content="https://raw.githubusercontent.com/nuthrash/AvalonDock/master/source/AvalonDock.sln" />
+                <ListViewItem Content="https://raw.githubusercontent.com/nuthrash/AvalonDock/master/source/AvalonDock.sln" />
+            </ListView>
+        </Grid>
+
+        <Separator />
+
+        <!-- Command Buttons -->
+        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+            <Button Content="Close" Margin="3" IsCancel="true" Click="CustomDialogClose_Click"  />
+        </StackPanel>
+    </StackPanel>
+</Dialog:CustomDialog>

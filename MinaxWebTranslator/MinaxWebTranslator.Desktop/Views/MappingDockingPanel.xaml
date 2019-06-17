@@ -58,14 +58,16 @@
                 </Grid.RowDefinitions>
 
                 <ToolBar x:Name="TbMappingAllTool" Grid.Column="0" Grid.Row="0" ToolBarTray.IsLocked="True">
-                    <Button x:Name="BtnMappingAllToolClearSorting" ToolTip="Clear Sorting" Click="BtnMappingAllToolClearSorting_Click">
+                    <Button x:Name="BtnMappingAllToolClearSorting" ToolTip="Clear Sorting"
+                            Click="BtnMappingAllToolClearSorting_Click">
                         <IconPacks:Modern Width="16" Height="16" Kind="Clean" />
                     </Button>
                 </ToolBar>
 
-                <DataGrid x:Name="DgMappingAll" Grid.Column="0" Grid.Row="1" GridLinesVisibility="Vertical" ItemsSource="{Binding}" 
-                                              AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
-                                              IsTextSearchEnabled="True" >
+                <DataGrid x:Name="DgMappingAll" Grid.Column="0" Grid.Row="1" GridLinesVisibility="Vertical" 
+                          AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                          MahApps:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True"
+                          IsTextSearchEnabled="True" ItemsSource="{Binding}"  >
                     <DataGrid.GroupStyle>
                         <GroupStyle ContainerStyle="{StaticResource MyGroupHeaderStyle}">
                             <GroupStyle.Panel>
@@ -102,17 +104,6 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid.Resources>
-                    <Style x:Key="IsEnabledBySelectedItemStyle" TargetType="Button">
-                        <Setter Property="IsEnabled" Value="True" />
-                        <Style.Triggers>
-
-                            <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=DgMappingProjConf}" Value="{x:Null}">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Grid.Resources>
 
                 <Grid x:Name="GdMappingProjConfTool" Grid.Column="0" Grid.Row="0" Margin="3">
                     <Grid.ColumnDefinitions>
@@ -128,33 +119,26 @@
                                 <IconPacks:Material Width="16" Height="16" Kind="Plus" />
                             </Button>
                             <Button x:Name="BtnMappingProjConfDeleteEntry" ToolTip="Delete" 
-                                    Style="{DynamicResource IsEnabledBySelectedItemStyle}" Click="BtnMappingProjConfDeleteEntry_Click">
+                                    Click="BtnMappingProjConfDeleteEntry_Click">
                                 <IconPacks:MaterialLight Width="16" Height="16" Kind="Delete" />
                             </Button>
-                            <!--<Button Command="ApplicationCommands.Delete"  ToolTip="Delete" 
-                                                                CommandTarget="{Binding ElementName=DgMappingProjConf}">
-                                                            <IconPacks:MaterialLight Width="16" Height="16" Kind="Delete" />
-                                                        </Button>-->
                             <Button x:Name="BtnMappingProjConfMoveUp" ToolTip="Move Up" 
-                                    Style="{DynamicResource IsEnabledBySelectedItemStyle}" Click="BtnMappingProjConfMoveUp_Click">
+                                    Click="BtnMappingProjConfMoveUp_Click">
                                 <IconPacks:Material Width="16" Height="16" Kind="ArrowUpThick" />
                             </Button>
                             <Button x:Name="BtnMappingProjConfMoveDown" ToolTip="Move Down" 
-                                    Style="{DynamicResource IsEnabledBySelectedItemStyle}" Click="BtnMappingProjConfMoveDown_Click">
+                                    Click="BtnMappingProjConfMoveDown_Click">
                                 <IconPacks:Material Width="16" Height="16" Kind="ArrowDownThick" />
                             </Button>
-                            <!--<Button x:Name="BtnMappingProjConfClearSorting" ToolTip="Clear Sorting" Click="BtnMappingProjConfClearSorting_Click">
-                                                            <IconPacks:Modern Width="16" Height="16" Kind="Clean" />
-                                                        </Button>-->
                         </ToolBar>
                     </ToolBarTray>
                 </Grid>
 
                 <DataGrid x:Name="DgMappingProjConf" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding}" 
-                                              GridLinesVisibility="Vertical" HorizontalGridLinesBrush="{DynamicResource AccentColorBrush4}"
-                                              VerticalGridLinesBrush="{DynamicResource AccentColorBrush4}"
-                                              AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="True"
-                                              IsTextSearchEnabled="True" >
+                          GridLinesVisibility="Vertical" HorizontalGridLinesBrush="{DynamicResource AccentColorBrush4}"
+                          VerticalGridLinesBrush="{DynamicResource AccentColorBrush4}"
+                          AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="True"
+                          IsTextSearchEnabled="True" SelectionChanged="DgMappingProjConf_SelectionChanged" >
                     <DataGrid.Resources>
                         <Style TargetType="DataGridCell" BasedOn="{StaticResource MetroDataGridCell}">
                             <Style.Triggers>
@@ -167,12 +151,7 @@
                                     </MultiTrigger.Conditions>
                                     <Setter Property="IsEditing" Value="True"/>
                                 </MultiTrigger>
-
-                                <!--<DataTrigger Binding="{Binding Path=IsReadOnly, RelativeSource={RelativeSource Self}}"
-                                                    Value="False">
-                                        <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}" />
-                                        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush4}" />
-                                    </DataTrigger>-->
+                                
                                 <Trigger Property="IsReadOnly" Value="False">
                                     <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}" />
                                     <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush4}" />
@@ -182,23 +161,25 @@
                     </DataGrid.Resources>
                     <DataGrid.Columns>
                         <DataGridTextColumn x:Name="ColMappingProjConfOriginal" Width="Auto" IsReadOnly="True" Header="Original Text" CanUserSort="False"
-                                                                        Binding="{Binding OriginalText}" />
+                                            Binding="{Binding OriginalText}" />
                         <DataGridTextColumn x:Name="ColMappingProjConfMapping" Width="Auto" IsReadOnly="False" CanUserSort="False"
-                                                                        Header="Mapping Text" Binding="{Binding MappingText, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                            Header="Mapping Text" Binding="{Binding MappingText, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                         <DataGridComboBoxColumn x:Name="ColMappingProjConfCategory" Width="Auto" IsReadOnly="False" CanUserSort="False"
-                                                         Header="Category" SelectedValueBinding="{Binding Path=Category, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TcL10nItemsConverter}}"
-                                                         ItemsSource="{Binding Source={StaticResource TextCategoryEnumValues}, Converter={StaticResource TcL10nItemsConverter}}" />
+                                                Header="Category" SelectedValueBinding="{Binding Path=Category, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TcL10nItemsConverter}}"
+                                                ItemsSource="{Binding Source={StaticResource TextCategoryEnumValues}, Converter={StaticResource TcL10nItemsConverter}}" />
                         <DataGridTextColumn x:Name="ColMappingProjConfDescription" Width="Auto" IsReadOnly="False" CanUserSort="False"
-                                                                        Header="Description" Binding="{Binding Description, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                            Header="Description" Binding="{Binding Description, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                         <DataGridTextColumn x:Name="ColMappingProjConfComment" Width="Auto" IsReadOnly="False" CanUserSort="False"
-                                                                        Header="Comment" Binding="{Binding Comment, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
+                                            Header="Comment" Binding="{Binding Comment, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </TabItem>
 
         <!-- Tab 3: TabItem template autogenerted by code-behind for each Glossary table -->
-        <TabItem x:Name="TiMappingTemplate" Visibility="Collapsed" Header="Glossary/Excite/Japanese2ChineseTraditional/Monster1.csv">
+        <TabItem x:Name="TiMappingTemplate" Visibility="Collapsed"
+                 MahApps:ControlsHelper.HeaderFontSize="14"
+                 Header="Glossary/Excite/Japanese2ChineseTraditional/Monster1.csv">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -207,9 +188,10 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <DataGrid x:Name="DgMappingGlossaryTemplate" Grid.Column="0" Grid.Row="0"
-                                                      GridLinesVisibility="Vertical" ItemsSource="{Binding}"
-                                                      AutoGenerateColumns="False" CanUserAddRows="False"
-                                                      CanUserDeleteRows="False" IsTextSearchEnabled="True">
+                          GridLinesVisibility="Vertical" ItemsSource="{Binding}"
+                          AutoGenerateColumns="False" CanUserAddRows="False"
+                          CanUserDeleteRows="False" IsTextSearchEnabled="True"
+                          MahApps:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="*" IsReadOnly="True" Header="Original Text" Binding="{Binding OriginalText}" />
                         <DataGridTextColumn Width="*" IsReadOnly="True" Header="Mapping Text" Binding="{Binding MappingText}"/>
@@ -225,7 +207,8 @@
         </TabItem>
 
         <!-- Tab 4: All glossary tables grouping DataGrid -->
-        <TabItem x:Name="TiMappingGlossaries" Visibility="Collapsed" Header="Glossary">
+        <TabItem x:Name="TiMappingGlossaries" Visibility="Collapsed" Header="Glossary"
+                 MahApps:ControlsHelper.HeaderFontSize="14">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -236,15 +219,17 @@
                 </Grid.RowDefinitions>
 
                 <ToolBar x:Name="TbMappingGlossariesTool" Grid.Column="0" Grid.Row="0" ToolBarTray.IsLocked="True">
-                    <Button x:Name="BtnMappingGlossariesToolClearSorting" ToolTip="Clear Sorting" Click="BtnMappingGlossariesToolClearSorting_Click">
+                    <Button x:Name="BtnMappingGlossariesToolClearSorting" ToolTip="Clear Sorting"
+                            Click="BtnMappingGlossariesToolClearSorting_Click">
                         <IconPacks:Modern Width="16" Height="16" Kind="Clean" />
                     </Button>
                 </ToolBar>
 
                 <DataGrid x:Name="DgMappingGlossaries" Grid.Column="0" Grid.Row="1"
-                                                      GridLinesVisibility="Vertical" ItemsSource="{Binding}"
-                                                      AutoGenerateColumns="False" CanUserAddRows="False"
-                                                      CanUserDeleteRows="False" IsTextSearchEnabled="True">
+                          GridLinesVisibility="Vertical" ItemsSource="{Binding}"
+                          AutoGenerateColumns="False" CanUserAddRows="False"
+                          CanUserDeleteRows="False" IsTextSearchEnabled="True"
+                          MahApps:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True">
                     <DataGrid.GroupStyle>
                         <GroupStyle ContainerStyle="{StaticResource MyGroupHeaderStyle}">
                             <GroupStyle.Panel>
@@ -258,8 +243,8 @@
                         <DataGridTextColumn Width="Auto" IsReadOnly="True" Header="Original Text" Binding="{Binding OriginalText}" />
                         <DataGridTextColumn Width="Auto" IsReadOnly="True" Header="Mapping Text" Binding="{Binding MappingText}"/>
                         <!--<DataGridComboBoxColumn Width="Auto" IsReadOnly="True"
-                                                         Header="Category" SelectedValueBinding="{Binding Path=Category, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TcL10nItemsConverter}}"
-                                                         ItemsSource="{Binding Source={StaticResource TextCategoryEnumValues}, Converter={StaticResource TcL10nItemsConverter}}" />-->
+                                                    Header="Category" SelectedValueBinding="{Binding Path=Category, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TcL10nItemsConverter}}"
+                                                    ItemsSource="{Binding Source={StaticResource TextCategoryEnumValues}, Converter={StaticResource TcL10nItemsConverter}}" />-->
                         <DataGridTextColumn Width="Auto" IsReadOnly="True" Header="Category" Binding="{Binding Path=Category, Converter={StaticResource TcL10nItemsConverter}}"/>
                         <DataGridTextColumn Width="Auto" IsReadOnly="True" Header="Description" Binding="{Binding Description}"/>
                         <DataGridTextColumn Width="Auto" IsReadOnly="True" Header="Comment" Binding="{Binding Comment}"/>

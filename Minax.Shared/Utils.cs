@@ -260,6 +260,7 @@ namespace Minax
 				dict[TextCategory.Book] = Languages.TextCategory.Str0Book;
 				dict[TextCategory.Game] = Languages.TextCategory.Str0Game;
 				dict[TextCategory.Language] = Languages.TextCategory.Str0Language;
+				dict[TextCategory.Dialect] = Languages.TextCategory.Str0Dialect;
 				dict[TextCategory.Translator] = Languages.TextCategory.Str0Translator;
 				dict[TextCategory.MiscTerms] = Languages.TextCategory.Str0MiscTerms;
 

@@ -13,7 +13,7 @@ namespace Minax.Domain.Translation
 	/// <summary>
 	/// Mapping entries and files monitor for Translation project and glossary files.
 	/// </summary>
-	public class MappingMonitor : IDisposable
+	public class MappingMonitor : IDisposable, INotifySuspendable
 	{
 		/// <summary>
 		/// Constructor with necessary parameter
@@ -29,7 +29,6 @@ namespace Minax.Domain.Translation
 			if( Directory.Exists( baseProjectPath ) == false ) {
 				try {
 					Directory.CreateDirectory( baseProjectPath );
-					//System.Threading.Thread.Sleep( 10 );
 					Directory.Delete( baseProjectPath );
 				}
 				catch {
@@ -133,6 +132,11 @@ namespace Minax.Domain.Translation
 		public bool AutoModifyMappingContentWhenFileRenamed { get; set; } = true;
 
 		/// <summary>
+		/// Enable/Disable notify events
+		/// </summary>
+		public bool IsNotificationEnabled { get; set; } = true;
+
+		/// <summary>
 		/// The deferred monitoring changed event
 		/// </summary>
 		public event MonitorEventHandler MonitorDeferredChanged;
@@ -145,7 +149,7 @@ namespace Minax.Domain.Translation
 		/// <summary>
 		/// MappingModel(inherited from MappingEntry) with some extra runtime properties
 		/// </summary>
-		public class MappingModel : MappingEntry, INotifyPropertyChanged, IDataErrorInfo
+		public class MappingModel : MappingEntry, INotifyPropertyChanged, IDataErrorInfo, INotifySuspendable
 		{
 			/// <summary>
 			/// Original string/text
@@ -241,6 +245,8 @@ namespace Minax.Domain.Translation
 
 			#endregion
 
+			public bool IsNotificationEnabled { get; set; } = true;
+
 			public event PropertyChangedEventHandler PropertyChanged;
 
 			#region "private/protected data/methods"
@@ -254,7 +260,8 @@ namespace Minax.Domain.Translation
 					return false;
 
 				backingStore = value;
-				OnNotify( propertyName );
+				if( IsNotificationEnabled )
+					OnNotify( propertyName );
 				return true;
 			}
 
@@ -603,7 +610,8 @@ namespace Minax.Domain.Translation
 								if( contains == false ) {
 									// notify subscriber(s) for file created by CollectionChanged event
 									mFileList.Add( tuple2.FullPath );
-									MonitorDeferredChanged?.Invoke( this, tuple2.Args.Event, tuple2.Args );
+									if( IsNotificationEnabled )
+										MonitorDeferredChanged?.Invoke( this, tuple2.Args.Event, tuple2.Args );
 								}
 								break;
 							case MonitorEvents.FileDeleted:
@@ -611,7 +619,8 @@ namespace Minax.Domain.Translation
 								if( contains ) {
 									// notify subscriber(s) for file deleted by CollectionChanged event
 									mFileList.Remove( tuple2.FullPath );
-									MonitorDeferredChanged?.Invoke( this, tuple2.Args.Event, tuple2.Args );
+									if( IsNotificationEnabled )
+										MonitorDeferredChanged?.Invoke( this, tuple2.Args.Event, tuple2.Args );
 								}
 
 								// notify subscriber(s) for monitoring file deleted by CollectionChanged event
@@ -635,7 +644,8 @@ namespace Minax.Domain.Translation
 									// file is existed, or deleted -> created -> changed...
 									// notify subscriber to reload/read file with changed content to this monitor!!
 								}
-								MonitorDeferredChanged?.Invoke( this, tuple2.Args.Event, tuple2.Args );
+								if( IsNotificationEnabled )
+									MonitorDeferredChanged?.Invoke( this, tuple2.Args.Event, tuple2.Args );
 
 								// file was changed, so monitoring file might changed...
 								// notify subscriber(s) for monitoring file changed by CollectionChanged event
@@ -663,7 +673,8 @@ namespace Minax.Domain.Translation
 										RemoveMonitoring( tuple2.Args.OldFullPath );
 									}
 								}
-								MonitorDeferredChanged?.Invoke( this, tuple2.Args.Event, tuple2.Args );
+								if( IsNotificationEnabled )
+									MonitorDeferredChanged?.Invoke( this, tuple2.Args.Event, tuple2.Args );
 								break;
 
 						}
@@ -775,14 +786,15 @@ namespace Minax.Domain.Translation
 						if( string.IsNullOrEmpty( model.OriginalText ) )
 							continue;
 					}
-					//if( AutoRemoveMonitoringWhenFileChanged )
+					
 					RemoveMapping( Path.Combine( BaseProjectPath, (e.OldItems[0] as MappingModel).ProjectBasedFileName ),
 									e.OldItems.Cast<MappingModel>().ToList() );
 					break;
 
 				case NotifyCollectionChangedAction.Replace:
 					if( e.NewItems != null && e.OldItems != null &&
-						e.NewItems.Count > 0 && e.OldItems.Count > 0 ) {
+						e.NewItems.Count > 0 && e.OldItems.Count > 0 &&
+						IsNotificationEnabled ) {
 						MonitorDeferredChanged?.Invoke( this, MonitorEvents.MappingSquenceChanged,
 											new MappingEventArgs(
 												MonitorEvents.MappingDeleted, null, null,
@@ -794,11 +806,12 @@ namespace Minax.Domain.Translation
 				case NotifyCollectionChangedAction.Reset:
 					RemoveMapping( Path.Combine( BaseProjectPath, (e.OldItems[0] as MappingModel).ProjectBasedFileName ),
 									e.OldItems.Cast<MappingModel>().ToList() );
-					MonitorDeferredChanged?.Invoke( this, MonitorEvents.MappingDeleted,
-											new MappingEventArgs (
-												MonitorEvents.MappingDeleted, null, null,
-												e.OldItems, e.NewItems
-											) );
+					if( IsNotificationEnabled )
+						MonitorDeferredChanged?.Invoke( this, MonitorEvents.MappingDeleted,
+												new MappingEventArgs (
+													MonitorEvents.MappingDeleted, null, null,
+													e.OldItems, e.NewItems
+												) );
 					break;
 			}
 		}
