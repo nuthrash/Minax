@@ -6,6 +6,9 @@ using System.Text;
 
 namespace MinaxWebTranslator.Desktop.ViewModels
 {
+	/// <summary>
+	/// Base ViewModel with general/comman commands or properties
+	/// </summary>
 	public class BaseViewModel : INotifyPropertyChanged, IDataErrorInfo
 	{
 		public bool IsBusy {
@@ -26,17 +29,23 @@ namespace MinaxWebTranslator.Desktop.ViewModels
 		}
 		private bool isDataEmpty = true;
 
+		/// <summary>
+		/// A string field cannot be empty
+		/// </summary>
 		public string NonEmptyString {
 			get => nonEmptyString;
 			set => SetProperty( ref nonEmptyString, value );
 		}
 		private string nonEmptyString;
 
-		public string NonEmptyMaxWatermark {
-			get => nonEmptyMaxWatermark;
-			set => SetProperty( ref nonEmptyMaxWatermark, value );
+		/// <summary>
+		/// NonEmptyString field's placeholder/watermark
+		/// </summary>
+		public string NonEmptyMaxPlaceholder {
+			get => nonEmptyMaxPlaceholder;
+			set => SetProperty( ref nonEmptyMaxPlaceholder, value );
 		}
-		private string nonEmptyMaxWatermark;
+		private string nonEmptyMaxPlaceholder;
 
 		#region "IDataErrorInfo members"
 		public string Error => string.Empty;

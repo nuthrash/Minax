@@ -13,15 +13,24 @@ namespace MinaxWebTranslator.Desktop.Models
 	/// </summary>
 	internal class TranslatorSelector : INotifyPropertyChanged
 	{
+		/// <summary>
+		/// Remote Translator/Translation API type
+		/// </summary>
 		public RemoteType RemoteType {
 			get => rt;
 			set => SetProperty( ref rt, value );
 		}
 
+		/// <summary>
+		/// MenuItem/ListViewItem header 
+		/// </summary>
 		public string Header {
 			get => header;
 			set => SetProperty( ref header, value );
 		}
+		/// <summary>
+		/// Checked in true means on occupied/selected
+		/// </summary>
 		public bool Checked {
 			get => check;
 			set => SetProperty( ref check, value );
@@ -34,8 +43,14 @@ namespace MinaxWebTranslator.Desktop.Models
 			set => SetProperty( ref icon, value );
 		}
 
+		/// <summary>
+		/// Extra description text such as hyperlink
+		/// </summary>
 		public string Description { get; set; }
 
+		/// <summary>
+		/// When SeparatorVisibility is Visible, means this Item is a Separator not a normal Translator
+		/// </summary>
 		public System.Windows.Visibility SeparatorVisibility { get; set; } = System.Windows.Visibility.Collapsed;
 
 		private RemoteType rt = RemoteType.None;

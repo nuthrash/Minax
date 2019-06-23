@@ -3,9 +3,10 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            mc:Ignorable="d"
             xmlns:views="clr-namespace:MinaxWebTranslator.Views"
-            x:Class="MinaxWebTranslator.Views.MainPage">
+            mc:Ignorable="d" x:Class="MinaxWebTranslator.Views.MainPage"
+            Appearing="MasterDetailPage_Appearing"
+            Disappearing="MasterDetailPage_Disappearing" >
 
     <MasterDetailPage.Master>
         <views:MenuPage />
@@ -19,7 +20,7 @@
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
-                <views:ItemsPage />
+                <views:DetailPage />
             </x:Arguments>
         </NavigationPage>
     </MasterDetailPage.Detail>

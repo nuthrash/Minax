@@ -139,6 +139,9 @@
                             <Paragraph>Wiki:
                                 <Hyperlink NavigateUri="https://github.com/nuthrash/Minax/wiki">https://github.com/nuthrash/Minax/wiki</Hyperlink>
                             </Paragraph>
+                            <Paragraph>Sample Projects:
+                                <Hyperlink NavigateUri="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects">https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects</Hyperlink>
+                            </Paragraph>
 
                         </FlowDocument>
                     </RichTextBox>
@@ -330,7 +333,7 @@
 
                                 <IconPacks:PackIconSimpleIcons Grid.Column="0" Grid.Row="2" Kind="Inkscape" />
                                 <TextBlock Grid.Column="1" Grid.Row="2">
-                                    <Hyperlink NavigateUri="https://www.inkscape.org">InkScape
+                                    <Hyperlink NavigateUri="https://www.inkscape.org">Inkscape
                                     </Hyperlink>
                                 </TextBlock>
 
@@ -391,7 +394,7 @@
                                 </Hyperlink>
                             </TextBlock>
                             
-                            <Label Grid.Column="0" Grid.Row="2" Content="Google Translate Chinese Converter" />
+                            <Label Grid.Column="0" Grid.Row="2" Content="Google Translator Chinese Converter" />
                             <TextBlock Grid.Column="1" Grid.Row="2">
                                 <Hyperlink NavigateUri="https://translate.google.com/?tab=wT#view=home&amp;op=translate&amp;sl=zh-CN&amp;tl=zh-TW">https://translate.google.com/?tab=wT#view=home&amp;op=translate&amp;sl=zh-CN&amp;tl=zh-TW
                                 </Hyperlink>

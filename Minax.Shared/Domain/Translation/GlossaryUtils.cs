@@ -37,7 +37,7 @@ namespace Minax.Domain.Translation
 			var baseProjectPath = Path.GetDirectoryName( projFullPathFileName );
 			if( string.IsNullOrWhiteSpace( baseProjectPath ) || 
 				Directory.Exists( baseProjectPath ) == false ||
-				monitor.BaseProjectPath != baseProjectPath )
+				monitor.BaseProjectPath.StartsWith(baseProjectPath) == false )
 				return false;
 
 			var glossaryPath = monitor.GlossaryPath;

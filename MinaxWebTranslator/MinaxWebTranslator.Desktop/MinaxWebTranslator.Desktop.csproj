@@ -16,7 +16,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>WebTranslator</PackageTags>
     <Description>Minax Web Translator Desktop WPF app on .Net Core 3 and .Net Framework 4.7.</Description>
-    <ApplicationIcon>Resources\Translator.ico</ApplicationIcon>
+    <ApplicationIcon>Translator.ico</ApplicationIcon>
   </PropertyGroup>
   
   <!--

@@ -6,8 +6,6 @@
         xmlns:local="clr-namespace:MinaxWebTranslator.Desktop"
         xmlns:lang="clr-namespace:MinaxWebTranslator.Desktop.Languages"
         xmlns:MinaxTranslation="clr-namespace:Minax.Domain.Translation;assembly=Minax.Shared"
-        xmlns:System="clr-namespace:System;assembly=mscorlib"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -45,6 +43,35 @@
                     <x:Type TypeName="MahApps:WindowCommandsOverlayBehavior" />
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
+
+            <ControlTemplate x:Key="ProjectToolTipTemplate" TargetType="{x:Type ToolTip}">
+                <Border BorderThickness="1"  CornerRadius="4" Padding="4"
+                        Background="{DynamicResource AccentColorBrush}">
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}"/>
+                            </Style>
+                        </Grid.Resources>
+                        <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Margin="1 0 5 0" Text="Project Name" />
+                        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Margin="1 0 5 0" Text="File Name" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Margin="1 0 5 0" Text="Full Path" />
+                        <GridSplitter Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="{DynamicResource IdealForegroundColorBrush}" Width="2" />
+                        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Margin="3 0 1 0" Text="{Binding Path=ProjectName}" />
+                        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="3 0 1 0" Text="{Binding Path=FileName}" />
+                        <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="3 0 1 0" Text="{Binding Path=FullPathFileName}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -74,7 +101,7 @@
                                 <MenuItem.ItemContainerStyle>
                                     <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                                         <Setter Property="IsCheckable" Value="False" />
-                                        <Setter Property="IsChecked" Value="{Binding Path=InUsed, Mode=OneWay}" />
+                                        <Setter Property="IsChecked" Value="{Binding Path=IsCurrent, Mode=OneWay}" />
                                         <EventSetter Event="Click" Handler="MenuItemRecentProject_Click" />
 
                                         <Style.Triggers>
@@ -180,6 +207,8 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
 
                                 <TextBlock x:Name="TbProjectNameHeader" Grid.Column="0" Grid.Row="0" Text="Project Name:" HorizontalAlignment="Right" />
@@ -205,11 +234,19 @@
                                 <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="4" FontWeight="ExtraBlack"  FontStretch="ExtraExpanded" Foreground="Red"
                                        Text="NOTICE: Some translator engines DO NOT support some Source Language and Target Language pair!" />
 
-                                <GridSplitter Height="2" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3"
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="Description:" HorizontalAlignment="Right" />
+                                <TextBox x:Name="TbProjectDesc" Grid.Column="1" Grid.Row="4" Margin="3" 
+                                         MahApps:TextBoxHelper.ClearTextButton="True" />
+
+                                <TextBlock Grid.Column="0" Grid.Row="5" Text="Remote Site:" HorizontalAlignment="Right" />
+                                <TextBox x:Name="TbProjectRemoteSite" Grid.Column="1" Grid.Row="5" Margin="3" 
+                                         MahApps:TextBoxHelper.ClearTextButton="True" />
+
+                                <GridSplitter Height="2" Grid.Column="5" Grid.Row="5" Grid.ColumnSpan="3"
                                               Background="Transparent"
                                               HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
 
-                                <GroupBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"  MahApps:ControlsHelper.ContentCharacterCasing="Normal"
+                                <GroupBox Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2"  MahApps:ControlsHelper.ContentCharacterCasing="Normal"
                                           Header="Glossary" Margin="3">
                                     <Grid >
                                         <Grid.ColumnDefinitions>
@@ -265,7 +302,7 @@
                                     </Grid>
                                 </GroupBox>
 
-                                <GroupBox Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"  MahApps:ControlsHelper.ContentCharacterCasing="Normal"
+                                <GroupBox Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2"  MahApps:ControlsHelper.ContentCharacterCasing="Normal"
                                           Header="File Changed Monitor" Margin="3">
                                     <Grid >
                                         <Grid.ColumnDefinitions>

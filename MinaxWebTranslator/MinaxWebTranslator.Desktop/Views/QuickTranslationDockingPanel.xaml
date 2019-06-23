@@ -44,7 +44,7 @@
                      MahApps:TextBoxHelper.ClearTextButton="True"
                      MahApps:TextBoxHelper.UseFloatingWatermark="True"
                      MahApps:TextBoxHelper.WatermarkWrapping="WrapWithOverflow"
-                     MahApps:TextBoxHelper.Watermark="{Binding NonEmptyMaxWatermark}">
+                     MahApps:TextBoxHelper.Watermark="{Binding NonEmptyMaxPlaceholder}">
                 <RichTextBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem x:Name="MiQuickInputClearAndPaste" Header="Clear and Paste" Click="BtnQuickClearAndPaste_Click"/>

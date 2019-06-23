@@ -1,25 +1,18 @@
 ﻿using MahApps.Metro.Controls;
 using Minax.Domain.Translation;
 using MinaxWebTranslator.Desktop.Converters;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Xceed.Wpf.AvalonDock.Controls;
 using Xceed.Wpf.AvalonDock.Layout;
 
 
 namespace MinaxWebTranslator.Desktop.Views
 {
+	/// <summary>
+	/// Dockable panel for summary used MappingModel after translating
+	/// </summary>
 	public partial class SummaryDockingPanel : LayoutAnchorable
 	{
 		public SummaryDockingPanel( MetroWindow mainWindow )
@@ -51,6 +44,7 @@ namespace MinaxWebTranslator.Desktop.Views
 
 				case MessageType.ProjectOpened:
 				case MessageType.DataReload:
+					// ReloadList()
 					var cvs = new CollectionViewSource { Source = TranslatorHelpers.CurrentUsedModels };
 					switch( CbSummaryGroupBy.SelectedIndex ) {
 						case 1: // File Name

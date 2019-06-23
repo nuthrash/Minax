@@ -39,7 +39,7 @@
         <RichTextBox x:Name="RtbSource" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
                      VerticalScrollBarVisibility="Auto" TextOptions.TextFormattingMode="Display"
                      MahApps:TextBoxHelper.UseFloatingWatermark="False"
-                     MahApps:TextBoxHelper.Watermark="Input original text to be translated..."
+                     MahApps:TextBoxHelper.Watermark="Input or paste original text to be translated..."
                      FontSize="14px">
             <RichTextBox.ContextMenu>
                 <ContextMenu>

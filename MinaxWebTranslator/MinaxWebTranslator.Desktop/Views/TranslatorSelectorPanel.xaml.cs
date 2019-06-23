@@ -19,6 +19,9 @@ using System.Windows.Shapes;
 
 namespace MinaxWebTranslator.Desktop.Views
 {
+	/// <summary>
+	/// Translator selector panel for selecting and configuring translator
+	/// </summary>
 	public partial class TranslatorSelectorPanel : UserControl
 	{
 		internal TranslatorSelector SelectedTranslator {
@@ -189,6 +192,15 @@ namespace MinaxWebTranslator.Desktop.Views
 			e.Handled = true;
 		}
 
+		private void CbXlatorMicrosoftServer_SelectionChanged( object sender, SelectionChangedEventArgs e )
+		{
+			int idx = 0;
+			if( CbXlatorMicrosoftServer.SelectedIndex > 0 )
+				idx = CbXlatorMicrosoftServer.SelectedIndex;
+			Properties.Settings.Default.XlatorMicrosoftServer = (CbXlatorMicrosoftServer.Items[idx] as ComboBoxItem).ToolTip.ToString();
+			Properties.Settings.Default.Save();
+		}
+
 		private void TranslatorSelectorPanel_Loaded( object sender, RoutedEventArgs e )
 		{
 			ReloadSettings();
@@ -199,6 +211,8 @@ namespace MinaxWebTranslator.Desktop.Views
 
 		private void LvXlatorSelector_SelectionChanged( object sender, SelectionChangedEventArgs e )
 		{
+			LblWarningCharged.Visibility = Visibility.Collapsed;
+
 			var model = LvXlatorSelector.SelectedItem as TranslatorSelector;
 			if( model == null || model.SeparatorVisibility == Visibility.Visible )
 				return;
@@ -240,6 +254,7 @@ namespace MinaxWebTranslator.Desktop.Views
 
 					if( gridCharged != null ) {
 						gridCharged.Visibility = Visibility.Visible;
+						LblWarningCharged.Visibility = Visibility.Visible;
 					}
 
 					await Task.Delay( 200 );
@@ -293,15 +308,6 @@ namespace MinaxWebTranslator.Desktop.Views
 		private void TbXlatorMicrosoftSubRegion_TextChanged( object sender, TextChangedEventArgs e )
 		{
 			Properties.Settings.Default.XlatorMicrosoftSubRegion = TbXlatorMicrosoftSubRegion.Text;
-			Properties.Settings.Default.Save();
-		}
-
-		private void CbXlatorMicrosoftServer_SelectionChanged( object sender, SelectionChangedEventArgs e )
-		{
-			int idx = 0;
-			if( CbXlatorMicrosoftServer.SelectedIndex > 0 )
-				idx = CbXlatorMicrosoftServer.SelectedIndex;
-			Properties.Settings.Default.XlatorMicrosoftServer = (CbXlatorMicrosoftServer.Items[idx] as ComboBoxItem).ToolTip.ToString();
 			Properties.Settings.Default.Save();
 		}
 	}

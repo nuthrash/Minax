@@ -3,19 +3,10 @@ using MahApps.Metro.Controls.Dialogs;
 using MinaxWebTranslator.Desktop.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MinaxWebTranslator.Desktop.Views
 {
@@ -39,12 +30,12 @@ namespace MinaxWebTranslator.Desktop.Views
 		/// <summary>
 		/// Input fields models
 		/// </summary>
-		internal List<InputFieldModel> InputFields { get; set; }
+		internal IList<InputFieldModel> InputFields { get; set; }
 
 		/// <summary>
 		/// Results of setting
 		/// </summary>
-		internal List<InputFieldModel> Results { get; private set; } = new List<InputFieldModel>();
+		internal IList<InputFieldModel> Results { get; private set; } = new List<InputFieldModel>();
 
 
 		public MultipleInputsDialog()
@@ -189,6 +180,7 @@ namespace MinaxWebTranslator.Desktop.Views
 					if( field.Value is SecureString ss ) {
 						TextBoxHelper.SetWatermark( pb, $"Current secure string length is {ss.Length}" );
 						TextBoxHelper.SetUseFloatingWatermark( pb, true );
+						pb.Password = ss.ConvertToString();
 					}
 					col2Element = pb;
 				}
@@ -201,8 +193,8 @@ namespace MinaxWebTranslator.Desktop.Views
 					if( field.Value != null )
 						tb.Text = field.Value.ToString();
 
-					if( string.IsNullOrWhiteSpace( field.PlaceHolder ) == false ) {
-						TextBoxHelper.SetWatermark( tb, field.PlaceHolder );
+					if( string.IsNullOrWhiteSpace( field.Placeholder ) == false ) {
+						TextBoxHelper.SetWatermark( tb, field.Placeholder );
 						TextBoxHelper.SetUseFloatingWatermark( tb, true );
 					}
 
@@ -270,16 +262,16 @@ namespace MinaxWebTranslator.Desktop.Views
 				} else {
 					outValues[row] = string.Empty;
 				}
+			}
 
-				Results.Clear();
-				for( int i = 0; i < InputFields.Count; ++i ) {
-					var field = InputFields[i];
-					Results.Add( new InputFieldModel {
-						FieldName = field.FieldName,
-						TypeInfo = field.TypeInfo,
-						Value = outValues[i],
-					} );
-				}
+			Results.Clear();
+			for( int i = 0; i < InputFields.Count; ++i ) {
+				var field = InputFields[i];
+				Results.Add( new InputFieldModel {
+					FieldName = field.FieldName,
+					TypeInfo = field.TypeInfo,
+					Value = outValues[i],
+				} );
 			}
 
 			if( MainWindow != null )

@@ -3,14 +3,11 @@ using MahApps.Metro.Controls.Dialogs;
 using Minax.Collections;
 using Minax.Domain.Translation;
 using Minax.IO;
-using Minax.Web;
 using Minax.Web.Translation;
 using MinaxWebTranslator.Desktop.Models;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -19,11 +16,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using static Minax.Domain.Translation.SupportedLanguagesExtensions;
 
 namespace MinaxWebTranslator.Desktop
 {
+	/// <summary>
+	/// App internal Project Manager for manipulating Project management and other works
+	/// </summary>
 	internal class ProjectManager
 	{
 		public static string ProjectSeparatorInSetting => "⇭⍢";
@@ -32,8 +30,21 @@ namespace MinaxWebTranslator.Desktop
 
 		public ReadOnlyObservableList<ProjectModel> Projects => mProjects;
 
-		public ProjectModel CurrentProject { get; private set; }
+		public ProjectModel CurrentProject {
+			get => mCurrentProject;
+			private set {
+				if( mCurrentProject == value )
+					return;
 
+				mCurrentProject = value;
+				CurrentProjectChanged?.Invoke( this, null );
+			}
+		}
+		public event EventHandler CurrentProjectChanged;
+
+		/// <summary>
+		/// MappingMonitor for monitoring file changed or Mapping changed with manipulating methods
+		/// </summary>
 		public MappingMonitor MappingMonitor => mMonitor;
 
 		public bool AutoRemoveMonitoringWhenFileChanged {
@@ -53,8 +64,9 @@ namespace MinaxWebTranslator.Desktop
 
 		#region "private/internal data/helpers"
 
-		private static readonly ObservableCollection<ProjectModel> sProjects = new ObservableCollection<ProjectModel>();
+		private static readonly ObservableList<ProjectModel> sProjects = new ObservableList<ProjectModel>();
 		private ReadOnlyObservableList<ProjectModel> mProjects;
+		private ProjectModel mCurrentProject;
 		private Minax.Domain.Translation.MappingMonitor mMonitor = null;
 		private bool autoRemoveMonitoringWhenFileChanged = false;
 
@@ -83,36 +95,38 @@ namespace MinaxWebTranslator.Desktop
 
 		#endregion
 
-
+		/// <summary>
+		/// Restore recently project list from AppSettings
+		/// </summary>
+		/// <returns></returns>
 		public bool RestoreListFromSettings()
 		{
 			sProjects.Clear();
 			_CheckSettings();
 
-			string[] seps = { ProjectSeparatorInSetting };
+			//string[] seps = { ProjectSeparatorInSetting };
+			List<ProjectModel> pmList = new List<ProjectModel>();
 			foreach( var file in Properties.Settings.Default.RecentProjects ) {
-				var items = file.Split( seps, StringSplitOptions.RemoveEmptyEntries );
-				if( items == null || items.Length <= 1 || File.Exists( items[1] ) == false )
+				var pm = ProjectModel.ConvertFromSettingString( file );
+				if( pm == null || File.Exists( pm.FullPathFileName ) == false )
 					continue;
-
-				sProjects.Add( new ProjectModel {
-					ProjectName = items[0],
-					FullPathFileName = items[1],
-					FileName = Path.GetFileName( items[1] )
-				} );
+				pmList.Add( pm );
 			}
+			sProjects.AddRange( pmList );
 
 			if( CustomGlossaryFileListLocations == null )
 				CustomGlossaryFileListLocations = new ObservableList<string>();
 
 			CustomGlossaryFileListLocations.Clear();
-			foreach( var loc in Properties.Settings.Default.CustomGlossaryFileListLocations ) {
-				CustomGlossaryFileListLocations.Add( loc );
-			}
+			CustomGlossaryFileListLocations.AddRange( Properties.Settings.Default.CustomGlossaryFileListLocations.ConvertToList() );
 
 			return true;
 		}
 
+		/// <summary>
+		/// Save recently project lsit to AppSettings
+		/// </summary>
+		/// <returns></returns>
 		public bool SaveListToSettings()
 		{
 			//if( sProjects.Count <= 0 ) // BUG!!!
@@ -123,7 +137,7 @@ namespace MinaxWebTranslator.Desktop
 			List<string> recentFiles = new List<string>();
 			foreach( var proj in sProjects ) {
 				// add separator string between ProjectName and FullPathFileName
-				recentFiles.Add( $"{proj.ProjectName}{ProjectSeparatorInSetting}{proj.FullPathFileName}" );
+				recentFiles.Add( proj.ToSettingString() );
 			}
 
 			Properties.Settings.Default.RecentProjects.Clear();
@@ -137,7 +151,12 @@ namespace MinaxWebTranslator.Desktop
 			return true;
 		}
 
-		public async Task<ProjectModel> OpenProject( string fullPathFileName )
+		/// <summary>
+		/// Open/Deserialize project from a full-path file name
+		/// </summary>
+		/// <param name="fullPathFileName">Project full-path file name</param>
+		/// <returns>null or opened Project instance</returns>
+		public ProjectModel OpenProject( string fullPathFileName )
 		{
 			if( string.IsNullOrWhiteSpace( fullPathFileName ) )
 				return null;
@@ -173,7 +192,7 @@ namespace MinaxWebTranslator.Desktop
 
 			// projModel prepared
 			projModel.ProjectName = projModel.Project.Name;
-			await MarkInUsed( projModel );
+			MarkAsCurrent( projModel );
 
 			// prepare mMonitor
 			var baseProjectPath = Path.GetDirectoryName( fullPathFileName );
@@ -202,7 +221,7 @@ namespace MinaxWebTranslator.Desktop
 				}
 			}
 
-			// add new project's OberserableCollection table to monitor...
+			// add new project's OberserableList table to monitor...
 			mMonitor.AutoRemoveMonitoringWhenFileChanged = AutoRemoveMonitoringWhenFileChanged;
 			mMonitor.AddMonitoring( fullPathFileName, projModel.Project.MappingTable );
 			mMonitor.Start();
@@ -210,6 +229,12 @@ namespace MinaxWebTranslator.Desktop
 			return projModel;
 		}
 
+		/// <summary>
+		/// Save/Serialize Project instance to file
+		/// </summary>
+		/// <param name="model">Source ProjectModel instance</param>
+		/// <param name="fullPathFileName">Target full-path file name</param>
+		/// <returns>true for success</returns>
 		public bool SaveProject( ProjectModel model, string fullPathFileName )
 		{
 			if( model == null || string.IsNullOrWhiteSpace( fullPathFileName ) )
@@ -224,6 +249,8 @@ namespace MinaxWebTranslator.Desktop
 				}
 			}
 
+			model.Project.Name = model.ProjectName;
+
 			mMonitor?.Stop();
 			var ret = TranslationProject.SerializeToXml( model.Project, fullPathFileName );
 			mMonitor?.Start();
@@ -231,6 +258,11 @@ namespace MinaxWebTranslator.Desktop
 			return ret;
 		}
 
+		/// <summary>
+		/// Close and un-set InCurrent of a Project instance
+		/// </summary>
+		/// <param name="projModel">Target ProjectModel</param>
+		/// <returns>true for success</returns>
 		public bool CloseProject( ProjectModel projModel )
 		{
 			if( projModel == null || sProjects.Contains( projModel ) == false )
@@ -238,36 +270,39 @@ namespace MinaxWebTranslator.Desktop
 
 			// DO NOT Remove ProjectModel from sProjects!!
 			//sProjects.Remove( projModel );
-			projModel.InUsed = false;
+			projModel.IsCurrent = false;
 			projModel.Project.MappingTable?.Clear();
 			projModel.Project = null;
 
-			//if( sProjects.Count <= 0 && mMonitor != null ) {
 			if( mMonitor != null ) {
 				mMonitor.Stop();
 				mMonitor.ClearAllMonitoring();
 				mMonitor.Dispose();
 			}
 			mMonitor = null;
+			CurrentProject = null;
 			return true;
 		}
 
-		public async Task<bool> MarkInUsed( ProjectModel proj )
+		/// <summary>
+		/// Mark ProjectModel instance as current
+		/// </summary>
+		/// <param name="proj">Target ProjectModel instance</param>
+		/// <returns>true for success</returns>
+		public bool MarkAsCurrent( ProjectModel proj )
 		{
 			if( proj == null || sProjects.Count <= 0 || sProjects.Contains( proj ) == false )
 				return false;
-			if( proj.InUsed ) //|| sProjects.IndexOf( proj ) == 0 )
+			if( proj.IsCurrent )
 				return true;
 
 			foreach( var p in sProjects ) {
-				p.InUsed = false;
+				p.IsCurrent = false;
 			}
-			proj.InUsed = true;
+			proj.IsCurrent = true;
 			CurrentProject = proj;
 			sProjects.Remove( proj );
 			sProjects.Insert( 0, proj );
-
-			await MessageHub.SendMessageAsync( this, MessageType.ProjectOpened, CurrentProject );
 
 			return true;
 		}
@@ -277,7 +312,7 @@ namespace MinaxWebTranslator.Desktop
 		/// </summary>
 		public void ClearRecentProjects()
 		{
-			ProjectModel proj = sProjects.FirstOrDefault( p => p.InUsed );
+			ProjectModel proj = sProjects.FirstOrDefault( p => p.IsCurrent );
 			sProjects.Clear();
 			if( proj != null )
 				sProjects.Add( proj );
@@ -317,6 +352,13 @@ namespace MinaxWebTranslator.Desktop
 			return true;
 		}
 
+		/// <summary>
+		/// Check if a file is concerned by a ProjectModel instance
+		/// </summary>
+		/// <param name="projModel">Source ProjectModel instance</param>
+		/// <param name="fullPathFileName">Target full-path file name</param>
+		/// <param name="engineFolderName">Remote Translator/Translation engine folder name for Glossary</param>
+		/// <returns>true for concerned</returns>
 		public bool IsFileConcernedByProject( ProjectModel projModel, string fullPathFileName, string engineFolderName = "Excite" )
 		{
 			if( projModel == null || projModel.Project == null ||
@@ -332,6 +374,14 @@ namespace MinaxWebTranslator.Desktop
 									projModel.Project.SourceLanguage, projModel.Project.TargetLanguage );
 		}
 
+		/// <summary>
+		/// Open and start monitoring glossary files
+		/// </summary>
+		/// <param name="projModel">ProjectModel instance</param>
+		/// <param name="engineFolderName">Remote Translator/Translation engine folder name for Glossary</param>
+		/// <param name="srcLang">Mapping source language</param>
+		/// <param name="tgtLang">Mapping target language</param>
+		/// <returns>true for success</returns>
 		public async Task<bool> OpenAndMonitorGlossaryFiles( ProjectModel projModel, string engineFolderName = "Excite",
 										SupportedSourceLanguage srcLang = SupportedSourceLanguage.Japanese,
 										SupportedTargetLanguage tgtLang = SupportedTargetLanguage.ChineseTraditional )
@@ -452,6 +502,11 @@ namespace MinaxWebTranslator.Desktop
 #endif
 		}
 
+		/// <summary>
+		/// Try to parse and extract MappingEntry from a file 
+		/// </summary>
+		/// <param name="fullPathFileName">Target full-path file name</param>
+		/// <returns>null or extracted MappingEntry list</returns>
 		public List<MappingEntry> TryParseAndExtractMappingEntries( string fullPathFileName )
 		{
 			if( File.Exists( fullPathFileName ) == false )
@@ -502,6 +557,16 @@ namespace MinaxWebTranslator.Desktop
 #endif
 		}
 
+		/// <summary>
+		/// Fetch remote files by remote file list link by HTTP/HTTPS/FTP
+		/// </summary>
+		/// <param name="fileListLink">Source remote file list link</param>
+		/// <param name="targetPath">Target path to place fetched files</param>
+		/// <param name="policy">Overwrite policy for same file name</param>
+		/// <param name="cancelToken">Cancellation token</param>
+		/// <param name="progress">Progress instance</param>
+		/// <param name="mainWindow">MainWindow instance</param>
+		/// <returns>true for success</returns>
 		public async Task<bool> FetchFilesByFileListLink( string fileListLink, string targetPath,
 											OverwritePolicy policy, CancellationTokenSource cancelToken,
 											IProgress<Minax.ProgressInfo> progress,
@@ -585,7 +650,16 @@ namespace MinaxWebTranslator.Desktop
 			return true;
 		}
 
-
+		/// <summary>
+		/// Fetch remote files by remote file list link by FTP
+		/// </summary>
+		/// <param name="ftpFileListLink">Source remote file list link via FTP protocol</param>
+		/// <param name="targetPath">Target path to place fetched files</param>
+		/// <param name="policy">Overwrite policy for same file name</param>
+		/// <param name="cancelToken">Canllation token</param>
+		/// <param name="progress">Progress instance</param>
+		/// <param name="mainWindow">MainWindow instance</param>
+		/// <returns>true for success</returns>
 		public static async Task<bool> FetchFilesByFileListLink( Uri ftpFileListLink, string targetPath,
 											OverwritePolicy policy, CancellationTokenSource cancelToken,
 											IProgress<Minax.ProgressInfo> progress,

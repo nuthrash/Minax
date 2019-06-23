@@ -2,10 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Text;
-using static Minax.Domain.Translation.SupportedLanguagesExtensions;
 
 namespace Minax.Web.Translation
 {
@@ -21,25 +19,47 @@ namespace Minax.Web.Translation
 		public static string FileExtension => ".conf";
 
 		/// <summary>
+		/// Field separator string for storing some fields to single string with it
+		/// </summary>
+		public static string FieldSeparator => "⒇₢";
+
+		/// <summary>
 		/// Project Name
 		/// </summary>
 		public string Name { get; set; }
 
+		/// <summary>
+		/// Supported source language for text Mapping
+		/// </summary>
 		public SupportedSourceLanguage SourceLanguage { get; set; } = SupportedSourceLanguage.Japanese;
+		/// <summary>
+		/// Supported target language for text Mapping
+		/// </summary>
 		public SupportedTargetLanguage TargetLanguage { get; set; } = SupportedTargetLanguage.ChineseTraditional;
 
-		public string CoverImageSource { get; set; }
+		/// <summary>
+		/// Cover image relative path to this TranslationProject file path
+		/// </summary>
+		public string CoverImageRelativePath { get; set; }
 
+		/// <summary>
+		/// Description text about this project
+		/// </summary>
 		public string Description { get; set; }
 
+		/// <summary>
+		/// Remote site URL for this project such as Web Novel site, Article site, etc.
+		/// </summary>
+		public string RemoteSite { get; set; }
+
+		/// <summary>
+		/// Last modified date
+		/// </summary>
 		public DateTime? LastModifiedDate { get; set; }
 
-		public string ApiKeyGoogleTranslator { get; set; }
-		public string ApiSnGoogleTranslator { get; set; }
-		public string ApiKeyMicrosoftTranslator { get; set; }  // Bing/Azure
-		public string ApiKeyBaiduTranslator { get; set; }
-		public string ApiKeyYoudaoTranslator { get; set; }
-
+		/// <summary>
+		/// Mapping table for replacing OriginalText (source text) to MappingText (target text)
+		/// </summary>
 		public List<MappingEntry> MappingTable { get; set; } = new List<MappingEntry>();
 
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -53,18 +54,36 @@ namespace MinaxWebTranslator.Desktop
 			}
 		}
 
-		public static string GetAllText( this RichTextBox rtb )
+		/// <summary>
+		/// Convert StringCollection content to List<string>
+		/// </summary>
+		/// <param name="strCollection">Source collection to be converted</param>
+		/// <returns>Converted List of string</returns>
+		public static List<string> ConvertToList( this StringCollection strCollection )
 		{
-			var tr = new TextRange( rtb.Document.ContentStart, rtb.Document.ContentEnd );
-			return tr.Text;
+			List<string> tmpList = new List<string>();
+			foreach( var str in strCollection )
+				tmpList.Add( str );
+
+			return tmpList;
 		}
 
+		/// <summary>
+		/// Convert a SecureString to a string
+		/// </summary>
+		/// <param name="value">Source SecureString</param>
+		/// <returns>Converted string</returns>
 		// https://stackoverflow.com/questions/818704/how-to-convert-securestring-to-system-string
 		public static string ConvertToString( this SecureString value )
 		{
 			return new System.Net.NetworkCredential( string.Empty, value ).Password;
 		}
 
+		/// <summary>
+		/// Convert a stirng to a SecureString
+		/// </summary>
+		/// <param name="value">Source string</param>
+		/// <returns>Converted SecureString</returns>
 		public static SecureString ConvertToSecureString( this string value )
 		{
 			SecureString ss = new SecureString();
@@ -74,6 +93,46 @@ namespace MinaxWebTranslator.Desktop
 			return ss;
 		}
 
+		/// <summary>
+		/// Get all text of a RichTextBox
+		/// </summary>
+		/// <param name="rtb">Source RichTextBox</param>
+		/// <returns>All text string of a RichTextBox</returns>
+		public static string GetAllText( this RichTextBox rtb )
+		{
+			return new TextRange( rtb.Document.ContentStart, rtb.Document.ContentEnd ).Text;
+		}
+
+		/// <summary>
+		/// Get current text line count of a RichTextBox
+		/// </summary>
+		/// <param name="rtb">Source RichTextBox</param>
+		/// <returns>Current text line count of this RichTextBox</returns>
+		public static int LineCount( this RichTextBox rtb )
+		{
+			int lineNumber;
+			var lineEnd = rtb.Document.ContentEnd.GetInsertionPosition( LogicalDirection.Backward );
+			lineEnd.GetLineStartPosition( int.MinValue, out lineNumber );
+			return -lineNumber + 1;
+		}
+
+		/// <summary>
+		/// Get current text line of cursor of a RichTextBox 
+		/// </summary>
+		/// <param name="rtb">Source RichTextBox</param>
+		/// <returns>Current cursor line number(1-based) of this RichTextBox</returns>
+		public static int CurrentLine( this RichTextBox rtb )
+		{
+			int lineNumber;
+			rtb.CaretPosition.GetLineStartPosition( int.MinValue, out lineNumber );
+			return -lineNumber + 1;
+		}
+
+		/// <summary>
+		/// Convert layout data to a string from this DockingManager
+		/// </summary>
+		/// <param name="dockManager">Source DockingManager</param>
+		/// <returns>Converted string of layout data</returns>
 		public static string LayoutToString( this DockingManager dockManager )
 		{
 			StringBuilder sb = new StringBuilder();
@@ -83,6 +142,11 @@ namespace MinaxWebTranslator.Desktop
 			return sb.ToString();
 		}
 
+		/// <summary>
+		/// Convert docking XML string to layout data to this DockingManager
+		/// </summary>
+		/// <param name="dockManager">Target DockingManager</param>
+		/// <param name="layoutXml">Layout XML string</param>
 		public static void LayoutFromString( this DockingManager dockManager, string layoutXml )
 		{
 			StringReader sr = new StringReader( layoutXml );

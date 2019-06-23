@@ -16,13 +16,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace MinaxWebTranslator.Desktop
@@ -32,19 +27,19 @@ namespace MinaxWebTranslator.Desktop
 	/// </summary>
 	public partial class MainWindow : MetroWindow
 	{
-		internal Progress<Minax.ProgressInfo> TransProgress => sTransProgress;
-
 		internal TranslatorSelector CurrentXlator {
-			get => mCurrentSelector;
+			get => mCurrentXlator;
 			private set {
-				if( mCurrentSelector == value )
+				if( mCurrentXlator == value )
 					return;
 
-				mCurrentSelector = value;
-				mCurrentRemoteTranslator = mCurrentSelector.RemoteType;
-				MiTranslatorSelector.Icon = new Image() { Source = mCurrentSelector.Icon, Height=24, Width=24 };
+				mCurrentXlator = value;
+				mCurrentRemoteType = mCurrentXlator.RemoteType;
+				// update MenuItem's Icon to current xlator's icon
+				MiTranslatorSelector.Icon = new Image() { Source = mCurrentXlator.Icon, Height=24, Width=24 };
 
-				_ = MessageHub.SendMessageAsync( this, MessageType.XlatorSelected, mCurrentSelector );
+				// tell other pages/panels the xlator has been changed
+				_ = MessageHub.SendMessageAsync( this, MessageType.XlatorSelected, mCurrentXlator );
 			}
 		}
 
@@ -52,7 +47,7 @@ namespace MinaxWebTranslator.Desktop
 		{
 			InitializeComponent();
 
-			// manually add Docking Components, then _RestoreDockingLayout() when Loaded
+			// manually add Docking Components, for _RestoreDockingLayout() to load their positions
 			mSrcPanel = new Views.SourceDockingPanel( this );
 			mTgtPanel = new Views.TargetDockingPanel( this );
 			mMappingPanel = new Views.MappingDockingPanel( this );
@@ -82,14 +77,14 @@ namespace MinaxWebTranslator.Desktop
 				CbStatusMessages.SelectedIndex = 0;
 
 			// prepare IProgress instance
-			sTransProgress.ProgressChanged += async ( s1, e1 ) => {
+			sTransProgress.ProgressChanged += ( s1, e1 ) => {
 				var value = e1.PercentOrErrorCode;
 
 				if( value >= 0 && value <= 100 ) {
-					await MessageHub.SendMessageAsync( this, MessageType.XlatingPercentOrErrorCode, value );
 					_UpdateStatus( e1.Message );
-				} else {
-					if( string.IsNullOrWhiteSpace(e1.Message) == false ) {
+				}
+				else {
+					if( string.IsNullOrWhiteSpace( e1.Message ) == false ) {
 						_UpdateStatus( $"ErrorCode: {e1.PercentOrErrorCode}, ErrorMessage: {e1.Message}" );
 					}
 				}
@@ -117,10 +112,10 @@ namespace MinaxWebTranslator.Desktop
 				e.Cancel = true;
 				return;
 			}
-			_CloseProj();
 
 			MessageHub.MessageReceived -= MsgHub_MessageRecevied;
 
+			_CloseProject();
 			//_SaveAppSettings();
 		}
 
@@ -138,11 +133,15 @@ namespace MinaxWebTranslator.Desktop
 		private ProjectModel mProject;
 		private string mProjFileName;
 		private bool mProjChanged, mAutoMergeWhenFileChanged;
-		private TranslatorSelector mCurrentSelector = null;
-		private RemoteType mCurrentRemoteTranslator = RemoteType.Excite;
+		private TranslatorSelector mCurrentXlator = null;
+		private RemoteType mCurrentRemoteType = RemoteType.Excite;
 		private CancellationTokenSource mCancelTokenSrource = new CancellationTokenSource();
 		// GUI Progress Indicator
 		private static readonly Progress<Minax.ProgressInfo> sTransProgress = new Progress<Minax.ProgressInfo>();
+		// scroll sync.
+		private volatile bool mIsScrolling = false;
+		private Timer mScrollDeferredSyncer = null;
+
 		// Mahapps ShowMessage's config for Yes/No
 		private static readonly MetroDialogSettings sMetroDlgYesNoSettings = new MetroDialogSettings {
 			AffirmativeButtonText = Languages.Global.Str0Yes, NegativeButtonText = Languages.Global.Str0No,
@@ -157,7 +156,7 @@ namespace MinaxWebTranslator.Desktop
 			DialogResultOnCancel = MessageDialogResult.Canceled, OwnerCanCloseWithDialog = true,
 		};
 
-		private int mStatusMsgCntMax = 1000;
+		//private int mStatusMsgCntMax = 1000; // for AppSettings
 		private readonly ObservableList<string> mStatusMessages = new ObservableList<string>() { ItemsCountMaximum = 1000 };
 
 		private void _InitializeDockingPanels()
@@ -344,8 +343,9 @@ namespace MinaxWebTranslator.Desktop
 				this.Title = $"{mProject.ProjectName} - Minax Web Translator";
 			}
 
-
-			await MessageHub.SendMessageAsync( this, MessageType.ProjectChanged, mProject );
+			// only when changed == true than send Message, other situations would latter send other Message (ProjectClosed...)
+			if( changed )
+				await MessageHub.SendMessageAsync( this, MessageType.ProjectChanged, mProject );
 		}
 
 		private void _DumpProj2ModelMappingTable( ProjectModel model )
@@ -388,7 +388,7 @@ namespace MinaxWebTranslator.Desktop
 				return false;
 
 			// model shall open first
-			if( model.InUsed == false ) {
+			if( model.IsCurrent == false ) {
 				return false;
 			}
 
@@ -396,8 +396,8 @@ namespace MinaxWebTranslator.Desktop
 			_UnsubscribeAllChangedEvents();
 
 			string xlatorFolder = "Excite";
-			if( Profiles.DefaultEngineFolders.ContainsKey( mCurrentRemoteTranslator ) )
-				xlatorFolder = Profiles.DefaultEngineFolders[mCurrentRemoteTranslator];
+			if( Profiles.DefaultEngineFolders.ContainsKey( mCurrentRemoteType ) )
+				xlatorFolder = Profiles.DefaultEngineFolders[mCurrentRemoteType];
 
 			bool ret = await ProjectManager.Instance.OpenAndMonitorGlossaryFiles( model, xlatorFolder,
 						model.Project.SourceLanguage, model.Project.TargetLanguage );
@@ -462,9 +462,23 @@ namespace MinaxWebTranslator.Desktop
 
 				case MessageType.XlatorSelected:
 					if( data is TranslatorSelector translatorSelector ) {
-						mCurrentSelector = translatorSelector;
-						if( mCurrentSelector != null )
-							mCurrentRemoteTranslator = mCurrentSelector.RemoteType;
+						mCurrentXlator = translatorSelector;
+						if( mCurrentXlator != null )
+							mCurrentRemoteType = mCurrentXlator.RemoteType;
+					}
+					break;
+
+				case MessageType.XlatingProgress:
+					if( data is Minax.ProgressInfo pi ) {
+						var value = pi.PercentOrErrorCode;
+						if( value >= 0 && value <= 100 ) {
+							_UpdateStatus( pi.Message );
+						}
+						else {
+							if( string.IsNullOrWhiteSpace( pi.Message ) == false ) {
+								_UpdateStatus( $"Translating failed! ErrorCode: {value}, ErrorMessage: {pi.Message}" );
+							}
+						}
 					}
 					break;
 
@@ -575,7 +589,7 @@ namespace MinaxWebTranslator.Desktop
 										}
 										projModels.CollectionChanged -= MappingModelTables_CollectionChanged;
 									}
-									mProject.InUsed = false;
+									mProject.IsCurrent = false;
 									mProject.Project.MappingTable?.Clear();
 									mProject.Project = null;
 									//await _ReloadAllMappingData( mProject );
@@ -609,7 +623,7 @@ namespace MinaxWebTranslator.Desktop
 						else {
 							if( false == ProjectManager.Instance.IsFileConcernedByProject(
 											mProject, args.FullPath,
-											Profiles.DefaultEngineFolders[mCurrentRemoteTranslator] ) )
+											Profiles.DefaultEngineFolders[mCurrentRemoteType] ) )
 								return;
 
 							// this file is a whole new Glossary file!! (not the proj. file itself!!)
@@ -643,7 +657,7 @@ namespace MinaxWebTranslator.Desktop
 				case MappingMonitor.MonitorEvents.FileCreated:
 					// a new Glossary file was created...
 					if( false == ProjectManager.Instance.IsFileConcernedByProject(
-								mProject, args.FullPath, Profiles.DefaultEngineFolders[mCurrentRemoteTranslator] ) )
+								mProject, args.FullPath, Profiles.DefaultEngineFolders[mCurrentRemoteType] ) )
 						return;
 
 					// this file is a whole new Glossary file!! (not the proj. file itself!!)
@@ -712,34 +726,20 @@ namespace MinaxWebTranslator.Desktop
 			if( model.FullPathFileName.Equals( mProjFileName ) )
 				return;
 
-			if( false == await _CheckAndAskProjSaving() )
-				return;
+			if( false == await _CheckAndAskProjSaving() ) { // cancel action
 
-			// close previous project
-			_CloseProj();
+				return;
+			} else {
+				if( mProject != null && mProject.Project != null ) {
+					// restore changed ProjectName to original Project.Name
+					mProject.ProjectName = mProject.Project.Name;
+				}
+				_SetProjChanged( false );
+			}
 
 			await _LoadProj( model.FullPathFileName );
 		}
 
-		private async void ComboBoxLanguage_SelectionChanged( object sender, SelectionChangedEventArgs e )
-		{
-			var cb = sender as ComboBox;
-			if( cb == null || cb.SelectedItem == null || mProject == null ||
-				mProject.Project == null )
-				return;
-
-			if( (cb.SelectedItem as ComboBoxItem)?.Tag is SupportedSourceLanguage srcLang ) {
-				if( mProject.Project.SourceLanguage != srcLang ) {
-					await _RefreshProjectAndGlossaryMappings();
-				}
-			}
-			else if( (cb.SelectedItem as ComboBoxItem)?.Tag is SupportedTargetLanguage tgtLang ) {
-				if( mProject.Project.TargetLanguage != tgtLang ) {
-					await _RefreshProjectAndGlossaryMappings();
-				}
-			}
-
-		}
 		private void Hyperlink_RequestNavigate( object sender, RequestNavigateEventArgs e )
 		{
 			Process.Start( new ProcessStartInfo( e.Uri.AbsoluteUri ) );
@@ -765,88 +765,53 @@ namespace MinaxWebTranslator.Desktop
 			}
 		}
 
-
-		private volatile bool _IsScrolling = false;
-		private ScrollViewer svTgt = null, svSrc = null;
-		private async void RtbSrcTgt_ScrollChanged( object sender, ScrollChangedEventArgs e )
+		private void RtbSrcTgt_ScrollChanged( object sender, ScrollChangedEventArgs e )
 		{
-			if( _IsScrolling || mTgtPanel.SyncTargetScroll != true )
+			if( mIsScrolling || mTgtPanel.SyncTargetScroll != true )
 				return;
 			if( e.VerticalChange == 0 && e.HorizontalChange == 0 ) { return; }
 
-			_IsScrolling = true;
+			mIsScrolling = true;
 
+			var rtbSender = sender as RichTextBox;
 			RichTextBox rtbSrc = mSrcPanel.RtbSource, rtbTgt = mTgtPanel.RtbTarget;
-			if( svTgt == null && sender == rtbTgt )
-				svTgt = e.OriginalSource as ScrollViewer;
-			if( svSrc == null && sender == rtbSrc )
-				svSrc = e.OriginalSource as ScrollViewer;
-
 			var rtbToSync = (sender == rtbTgt) ? rtbSrc : rtbTgt;
-			var sv = e.OriginalSource as ScrollViewer;
 
-			if( sv.ScrollableHeight <= 0.0 )
-				goto exit;
+			if( mScrollDeferredSyncer != null )
+				mScrollDeferredSyncer.Dispose();
+			mScrollDeferredSyncer = new Timer( (sub) => {
+				Dispatcher.BeginInvoke( (Action)delegate {
+					if( rtbSender.VerticalOffset <= 1.0 ) {
+						rtbToSync.ScrollToVerticalOffset( 0 );
+					}
+					else if( rtbToSync.ViewportHeight >= rtbSender.VerticalOffset ) {
+						rtbToSync.ScrollToVerticalOffset( rtbSender.VerticalOffset );
+					}
+					else if( rtbSender.VerticalOffset + rtbSender.ViewportHeight >= rtbSender.ExtentHeight ) {
+						rtbToSync.ScrollToEnd();
+					}
+					else {
+						var srcUnit = rtbSrc.ExtentHeight / rtbSrc.LineCount();
+						var tgtUnit = rtbTgt.ExtentHeight / rtbTgt.LineCount();
 
-			var percentV = e.VerticalOffset / sv.ScrollableHeight;
-			var tgtCnt = rtbTgt.Document.Blocks.Count;
-			var srcCnt = rtbSrc.Document.Blocks.Count;
-
-			// perform line count scrolling when IsTranslating!!
-			if( mTgtPanel.IsTranslating || srcCnt > tgtCnt ) {
-				// the current line
-				//int lineNumber;
-				//var curLine = rtbTgt.CaretPosition.GetLineStartPosition( -int.MaxValue, out lineNumber );
-				//lineNumber = lineNumber * -1;
-
-				if( sender == rtbTgt ) {
-					int lineNum = (int)( tgtCnt * percentV );
-					if( srcCnt <= lineNum ) {
-						rtbSrc.ScrollToEnd();
-					} else {
-						var percentV2 = (double)lineNum / srcCnt;
-						if( svSrc != null ) {
-							svSrc.ScrollToVerticalOffset( percentV2 * svSrc.ScrollableHeight );
-						} else {
-							rtbSrc.ScrollToVerticalOffset( percentV2 * rtbSrc.ViewportHeight );
+						if( rtbSender == rtbSrc ) {
+							rtbToSync.ScrollToVerticalOffset( tgtUnit * rtbSender.VerticalOffset / srcUnit );
+						}
+						else {
+							rtbToSync.ScrollToVerticalOffset( srcUnit * rtbSender.VerticalOffset / tgtUnit );
 						}
 					}
-				} else {
-					// sender is rtbSrc
-					int lineNum = (int)( srcCnt * percentV );
-					if( tgtCnt <= lineNum ) {
-						rtbTgt.ScrollToEnd();
-					} else {
-						var percentV2 = (double)lineNum / tgtCnt;
-						if( svTgt != null ) {
-							svTgt.ScrollToVerticalOffset( percentV2 * svTgt.ScrollableHeight );
-						} else {
-							rtbTgt.ScrollToVerticalOffset( percentV2 * rtbTgt.ViewportHeight );
-						}
-					}
-				}
 
-				goto exit;
-			}
+					if( mScrollDeferredSyncer != null )
+						mScrollDeferredSyncer.Dispose();
+					mScrollDeferredSyncer = null;
 
-			// when not in translating
-			if( sender == rtbTgt ) {
-				if( svSrc != null )
-					svSrc.ScrollToVerticalOffset( percentV * svSrc.ScrollableHeight );
-				else
-					rtbSrc.ScrollToVerticalOffset( percentV * rtbSrc.ViewportHeight );
-			}
-			else {
-				if( svTgt != null )
-					svTgt.ScrollToVerticalOffset( percentV * svTgt.ScrollableHeight );
-				else
-					rtbTgt.ScrollToVerticalOffset( percentV * rtbTgt.ViewportHeight );
-			}
+					rtbToSync.InvalidateVisual();
+					mIsScrolling = false;
+				} );				
 
-		exit:
-			await Task.Delay( 100 );
-			rtbToSync.InvalidateVisual();
-			_IsScrolling = false;
+			}, null, 200, Timeout.Infinite );
+
 		}
 
 
@@ -863,14 +828,44 @@ namespace MinaxWebTranslator.Desktop
 
 			FoMessage.IsOpen = true;
 		}
-		
-		internal async Task<bool> _LoadProj( string fullPathFileName )
+
+		private async void _OpenProject()
 		{
+			if( false == await _CheckAndAskProjSaving() )
+				return;
+
+			var prevFn = mProjFileName;
+			var dlg = new Microsoft.Win32.OpenFileDialog();
+			if( prevFn != null )
+				dlg.InitialDirectory = System.IO.Path.GetDirectoryName( prevFn );
+			else
+				dlg.InitialDirectory = Environment.CurrentDirectory;
+
+			dlg.Title = "Select an existed Translation Project file";
+			dlg.AddExtension = true;
+			dlg.CheckFileExists = true;
+			dlg.DefaultExt = TranslationProject.FileExtension;
+			dlg.Filter = "Translation Project File(*.conf)|*.conf";
+			if( dlg.ShowDialog() != true )
+				return;
+
 			// try to load Project file
-			var newProj = await ProjectManager.Instance.OpenProject( fullPathFileName );
+			var rst = await _LoadProj( dlg.FileName );
+			if( rst )
+				ShowAutoCloseMessage( "Operation Succeed", $"Open project \"{mProject.ProjectName}\" succeed." );
+			else
+				await this.ShowMessageAsync( "Operation Failed", $"Open project \"{dlg.FileName}\" failed." );
+		}
+		
+		private async Task<bool> _LoadProj( string fullPathFileName )
+		{
+			// close previous project
+			_CloseProject();
+
+			// try to load Project file
+			var newProj = ProjectManager.Instance.OpenProject( fullPathFileName );
 			if( newProj == null ) {
-				//MessageBox.Show( "Open Project Failed" );
-				this.ShowAutoCloseMessage( "Operation Failed", "Open project failed!" );
+				await this.ShowMessageAsync( "Operation Failed", "Open project failed!" );
 				return false;
 			}
 
@@ -884,6 +879,8 @@ namespace MinaxWebTranslator.Desktop
 			}
 
 			TranslatorHelpers.DescendedModels = ProjectManager.Instance.MappingMonitor.DescendedModels;
+			TranslatorHelpers.SourceLanguage = mProject.Project.SourceLanguage;
+			TranslatorHelpers.TargetLanguage = mProject.Project.TargetLanguage;
 
 			GbOptionProject.IsEnabled = true;
 			TbProjectName.Text = mProject.ProjectName;
@@ -917,18 +914,25 @@ namespace MinaxWebTranslator.Desktop
 			mProjChanged = false;
 			GdMain.IsEnabled = true;
 
+			await MessageHub.SendMessageAsync( this, MessageType.ProjectOpened, mProject );
+
 			this.Title = $"{mProject.ProjectName} - Minax Web Translator";
 			return true;
 		}
 
-		internal void _CloseProj()
+		private async void _CloseProject()
 		{
+			if( false == await _CheckAndAskProjSaving() )
+				return;
+
 			// unsubscribe all events
 			_UnsubscribeAllChangedEvents();
 
 			if( mProject != null ) {
 				ProjectManager.Instance.CloseProject( mProject );
 			}
+
+			var closedProject = mProject;
 			mProject = null;
 			mProjFileName = null;
 			mProjChanged = false;
@@ -939,9 +943,33 @@ namespace MinaxWebTranslator.Desktop
 
 			// clear closed project's used model list for Summary
 			TranslatorHelpers.CurrentUsedModels.Clear();
+			await MessageHub.SendMessageAsync( this, MessageType.ProjectClosed, closedProject );
 		}
 
-		internal async Task<bool> _CheckAndAskProjSaving( bool forceSaving = false )
+		private async void _SaveProject()
+		{
+			if( mProject == null )
+				return;
+
+			_DumpProj2ModelMappingTable( mProject );
+
+			if( ProjectManager.Instance.SaveProject( mProject, mProject.FullPathFileName ) == false ) {
+				await this.ShowMessageAsync( "Operation Failed", "Save current project failed!!" );
+				return;
+			}
+
+			if( MatsRemeberRecentProjects.IsChecked == true )
+				ProjectManager.Instance.SaveListToSettings();
+
+			_SetProjChanged( false );
+			_SaveDockingLayout();
+
+			this.ShowAutoCloseMessage( "Opertion succeed", "Curret project saved." );
+			await MessageHub.SendMessageAsync( this, MessageType.ProjectSaved, mProject );
+		}
+		
+
+		private async Task<bool> _CheckAndAskProjSaving( bool forceSaving = false )
 		{
 			if( mProject != null && mProjChanged ) {
 				if( forceSaving == false ) {
@@ -1013,7 +1041,7 @@ namespace MinaxWebTranslator.Desktop
 				case 3:
 					policy = Minax.IO.OverwritePolicy.FileSizeLarger;
 					break;
-				//case 4: // NOT SUPPORTED!!
+				//case 4: // NOT SUPPORT!!
 				//	policy = Minax.IO.OverwritePolicy.FileDateNew;
 				//	break;
 			}
@@ -1029,7 +1057,7 @@ namespace MinaxWebTranslator.Desktop
 			var rst = await ProjectManager.Instance.FetchFilesByFileListLink(
 					CbGlossarySyncFile.SelectedItem.ToString(),
 					ProjectManager.Instance.MappingMonitor.BaseProjectPath, policy,
-					mCancelTokenSrource, null, this );
+					mCancelTokenSrource, sTransProgress, this );
 
 			if( rst == false ) {
 				await this.ShowMessageAsync( "Operation Failed", "Download remote Glossary file(s) by file link failed!" );
@@ -1090,15 +1118,20 @@ namespace MinaxWebTranslator.Desktop
 
 			var changed = false;
 			if( mProject.ProjectName != TbProjectName.Text ) {
+				if( string.IsNullOrWhiteSpace( TbProjectName.Text ) ) {
+					TbProjectName.Text = mProject.ProjectName;
+					await this.ShowMessageAsync( "Field Error", "The Project Name field cannot be empty or full of whitespace text!" );
+					return;
+				}
 
 				mProject.ProjectName = TbProjectName.Text;
-				if( mProject.Project != null )
-					mProject.Project.Name = mProject.ProjectName;
+				// NOTE: DO NOT set Project.Name here for recovery original Project.Name to mProject.ProjectName when cancel saving
+				//if( mProject.Project != null )
+				//	mProject.Project.Name = mProject.ProjectName;
 
 				changed = true;
 			}
 
-			//ComboBoxLanguage_SelectionChanged
 			var langChanged = false;
 			if( (CbSourceLang.SelectedItem as ComboBoxItem).Tag is SupportedSourceLanguage srcLang ) {
 				if( mProject.Project.SourceLanguage != srcLang ) {
@@ -1114,7 +1147,15 @@ namespace MinaxWebTranslator.Desktop
 				}
 			}
 
+			if( TbProjectDesc.Text != mProject.Project.Description )
+				changed = true;
+			if( TbProjectRemoteSite.Text != mProject.Project.RemoteSite )
+				changed = true;
+
 			if( langChanged ) {
+				TranslatorHelpers.SourceLanguage = mProject.Project.SourceLanguage;
+				TranslatorHelpers.TargetLanguage = mProject.Project.TargetLanguage;
+
 				_SetProjChanged();
 				await _RefreshProjectAndGlossaryMappings();
 			} else if( changed ) {
@@ -1189,40 +1230,15 @@ namespace MinaxWebTranslator.Desktop
 			ProjectManager.Instance.ClearRecentProjects();
 		}
 
-		private async void MiProjectOpen_Click( object sender, RoutedEventArgs e )
+		private void MiProjectOpen_Click( object sender, RoutedEventArgs e )
 		{
-			if( false == await _CheckAndAskProjSaving() )
-				return;
-
-			var prevFn = mProjFileName;
-			var dlg = new Microsoft.Win32.OpenFileDialog();
-			if( prevFn != null )
-				dlg.InitialDirectory = System.IO.Path.GetDirectoryName( prevFn );
-			else
-				dlg.InitialDirectory = Environment.CurrentDirectory;
-
-			dlg.Title = "Select an existed Translation Project file";
-			dlg.AddExtension = true;
-			dlg.DefaultExt = TranslationProject.FileExtension;
-			dlg.Filter = "Translation Project File(*.conf)|*.conf";
-			if( dlg.ShowDialog() != true )
-				return;
-
-			// try to load Project file
-			var rst = await _LoadProj( dlg.FileName );
-			if( rst )
-				ShowAutoCloseMessage( "Operation Succeed", $"Open project \"{mProject.ProjectName}\" succeed." );
-			else
-				await this.ShowMessageAsync( "Operation Failed", $"Open project \"{dlg.FileName}\" failed." );
+			_OpenProject();
 		}
 
 		private async void MiProjectNew_Click( object sender, RoutedEventArgs e )
 		{
-			if( false == await _CheckAndAskProjSaving() )
-				return;
-
 			var prevFn = mProjFileName;
-			var dlg = new Microsoft.Win32.OpenFileDialog();
+			var dlg = new Microsoft.Win32.SaveFileDialog();
 			if( prevFn != null )
 				dlg.InitialDirectory = System.IO.Path.GetDirectoryName( prevFn );
 			else
@@ -1243,31 +1259,14 @@ namespace MinaxWebTranslator.Desktop
 				await this.ShowMessageAsync( "Operation Failed", $"Create project \"{dlg.FileName}\" failed." );
 		}
 
-		private async void MiProjectSave_Click( object sender, RoutedEventArgs e )
+		private void MiProjectSave_Click( object sender, RoutedEventArgs e )
 		{
-			if( mProject == null )
-				return;
-
-			_DumpProj2ModelMappingTable( mProject );
-
-			if( ProjectManager.Instance.SaveProject( mProject, mProject.FullPathFileName ) == false ) {
-				await this.ShowMessageAsync( "Operation Failed", "Save current project failed!!" );
-				return;
-			}
-
-			if( MatsRemeberRecentProjects.IsChecked == true )
-				ProjectManager.Instance.SaveListToSettings();
-
-			_SetProjChanged( false );
-			_SaveDockingLayout();
+			_SaveProject();
 		}
 
-		private async void MiProjectClose_Click( object sender, RoutedEventArgs e )
+		private void MiProjectClose_Click( object sender, RoutedEventArgs e )
 		{
-			if( false == await _CheckAndAskProjSaving() )
-				return;
-
-			_CloseProj();
+			_CloseProject();
 		}
 
 		private void MiTranslatorSelector_Click( object sender, RoutedEventArgs e )
@@ -1283,7 +1282,7 @@ namespace MinaxWebTranslator.Desktop
 		{
 			// update and SendMessage when Translator changed
 			if( CurrentXlator != mXlatorSelectorPanel.SelectedTranslator ) {
-				mCurrentRemoteTranslator = mXlatorSelectorPanel.SelectedTranslator.RemoteType;
+				mCurrentRemoteType = mXlatorSelectorPanel.SelectedTranslator.RemoteType;
 				await _RefreshProjectAndGlossaryMappings( false );
 			}
 			CurrentXlator = mXlatorSelectorPanel.SelectedTranslator;

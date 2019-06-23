@@ -199,7 +199,7 @@ namespace Minax.Collections
 			lock( base.SyncRoot )
 				base.list.AddRange( collection );
 
-			base.OnCollectionChanged( NotifyCollectionChangedAction.Add, new List<T>( collection) );
+			base.OnCollectionChanged( NotifyCollectionChangedAction.Add, new List<T>( collection ) );
 			base.OnPropertyChanged( nameof( Count ) );
 		}
 

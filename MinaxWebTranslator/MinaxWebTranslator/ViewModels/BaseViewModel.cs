@@ -6,29 +6,55 @@ using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
 using MinaxWebTranslator.Models;
-using MinaxWebTranslator.Services;
 
 namespace MinaxWebTranslator.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
-    {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>() ?? new MockDataStore();
+	/// <summary>
+	/// Base ViewModel with general/comman commands or properties
+	/// </summary>
+	public class BaseViewModel : INotifyPropertyChanged, IDataErrorInfo
+	{
+		public bool IsBusy {
+			get => isBusy;
+			set => SetProperty( ref isBusy, value );
+		}
+		bool isBusy = false;
+	
+		public string Title {
+			get => title;
+			set => SetProperty( ref title, value );
+		}
+		string title = string.Empty;
 
-        bool isBusy = false;
-        public bool IsBusy
-        {
-            get { return isBusy; }
-            set { SetProperty(ref isBusy, value); }
-        }
+		/// <summary>
+		/// Is items empty
+		/// </summary>
+		public bool IsDataEmpty {
+			get => isDataEmpty;
+			set => SetProperty( ref isDataEmpty, value );
+		}
+		private bool isDataEmpty = true;
 
-        string title = string.Empty;
-        public string Title
-        {
-            get { return title; }
-            set { SetProperty(ref title, value); }
-        }
+		/// <summary>
+		/// A string field cannot be empty
+		/// </summary>
+		public string NonEmptyString {
+			get => nonEmptyString;
+			set => SetProperty( ref nonEmptyString, value );
+		}
+		private string nonEmptyString;
 
-        protected bool SetProperty<T>(ref T backingStore, T value,
+		/// <summary>
+		/// NonEmptyString field's placeholder/watermark
+		/// </summary>
+		public string NonEmptyMaxPlaceholder {
+			get => nonEmptyMaxPlaceholder;
+			set => SetProperty( ref nonEmptyMaxPlaceholder, value );
+		}
+		private string nonEmptyMaxPlaceholder;
+
+
+		protected bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName]string propertyName = "",
             Action onChanged = null)
         {
@@ -41,8 +67,27 @@ namespace MinaxWebTranslator.ViewModels
             return true;
         }
 
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
+		
+		#region "IDataErrorInfo members"
+		public string Error => string.Empty;
+
+		public string this[string columnName] {
+			get {
+				switch( columnName ) {
+					case nameof( NonEmptyString ):
+						if( string.IsNullOrWhiteSpace( NonEmptyString ) )
+							return "This field cannot be empty or full of white text!";
+						break;
+				}
+				return null;
+			}
+		}
+		#endregion
+
+
+		#region INotifyPropertyChanged
+
+		public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             var changed = PropertyChanged;
@@ -51,6 +96,7 @@ namespace MinaxWebTranslator.ViewModels
 
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         #endregion
     }
 }

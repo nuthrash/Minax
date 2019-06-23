@@ -20,11 +20,16 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace MinaxWebTranslator.Desktop.Views
 {
+	/// <summary>
+	/// Dockable panel for quick translation with multiple translators
+	/// </summary>
 	public partial class QuickTranslationDockingPanel : LayoutAnchorable
 	{
 		internal bool IsTranslating {
 			get => isTranslating;
 			private set {
+				if( isTranslating == value )
+					return;
 				isTranslating = value;
 				_ = MessageHub.SendMessageAsync( this, MessageType.XlatingQuick, isTranslating );
 			}
@@ -44,7 +49,7 @@ namespace MinaxWebTranslator.Desktop.Views
 			//this.Content = new ViewModels.EditingViewModel();
 			GdQuick.DataContext = mEditingVM = new ViewModels.EditingViewModel() {
 				// ClearAndPasteCmd and CopyAllCmd cannot work normally under AvalonDock's LayoutAnchorable!!
-				NonEmptyMaxWatermark = $"Input some text to be translated, count: {mCurrentInput.Length}/{TranslatingMaxWordCount}",
+				NonEmptyMaxPlaceholder = $"Input some text to be translated, count: {mCurrentInput.Length}/{TranslatingMaxWordCount}",
 			};
 
 			mRtbs = new List<RichTextBox> {
@@ -58,10 +63,14 @@ namespace MinaxWebTranslator.Desktop.Views
 			MessageHub.MessageReceived -= MsgHub_MessageRecevied;
 			MessageHub.MessageReceived += MsgHub_MessageRecevied;
 
+			sTransProgress.ProgressChanged += async ( s1, e1 ) => {
+				await MessageHub.SendMessageAsync( this, MessageType.XlatingProgress, e1 );
+			};
+
 			RtbQuickInput.TextChanged += ( s1, e1 ) => {
 				var text = new TextRange( RtbQuickInput.Document.ContentStart, RtbQuickInput.Document.ContentEnd ).Text;
 				mCurrentInput = text;
-				mEditingVM.NonEmptyMaxWatermark = $"Input some text to be translated, count: {mCurrentInput.Length}/{TranslatingMaxWordCount}";
+				mEditingVM.NonEmptyMaxPlaceholder = $"Input some text to be translated, count: {mCurrentInput.Length}/{TranslatingMaxWordCount}";
 				if( text.Length > TranslatingMaxWordCount ) {
 					if( mDeferredWorker != null )
 						mDeferredWorker.Dispose();
@@ -73,7 +82,7 @@ namespace MinaxWebTranslator.Desktop.Views
 							if( mDeferredWorker != null )
 								mDeferredWorker.Dispose();
 							mDeferredWorker = null;
-							mEditingVM.NonEmptyMaxWatermark = $"Input some text to be translated, count: {mCurrentInput.Length}/{TranslatingMaxWordCount}";
+							mEditingVM.NonEmptyMaxPlaceholder = $"Input some text to be translated, count: {mCurrentInput.Length}/{TranslatingMaxWordCount}";
 							BtnQuickTrans.IsEnabled = true;
 						} );
 					}, text.Substring(0, TranslatingMaxWordCount - 2), 200, Timeout.Infinite );
@@ -121,6 +130,10 @@ namespace MinaxWebTranslator.Desktop.Views
 		private Timer mDeferredWorker = null;
 		private string mCurrentInput = "";
 
+		// GUI Progress Indicator
+		private static readonly Progress<Minax.ProgressInfo> sTransProgress = new Progress<Minax.ProgressInfo>();
+
+
 		private void _FillAndTriggerXlate( string textQuick )
 		{
 			RtbQuickInput.Document.Blocks.Clear();
@@ -134,6 +147,12 @@ namespace MinaxWebTranslator.Desktop.Views
 		private void MsgHub_MessageRecevied( object sender, MessageType type, object data )
 		{
 			switch( type ) {
+				case MessageType.AppClosed:
+				case MessageType.AppClosing:
+					if( mCancelTokenSrource.IsCancellationRequested == false )
+						mCancelTokenSrource.Cancel();
+					break;
+
 				case MessageType.XlatingSections:
 					if( data is bool xlatingTarget ) {
 						GdQuick.IsEnabled = !xlatingTarget;
@@ -188,19 +207,19 @@ namespace MinaxWebTranslator.Desktop.Views
 
 			if( CbQuickXLang.IsChecked == true ) {
 				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.CrossLanguageFree, sourceText, RtbQuickXLangOutput,
-												mCancelTokenSrource.Token, mMainWindow.TransProgress ) );
+												mCancelTokenSrource.Token, sTransProgress ) );
 			}
 			if( CbQuickBaidu.IsChecked == true ) {
 				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.BaiduFree, sourceText, RtbQuickBaiduOutput,
-												mCancelTokenSrource.Token, mMainWindow.TransProgress ) );
+												mCancelTokenSrource.Token, sTransProgress ) );
 			}
 			if( CbQuickYoudao.IsChecked == true ) {
 				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.YoudaoFree, sourceText, RtbQuickYoudaoOutput,
-												mCancelTokenSrource.Token, mMainWindow.TransProgress ) );
+												mCancelTokenSrource.Token, sTransProgress ) );
 			}
 			if( CbQuickGoogle.IsChecked == true ) {
 				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.GoogleFree, sourceText, RtbQuickGoogleOutput,
-												mCancelTokenSrource.Token, mMainWindow.TransProgress ) );
+												mCancelTokenSrource.Token, sTransProgress ) );
 			}
 
 			await Task.WhenAll( tasks );

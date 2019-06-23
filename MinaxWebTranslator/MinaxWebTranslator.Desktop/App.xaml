@@ -20,16 +20,11 @@
 
             <Style TargetType="TabItem" BasedOn="{StaticResource MetroRoundedTabItemInvert}"/>
             <Style x:Key="MetroValidationPopup" TargetType="{x:Type MahApps:CustomValidationPopup}">
-                <Setter Property="HorizontalAlignment"
-                Value="Right" />
-                <Setter Property="HorizontalOffset"
-                Value="0" />
-                <Setter Property="VerticalOffset"
-                Value="0" />
-                <Setter Property="PopupAnimation"
-                Value="Fade" />
-                <Setter Property="Placement"
-                Value="Right" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="HorizontalOffset" Value="0" />
+                <Setter Property="VerticalOffset" Value="0" />
+                <Setter Property="PopupAnimation" Value="Fade" />
+                <Setter Property="Placement" Value="Right" />
             </Style>
 
             <Style x:Key="MyGroupHeaderStyle" TargetType="GroupItem" >

@@ -7,6 +7,9 @@ using System.Windows.Input;
 
 namespace MinaxWebTranslator.Desktop.ViewModels
 {
+	/// <summary>
+	/// MainWindow ViewModel
+	/// </summary>
 	internal class MainWindowViewModel : BaseViewModel
 	{
 		public ICommand CloseFlyoutCmd { get; }

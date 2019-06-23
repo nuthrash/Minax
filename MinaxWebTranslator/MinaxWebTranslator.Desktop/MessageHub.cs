@@ -6,10 +6,19 @@ using System.Windows;
 
 namespace MinaxWebTranslator.Desktop
 {
+	/// <summary>
+	/// App internal Message Hub
+	/// </summary>
 	internal static class MessageHub
 	{
+		/// <summary>
+		/// Is MessageReceived event enabled
+		/// </summary>
 		public static bool IsEventEnabled { get; set; } = true;
 
+		/// <summary>
+		/// MessageReceived event for receiving message from others
+		/// </summary>
 		public static event MessageEventHandler MessageReceived;
 
 		public static async Task<bool> SendMessageAsync( object sender, MessageType type, object data )
@@ -47,7 +56,12 @@ namespace MinaxWebTranslator.Desktop
 		}
 	}
 
-
+	/// <summary>
+	/// Message event handler
+	/// </summary>
+	/// <param name="sender">Sender who send this message</param>
+	/// <param name="type">Message tpye</param>
+	/// <param name="data">Message data</param>
 	internal delegate void MessageEventHandler( object sender, MessageType type, object data );
 
 	internal enum MessageType
@@ -77,81 +91,91 @@ namespace MinaxWebTranslator.Desktop
 		/// </summary>
 		ProjectCreated,
 		/// <summary>
-		/// When existed project opened
+		/// When existed project opened, data is a ProjectModel
 		/// </summary>
 		ProjectOpened,
 		/// <summary>
-		/// When current project closed
+		/// When current project closed, data is a closed ProjectModel
 		/// </summary>
 		ProjectClosed,
 		/// <summary>
-		/// When current project settings/Mapping changed
+		/// When current project settings/Mapping changed, data is a ProjectModel
 		/// </summary>
 		ProjectChanged,
 		/// <summary>
-		/// When current project saved
+		/// When current project saved, data is a ProjectModel
 		/// </summary>
 		ProjectSaved,
 		/// <summary>
-		/// When current project renamed
+		/// When current project renamed, data is a MappingMonitor.MappingEventArgs
 		/// </summary>
 		ProjectRenamed,
 		/// <summary>
-		/// Project updated outside the App
+		/// Project updated outside the App, data is a MappingMonitor.MappingEventArgs
 		/// </summary>
 		ProjectUpdated, // FileChanged
 
 		/// <summary>
-		/// A new Glossary file found
+		/// A new Glossary file found,  data is a MappingMonitor.MappingEventArgs
 		/// </summary>
 		GlossaryNew, // FileChanged
 		/// <summary>
-		/// Existed Glossary file updated outside the App
+		/// Existed Glossary file updated outside the App, data is a MappingMonitor.MappingEventArgs
 		/// </summary>
 		GlossaryUpdated, // FileChanged
 		/// <summary>
-		/// A Glossary file was deleted outside the App
+		/// A Glossary file was deleted outside the App, data is a MappingMonitor.MappingEventArgs
 		/// </summary>
 		GlossaryDeleted, // FileDeleted
 		/// <summary>
-		/// A Glossary file was renamed outside the app
+		/// A Glossary file was renamed outside the app, data is a MappingMonitor.MappingEventArgs
 		/// </summary>
 		GlossaryRenamed, // FileRenamed
 
 		/// <summary>
-		/// Status message text to show on StatusBar
+		/// Status message text to show on StatusBar, data is a string
 		/// </summary>
 		StatusMessage,
 
 		/// <summary>
-		/// When Source Text changed. (not used in Desktop version)
+		/// When Source Text changed, data is a string
 		/// </summary>
 		SourceTextChanged,
 
 		/// <summary>
-		/// Current Translator/TranslationService changed
+		/// Current Translator/TranslationService changed, data is a TranslatorSelector
 		/// </summary>
 		XlatorSelected,
 		/// <summary>
-		/// Translating sections text mode in On/Off
+		/// Translating sections text mode in On/Off, data is a bool
 		/// </summary>
 		XlatingSections,
 		/// <summary>
-		/// Translating Quick/small text mode in On/Off
+		/// Translating Quick/small text mode in On/Off, data is a bool
 		/// </summary>
 		XlatingQuick,
 		/// <summary>
-		/// Send translate Quick/small text request with string parameter from client
+		/// Send translate Quick/small text request with string parameter from client, data is a string
 		/// </summary>
 		XlatingQuickWithText,
 		/// <summary>
-		/// Translating percentage or error code by ProgressInfo
+		/// Translating percentage or error code, data is a Minax.ProgressInfo
 		/// </summary>
-		XlatingPercentOrErrorCode,
+		XlatingProgress,
 
 		/// <summary>
-		/// Data/Items source reload to reflect current status
+		/// Data/Items source reload to reflect current status, data is a ProjectModel
 		/// </summary>
 		DataReload,
+
+		/// <summary>
+		/// Networking operation percentage or error code, data is a Minax.ProgressInfo
+		/// </summary>
+		NetProgress,
+
+		/// <summary>
+		/// Navigating of Menu page/module (not used in Desktop version), data is a MenuItemType
+		/// </summary>
+		MenuNavigate,
 	}
 }

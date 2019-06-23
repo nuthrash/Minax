@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -348,6 +349,23 @@ namespace Minax
 				var xform = aes.CreateDecryptor();
 				return Encoding.UTF8.GetString( xform.TransformFinalBlock( encBytes, 0, encBytes.Length ) );
 			}
+		}
+
+		public static string ConvertToString( SecureString ss )
+		{
+			return new System.Net.NetworkCredential( string.Empty, ss ).Password;
+		}
+
+		public static SecureString ConvertToSecureString( string value )
+		{
+			SecureString ss = new SecureString();
+			if( string.IsNullOrEmpty( value ) )
+				return ss;
+
+			foreach( var ch in value )
+				ss.AppendChar( ch );
+
+			return ss;
 		}
 
 		#endregion

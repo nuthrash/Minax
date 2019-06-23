@@ -1,23 +1,13 @@
-﻿using MahApps.Metro.Controls;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Xceed.Wpf.AvalonDock.Controls;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace MinaxWebTranslator.Desktop.Views
 {
+	/// <summary>
+	/// Dockable panel for Source text
+	/// </summary>
 	public partial class SourceDockingPanel : LayoutAnchorable
 	{
 		internal string SourceText {

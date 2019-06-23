@@ -24,11 +24,17 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace MinaxWebTranslator.Desktop.Views
 {
+	/// <summary>
+	/// Dockable panel for Target text of Translation
+	/// </summary>
 	public partial class TargetDockingPanel : LayoutAnchorable
 	{
 		internal string SourceText {
 			get => mSourceText;
 			set {
+				if( mSourceText == value )
+					return;
+
 				BtnTargetTranslate.IsEnabled = !string.IsNullOrWhiteSpace( value );
 				mSourceText = value;
 			}
@@ -57,6 +63,15 @@ namespace MinaxWebTranslator.Desktop.Views
 
 			MessageHub.MessageReceived -= MsgHub_MessageRecevied;
 			MessageHub.MessageReceived += MsgHub_MessageRecevied;
+
+			sTransProgress.ProgressChanged += async ( s1, e1 ) => {
+				var value = e1.PercentOrErrorCode;
+
+				if( value >= 0 && value <= 100 ) {
+					TbTargetPercent.Text = $"{value}%";
+				}
+				await MessageHub.SendMessageAsync( this, MessageType.XlatingProgress, e1 );
+			};
 		}
 
 		private MainWindow mMainWindow;
@@ -64,6 +79,9 @@ namespace MinaxWebTranslator.Desktop.Views
 		private string mCrytoKey;
 		private volatile bool isXlating = false;
 		private CancellationTokenSource mCancelTokenSrource = new CancellationTokenSource();
+		// GUI Progress Indicator
+		private static readonly Progress<Minax.ProgressInfo> sTransProgress = new Progress<Minax.ProgressInfo>();
+
 		private SecureString mTmpBaiduAppId, mTmpBaiduSecretKey, mTmpYoudaoAppKey, mTmpYoudaoAppSecret, mTmpGoogleApiKey, mTmpMicrosoftSubKey;
 
 		private async Task<(string AppId, string SecretKey)> _CheckAndAskBaiduCharged()
@@ -90,9 +108,10 @@ namespace MinaxWebTranslator.Desktop.Views
 					await mMainWindow.ShowMetroDialogAsync( miDialog );
 					await miDialog.WaitUntilUnloadedAsync();
 
-					if( miDialog.Results != null && miDialog.Results.Count >= 2 ) {
+					var results = miDialog.Results;
+					if( results != null && results.Count >= 2 ) {
 						SecureString ssAppId = null, ssSecKey = null;
-						foreach( var rst in miDialog.Results ) {
+						foreach( var rst in results ) {
 							if( rst.FieldName == "APP ID" && rst.Value is SecureString ss1 )
 								ssAppId = ss1;
 							else if( rst.FieldName == "Secret Key" && rst.Value is SecureString ss2 )
@@ -258,6 +277,13 @@ namespace MinaxWebTranslator.Desktop.Views
 				return;
 
 			switch( type ) {
+				case MessageType.AppClosed:
+				case MessageType.AppClosing:
+					if( mCancelTokenSrource.IsCancellationRequested == false )
+						mCancelTokenSrource.Cancel();
+					break;
+
+
 				case MessageType.XlatorSelected:
 					if( data is TranslatorSelector translatorSelector ) {
 						CurrentTranslator = translatorSelector;
@@ -265,18 +291,20 @@ namespace MinaxWebTranslator.Desktop.Views
 					}
 					break;
 
-				case MessageType.XlatingPercentOrErrorCode:
-					// update Percent string
-					if( data is int percentOrErrorCode ) {
-						if( percentOrErrorCode >= 0 && percentOrErrorCode <= 100 ) {
-							TbTargetPercent.Text = $"{percentOrErrorCode}%";
-						}
-					}
-					break;
+				//case MessageType.XlatingPercentOrErrorCode:
+				//	// update Percent string
+				//	if( data is int percentOrErrorCode ) {
+				//		if( percentOrErrorCode >= 0 && percentOrErrorCode <= 100 ) {
+				//			TbTargetPercent.Text = $"{percentOrErrorCode}%";
+				//		}
+				//	}
+				//	break;
 
 				case MessageType.SourceTextChanged:
 					if( data is string sourceText ) {
 						SourceText = sourceText;
+					} else {
+						SourceText = null;
 					}
 					break;
 			}
@@ -318,31 +346,31 @@ namespace MinaxWebTranslator.Desktop.Views
 				switch( remoteType ) {
 					case RemoteType.Excite:
 						result = await TranslatorHelpers.XlateExcitePage( WbMain, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, mMainWindow.TransProgress );
+										mCancelTokenSrource.Token, sTransProgress );
 						break;
 					case RemoteType.Weblio:
 						result = await TranslatorHelpers.XlateWeblioPage( WbMain, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, mMainWindow.TransProgress );
+										mCancelTokenSrource.Token, sTransProgress );
 						break;
 					case RemoteType.CrossLanguage:
 						result = await TranslatorHelpers.XlateCrossLangPage( WbMain, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, mMainWindow.TransProgress );
+										mCancelTokenSrource.Token, sTransProgress );
 						break;
 					case RemoteType.Baidu:
 						result = await TranslatorHelpers.XlateBaiduPage( WbMain, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, mMainWindow.TransProgress );
+										mCancelTokenSrource.Token, sTransProgress );
 						break;
 					case RemoteType.Youdao:
 						result = await TranslatorHelpers.XlateYoudaoPage( WbMain, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, mMainWindow.TransProgress );
+										mCancelTokenSrource.Token, sTransProgress );
 						break;
 					case RemoteType.Google:
 						result = await TranslatorHelpers.XlateGooglePage( WbMain, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, mMainWindow.TransProgress );
+										mCancelTokenSrource.Token, sTransProgress );
 						break;
 					case RemoteType.Microsoft:
 						result = await TranslatorHelpers.XlateMicrosoftPage( WbMain, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, mMainWindow.TransProgress );
+										mCancelTokenSrource.Token, sTransProgress );
 						break;
 
 					case RemoteType.CrossLanguageFree:
@@ -350,7 +378,7 @@ namespace MinaxWebTranslator.Desktop.Views
 					case RemoteType.YoudaoFree:
 					case RemoteType.GoogleFree:
 						result = await TranslatorHelpers.XlateApiFree( remoteType, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, mMainWindow.TransProgress );
+										mCancelTokenSrource.Token, sTransProgress );
 						break;
 
 					// ask APP ID/Secret ... when setting is empty
@@ -360,7 +388,7 @@ namespace MinaxWebTranslator.Desktop.Views
 							result = false;
 						else
 							result = await TranslatorHelpers.XlateApiCharged( remoteType, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, mMainWindow.TransProgress,
+										mCancelTokenSrource.Token, sTransProgress,
 										tupleBaidu.AppId, tupleBaidu.SecretKey, null, null );
 
 						// maybe input wrong character...so clear data for next input
@@ -377,7 +405,7 @@ namespace MinaxWebTranslator.Desktop.Views
 							result = false;
 						else
 							result = await TranslatorHelpers.XlateApiCharged( remoteType, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, mMainWindow.TransProgress,
+										mCancelTokenSrource.Token, sTransProgress,
 										tupleYoudao.AppKey, tupleYoudao.AppSecret, null, null );
 
 						// maybe input wrong character...so clear data for next input
@@ -394,7 +422,7 @@ namespace MinaxWebTranslator.Desktop.Views
 							result = false;
 						else
 							result = await TranslatorHelpers.XlateApiCharged( remoteType, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, mMainWindow.TransProgress,
+										mCancelTokenSrource.Token, sTransProgress,
 										apiKeyGoogle, null, null, null );
 						if( result != true ) {
 							mTmpGoogleApiKey = null;
@@ -408,7 +436,7 @@ namespace MinaxWebTranslator.Desktop.Views
 							result = false;
 						else
 							result = await TranslatorHelpers.XlateApiCharged( remoteType, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, mMainWindow.TransProgress,
+										mCancelTokenSrource.Token, sTransProgress,
 										subKeyMs, null,
 										Properties.Settings.Default.XlatorMicrosoftServer,
 										Properties.Settings.Default.XlatorMicrosoftSubRegion );
@@ -420,7 +448,7 @@ namespace MinaxWebTranslator.Desktop.Views
 				}
 
 				if( result )
-					mMainWindow.ShowAutoCloseMessage( "Translating Result", "Translation succeded!" );
+					mMainWindow.ShowAutoCloseMessage( "Translating Result", "Translating succeded!" );
 				else if( isCharged )
 					await mMainWindow.ShowMessageAsync( "Translating Failed",
 								"Translation failed!\nMaybe some necessary field(s) is/are missing or wrong typed when using Transaltion API (Charged)? " );

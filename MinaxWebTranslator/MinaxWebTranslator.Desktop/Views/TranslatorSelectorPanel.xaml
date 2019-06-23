@@ -190,6 +190,8 @@
                          TextChanged="TbXlatorMicrosoftSubRegion_TextChanged" />
             </Grid>
 
+            <Label x:Name="LblWarningCharged" Foreground="DarkRed" Visibility="Collapsed"
+                   Content="NOTE: Above field(s) content would be saved to private App location. If you think that is danganous, you shall not key in anything!!"/>
         </StackPanel>
 
         <Separator />
@@ -210,7 +212,9 @@
                         </Grid.RowDefinitions>
 
                         <Image Grid.Column="0" Grid.Row="0" Stretch="Uniform"
-                                   Source="{Binding Icon}" VerticalAlignment="Center" />
+                               Source="{Binding Icon}" VerticalAlignment="Center" 
+                               RenderOptions.BitmapScalingMode="HighQuality"
+                               SnapsToDevicePixels="True" />
 
                         <Separator Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
                                    HorizontalAlignment="Stretch" VerticalAlignment="Center"

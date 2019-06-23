@@ -59,5 +59,95 @@ namespace MinaxWebTranslator.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查詢類型 System.Byte[] 的當地語系化資源。
+        /// </summary>
+        internal static byte[] BaiduTranslator {
+            get {
+                object obj = ResourceManager.GetObject("BaiduTranslator", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Byte[] 的當地語系化資源。
+        /// </summary>
+        internal static byte[] Bing {
+            get {
+                object obj = ResourceManager.GetObject("Bing", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Byte[] 的當地語系化資源。
+        /// </summary>
+        internal static byte[] CrossLanguage {
+            get {
+                object obj = ResourceManager.GetObject("CrossLanguage", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Byte[] 的當地語系化資源。
+        /// </summary>
+        internal static byte[] Excite {
+            get {
+                object obj = ResourceManager.GetObject("Excite", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Byte[] 的當地語系化資源。
+        /// </summary>
+        internal static byte[] GoogleTranslator {
+            get {
+                object obj = ResourceManager.GetObject("GoogleTranslator", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Byte[] 的當地語系化資源。
+        /// </summary>
+        internal static byte[] Microsoft {
+            get {
+                object obj = ResourceManager.GetObject("Microsoft", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Byte[] 的當地語系化資源。
+        /// </summary>
+        internal static byte[] Translator {
+            get {
+                object obj = ResourceManager.GetObject("Translator", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Byte[] 的當地語系化資源。
+        /// </summary>
+        internal static byte[] WeblioTranslator {
+            get {
+                object obj = ResourceManager.GetObject("WeblioTranslator", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Byte[] 的當地語系化資源。
+        /// </summary>
+        internal static byte[] YoudaoTranslator {
+            get {
+                object obj = ResourceManager.GetObject("YoudaoTranslator", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

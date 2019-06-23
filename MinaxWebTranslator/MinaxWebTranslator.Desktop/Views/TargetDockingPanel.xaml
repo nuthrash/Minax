@@ -31,11 +31,11 @@
             </Grid.RowDefinitions>
 
             <Button x:Name="BtnTargetTranslate" Grid.Column="0" Grid.Row="0" Margin="3 3 3 6" Padding="3"
-                    HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"
+                    HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" 
                     IsEnabled="False" Click="BtnTargetTranslate_Click">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" >
-                    <Image x:Name="ImgTargetTranslate"  Height="16" Width="16" Margin="4 0 4 0"/>
-                    <TextBlock x:Name="TbTargetTranslate" FontSize="12px" Text="Translate" VerticalAlignment="Center" />
+                    <Image x:Name="ImgTargetTranslate"  Height="24" Width="24" Margin="4 0 4 0"/>
+                    <TextBlock x:Name="TbTargetTranslate" FontSize="16px" Text="Translate" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
 

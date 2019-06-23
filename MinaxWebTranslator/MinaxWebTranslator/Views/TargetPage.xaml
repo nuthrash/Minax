@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" x:Class="MinaxWebTranslator.Views.TargetPage"
+             NavigationPage.HasNavigationBar="False" >
+    <StackLayout x:Name="SlTranslate">
+        <ScrollView Orientation="Horizontal">
+            <StackLayout Grid.Column="0" Grid.Row="0" HorizontalOptions="FillAndExpand" Spacing="3"
+                         VerticalOptions="StartAndExpand" Orientation="Horizontal">
+                <Button x:Name="BtnTargetTranslate" Text="Translate" ContentLayout="Left, 5"
+                        IsEnabled="False" Clicked="BtnTargetTranslate_Clicked" />
+                <Button x:Name="BtnCopyAll" Text="Copy All" Clicked="BtnCopyAll_Clicked" />
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand">
+                    <Switch x:Name="SwAutoTop" IsToggled="False" Toggled="SwAutoTop_Toggled" />
+                    <Label Text="Auto Top" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <WebView x:Name="WvTarget" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                     HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                     BackgroundColor="LightYellow" />
+
+            <!-- right up corner busy indicator -->
+            <ActivityIndicator x:Name="AiBusy" Grid.Column="1" Grid.Row="0" HorizontalOptions="End" VerticalOptions="Start"
+                               HeightRequest="56" WidthRequest="56" IsRunning="False" />
+            <Label x:Name="LblTargetPercent" Grid.Column="1" Grid.Row="0" HorizontalOptions="End" VerticalOptions="Start"
+                   Text="00%" Margin="0,17,14,0" IsVisible="False" />
+        </Grid>
+    </StackLayout>
+</ContentPage>

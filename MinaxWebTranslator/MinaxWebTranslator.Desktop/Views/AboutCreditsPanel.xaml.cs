@@ -10,6 +10,9 @@ using System.Windows.Navigation;
 
 namespace MinaxWebTranslator.Desktop.Views
 {
+	/// <summary>
+	/// About/Credits panel
+	/// </summary>
 	public partial class AboutCreditsPanel : UserControl
 	{
 		public AboutCreditsPanel( MainWindow mainWindow )
@@ -20,8 +23,8 @@ namespace MinaxWebTranslator.Desktop.Views
 		}
 
 		private MainWindow mMainWindow;
-		private List<WebTranslatorModel> mWebXlators;
-		private List<IconCreditsModel> mIconCredits;
+		private List<CreditsItemModel> mWebXlators;
+		private List<CreditsItemModel> mIconCredits;
 
 		private void Hyperlink_RequestNavigate( object sender, RequestNavigateEventArgs e )
 		{
@@ -58,26 +61,26 @@ namespace MinaxWebTranslator.Desktop.Views
 			var srcGoogle = conv.ConvertFromString( "pack://application:,,,/Resources/GoogleTranslator.png" ) as ImageSource;
 			var srcMicrosoft = conv.ConvertFromString( "pack://application:,,,/Resources/Microsoft.png" ) as ImageSource;
 
-			mWebXlators = new List<WebTranslatorModel> {
-				new WebTranslatorModel { Title = "Excite Translator (エキサイト翻訳)", Hyperlink = "https://www.excite.co.jp/world/", Icon = srcExcite },
-				new WebTranslatorModel { Title = "CrossLanguage Translator (CROSS-Transer)", Hyperlink = "http://cross.transer.com", Icon = srcCrossLang },
-				new WebTranslatorModel { Title = "Weblio Translator (Weblio 翻訳)", Hyperlink = "https://translate.weblio.jp/", Icon = srcWeblio },
-				new WebTranslatorModel { Title = "Baidu Translator (百度翻译)", Hyperlink = "https://fanyi.baidu.com", Icon = srcBaidu },
-				new WebTranslatorModel { Title = "Youdao Translator (有道翻译)", Hyperlink = "http://fanyi.youdao.com", Icon = srcYoudao },
-				new WebTranslatorModel { Title = "Google Translator", Hyperlink = "https://translate.google.com/", Icon = srcGoogle },
-				new WebTranslatorModel { Title = "Microsoft/Bing Translator", Hyperlink = "https://www.bing.com/translator", Icon = srcMicrosoft },
+			mWebXlators = new List<CreditsItemModel> {
+				new CreditsItemModel { Title = "Excite Translator (エキサイト翻訳)", Hyperlink = "https://www.excite.co.jp/world/", Icon = srcExcite },
+				new CreditsItemModel { Title = "CrossLanguage Translator (CROSS-Transer)", Hyperlink = "http://cross.transer.com", Icon = srcCrossLang },
+				new CreditsItemModel { Title = "Weblio Translator (Weblio 翻訳)", Hyperlink = "https://translate.weblio.jp/", Icon = srcWeblio },
+				new CreditsItemModel { Title = "Baidu Translator (百度翻译)", Hyperlink = "https://fanyi.baidu.com", Icon = srcBaidu },
+				new CreditsItemModel { Title = "Youdao Translator (有道翻译)", Hyperlink = "http://fanyi.youdao.com", Icon = srcYoudao },
+				new CreditsItemModel { Title = "Google Translator", Hyperlink = "https://translate.google.com/", Icon = srcGoogle },
+				new CreditsItemModel { Title = "Microsoft/Bing Translator", Hyperlink = "https://www.bing.com/translator", Icon = srcMicrosoft },
 			};
 			LvWebXlators.ItemsSource = mWebXlators;
 
 
-			mIconCredits = new List<IconCreditsModel> {
-				new IconCreditsModel { Icon = srcGoogle, Title = "Google Translate Logo (vector version)",
+			mIconCredits = new List<CreditsItemModel> {
+				new CreditsItemModel { Icon = srcGoogle, Title = "Google Translate Logo (vector version)",
 						Author = "Google Inc.", License = "Public Domain",
 						Hyperlink = "https://commons.wikimedia.org/wiki/File:Google_Translate_logo.svg",
 						Note = "Converted to .png by Minax project."
 				},
 
-				new IconCreditsModel { Icon = srcExcite, Title = "Excite 1 Logo",
+				new CreditsItemModel { Icon = srcExcite, Title = "Excite 1 Logo",
 						Author = "Excite Inc.", License = "Public Domain?",
 						Hyperlink = "https://freebiesupply.com/logos/excite-1-logo/",
 						//Hyperlink = "https://worldvectorlogo.com/logo/excite-1",

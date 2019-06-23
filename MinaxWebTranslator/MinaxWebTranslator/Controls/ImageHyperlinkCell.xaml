@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" Appearing="ViewCell_Appearing"
+             x:Class="MinaxWebTranslator.Controls.ImageHyperlinkCell">
+    <Grid Margin="2,4,2,4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding ImageWidth}" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"  
+               Source="{Binding ImageSource}" />
+        <Label Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" TextColor="Transparent">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span x:Name="SpImage" Text="ImageNavigateUri">
+                        <Span.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenWebCommand}"
+                                                  CommandParameter="{Binding ImageNavigateUri}" />
+                        </Span.GestureRecognizers>
+                    </Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <Label x:Name="LblText" Grid.Column="1" Grid.Row="0" TextColor="Black" FontAttributes="Bold" VerticalTextAlignment="Center">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span x:Name="SpText" Text="{Binding Text}"
+                          TextColor="{Binding TextColor}" FontAttributes="Bold">
+                        <Span.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenWebCommand}"
+                                                  CommandParameter="{Binding TextNavigateUri}" />
+                        </Span.GestureRecognizers>
+                    </Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Label x:Name="LblDetail" Grid.Column="1" Grid.Row="1" VerticalTextAlignment="Center" >
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span x:Name="SpDetail" Text="{Binding Detail}"
+                          TextColor="Blue" TextDecorations="Underline">
+                        <Span.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenWebCommand}"
+                                                  CommandParameter="{Binding DetailNavigateUri}" />
+                        </Span.GestureRecognizers>
+                    </Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+    </Grid>
+</ViewCell>

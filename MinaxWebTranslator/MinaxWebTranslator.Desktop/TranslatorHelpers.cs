@@ -22,17 +22,32 @@ using Minax;
 
 namespace MinaxWebTranslator.Desktop
 {
+	/// <summary>
+	/// App internal Translator helper methods
+	/// </summary>
 	internal static class TranslatorHelpers
 	{
 
 		public static SupportedSourceLanguage SourceLanguage { get; set; } = SupportedSourceLanguage.Japanese;
 		public static SupportedTargetLanguage TargetLanguage { get; set; } = SupportedTargetLanguage.ChineseTraditional;
 
+		/// <summary>
+		/// Auto scoll up to top after translating finished
+		/// </summary>
 		public static bool AutoScrollToTop { get; set; } = true;
 
+		/// <summary>
+		/// Mark mapped text with HTML bold tag to highlight
+		/// </summary>
 		public static bool MarkMappedTextWithHtmlBoldTag { get; set; } = true;
 
+		/// <summary>
+		/// MappingModel list in descended order for replacing from long to short
+		/// </summary>
 		public static ReadOnlyObservableList<MappingMonitor.MappingModel> DescendedModels { get; set; }
+		/// <summary>
+		/// Current used MappingModel after translating
+		/// </summary>
 		public static ObservableList<MappingMonitor.MappingModel> CurrentUsedModels { get; } = new ObservableList<MappingMonitor.MappingModel>();
 
 
@@ -1315,11 +1330,9 @@ namespace MinaxWebTranslator.Desktop
 			if( browser == null || string.IsNullOrWhiteSpace( location ) )
 				return false;
 
-			//if( remoteType == RemoteType.GoogleCharged ) {
 			if( remoteType == RemoteType.Google ) {
 				browser.LoadCompleted -= WebBrowser_LoadCompleted;
 				browser.LoadCompleted += WebBrowser_LoadCompleted;
-				//browser.Navigate( location );
 
 				await sSemaBrowser.WaitAsync( TimeSpan.FromSeconds( timeOutInSeconds ) );
 				browser.LoadCompleted -= WebBrowser_LoadCompleted;
@@ -1352,6 +1365,58 @@ namespace MinaxWebTranslator.Desktop
 			return true;
 		}
 
+		/// <summary>
+		/// Wait for CSS-style selector to appear
+		/// </summary>
+		/// <param name="browser">Target web browser</param>
+		/// <param name="cssSelector">Checking CSS selector</param>
+		/// <param name="defaultLocation">Default location when out-of-retry</param>
+		/// <param name="retry">Retry count</param>
+		/// <returns>true for success</returns>
+		private static async Task<bool> _WaitForSelector( WebBrowser browser, string cssSelector, string defaultLocation, int retry = 50 )
+		{
+			var jsQuerySelectorCnt = new string[] {
+				string.Format( @"document.querySelectorAll('{0}').length;", cssSelector ),
+			};
+			int selectorCnt = (int)browser.InvokeScript( "eval", jsQuerySelectorCnt );
+			while( selectorCnt <= 0 ) {
+				if( retry-- <= 0 ) {
+					if( defaultLocation != null )
+						browser.Navigate( defaultLocation );
+					return false;
+				}
+
+				await Task.Delay( rnd.Next( 200, 300 ) );
+				selectorCnt = (int)browser.InvokeScript( "eval", jsQuerySelectorCnt );
+			}
+
+			return true;
+		}
+
+		/// <summary>
+		/// Wait for style element appear
+		/// </summary>
+		/// <param name="browser">Target web browser</param>
+		/// <param name="cssSelector">Checking CSS selector</param>
+		/// <param name="defaultLocation">Default location when out-of-retry</param>
+		/// <param name="retry">Retry count</param>
+		/// <returns>true for success</returns>
+		private static async Task<bool> _WaitForStyle( WebBrowser browser, string cssSelector, string defaultLocation, int retry = 50 )
+		{
+			var jsQuerySelectorStyle = new string[] { $"document.querySelector('{cssSelector}').getAttribute('style');" };
+			var selectorStyle = browser.InvokeScript( "eval", jsQuerySelectorStyle ) as string;
+			while( string.IsNullOrEmpty( selectorStyle ) ) {
+				if( retry-- <= 0 ) {
+					browser.Navigate( defaultLocation );
+					return false;
+				}
+
+				await Task.Delay( rnd.Next( 250, 450 ) );
+				selectorStyle = browser.InvokeScript( "eval", jsQuerySelectorStyle ) as string;
+			}
+
+			return true;
+		}
 
 		#endregion // "Web Page Translators"
 
@@ -1406,44 +1471,6 @@ namespace MinaxWebTranslator.Desktop
 		{
 			return RemoteAgents.SliceSections( text, maxWords, out sections );
 		}
-
-		private static async Task<bool> _WaitForSelector( WebBrowser browser, string cssSelector, string defaultLocation, int retry = 50 )
-		{
-			var jsQuerySelectorCnt = new string[] {
-				string.Format( @"document.querySelectorAll('{0}').length;", cssSelector ),
-			};
-			int selectorCnt = (int)browser.InvokeScript( "eval", jsQuerySelectorCnt );
-			while( selectorCnt <= 0 ) {
-				if( retry-- <= 0 ) {
-					if( defaultLocation != null )
-						browser.Navigate( defaultLocation );
-					return false;
-				}
-
-				await Task.Delay( rnd.Next( 200, 300 ) );
-				selectorCnt = (int)browser.InvokeScript( "eval", jsQuerySelectorCnt );
-			}
-
-			return true;
-		}
-
-		private static async Task<bool> _WaitForStyle( WebBrowser browser, string cssSelector, string defaultLocation, int retry = 50 )
-		{
-			var jsQuerySelectorStyle = new string[] { $"document.querySelector('{cssSelector}').getAttribute('style');" };
-			var selectorStyle = browser.InvokeScript( "eval", jsQuerySelectorStyle ) as string;
-			while( string.IsNullOrEmpty( selectorStyle ) ) {
-				if( retry-- <= 0 ) {
-					browser.Navigate( defaultLocation );
-					return false;
-				}
-
-				await Task.Delay( rnd.Next( 250, 450 ) );
-				selectorStyle = browser.InvokeScript( "eval", jsQuerySelectorStyle ) as string;
-			}
-
-			return true;
-		}
-
 
 		private static void _Report( IProgress<ProgressInfo> progress,
 						int percentOrCode, string message, object infoObject )

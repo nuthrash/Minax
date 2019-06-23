@@ -26,6 +26,9 @@ using static Minax.Domain.Translation.SupportedLanguagesExtensions;
 
 namespace MinaxWebTranslator.Desktop.Views
 {
+	/// <summary>
+	/// Dockable panel for Mapping tables
+	/// </summary>
 	public partial class MappingDockingPanel : LayoutAnchorable
 	{
 		internal bool IsProjectChanged => mProjChanged;
@@ -54,17 +57,9 @@ namespace MinaxWebTranslator.Desktop.Views
 			DialogResultOnCancel = MessageDialogResult.Canceled, OwnerCanCloseWithDialog = true,
 		};
 
-		// Mahapps ShowMessage's config for Yes/No
-		private static readonly MetroDialogSettings sMetroDlgYesNoSettings = new MetroDialogSettings {
-			AffirmativeButtonText = Languages.Global.Str0Yes, NegativeButtonText = Languages.Global.Str0No,
-			DefaultButtonFocus = MessageDialogResult.Affirmative,
-			DialogResultOnCancel = MessageDialogResult.Canceled, OwnerCanCloseWithDialog = true,
-		};
-
 		private readonly MainWindow mMainWindow;
 		private ProjectModel mProject;
 		private bool mProjChanged = false;
-		private bool mAutoMergeWhenFileChanged = false;
 
 
 		private TranslatorSelector mCurrentXlator = null;
@@ -74,7 +69,7 @@ namespace MinaxWebTranslator.Desktop.Views
 		private async void _SetProjChanged()
 		{
 			mProjChanged = true;
-			await MessageHub.SendMessageAsync( this, MessageType.ProjectChanged, null );
+			await MessageHub.SendMessageAsync( this, MessageType.ProjectChanged, mProject );
 		}
 
 		private async Task<bool> _ReloadAllMappingData( ProjectModel model )
@@ -84,7 +79,7 @@ namespace MinaxWebTranslator.Desktop.Views
 				return false;
 
 			// model shall open first
-			if( model.InUsed == false ) {
+			if( model.IsCurrent == false ) {
 				return false;
 			}
 
@@ -128,7 +123,8 @@ namespace MinaxWebTranslator.Desktop.Views
 				cvs.GroupDescriptions.Add( new PropertyGroupDescription( nameof( MappingMonitor.MappingModel.ProjectBasedFileName ) ) );
 				DgMappingGlossaries.ItemsSource = cvs.View;
 				TiMappingGlossaries.Visibility = Visibility.Visible;
-				TcMapping.Items.Insert( 0, TiMappingGlossaries );
+				if( TcMapping.Items.Contains(TiMappingGlossaries) == false )
+					TcMapping.Items.Insert( 0, TiMappingGlossaries );
 			}
 
 			bool hasGlossaryEntry = TcMapping.Items.Count > 0;
@@ -141,7 +137,8 @@ namespace MinaxWebTranslator.Desktop.Views
 			DgMappingProjConf.ItemsSource = projModels;
 			TiMappingProjConf.Header = model.ProjectName;
 			TiMappingProjConf.IsSelected = true;
-			TcMapping.Items.Insert( 0, TiMappingProjConf );
+			if( TcMapping.Items.Contains(TiMappingProjConf) == false )
+				TcMapping.Items.Insert( 0, TiMappingProjConf );
 
 			if( hasGlossaryEntry ) {
 				CollectionViewSource cvs = new CollectionViewSource();
@@ -149,7 +146,8 @@ namespace MinaxWebTranslator.Desktop.Views
 				cvs.GroupDescriptions.Add( new PropertyGroupDescription( nameof( MappingMonitor.MappingModel.ProjectBasedFileName ) ) );
 				DgMappingAll.ItemsSource = cvs.View;
 				TiMappingAll.Visibility = Visibility.Visible;
-				TcMapping.Items.Insert( 0, TiMappingAll );
+				if( TcMapping.Items.Contains(TiMappingAll) == false )
+					TcMapping.Items.Insert( 0, TiMappingAll );
 			}
 
 			return true;

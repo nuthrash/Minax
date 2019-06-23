@@ -1,18 +1,23 @@
-﻿
+﻿# Overview
+This folder place some sample projects and glossary files.
 
+## *.conf
+Sample Translation Project files.
 
-'What is a glossary file?'
- - Define specific names and terms with a glossary
+## GlossaryFileList.txt
 
+This file stores many relative paths (to this folder) of Glossary sub-folders and files. It shall be an UTF-8 pure text file!
 
- - 自訂 AutoML Translation 自訂模型、神經機器翻譯 (NMT) 一般模型或詞組式機器翻譯模型 (PBMT) 一般模型
- 
- 
- 
-Google Translation API v3
+### Content sample
+```
+./Glossary/Excite
+./Glossary/Excite/English2ChineseTraditional
+./Glossary/Excite/Japanese2ChineseTraditional
+./Glossary/Excite/Japanese2ChineseTraditional/MiscTerms1.tsv
+./Glossary/Excite/Japanese2ChineseTraditional/Monster1.csv
+./Glossary/Excite/Japanese2ChineseTraditional/Translator1.tsv
+./Glossary/Excite/Japanese2English
+ ```
 
-- https://cloud.google.com/translate/docs/quickstart-v3
-  -- https://translation.googleapis.com/v3beta1/projects/project-id/locations/global:translateText endpoint
- 
- 
- 
+## GlossaryEmpty.zip
+This file compress some empty glossary folders which can be extract to Project folder by yourself.
