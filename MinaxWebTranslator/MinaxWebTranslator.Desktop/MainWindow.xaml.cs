@@ -117,6 +117,9 @@ namespace MinaxWebTranslator.Desktop
 
 			_CloseProject();
 			//_SaveAppSettings();
+
+			// wait for other panel unbind ItemsSource!!
+			await Task.Delay( 100 );
 		}
 
 		#region "private data/methods/helpers"
@@ -1147,9 +1150,9 @@ namespace MinaxWebTranslator.Desktop
 				}
 			}
 
-			if( TbProjectDesc.Text != mProject.Project.Description )
+			if( mProject.Project.Description != TbProjectDesc.Text )
 				changed = true;
-			if( TbProjectRemoteSite.Text != mProject.Project.RemoteSite )
+			if( mProject.Project.RemoteSite != TbProjectRemoteSite.Text )
 				changed = true;
 
 			if( langChanged ) {

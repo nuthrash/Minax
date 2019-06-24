@@ -45,12 +45,12 @@ namespace Minax.Web.Translation
 		/// <summary>
 		/// Description text about this project
 		/// </summary>
-		public string Description { get; set; }
+		public string Description { get; set; } = "";
 
 		/// <summary>
 		/// Remote site URL for this project such as Web Novel site, Article site, etc.
 		/// </summary>
-		public string RemoteSite { get; set; }
+		public string RemoteSite { get; set; } = "";
 
 		/// <summary>
 		/// Last modified date

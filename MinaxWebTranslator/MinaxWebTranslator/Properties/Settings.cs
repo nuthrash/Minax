@@ -56,7 +56,6 @@ namespace MinaxWebTranslator.Properties
 			}
 		}
 		private const string RecentProjectsKey = "RecentProject";
-		//private static List<string> RecentProjectsDefault = new List<string>();
 		private static List<string> RecentProjectsSave = null;
 
 		public List<string> CustomGlossaryFileListLocations {
@@ -99,7 +98,7 @@ namespace MinaxWebTranslator.Properties
 		private const string CustomGlossaryFileListLocationsKey = "CustomGlossaryFileListLocations";
 		private static List<string> CustomGlossaryFileListLocationsSave = null;
 
-		public string DefaultGlossaryFileListLocation => "https://raw.githubusercontent.com/nuthrash/Minax/master/MinaxWebTranslator/TranslationProjects/GlossaryFileList.txt";
+		public string DefaultGlossaryFileListLocation => "https://github.com/nuthrash/Minax/raw/master/MinaxWebTranslator/TranslationProjects/GlossaryFileList.txt";
 
 		public int QuickTranslationWordMax => 500;
 

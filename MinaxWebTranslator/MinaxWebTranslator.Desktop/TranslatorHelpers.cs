@@ -1421,21 +1421,21 @@ namespace MinaxWebTranslator.Desktop
 		#endregion // "Web Page Translators"
 
 		// WebView/WebBrowser variables
-		private static readonly string sLocExciteCht = "https://www.excite.co.jp/world/fantizi/";
-		private static readonly string sLocExciteEn = "https://www.excite.co.jp/world/english/";
-		private static readonly string sLocWeblioCht = "https://translate.weblio.jp/chinese/";
-		private static readonly string sLocWeblioEn = "https://translate.weblio.jp/";
+		//private static readonly string sLocExciteCht = "https://www.excite.co.jp/world/fantizi/";
+		//private static readonly string sLocExciteEn = "https://www.excite.co.jp/world/english/";
+		//private static readonly string sLocWeblioCht = "https://translate.weblio.jp/chinese/";
+		//private static readonly string sLocWeblioEn = "https://translate.weblio.jp/";
 		private static readonly string sLocCrossLang = "http://cross.transer.com/";
 		private static readonly string sLocBaiduCht = "https://fanyi.baidu.com/#jp/cht/しかも";
 		private static readonly string sLocBaiduEn = "https://fanyi.baidu.com/#jp/en/しかも";
 		private static readonly string sLocYoudaoCht = "http://fanyi.youdao.com/";
-		private static readonly string sLocGoogleCht = "https://translate.google.com/?op=translate&sl=ja&tl=zh-TW&text=しかも";
-		private static readonly string sLocGoogleEn = "https://translate.google.com/?op=translate&sl=ja&tl=en&text=しかも";
+		//private static readonly string sLocGoogleCht = "https://translate.google.com/?op=translate&sl=ja&tl=zh-TW&text=しかも";
+		//private static readonly string sLocGoogleEn = "https://translate.google.com/?op=translate&sl=ja&tl=en&text=しかも";
 		private static readonly string sLocGoogleChtPrefix = "https://translate.google.com/?op=translate&sl=ja&tl=zh-TW&text=";
-		private static readonly string sLocGoogleChtDocPrefix = "https://translate.google.com/?op=docs&sl=ja&tl=zh-TW";
-		private static readonly string sLocGoogleChtDocPrefix2 = "https://translate.google.com/#view=home&op=docs&sl=ja&tl=zh-TW";
+		//private static readonly string sLocGoogleChtDocPrefix = "https://translate.google.com/?op=docs&sl=ja&tl=zh-TW";
+		//private static readonly string sLocGoogleChtDocPrefix2 = "https://translate.google.com/#view=home&op=docs&sl=ja&tl=zh-TW";
 		private static readonly string sLocGoogleEnPrefix = "https://translate.google.com/?op=translate&sl=ja&tl=en&text=";
-		private static readonly string sLocGoogleEnDocPrefix = "https://translate.google.com/?op=docs&sl=ja&tl=en";
+		//private static readonly string sLocGoogleEnDocPrefix = "https://translate.google.com/?op=docs&sl=ja&tl=en";
 		private static readonly string sLocBingCht = "https://www.bing.com/translator?to=zh-CHT&text=Change";
 		private static readonly string sLocBingEn = "https://www.bing.com/translator?to=en&text=しかも";
 

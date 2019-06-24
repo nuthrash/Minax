@@ -196,7 +196,6 @@ namespace Minax.Collections
 		protected virtual void OnCollectionChanged( NotifyCollectionChangedAction action,
 														object changedItem = null, int index = -1 )
 		{
-			//new NotifyCollectionChangedEventArgs();
 			CollectionChanged?.Invoke( this, new NotifyCollectionChangedEventArgs( action, changedItem, index ) );
 		}
 

@@ -15,7 +15,7 @@
       <Value Profile="(Default)">500</Value>
     </Setting>
     <Setting Name="DefaultGlossaryFileListLocation" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://raw.githubusercontent.com/nuthrash/Minax/master/MinaxWebTranslator/TranslationProjects/GlossaryFileList.txt</Value>
+      <Value Profile="(Default)">https://github.com/nuthrash/Minax/raw/master/MinaxWebTranslator/TranslationProjects/GlossaryFileList.txt</Value>
     </Setting>
     <Setting Name="RemoteXlatorType" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

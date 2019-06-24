@@ -14,6 +14,7 @@
   - Author: Excite Inc.
   - License: [Public Domain](https://en.wikipedia.org/wiki/Wikipedia:Public_domain)
   - Note: Shrinked by Minax Project.
+
 - [Bing.svg](./Bing.svg) <img src="./Bing.png" width="24" title="Bing Logo">
   - Source Link: https://freebiesupply.com/logos/bing-logo/
   - Title: Bing Logo

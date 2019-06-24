@@ -71,8 +71,8 @@ namespace MinaxWebTranslator.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://raw.githubusercontent.com/nuthrash/Minax/master/MinaxWebTranslator/Transl" +
-            "ationProjects/GlossaryFileList.txt")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/nuthrash/Minax/raw/master/MinaxWebTranslator/TranslationProjec" +
+            "ts/GlossaryFileList.txt")]
         public string DefaultGlossaryFileListLocation {
             get {
                 return ((string)(this["DefaultGlossaryFileListLocation"]));
