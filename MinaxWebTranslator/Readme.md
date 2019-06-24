@@ -26,7 +26,9 @@ It works with some online web sites and APIs, such as Excite, CROSS-transer, Web
 - Draggable and Dockable Panels
 <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main2-Dockable.jpg" width="640" title="MWT Desktop Main - Drag and Dockable">
   - You can drag and dock each panel to anywhere
-  - And restore original docking layout by Menu -> Panel Layout -> Restore Default
+  - And restore original docking layout by Menu -> Panel Layout -> Restore Default  
+<br />
+<br />
 
 - Hidable Panels
 <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main3-Hidable.jpg" width="640" title="MWT Desktop Main - Hideable">
@@ -35,16 +37,17 @@ It works with some online web sites and APIs, such as Excite, CROSS-transer, Web
 ### Menu
 - Project New, Open, Save, Close, and Recent Project(s)
 <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Menu1-RecentProjectWithTooltip.jpg" width="640" title="MWT Desktop Menu1 - Recent Project With Tooltip">
-  - Create New Project: Menu -> Project -> New
-  - Open Existed Project: Menu -> Project -> Open
-  - Save Opened Project: Menu -> Project -> Save
-  - Close Opened Project: Menu -> Project -> Close
-  - Open One of Recent Project(s): Menu -> Project -> Recent Project(s) -> Click desired project
-    - When mouse stop on one recent project item, it would popup tooltip table to show some information about it.
+  - Create New Project: Menu -> Project -> New <br />
+  - Open Existed Project: Menu -> Project -> Open <br />
+  - Save Opened Project: Menu -> Project -> Save <br />
+  - Close Opened Project: Menu -> Project -> Close <br />
+  - Open One of Recent Project(s): Menu -> Project -> Recent Project(s) -> Click desired project <br />
+    - When mouse stop on one recent project item, it would popup tooltip table to show some information about it. <br />
+<br />
 
 - Translator
   - Select Translator and fill required field(s): Menu -> Translator
-  <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Translator1.jpg" width="640" title="MWT Desktop Translator1">
+  <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Translator1.jpg" width="640" title="MWT Desktop Translator1"> <br />
   - When select a **charged** Translation API, you might fill required field(s) or keep blank util click Translate button to ask it or them.
   <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Translator2.jpg" width="640" title="MWT Desktop Translator2">
 
@@ -56,8 +59,8 @@ It works with some online web sites and APIs, such as Excite, CROSS-transer, Web
 - Step 4: Fill some text to Source box in Source panel
 - Step 5: Clcik Translate button in Target panel
 <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Target3-note.jpg" width="640" title="MWT Desktop Translator1">
-  - The translated text would show on the Target box in Target panel.
-  - The mapped text would be marked with **bold**.
+  - The translated text would show on the Target box in Target panel. <br />
+  - The mapped text would be marked with **bold**. <br />
 
 ---
 
