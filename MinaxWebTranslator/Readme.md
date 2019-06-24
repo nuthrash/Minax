@@ -68,7 +68,8 @@ See [Conepts.md](./Concepts.md)
 - Step 5: Clcik Translate button in Target panel
 <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Target3-note.jpg" title="MWT Desktop Translator1">
   - The translated text would show on the Target box in Target panel. <br />
-  - The mapped text would be marked with **bold** <br />
+  - The mapped text world be marked with bold.  
+  <br />
 
 ---
 
