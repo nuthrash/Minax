@@ -217,6 +217,14 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0" Text="Title" BackgroundColor="#E0E6F8" />
@@ -276,6 +284,126 @@
                                     <Span.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding OpenWebCmd}"
                                                         CommandParameter="https://www.filehelpers.net/" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label Grid.Column="0" Grid.Row="5" Text="Xamarin.Forms.DataGrid" />
+                    <Label Grid.Column="1" Grid.Row="5">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="https://github.com/akgulebubekir/Xamarin.Forms.DataGrid"
+                                                  TextColor="Blue" TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenWebCmd}"
+                                                        CommandParameter="https://github.com/akgulebubekir/Xamarin.Forms.DataGrid" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label Grid.Column="0" Grid.Row="6" Text="Xamarin.Plugin.FilePicker" />
+                    <Label Grid.Column="1" Grid.Row="6">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="https://github.com/jfversluis/FilePicker-Plugin-for-Xamarin-and-Windows"
+                                                  TextColor="Blue" TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenWebCmd}"
+                                                        CommandParameter="https://github.com/jfversluis/FilePicker-Plugin-for-Xamarin-and-Windows" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label Grid.Column="0" Grid.Row="7" Text="Xamarin.Forms.InputKit" />
+                    <Label Grid.Column="1" Grid.Row="7">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="https://github.com/enisn/Xamarin.Forms.InputKit"
+                                                  TextColor="Blue" TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenWebCmd}"
+                                                        CommandParameter="https://github.com/enisn/Xamarin.Forms.InputKit" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label Grid.Column="0" Grid.Row="8" Text="Xamarin.Forms.DialogKit" />
+                    <Label Grid.Column="1" Grid.Row="8">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="https://github.com/enisn/Xamarin.Forms.DialogKit"
+                                                  TextColor="Blue" TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenWebCmd}"
+                                                        CommandParameter="https://github.com/enisn/Xamarin.Forms.DialogKit" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label Grid.Column="0" Grid.Row="9" Text="Rg.Plugins.Popup" />
+                    <Label Grid.Column="1" Grid.Row="9">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="https://github.com/rotorgames/Rg.Plugins.Popup"
+                                                  TextColor="Blue" TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenWebCmd}"
+                                                        CommandParameter="https://github.com/rotorgames/Rg.Plugins.Popup" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label Grid.Column="0" Grid.Row="10" Text="Xamarin.Forms.AlertDialogModal" />
+                    <Label Grid.Column="1" Grid.Row="10">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="https://github.com/asimeonov/XamMultiChoiceModalPage"
+                                                  TextColor="Blue" TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenWebCmd}"
+                                                        CommandParameter="https://github.com/asimeonov/XamMultiChoiceModalPage" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label Grid.Column="0" Grid.Row="11" Text="Plugin.Toast" />
+                    <Label Grid.Column="1" Grid.Row="11">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="https://github.com/ishrakland/Toast/"
+                                                  TextColor="Blue" TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenWebCmd}"
+                                                        CommandParameter="https://github.com/ishrakland/Toast/" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label Grid.Column="0" Grid.Row="12" Text="CHTCHSConv" />
+                    <Label Grid.Column="1" Grid.Row="12">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="https://www.nuget.org/packages/CHTCHSConv"
+                                                  TextColor="Blue" TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenWebCmd}"
+                                                        CommandParameter="https://www.nuget.org/packages/CHTCHSConv" />
                                     </Span.GestureRecognizers>
                                 </Span>
                             </FormattedString>
@@ -362,8 +490,23 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Label Grid.Column="0" Grid.Row="4" Text="Fanhuaji (繁化姬)" />
+                    <Label Grid.Column="0" Grid.Row="4" Text="iPhotoDraw" />
                     <Label Grid.Column="1" Grid.Row="4">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="https://www.iphotodraw.com/"
+                                                  TextColor="Blue" TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenWebCmd}"
+                                                        CommandParameter="https://www.iphotodraw.com/" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label Grid.Column="0" Grid.Row="5" Text="Fanhuaji (繁化姬)" />
+                    <Label Grid.Column="1" Grid.Row="5">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="https://zhconvert.org/"
@@ -377,8 +520,8 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Label Grid.Column="0" Grid.Row="5" Text="Stack Overflow" />
-                    <Label Grid.Column="1" Grid.Row="5" >
+                    <Label Grid.Column="0" Grid.Row="6" Text="Stack Overflow" />
+                    <Label Grid.Column="1" Grid.Row="6" >
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="https://stackoverflow.com"
@@ -392,8 +535,8 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Label Grid.Column="0" Grid.Row="6" Text="MSDN Forums" />
-                    <Label Grid.Column="1" Grid.Row="6"  >
+                    <Label Grid.Column="0" Grid.Row="7" Text="MSDN Forums" />
+                    <Label Grid.Column="1" Grid.Row="7"  >
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="https://social.msdn.microsoft.com/Forums"
@@ -407,8 +550,8 @@
                         </Label.FormattedText>
                     </Label>
 
-                    <Label Grid.Column="0" Grid.Row="7" Text="GitHub" />
-                    <Label Grid.Column="1" Grid.Row="7" >
+                    <Label Grid.Column="0" Grid.Row="8" Text="GitHub" />
+                    <Label Grid.Column="1" Grid.Row="8" >
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="https://github.com/"

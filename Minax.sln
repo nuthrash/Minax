@@ -29,6 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{64146C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MinaxWebTranslator", "MinaxWebTranslator", "{F4B0E700-AC95-44AD-93D8-5D896B5C6209}"
 	ProjectSection(SolutionItems) = preProject
+		MinaxWebTranslator\Concepts.md = MinaxWebTranslator\Concepts.md
 		MinaxWebTranslator\Readme.md = MinaxWebTranslator\Readme.md
 	EndProjectSection
 EndProject

@@ -139,6 +139,12 @@
                             <Paragraph>Wiki:
                                 <Hyperlink NavigateUri="https://github.com/nuthrash/Minax/wiki">https://github.com/nuthrash/Minax/wiki</Hyperlink>
                             </Paragraph>
+                            <Paragraph>App Usage:
+                                <Hyperlink NavigateUri="https://github.com/nuthrash/Minax/blob/master/MinaxWebTranslator/Readme.md">https://github.com/nuthrash/Minax/blob/master/MinaxWebTranslator/Readme.md</Hyperlink>
+                            </Paragraph>
+                            <Paragraph>App Concepts:
+                                <Hyperlink NavigateUri="https://github.com/nuthrash/Minax/blob/master/MinaxWebTranslator/Concepts.md">https://github.com/nuthrash/Minax/blob/master/MinaxWebTranslator/Concepts.md</Hyperlink>
+                            </Paragraph>
                             <Paragraph>Sample Projects:
                                 <Hyperlink NavigateUri="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects">https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects</Hyperlink>
                             </Paragraph>
@@ -261,6 +267,7 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
 
 
@@ -291,10 +298,31 @@
                                     </Hyperlink>
                                 </TextBlock>
 
-                                <IconPacks:PackIconOcticons Grid.Column="0" Grid.Row="4"  Kind="FileCode" />
+                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="4" Kind="LanguageJavascript" />
                                 <TextBlock Grid.Column="1" Grid.Row="4">
                                     <Hyperlink
+                                        NavigateUri="https://github.com/paulbartrum/jurassic">Jurassic
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconOcticons Grid.Column="0" Grid.Row="5"  Kind="FileCode" />
+                                <TextBlock Grid.Column="1" Grid.Row="5">
+                                    <Hyperlink
                                         NavigateUri="https://www.filehelpers.net/">FileHelpers
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconSimpleIcons Grid.Column="0" Grid.Row="6"  Kind="GitHub" />
+                                <TextBlock Grid.Column="1" Grid.Row="6">
+                                    <Hyperlink
+                                        NavigateUri="https://github.com/nharren/HtmlToXamlConverter">HtmlToXamlConverter
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconModern Grid.Column="0" Grid.Row="7"  Kind="SocialNuget" />
+                                <TextBlock Grid.Column="1" Grid.Row="7">
+                                    <Hyperlink
+                                        NavigateUri="https://www.nuget.org/packages/ChineseConverter">ChineseConverter
                                     </Hyperlink>
                                 </TextBlock>
                             </Grid>
@@ -308,6 +336,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
@@ -337,26 +366,32 @@
                                     </Hyperlink>
                                 </TextBlock>
 
-                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="3"  Kind="Translate" />
+                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="3" Kind="FormatAnnotationPlus" />
                                 <TextBlock Grid.Column="1" Grid.Row="3">
+                                    <Hyperlink NavigateUri="https://www.iphotodraw.com/">iPhotoDraw
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="4"  Kind="Translate" />
+                                <TextBlock Grid.Column="1" Grid.Row="4">
                                     <Hyperlink NavigateUri="https://zhconvert.org/">Fanhuaji (繁化姬)
                                     </Hyperlink>
                                 </TextBlock>
 
-                                <IconPacks:PackIconSimpleIcons Grid.Column="0" Grid.Row="4"  Kind="StackOverflow" />
-                                <TextBlock Grid.Column="1" Grid.Row="4" IsHyphenationEnabled="True">
+                                <IconPacks:PackIconSimpleIcons Grid.Column="0" Grid.Row="5"  Kind="StackOverflow" />
+                                <TextBlock Grid.Column="1" Grid.Row="5" IsHyphenationEnabled="True">
                                     <Hyperlink NavigateUri="https://stackoverflow.com">Stack Overflow
                                     </Hyperlink>
                                 </TextBlock>
 
-                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="5"  Kind="ForumOutline" />
-                                <TextBlock Grid.Column="1" Grid.Row="5">
+                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="6"  Kind="ForumOutline" />
+                                <TextBlock Grid.Column="1" Grid.Row="6">
                                     <Hyperlink NavigateUri="https://social.msdn.microsoft.com/Forums">MSDN Forums
                                     </Hyperlink>
                                 </TextBlock>
 
-                                <IconPacks:PackIconSimpleIcons Grid.Column="0" Grid.Row="6"  Kind="GitHub" />
-                                <TextBlock Grid.Column="1" Grid.Row="6">
+                                <IconPacks:PackIconSimpleIcons Grid.Column="0" Grid.Row="7"  Kind="GitHub" />
+                                <TextBlock Grid.Column="1" Grid.Row="7">
                                     <Hyperlink NavigateUri="https://github.com/">GitHub
                                     </Hyperlink>
                                 </TextBlock>

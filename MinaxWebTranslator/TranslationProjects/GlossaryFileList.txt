@@ -1,4 +1,4 @@
-./Glossary
+﻿./Glossary
 ./Glossary/Baidu
 ./Glossary/Baidu/English2ChineseTraditional
 ./Glossary/Baidu/Japanese2ChineseTraditional

@@ -1,13 +1,21 @@
-<img src="../Assets/Images/Translator.png" width="64" title="Translator App Icon">
+﻿<img src="../Assets/Images/Translator.png" width="64" title="Translator App Icon">
 
 # Overview
-**Minax Web Translator** app is not a translator. It just an agent and text mapping-replacer for remote web translator/translation result.
+**Minax Web Translator** app is **not** a translator. It just an **agent and text mapping-replacer** for remote web translator/translation result.
 It works with some online web sites and APIs, such as Excite, CROSS-transer, Weblio, Baidu, Youdao, Google, Microsoft/Bing etc..
 
 - Wiki: https://github.com/nuthrash/Minax/wiki
 - Sample Projects: https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects
 
+<br />
+
 ---
+
+# Concepts and Translation API information
+See [Conepts.md](./Concepts.md)
+<br />
+<br />
+
 ---
 
 # Usage and Requirements
@@ -16,27 +24,27 @@ It works with some online web sites and APIs, such as Excite, CROSS-transer, Web
 - System Requirement
   1. Operating System: Windows 7 Service Pack 1 (SP1) and above
   2. .Net Framework: [4.7](https://dotnet.microsoft.com/download/dotnet-framework/net47) and above
-  3. Privilege Access: local storage, network
+  3. Privileged Access: local storage, network
 
 ### Main Window
 
 - Startup
-<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main1.jpg" width="640" title="MWT Desktop Main - Startup">
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main1.jpg" title="MWT Desktop Main - Startup">
 
 - Draggable and Dockable Panels
-<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main2-Dockable.jpg" width="640" title="MWT Desktop Main - Drag and Dockable">
-  - You can drag and dock each panel to anywhere
-  - And restore original docking layout by Menu -> Panel Layout -> Restore Default  
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main2-Dockable.jpg" title="MWT Desktop Main - Drag and Dockable">
+  - You can drag and dock each panel to anywhere <br />
+  - And restore to original docking layout by Menu -> Panel Layout -> Restore Default  
 <br />
 <br />
 
-- Hidable Panels
-<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main3-Hidable.jpg" width="640" title="MWT Desktop Main - Hideable">
+- Hideable Panels
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main3-Hidable.jpg" title="MWT Desktop Main - Hideable">
   - You can hide some panels to focus on Target panel
 
 ### Menu
 - Project New, Open, Save, Close, and Recent Project(s)
-<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Menu1-RecentProjectWithTooltip.jpg" width="640" title="MWT Desktop Menu1 - Recent Project With Tooltip">
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Menu1-RecentProjectWithTooltip.jpg" title="MWT Desktop Menu1 - Recent Project With Tooltip">
   - Create New Project: Menu -> Project -> New <br />
   - Open Existed Project: Menu -> Project -> Open <br />
   - Save Opened Project: Menu -> Project -> Save <br />
@@ -47,9 +55,9 @@ It works with some online web sites and APIs, such as Excite, CROSS-transer, Web
 
 - Translator
   - Select Translator and fill required field(s): Menu -> Translator
-  <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Translator1.jpg" width="640" title="MWT Desktop Translator1"> <br />
+  <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Translator1.jpg" title="MWT Desktop Translator1"> <br />
   - When select a **charged** Translation API, you might fill required field(s) or keep blank util click Translate button to ask it or them.
-  <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Translator2.jpg" width="640" title="MWT Desktop Translator2">
+  <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Translator2.jpg" title="MWT Desktop Translator2">
 
 
 ### Translating
@@ -58,17 +66,17 @@ It works with some online web sites and APIs, such as Excite, CROSS-transer, Web
 - Step 3: Create/Modify some mapping item in Mapping panel
 - Step 4: Fill some text to Source box in Source panel
 - Step 5: Clcik Translate button in Target panel
-<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Target3-note.jpg" width="640" title="MWT Desktop Translator1">
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Target3-note.jpg" title="MWT Desktop Translator1">
   - The translated text would show on the Target box in Target panel. <br />
-  - The mapped text would be marked with **bold**. <br />
+  - The mapped text would be marked with **bold** <br />
 
 ---
 
 ## Xamarin.Forms
 - Base Project Folder: [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/MinaxWebTranslator)
 - System Requirement
-  1. Operating System: depends on each platform sub-package
-  2. Privilege Access: local storage, network
+  1. Operating System: depends on each sub-package's platform
+  2. Privileged Access: local storage, network
 
 
 ### Android
