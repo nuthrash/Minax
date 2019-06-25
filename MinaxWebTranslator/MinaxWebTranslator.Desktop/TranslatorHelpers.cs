@@ -1,4 +1,4 @@
-﻿using HtmlAgilityPack;
+using HtmlAgilityPack;
 using Minax.Collections;
 using Minax.Domain.Translation;
 using Minax.Web.Translation;
@@ -747,7 +747,6 @@ namespace MinaxWebTranslator.Desktop
 			// only support Chinese ==> English by Youdao!!
 			if( TargetLanguage == SupportedTargetLanguage.English && SourceLanguage != SupportedSourceLanguage.ChineseSimplified )
 				return false;
-
 
 			// step 0: load default location, Host is "fanyi.youdao.com"
 			bool rst = await _WaitBrowserLoaded( browser, defLoc, RemoteType.Youdao, 3 );

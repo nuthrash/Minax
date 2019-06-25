@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -159,6 +159,9 @@ namespace Minax.Collections
 			return rst;
 		}
 
+		/// <summary>
+		/// Check if internal item count has reached ItemsCountMaximum, and remove extra item from front or back
+		/// </summary>
 		public void CheckMaxAndRemoveExtra()
 		{
 			if( base.list.Count > itemCntMax ) {
@@ -174,6 +177,11 @@ namespace Minax.Collections
 
 		#region "ObservableCollection like"
 
+		/// <summary>
+		/// Move oldIndex item to newIndex
+		/// </summary>
+		/// <param name="oldIndex">Old item index</param>
+		/// <param name="newIndex">New item index</param>
 		public void Move( int oldIndex, int newIndex )
 		{
 			if( oldIndex < 0 || oldIndex >= base.list.Count )

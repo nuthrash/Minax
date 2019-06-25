@@ -1,4 +1,4 @@
-﻿using Minax.Collections;
+using Minax.Collections;
 using Minax.Domain.Translation;
 using MinaxWebTranslator.Models;
 using System;
@@ -43,9 +43,12 @@ namespace MinaxWebTranslator.Views
 			InitializeComponent();
 
 			// replace DgMapping with new one...
-			// seems something wrong with Xamarin.Forms 4.0 results in many BindingProperty cannot be compiled...
-			DgMapping.ActiveRowColor = Color.FromHex( "#8899AA" ); //"#8899AA";
-			DgMapping.HeaderBackground = Color.FromHex( "#E0E6F8" ); //"#8899AA";
+			// seems something wrong with Xamarin.Forms 4.0...
+			// 1. highlight row sometimes wrong
+			// 2. cannot Binding with Converter "TcL10nItemsConverter"
+			DgMapping.ActiveRowColor = Color.FromHex( "#8899AA" );
+			DgMapping.HeaderBackground = Color.FromHex( "#E0E6F8" );
+
 
 			Label noData = new Label();
 			noData.Text = "NO DATA";
@@ -67,14 +70,19 @@ namespace MinaxWebTranslator.Views
 			newDg.HeaderHeight = DgMapping.HeaderHeight;
 
 			newDg.Columns.AddRange( DgMapping.Columns );
-			newDg.ItemsSource = new ObservableList<MappingMonitor.MappingModel>();
-			newDg.ItemSelected -= DgMapping_ItemSelected;
-			newDg.ItemSelected += DgMapping_ItemSelected;
+
+			// useless
+			//if( newDg.Resources == null )
+			//	newDg.Resources = new ResourceDictionary();
+			//newDg.Resources.Add( "TcL10nItemsConverter", new Converters.TextCategoryL10nItemsConverter() );
 
 			GdMain.Children.Remove( DgMapping );
 			GdMain.Children.Add( newDg, 0, 1 );
 
 			DgMapping = newDg;
+			DgMapping.ItemsSource = new ObservableList<MappingMonitor.MappingModel>();
+			DgMapping.ItemSelected -= DgMapping_ItemSelected;
+			DgMapping.ItemSelected += DgMapping_ItemSelected;
 
 			MessageHub.MessageReceived -= MsgHub_MessageRecevied;
 			MessageHub.MessageReceived += MsgHub_MessageRecevied;

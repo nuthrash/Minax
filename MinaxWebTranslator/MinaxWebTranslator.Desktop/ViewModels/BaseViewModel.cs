@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -28,6 +28,12 @@ namespace MinaxWebTranslator.Desktop.ViewModels
 			set => SetProperty( ref isDataEmpty, value );
 		}
 		private bool isDataEmpty = true;
+
+		public string DataErrorPlaceholder {
+			get => dataErrorPlaceholder;
+			set => SetProperty( ref dataErrorPlaceholder, value );
+		}
+		private string dataErrorPlaceholder;
 
 		/// <summary>
 		/// A string field cannot be empty

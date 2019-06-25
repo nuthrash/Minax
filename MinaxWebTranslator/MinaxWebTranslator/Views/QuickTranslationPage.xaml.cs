@@ -1,4 +1,4 @@
-﻿using Minax.Web.Translation;
+using Minax.Web.Translation;
 using MinaxWebTranslator.Models;
 using Rg.Plugins.Popup.Services;
 using System;
@@ -39,6 +39,10 @@ namespace MinaxWebTranslator.Views
 				NonEmptyMaxPlaceholder = $"Input some text to be translated, count: {mCurrentInput.Length}/{TranslatingMaxWordCount}",
 			};
 
+			EtQuickXLangOutput.BindingContext = mXlangVM = new ViewModels.BaseViewModel();
+			EtQuickYoudaoOutput.BindingContext = mYoudaoVM = new ViewModels.BaseViewModel();
+			EtQuickGoogleOutput.BindingContext = mGoogleVM = new ViewModels.BaseViewModel();
+
 			mEntries = new List<Entry> {
 				EtQuickInput,
 				EtQuickXLangOutput,
@@ -49,9 +53,28 @@ namespace MinaxWebTranslator.Views
 			MessageHub.MessageReceived -= MsgHub_MessageRecevied;
 			MessageHub.MessageReceived += MsgHub_MessageRecevied;
 
-			sTransProgress.ProgressChanged += async ( s1, e1 ) => {
+			sProgressXlang.ProgressChanged += async ( s1, e1 ) => {
+				if( e1.PercentOrErrorCode < 0 && string.IsNullOrWhiteSpace( e1.Message ) == false ) {
+					mXlangVM.DataErrorPlaceholder = e1.Message;
+				}
+
 				await MessageHub.SendMessageAsync( this, MessageType.XlatingProgress, e1 );
 			};
+			sProgressYoudao.ProgressChanged += async ( s1, e1 ) => {
+				if( e1.PercentOrErrorCode < 0 && string.IsNullOrWhiteSpace( e1.Message ) == false ) {
+					mYoudaoVM.DataErrorPlaceholder = e1.Message;
+				}
+
+				await MessageHub.SendMessageAsync( this, MessageType.XlatingProgress, e1 );
+			};
+			sProgressGoogle.ProgressChanged += async ( s1, e1 ) => {
+				if( e1.PercentOrErrorCode < 0 && string.IsNullOrWhiteSpace( e1.Message ) == false ) {
+					mGoogleVM.DataErrorPlaceholder = e1.Message;
+				}
+
+				await MessageHub.SendMessageAsync( this, MessageType.XlatingProgress, e1 );
+			};
+
 
 			EtQuickInput.TextChanged += ( s1, e1 ) => {
 				var text = EtQuickInput.Text;
@@ -99,11 +122,14 @@ namespace MinaxWebTranslator.Views
 		private bool isTranslating;
 		private string mCurrentInput = "";
 		private readonly ViewModels.EditingViewModel mEditingVM;
+		private readonly ViewModels.BaseViewModel mXlangVM, mYoudaoVM, mGoogleVM;
 		private readonly List<Entry> mEntries;
 		private CancellationTokenSource mCancelTokenSrource = new CancellationTokenSource();
 		private Timer mDeferredWorker = null;
 
-		private static Progress<Minax.ProgressInfo> sTransProgress = new Progress<Minax.ProgressInfo>();
+		private static readonly Progress<Minax.ProgressInfo> sProgressXlang = new Progress<Minax.ProgressInfo>(),
+					sProgressYoudao = new Progress<Minax.ProgressInfo>(),
+					sProgressGoogle = new Progress<Minax.ProgressInfo>();
 
 		private void _FillAndTriggerXlate( string textQuick )
 		{
@@ -188,19 +214,19 @@ namespace MinaxWebTranslator.Views
 			double preferSize = EtQuickInput.Height;
 			if( CbQuickXLang.IsChecked == true ) {
 				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.CrossLanguageFree, sourceText,
-							EtQuickXLangOutput, mCancelTokenSrource.Token, sTransProgress ) );
+							EtQuickXLangOutput, mCancelTokenSrource.Token, sProgressXlang ) );
 				AiBusyCrossTranser.HeightRequest = AiBusyCrossTranser.WidthRequest = preferSize;
 				AiBusyCrossTranser.IsRunning = true;
 			}
 			if( CbQuickYoudao.IsChecked == true ) {
 				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.YoudaoFree, sourceText,
-							EtQuickYoudaoOutput, mCancelTokenSrource.Token, sTransProgress ) );
+							EtQuickYoudaoOutput, mCancelTokenSrource.Token, sProgressYoudao ) );
 				AiBusyYoudao.HeightRequest = AiBusyYoudao.WidthRequest = preferSize;
 				AiBusyYoudao.IsRunning = true;
 			}
 			if( CbQuickGoogle.IsChecked == true ) {
 				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.GoogleFree, sourceText,
-							EtQuickGoogleOutput, mCancelTokenSrource.Token, sTransProgress ) );
+							EtQuickGoogleOutput, mCancelTokenSrource.Token, sProgressGoogle ) );
 				AiBusyGoogle.HeightRequest = AiBusyGoogle.WidthRequest = preferSize;
 				AiBusyGoogle.IsRunning = true;
 			}

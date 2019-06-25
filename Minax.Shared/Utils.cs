@@ -1,4 +1,4 @@
-﻿using Minax.Domain.Translation;
+using Minax.Domain.Translation;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -206,82 +206,10 @@ namespace Minax
 		{
 			if( sTextCategoryDescriptions.Count <= 0 ) {
 				var dict = sTextCategoryDescriptions;
-				dict[TextCategory.Undefined] = Languages.TextCategory.Str0Undefined;
 
-				dict[TextCategory.FirstName] = Languages.TextCategory.Str0FirstName;
-				dict[TextCategory.FamilyName] = Languages.TextCategory.Str0FamilyName;
-				dict[TextCategory.MiddleName] = Languages.TextCategory.Str0MiddleName;
-				dict[TextCategory.NickName] = Languages.TextCategory.Str0NickName;
-				dict[TextCategory.AliasName] = Languages.TextCategory.Str0AliasName;
-				dict[TextCategory.ReincarnatedName] = Languages.TextCategory.Str0ReincarnatedName;
-				dict[TextCategory.OtherName] = Languages.TextCategory.Str0OtherName;
-
-				dict[TextCategory.Character] = Languages.TextCategory.Str0Character;
-				dict[TextCategory.Machine] = Languages.TextCategory.Str0Machine;
-				dict[TextCategory.Ship] = Languages.TextCategory.Str0Ship;
-				dict[TextCategory.Car] = Languages.TextCategory.Str0Car;
-
-				dict[TextCategory.Organization] = Languages.TextCategory.Str0Organization;
-				dict[TextCategory.JobPosition] = Languages.TextCategory.Str0JobPosition;
-				dict[TextCategory.Relation] = Languages.TextCategory.Str0Relation;
-
-				dict[TextCategory.Species] = Languages.TextCategory.Str0Species;
-				//dict[TextCategory.Race] = Languages.TextCategory.Str0Race;
-				dict[TextCategory.Animal] = Languages.TextCategory.Str0Animal;
-				dict[TextCategory.Monster] = Languages.TextCategory.Str0Monster;
-
-				dict[TextCategory.Material] = Languages.TextCategory.Str0Material;
-				dict[TextCategory.Inventory] = Languages.TextCategory.Str0Inventory;
-				dict[TextCategory.Object] = Languages.TextCategory.Str0Object;
-
-				dict[TextCategory.Food] = Languages.TextCategory.Str0Food;
-				dict[TextCategory.Clothing] = Languages.TextCategory.Str0Clothing;
-				dict[TextCategory.Housing] = Languages.TextCategory.Str0Housing;
-				dict[TextCategory.Transportation] = Languages.TextCategory.Str0Transportation;
-				dict[TextCategory.Education] = Languages.TextCategory.Str0Education;
-				dict[TextCategory.Entertainment] = Languages.TextCategory.Str0Entertainment;
-				dict[TextCategory.Music] = Languages.TextCategory.Str0Music;
-
-				dict[TextCategory.HairStyle] = Languages.TextCategory.Str0HairStyle;
-				dict[TextCategory.Accessory] = Languages.TextCategory.Str0Accessory;
-				dict[TextCategory.Shoe] = Languages.TextCategory.Str0Shoe;
-
-				dict[TextCategory.Facility] = Languages.TextCategory.Str0Facility;
-				dict[TextCategory.Building] = Languages.TextCategory.Str0Building;
-				dict[TextCategory.Location] = Languages.TextCategory.Str0Location;
-				dict[TextCategory.City] = Languages.TextCategory.Str0City;
-
-				dict[TextCategory.Action] = Languages.TextCategory.Str0Action;
-				dict[TextCategory.Phenomenon] = Languages.TextCategory.Str0Phenomenon;
-				dict[TextCategory.Property] = Languages.TextCategory.Str0Property;
-				dict[TextCategory.Social] = Languages.TextCategory.Str0Social;
-
-				dict[TextCategory.BodyOrgan] = Languages.TextCategory.Str0BodyOrgan;
-
-				dict[TextCategory.Color] = Languages.TextCategory.Str0Color;
-
-				dict[TextCategory.Weapon] = Languages.TextCategory.Str0Weapon;
-				dict[TextCategory.Maneuver] = Languages.TextCategory.Str0Maneuver;
-				dict[TextCategory.Magic] = Languages.TextCategory.Str0Magic;
-				dict[TextCategory.Alchemy] = Languages.TextCategory.Str0Alchemy;
-
-				dict[TextCategory.Science] = Languages.TextCategory.Str0Science;
-				dict[TextCategory.Book] = Languages.TextCategory.Str0Book;
-				dict[TextCategory.Game] = Languages.TextCategory.Str0Game;
-				dict[TextCategory.Language] = Languages.TextCategory.Str0Language;
-				dict[TextCategory.Dialect] = Languages.TextCategory.Str0Dialect;
-				dict[TextCategory.Translator] = Languages.TextCategory.Str0Translator;
-				dict[TextCategory.MiscTerms] = Languages.TextCategory.Str0MiscTerms;
-
-				dict[TextCategory.Verbs] = Languages.TextCategory.Str0Verbs;
-				dict[TextCategory.Noun] = Languages.TextCategory.Str0Noun;
-				dict[TextCategory.Adjective] = Languages.TextCategory.Str0Adjective;
-				dict[TextCategory.Adverb] = Languages.TextCategory.Str0Adverb;
-				dict[TextCategory.Conjunction] = Languages.TextCategory.Str0Conjunction;
-				dict[TextCategory.Determiners] = Languages.TextCategory.Str0Determiners;
-				dict[TextCategory.Preposition] = Languages.TextCategory.Str0Preposition;
-				dict[TextCategory.Pronouns] = Languages.TextCategory.Str0Pronouns;
-
+				foreach( TextCategory category in Enum.GetValues( typeof( TextCategory ) ) ) {
+					dict[category] = category.ToL10nString();
+				}
 			}
 
 			return sTextCategoryDescriptions.Values.ToList();
@@ -314,6 +242,35 @@ namespace Minax
 			Enum.TryParse( description, out result );
 
 			return result;
+		}
+
+
+		private static readonly SortedDictionary<SupportedSourceLanguage, string> sSrcLangDescriptions = new SortedDictionary<SupportedSourceLanguage, string>();
+		public static IReadOnlyList<string> GetAllSupportedSourceLanguagesL10nStrings()
+		{
+			if( sSrcLangDescriptions.Count <= 0 ) {
+				var dict = sSrcLangDescriptions;
+
+				foreach( SupportedSourceLanguage srcLang in Enum.GetValues(typeof(SupportedSourceLanguage)) ) {
+					dict[srcLang] = srcLang.ToL10nString();
+				}
+			}
+
+			return sSrcLangDescriptions.Values.ToList();
+		}
+
+		private static readonly SortedDictionary<SupportedTargetLanguage, string> sTgtLangDescriptions = new SortedDictionary<SupportedTargetLanguage, string>();
+		public static IReadOnlyList<string> GetAllSupportedTargetLanguagesL10nStrings()
+		{
+			if( sTgtLangDescriptions.Count <= 0 ) {
+				var dict = sTgtLangDescriptions;
+
+				foreach( SupportedTargetLanguage tgtLang in Enum.GetValues(typeof( SupportedTargetLanguage ) ) ) {
+					dict[tgtLang] = tgtLang.ToL10nString();
+				}
+			}
+
+			return sTgtLangDescriptions.Values.ToList();
 		}
 
 		#endregion

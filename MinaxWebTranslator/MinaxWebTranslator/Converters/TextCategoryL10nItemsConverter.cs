@@ -1,4 +1,4 @@
-﻿using Minax.Domain.Translation;
+using Minax.Domain.Translation;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,7 +10,7 @@ namespace MinaxWebTranslator.Converters
 	/// <summary>
 	/// Mapping text category to L10N string converter
 	/// </summary>
-	internal class TextCategoryL10nItemsConverter : IValueConverter
+	public class TextCategoryL10nItemsConverter : IValueConverter
 	{
 		public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
 		{
