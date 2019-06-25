@@ -61,15 +61,26 @@ See [Conepts.md](./Concepts.md)
 
 
 ### Translating
+This feature is the main feature of this App to translate large size text.
 - Step 1: Open or create a Translation Project
 - Step 2: Select a desired Translator (Menu -> Translator)
 - Step 3: Create/Modify some mapping item in Mapping panel
 - Step 4: Fill some text to Source box in Source panel
-- Step 5: Clcik Translate button in Target panel
+- Step 5: Click Translate button in Target panel
 <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Target3-note.jpg" title="MWT Desktop Translator1">
   - The translated text would show on the Target box in Target panel. <br />
   - The mapped text world be marked with bold.  
+
   <br />
+
+### Quick Translation
+This feature is a simple feature to quick translate small piece of text,
+therefore the Input box is restricted to max 500 words.
+
+![MWT-WinDesktop-QuickTranslation2](../Assets/Images/ScreenShots/MWT-WinDesktop-QuickTranslation2.jpg "Quick Translation Panel")
+
+The basic usage is same with main translating feature, besides you select multiple Translators to translate short text simultaneously.
+And the "Integrated Output" box would integrate all selected Translators' output to a single section.
 
 ---
 
@@ -121,8 +132,8 @@ The rules of Translator selection are very simple:
      - For exmaple, Chinese is Logogram, and English is Phonogram, the syntax and word sequence are very different with each other.
      - When you select Google Translate to translate English to Japanese, you may get a acceptable result. But in the reverse direction is not so.
      - When you select Baidu Translator to translate between Chinese and Japanese, the result is acceptable on bi-direction, that's because these two languages are Logogram.
-3. Translate and Pray
-   - No matter what, the Translating engines are Machine Translation, you should not expect them would translate very well!!
+3. Press (Translate button) and Pray
+   - No matter what, these Translating engines are Machine Translation, you should not expect them would translate very well!!
 
-If you do not understand what I talk about, you could try every engine many times to find what is the best with you. 
+If you do not understand what I talk about, you could try every engine many times to find what is the best for you. 
 
