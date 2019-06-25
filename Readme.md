@@ -25,7 +25,7 @@ See [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebT
 <br />
 
 ## Build Environmnet
-- Microsoft Visual Studio 2019 16.1.3
+- Microsoft Visual Studio 2019 16.1.4
 - .Net Framework 4.7 SDK
 - .Net Core 3.0 preview6 (just for testing)
 - Android SDK Platform 28 (Android 9.0 - Pie)
