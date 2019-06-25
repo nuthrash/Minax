@@ -61,6 +61,15 @@ namespace Minax.Languages {
         }
         
         /// <summary>
+        ///   查詢類似 Accessory 的當地語系化字串。
+        /// </summary>
+        public static string Str0Accessory {
+            get {
+                return ResourceManager.GetString("Str0Accessory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Action 的當地語系化字串。
         /// </summary>
         public static string Str0Action {
@@ -138,6 +147,15 @@ namespace Minax.Languages {
         public static string Str0Building {
             get {
                 return ResourceManager.GetString("Str0Building", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Car 的當地語系化字串。
+        /// </summary>
+        public static string Str0Car {
+            get {
+                return ResourceManager.GetString("Str0Car", resourceCulture);
             }
         }
         
@@ -241,6 +259,15 @@ namespace Minax.Languages {
         }
         
         /// <summary>
+        ///   查詢類似 First Name 的當地語系化字串。
+        /// </summary>
+        public static string Str0FirstName {
+            get {
+                return ResourceManager.GetString("Str0FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Food 的當地語系化字串。
         /// </summary>
         public static string Str0Food {
@@ -309,6 +336,15 @@ namespace Minax.Languages {
         public static string Str0Location {
             get {
                 return ResourceManager.GetString("Str0Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Machine 的當地語系化字串。
+        /// </summary>
+        public static string Str0Machine {
+            get {
+                return ResourceManager.GetString("Str0Machine", resourceCulture);
             }
         }
         
@@ -394,6 +430,15 @@ namespace Minax.Languages {
         }
         
         /// <summary>
+        ///   查詢類似 Object 的當地語系化字串。
+        /// </summary>
+        public static string Str0Object {
+            get {
+                return ResourceManager.GetString("Str0Object", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Organization 的當地語系化字串。
         /// </summary>
         public static string Str0Organization {
@@ -471,6 +516,15 @@ namespace Minax.Languages {
         public static string Str0Science {
             get {
                 return ResourceManager.GetString("Str0Science", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Ship 的當地語系化字串。
+        /// </summary>
+        public static string Str0Ship {
+            get {
+                return ResourceManager.GetString("Str0Ship", resourceCulture);
             }
         }
         

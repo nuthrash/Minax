@@ -69,8 +69,26 @@ namespace MinaxWebTranslator.Views
 
 		private async void TbiSave_Clicked( object sender, EventArgs e )
 		{
-			if( string.IsNullOrWhiteSpace( EditingModel.OriginalText ) ) {
-				await DisplayAlert( "Invalid Field", "Original Text cannot be empty or full of white spaces!", "OK" );
+			var newOrig = EditingModel.OriginalText;
+			if( string.IsNullOrEmpty( newOrig ) ) {
+				await DisplayAlert( "Original Text Error", "Original Text cannot be empty!", Languages.Global.Str0Ok );
+				return;
+			}
+			if( string.IsNullOrWhiteSpace( newOrig ) ) {
+				await DisplayAlert( "Original Text Warning",
+					"The Original Text seems full of whitespace text, take care of it!!", Languages.Global.Str0Ok );
+			}
+
+			if( newOrig.Length <= 1 ) {
+				await DisplayAlert( "Original Text Warning",
+					"The Original Text might too short to replaced many words incorrectly!!", Languages.Global.Str0Ok );
+			}
+
+			// check orig is existed
+			var first = TargetList?.FirstOrDefault( item => item.OriginalText == newOrig );
+			if( first != null ) {
+				await DisplayAlert( "Duplicate Text",
+					$"Sorry! The Original Text of new Mapping \"{newOrig}\" duplicated with existed item!!", Languages.Global.Str0Ok );
 				return;
 			}
 

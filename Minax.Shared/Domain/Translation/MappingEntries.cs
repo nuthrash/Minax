@@ -26,7 +26,7 @@ namespace Minax.Domain.Translation
 		public const string FileExtension = ".tsv";
 
 		/// <summary>
-		/// Original string/text
+		/// Original string/text, cannot be empty but may full of whitespace characters
 		/// </summary>
 		public string OriginalText { get; set; }
 

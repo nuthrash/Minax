@@ -11,24 +11,52 @@ namespace Minax.Domain.Translation
 	{
 		Undefined = 0,
 
-		Character,
+		/// <summary>
+		/// Forename, given name, or first name
+		/// </summary>
+		FirstName,
+		/// <summary>
+		/// Surname, last name, or family name
+		/// </summary>
 		FamilyName,
 		MiddleName,
 		NickName,
 		AliasName,
+		/// <summary>
+		/// Before or after reincarnated name
+		/// </summary>
 		ReincarnatedName,
+		/// <summary>
+		/// Other name for un-classified name
+		/// </summary>
 		OtherName,
 
-		Organization, // PowerRanger, Empire...
-		JobPosition, // Manager, BraveMan, PartyRole, nobility...
+		Character,
+		Machine,
+		/// <summary>
+		/// Ship or craft like starship, aircraft, etc.
+		/// </summary>
+		Ship,
+		Car,
+
+		/// <summary>
+		/// Organization like PowerRanger, government, xxx empire
+		/// </summary>
+		Organization,
+		/// <summary>
+		/// Job position like manager, BraveMan, party role, nobility
+		/// </summary>
+		JobPosition,
 		Relation,
 
 		Species,
+		//Race,
 		Animal,
 		Monster,
 
 		Material,
 		Inventory,
+		Object,
 
 		Food,
 		Clothing,
@@ -39,6 +67,10 @@ namespace Minax.Domain.Translation
 		Music,
 
 		HairStyle,
+		/// <summary>
+		/// Accessory like ring, ear ring, etc.
+		/// </summary>
+		Accessory,
 		Shoe,
 
 		Facility,
@@ -47,8 +79,17 @@ namespace Minax.Domain.Translation
 		City,
 
 		Action,
+		/// <summary>
+		/// Phenomenon like gravity, weather, etc.
+		/// </summary>
 		Phenomenon,
+		/// <summary>
+		/// Attribute of something
+		/// </summary>
 		Property,
+		/// <summary>
+		/// Social related terms
+		/// </summary>
 		Social,
 
 		BodyOrgan,
@@ -56,25 +97,53 @@ namespace Minax.Domain.Translation
 		Color,
 
 		Weapon,
-		Maneuver, // 招式：Punch, Kick, Strike, Dodge
-		Magic, // 咒文、魔法 spell
+		/// <summary>
+		/// Skill for fighting, like punch, kick, strike, dodge, etc.
+		/// </summary>
+		Maneuver,
+		/// <summary>
+		/// Skill for magic, mana, and conjuration
+		/// </summary>
+		Magic,
 		Alchemy,
 
-		Science, // Physics
-		Book, // Novel, SF, Dictionary
-		Game, // FPS, Car racing
-		Language, // ビビット => 活潑＼生動＼Vivid
+		/// <summary>
+		/// Knowledge of Physics, Natural, etc.
+		/// </summary>
+		Science,
+		/// <summary>
+		/// Book category like novel, SF, dictionary
+		/// </summary>
+		Book,
+		/// <summary>
+		/// Game category like FPS, car racing, etc.
+		/// </summary>
+		Game,
+		/// <summary>
+		/// Source language related
+		/// </summary>
+		Language,
+		/// <summary>
+		/// Dialect about regional language
+		/// </summary>
 		Dialect,
-		Translator, // 勇者 => 勇者 (勇者 => 勇敢的人 is not good in this project!!)
-		MiscTerms, // SNS, TCP/IP, ラノベ(Light Novel)
+		/// <summary>
+		/// Translator-related mapping to avoid mis-translating
+		/// </summary>
+		/// <example>勇者 => 勇者 (勇者 => 勇敢的人 is not good when translated by some Translators!!)</example>
+		Translator,
+		/// <summary>
+		/// Other terms, like SNS, TCP/IP, ラノベ(Light Novel)
+		/// </summary>
+		MiscTerms,
 
 		Verbs,
 		Noun,
 		Adjective,
 		Adverb,
-		Conjunction, // 連詞
-		Determiners, // 限定詞
-		Preposition, // 介詞
-		Pronouns, // 代詞
+		Conjunction,
+		Determiners,
+		Preposition,
+		Pronouns,
 	}
 }

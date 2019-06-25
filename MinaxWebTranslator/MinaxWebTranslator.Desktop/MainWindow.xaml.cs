@@ -16,6 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using Xceed.Wpf.AvalonDock.Layout;
@@ -58,6 +59,13 @@ namespace MinaxWebTranslator.Desktop
 			// manually add TranslatorSelector panel
 			mXlatorSelectorPanel = new Views.TranslatorSelectorPanel();
 			FoTranslator.Content = mXlatorSelectorPanel;
+
+			// add CommandBindings, Project Save (Ctrl + S)
+			RoutedCommand saveProjectCmd = new RoutedCommand(), openProjectCmd = new RoutedCommand();
+			saveProjectCmd.InputGestures.Add( new KeyGesture( Key.S, ModifierKeys.Control ) );
+			CommandBindings.Add( new CommandBinding( saveProjectCmd, MiProjectSave_Click ) );
+			openProjectCmd.InputGestures.Add( new KeyGesture(Key.O, ModifierKeys.Control) );
+			CommandBindings.Add( new CommandBinding( openProjectCmd, MiProjectOpen_Click) );
 
 			this.DataContext = new MainWindowViewModel();
 		}
@@ -1150,10 +1158,14 @@ namespace MinaxWebTranslator.Desktop
 				}
 			}
 
-			if( mProject.Project.Description != TbProjectDesc.Text )
+			if( mProject.Project.Description != TbProjectDesc.Text ) {
+				mProject.Project.Description = TbProjectDesc.Text;
 				changed = true;
-			if( mProject.Project.RemoteSite != TbProjectRemoteSite.Text )
+			}
+			if( mProject.Project.RemoteSite != TbProjectRemoteSite.Text ) {
+				mProject.Project.RemoteSite = TbProjectRemoteSite.Text;
 				changed = true;
+			}
 
 			if( langChanged ) {
 				TranslatorHelpers.SourceLanguage = mProject.Project.SourceLanguage;
@@ -1233,11 +1245,6 @@ namespace MinaxWebTranslator.Desktop
 			ProjectManager.Instance.ClearRecentProjects();
 		}
 
-		private void MiProjectOpen_Click( object sender, RoutedEventArgs e )
-		{
-			_OpenProject();
-		}
-
 		private async void MiProjectNew_Click( object sender, RoutedEventArgs e )
 		{
 			var prevFn = mProjFileName;
@@ -1260,6 +1267,10 @@ namespace MinaxWebTranslator.Desktop
 				ShowAutoCloseMessage( "Operation Succeed", $"Create project \"{mProject.ProjectName}\" succeed." );
 			else
 				await this.ShowMessageAsync( "Operation Failed", $"Create project \"{dlg.FileName}\" failed." );
+		}
+		private void MiProjectOpen_Click( object sender, RoutedEventArgs e )
+		{
+			_OpenProject();
 		}
 
 		private void MiProjectSave_Click( object sender, RoutedEventArgs e )
@@ -1290,6 +1301,11 @@ namespace MinaxWebTranslator.Desktop
 			}
 			CurrentXlator = mXlatorSelectorPanel.SelectedTranslator;
 		}
+
+		//private void CommandBinding_Executed( object sender, System.Windows.Input.ExecutedRoutedEventArgs e )
+		//{
+		//	_SaveProject();
+		//}
 
 		private void MiAbout_Click( object sender, RoutedEventArgs e )
 		{

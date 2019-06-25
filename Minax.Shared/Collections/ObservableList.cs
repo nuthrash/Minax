@@ -23,7 +23,7 @@ namespace Minax.Collections
 		public ObservableList( IEnumerable<T> collection ) : base(collection) { }
 
 		/// <summary>
-		/// Items count maximum. When items count exceed max., then would auto remove extra items!
+		/// Items count maximum. When items count exceed max., then would handy remove extra items!
 		/// </summary>
 		public int ItemsCountMaximum {
 			get => itemCntMax;

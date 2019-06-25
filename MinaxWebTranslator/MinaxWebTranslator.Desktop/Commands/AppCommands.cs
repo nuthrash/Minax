@@ -60,6 +60,5 @@ namespace MinaxWebTranslator.Desktop.Commands
 				tbox.Paste();
 			}
 		} );
-
 	}
 }

@@ -19,6 +19,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinaxWebTranslator.Desktop", "MinaxWebTranslator\MinaxWebTranslator.Desktop\MinaxWebTranslator.Desktop.csproj", "{46E7ED60-A110-4F8B-95F9-D5B151B723E4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{73D23905-CB76-4BF7-B7BD-DE3704C42DDE}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{762B31B6-CC49-4FC0-B7B2-D0CEC948E2AE}"
 EndProject

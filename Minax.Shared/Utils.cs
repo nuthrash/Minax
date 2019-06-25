@@ -208,7 +208,7 @@ namespace Minax
 				var dict = sTextCategoryDescriptions;
 				dict[TextCategory.Undefined] = Languages.TextCategory.Str0Undefined;
 
-				dict[TextCategory.Character] = Languages.TextCategory.Str0Character;
+				dict[TextCategory.FirstName] = Languages.TextCategory.Str0FirstName;
 				dict[TextCategory.FamilyName] = Languages.TextCategory.Str0FamilyName;
 				dict[TextCategory.MiddleName] = Languages.TextCategory.Str0MiddleName;
 				dict[TextCategory.NickName] = Languages.TextCategory.Str0NickName;
@@ -216,16 +216,23 @@ namespace Minax
 				dict[TextCategory.ReincarnatedName] = Languages.TextCategory.Str0ReincarnatedName;
 				dict[TextCategory.OtherName] = Languages.TextCategory.Str0OtherName;
 
+				dict[TextCategory.Character] = Languages.TextCategory.Str0Character;
+				dict[TextCategory.Machine] = Languages.TextCategory.Str0Machine;
+				dict[TextCategory.Ship] = Languages.TextCategory.Str0Ship;
+				dict[TextCategory.Car] = Languages.TextCategory.Str0Car;
+
 				dict[TextCategory.Organization] = Languages.TextCategory.Str0Organization;
 				dict[TextCategory.JobPosition] = Languages.TextCategory.Str0JobPosition;
 				dict[TextCategory.Relation] = Languages.TextCategory.Str0Relation;
 
 				dict[TextCategory.Species] = Languages.TextCategory.Str0Species;
+				//dict[TextCategory.Race] = Languages.TextCategory.Str0Race;
 				dict[TextCategory.Animal] = Languages.TextCategory.Str0Animal;
 				dict[TextCategory.Monster] = Languages.TextCategory.Str0Monster;
 
 				dict[TextCategory.Material] = Languages.TextCategory.Str0Material;
 				dict[TextCategory.Inventory] = Languages.TextCategory.Str0Inventory;
+				dict[TextCategory.Object] = Languages.TextCategory.Str0Object;
 
 				dict[TextCategory.Food] = Languages.TextCategory.Str0Food;
 				dict[TextCategory.Clothing] = Languages.TextCategory.Str0Clothing;
@@ -236,6 +243,7 @@ namespace Minax
 				dict[TextCategory.Music] = Languages.TextCategory.Str0Music;
 
 				dict[TextCategory.HairStyle] = Languages.TextCategory.Str0HairStyle;
+				dict[TextCategory.Accessory] = Languages.TextCategory.Str0Accessory;
 				dict[TextCategory.Shoe] = Languages.TextCategory.Str0Shoe;
 
 				dict[TextCategory.Facility] = Languages.TextCategory.Str0Facility;

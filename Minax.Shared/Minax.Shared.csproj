@@ -36,6 +36,10 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Remove="Resources\WebNovelsEmpty.zip" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <PackageReference Include="FileHelpers" Version="3.4.0" />
 	<PackageReference Include="HtmlAgilityPack" Version="1.11.7" />
     <PackageReference Include="Jurassic" Version="3.0.0" />
@@ -77,6 +81,10 @@
 
   <ItemGroup>
     <Folder Include="Web\Formats\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\WebNovelsEmpty.zip" />
   </ItemGroup>
 
 </Project>

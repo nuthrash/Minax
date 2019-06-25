@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Str0Accessory" xml:space="preserve">
+    <value>Accessory</value>
+  </data>
   <data name="Str0Action" xml:space="preserve">
     <value>Action</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="Str0Building" xml:space="preserve">
     <value>Building</value>
+  </data>
+  <data name="Str0Car" xml:space="preserve">
+    <value>Car</value>
   </data>
   <data name="Str0Character" xml:space="preserve">
     <value>Character</value>
@@ -177,6 +183,9 @@
   <data name="Str0FamilyName" xml:space="preserve">
     <value>Family Name</value>
   </data>
+  <data name="Str0FirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
   <data name="Str0Food" xml:space="preserve">
     <value>Food</value>
   </data>
@@ -200,6 +209,9 @@
   </data>
   <data name="Str0Location" xml:space="preserve">
     <value>Location</value>
+  </data>
+  <data name="Str0Machine" xml:space="preserve">
+    <value>Machine</value>
   </data>
   <data name="Str0Magic" xml:space="preserve">
     <value>Magic</value>
@@ -228,6 +240,9 @@
   <data name="Str0Noun" xml:space="preserve">
     <value>Noun</value>
   </data>
+  <data name="Str0Object" xml:space="preserve">
+    <value>Object</value>
+  </data>
   <data name="Str0Organization" xml:space="preserve">
     <value>Organization</value>
   </data>
@@ -254,6 +269,9 @@
   </data>
   <data name="Str0Science" xml:space="preserve">
     <value>Science</value>
+  </data>
+  <data name="Str0Ship" xml:space="preserve">
+    <value>Ship</value>
   </data>
   <data name="Str0Shoe" xml:space="preserve">
     <value>Shoe</value>

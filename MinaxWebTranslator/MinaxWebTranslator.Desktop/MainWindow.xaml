@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MinaxWebTranslator.Desktop"
+        xmlns:Commands="clr-namespace:MinaxWebTranslator.Desktop.Commands"
         xmlns:lang="clr-namespace:MinaxWebTranslator.Desktop.Languages"
         xmlns:MinaxTranslation="clr-namespace:Minax.Domain.Translation;assembly=Minax.Shared"
         xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
@@ -91,8 +92,8 @@
                               ToolTip="Menu" Icon="{IconPacks:Material Kind=Menu}" >
                         <MenuItem Header="_Project" Foreground="Black">
                             <MenuItem x:Name="MiProjectNew" Header="_New" Click="MiProjectNew_Click" />
-                            <MenuItem x:Name="MiProjectOpen" Header="_Open" Click="MiProjectOpen_Click"/>
-                            <MenuItem x:Name="MiProjectSave" Header="_Save" Click="MiProjectSave_Click" />
+                            <MenuItem x:Name="MiProjectOpen" Header="_Open" InputGestureText="Ctrl+O" Click="MiProjectOpen_Click"/>
+                            <MenuItem x:Name="MiProjectSave" Header="_Save" InputGestureText="Ctrl+S" Click="MiProjectSave_Click" />
                             <MenuItem x:Name="MiProjectClose" Header="_Close" Click="MiProjectClose_Click" />
                             <Separator />
 
@@ -114,7 +115,7 @@
                                                 <Setter Property="BorderBrush" Value="{StaticResource MyMenuItem.Highlight.Border}"/>
                                             </MultiTrigger>
 
-                                            <DataTrigger Binding="{Binding Path=InUsed}" Value="True">
+                                            <DataTrigger Binding="{Binding Path=IsCurrent}" Value="True">
                                                 <Setter Property="IsChecked" Value="True" />
                                                 <Setter Property="Background" Value="{StaticResource MyMenuItem.Highlight.Background}"/>
                                                 <Setter Property="BorderBrush" Value="{StaticResource MyMenuItem.Highlight.Border}"/>

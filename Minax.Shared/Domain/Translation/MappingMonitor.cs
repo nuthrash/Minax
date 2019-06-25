@@ -234,7 +234,8 @@ namespace Minax.Domain.Translation
 					string errorMessage = null;
 					switch( columnName ) {
 						case nameof( OriginalText ):
-							if( String.IsNullOrWhiteSpace( OriginalText ) ) {
+							// OriginalText cannot be empty, but maybe full of whitespace characters!!
+							if( string.IsNullOrEmpty( OriginalText ) ) {
 								errorMessage = Languages.Global.Str0OriginalTextCantEmpty;
 							}
 							break;
@@ -245,6 +246,9 @@ namespace Minax.Domain.Translation
 
 			#endregion
 
+			/// <summary>
+			/// Suspenable notification of PropertyChanged event
+			/// </summary>
 			public bool IsNotificationEnabled { get; set; } = true;
 
 			public event PropertyChangedEventHandler PropertyChanged;
@@ -260,14 +264,14 @@ namespace Minax.Domain.Translation
 					return false;
 
 				backingStore = value;
-				if( IsNotificationEnabled )
-					OnNotify( propertyName );
+				OnNotify( propertyName );
 				return true;
 			}
 
 			private void OnNotify( [CallerMemberName]string propertyName = "" )
 			{
-				PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+				if( IsNotificationEnabled )
+					PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
 			}
 
 			#endregion
@@ -275,7 +279,7 @@ namespace Minax.Domain.Translation
 			/// <summary>
 			/// Create a new MappingEntry with same values of this MappingModel
 			/// </summary>
-			/// <returns></returns>
+			/// <returns>MappingEntry instance</returns>
 			public MappingEntry ToMappingEntry()
 			{
 				return new MappingEntry {

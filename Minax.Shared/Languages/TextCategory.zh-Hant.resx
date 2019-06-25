@@ -199,7 +199,7 @@
     <value>魔法(Magic)</value>
   </data>
   <data name="Str0Maneuver" xml:space="preserve">
-    <value>招式(Maneuver)</value>
+    <value>招式與技能(Maneuver)</value>
   </data>
   <data name="Str0Material" xml:space="preserve">
     <value>材質(Material)</value>
@@ -235,7 +235,7 @@
     <value>屬性(Property)</value>
   </data>
   <data name="Str0ReincarnatedName" xml:space="preserve">
-    <value>轉世後名字(ReincarnatedName)</value>
+    <value>轉世名字(ReincarnatedName)</value>
   </data>
   <data name="Str0Relation" xml:space="preserve">
     <value>關係(Relation)</value>
@@ -278,5 +278,23 @@
   </data>
   <data name="Str0Pronouns" xml:space="preserve">
     <value>代名詞(Pronouns)</value>
+  </data>
+  <data name="Str0Accessory" xml:space="preserve">
+    <value>飾品與配件(Accessory)</value>
+  </data>
+  <data name="Str0Car" xml:space="preserve">
+    <value>車輛(Car)</value>
+  </data>
+  <data name="Str0FirstName" xml:space="preserve">
+    <value>名字(FirstName)</value>
+  </data>
+  <data name="Str0Machine" xml:space="preserve">
+    <value>機械(Machine)</value>
+  </data>
+  <data name="Str0Object" xml:space="preserve">
+    <value>物件(Object)</value>
+  </data>
+  <data name="Str0Ship" xml:space="preserve">
+    <value>船艦(Ship)</value>
   </data>
 </root>

@@ -11,6 +11,7 @@ namespace Minax.Web.Translation
 		None = 0,
 
 		#region "Web Page types"
+
 		/// <summary>
 		/// Excite Transltor (エキサイト翻訳). Powered by KODENSHA
 		/// </summary>
@@ -44,6 +45,7 @@ namespace Minax.Web.Translation
 		/// Microsoft/Bing Transltor
 		/// </summary>
 		Microsoft = 60,
+
 		#endregion
 
 		#region "Web API types"
@@ -72,7 +74,7 @@ namespace Minax.Web.Translation
 		/// <summary>
 		/// Microsoft translation API (Free)
 		/// </summary>
-		MicrosoftFree = 160, // not found
+		MicrosoftFree = 160, // found some information, but seems not free
 
 		/// <summary>
 		/// Excite translation solution source. Kodensha(高電社) Co. Ltd.
@@ -82,7 +84,7 @@ namespace Minax.Web.Translation
 		/// <summary>
 		/// CrossLanguage Corp.(株式會社クロスランゲージ)
 		/// </summary>
-		/// <remarks>https://www.crosslanguage.co.jp/auto-translation/sdk/api/ ??</remarks>
+		/// <remarks>https://www.crosslanguage.co.jp/auto-translation/sdk/api/  ??</remarks>
 		CrossLanguageCharged = 220,
 		/// <summary>
 		/// Baidu Translation API (Charged)
@@ -99,6 +101,7 @@ namespace Minax.Web.Translation
 		/// </summary>
 		/// <remarks>https://cloud.google.com/translate/docs/ https://translation.googleapis.com/language/translate/v2</remarks>
 		GoogleCharged = 250,
+		//GoogleChargedV3 = 251,
 		/// <summary>
 		/// Microsoft Translation API (Charged) V3
 		/// </summary>

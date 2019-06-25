@@ -372,7 +372,6 @@ namespace MinaxWebTranslator.Desktop.Views
 					break;
 				case MessageType.DataReload:
 					if( data is ProjectModel reloadModel ) {
-						//var rst = await _ReloadAllMappingData( reloadModel );
 						await _ReloadAllMappingData( reloadModel );
 					}
 					break;
@@ -452,23 +451,26 @@ namespace MinaxWebTranslator.Desktop.Views
 			if( list == null )
 				return;
 
-			var newOrig = await mMainWindow.ShowInputAsync( "Add New Mapping", "New mapping text:", sInputSettings );
+			var newOrig = await mMainWindow.ShowInputAsync( "Add New Mapping", "New Original Text:", sInputSettings );
 
-			// show warning about OriginalText is all white spaces
-			if( string.IsNullOrWhiteSpace( newOrig ) ) {
-				await mMainWindow.ShowMessageAsync( "Original Text Error", "The Mapping text shall not be empty or full of white space!!" );
+			// show warning about OriginalText is empty (it maybe full of whitespace characters!!)
+			if( string.IsNullOrEmpty( newOrig ) ) {
+				await mMainWindow.ShowMessageAsync( "Original Text Error", "The Original Text shall not be empty!!" );
 				return;
+			}
+			if( string.IsNullOrWhiteSpace( newOrig ) ) {
+				await mMainWindow.ShowMessageAsync( "Original Text Warning", "The Original Text seems full of whitespace text, take care of it!!" );
 			}
 
 			// show warning about OriginalText is only one word
 			if( newOrig.Length <= 1 ) {
-				await mMainWindow.ShowMessageAsync( "Original Text Warning", "The Mapping text might too short to replaced many words incorrectly!!" );
+				await mMainWindow.ShowMessageAsync( "Original Text Warning", "The Original Text might too short to replaced many words incorrectly!!" );
 			}
 
 			// check orig is existed
 			var first = list.FirstOrDefault( item => item.OriginalText == newOrig );
 			if( first != null ) {
-				await mMainWindow.ShowMessageAsync( "Duplicate Text", $"Sorry! The original text of new mapping \"{newOrig}\" duplicated with existed item!!" );
+				await mMainWindow.ShowMessageAsync( "Duplicate Text", $"Sorry! The Original Text of new Mapping \"{newOrig}\" duplicated with existed item!!" );
 				DgMappingProjConf.SelectedItem = first;
 				return;
 			}
