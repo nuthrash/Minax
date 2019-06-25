@@ -10,13 +10,19 @@
     <Company>Minax</Company>
     <Authors>nuthrash</Authors>
     <Copyright>Copyright © 2019 nuthrash</Copyright>
-    <PackageProjectUrl>https://github.com/nuthrash/Minax.wiki.git</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/nuthrash/Minax/wiki</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nuthrash/Minax.git</RepositoryUrl>
-    <PackageIconUrl>https://raw.github.com/nuthrash/Minax/master/Assets/Images/Translator.png</PackageIconUrl>
+    <PackageIconUrl>https://github.com/nuthrash/Minax/raw/master/Assets/Images/Translator.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>WebTranslator</PackageTags>
     <Description>Minax Web Translator Desktop WPF app on .Net Core 3 and .Net Framework 4.7.</Description>
     <ApplicationIcon>Translator.ico</ApplicationIcon>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>MinaxWebTranslator.Desktop.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net47|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   
   <!--
@@ -25,7 +31,6 @@
   -->
 
   <ItemGroup>
-    <None Remove="App.config" />
     <None Remove="App.manifest" />
     <None Remove="Resources\BaiduTranslator.png" />
     <None Remove="Resources\Bing.png" />
@@ -65,13 +70,18 @@
     <PackageReference Include="Dirkster.AvalonDock" Version="3.5.7" />
     <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="3.5.7" />
     <PackageReference Include="FileHelpers" Version="3.4.0" />
-    <PackageReference Include="HtmlToXamlConverter" Version="1.0.5727.24510" />
     <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0391" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0158" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Minax.Shared\Minax.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="HtmlToXamlConverter">
+      <HintPath>..\..\Assets\Libraries\Signed\HtmlToXamlConverter.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

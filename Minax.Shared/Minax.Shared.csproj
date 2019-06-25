@@ -12,12 +12,14 @@
     <Copyright>Copyright © 2019 nuthrash</Copyright>
     <RepositoryUrl>https://github.com/nuthrash/Minax.git</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageTags>Minax</PackageTags>
+    <PackageTags>Minax.Shared</PackageTags>
     <PackageReleaseNotes>Initial base project</PackageReleaseNotes>
     <PackageIconUrl></PackageIconUrl>
-    <PackageProjectUrl>https://github.com/nuthrash/Minax.wiki.git</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/nuthrash/Minax/wiki</PackageProjectUrl>
     <NeutralLanguage></NeutralLanguage>
     <LangVersion>7.3</LangVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Minax.Shared.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net47'">
@@ -42,7 +44,7 @@
   <ItemGroup>
     <PackageReference Include="FileHelpers" Version="3.4.0" />
 	<PackageReference Include="HtmlAgilityPack" Version="1.11.7" />
-    <PackageReference Include="Jurassic" Version="3.0.0" />
+	<PackageReference Include="Jurassic.Unofficial" Version="2019.6.5" />
 	<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 

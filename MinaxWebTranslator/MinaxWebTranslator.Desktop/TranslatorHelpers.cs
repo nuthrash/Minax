@@ -1152,7 +1152,7 @@ namespace MinaxWebTranslator.Desktop
 				if( text.Contains( mm.OriginalText ) == false )
 					continue;
 
-				var k1 = $"WWW.ZKS{num++}.ORG"; // seems good, but some exceptions...so need regex replacement
+				var k1 = $"www.zks{num++}.org"; // seems good, but some exceptions...so need regex replacement
 				tmpList.Add( (mm.OriginalText, k1, mm.MappingText) );
 				sb.Replace( mm.OriginalText, k1 );
 
@@ -1271,14 +1271,15 @@ namespace MinaxWebTranslator.Desktop
 
 					// replace some CHS char. from Bing translated string
 					if( TargetLanguage == SupportedTargetLanguage.ChineseTraditional ) {
-						foreach( var (From, To) in Profiles.BingXlationAfter2Cht )
+						foreach( var (From, To) in Profiles.MicrosoftXlationAfter2Cht )
 							sb.Replace( From, To );
 					}
 
 					// Regex replace mis-translated temp. string
-					string regex1 = @"WWW[ .]+ZKS(?<SeqNum>[0-9]+)[ .]+.ORG";
+					string regex1 = @"[wW]{3}[ .]+zks(?<SeqNum>[0-9]+)[ .]+.org";
 					tstr = System.Text.RegularExpressions.Regex.Replace(
-								sb.ToString(), regex1, "WWW.ZKS${SeqNum}.ORG" );
+								sb.ToString(), regex1, "www.zks${SeqNum}.org",
+								System.Text.RegularExpressions.RegexOptions.IgnoreCase );
 					if( string.IsNullOrWhiteSpace( tstr ) == false ) {
 						sb.Clear();
 						sb.Append( tstr );
@@ -1335,7 +1336,7 @@ namespace MinaxWebTranslator.Desktop
 
 				await sSemaBrowser.WaitAsync( TimeSpan.FromSeconds( timeOutInSeconds ) );
 				browser.LoadCompleted -= WebBrowser_LoadCompleted;
-				await Task.Delay( 300 );
+				await Task.Delay( 1500 );
 
 				if( sBrowserLoaded == true && browser.Source.OriginalString == location )
 					return true;
@@ -1357,7 +1358,7 @@ namespace MinaxWebTranslator.Desktop
 				await sSemaBrowser.WaitAsync( TimeSpan.FromSeconds( timeOutInSeconds ) );
 				browser.LoadCompleted -= WebBrowser_LoadCompleted;
 
-				await Task.Delay( 300 );
+				await Task.Delay( 1500 );
 				return sBrowserLoaded;
 			}
 

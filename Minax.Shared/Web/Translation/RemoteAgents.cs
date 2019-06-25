@@ -1399,7 +1399,7 @@ namespace Minax.Web.Translation
 
 					List<IReadOnlyList<(string From, string To)>> afterTgtLangs = new List<IReadOnlyList<(string From, string To)>>();
 					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional ) {
-						afterTgtLangs.Add( Profiles.BingXlationAfter2Cht );
+						afterTgtLangs.Add( Profiles.MicrosoftXlationAfter2Cht );
 					}
 					if( false == ReplaceAfterXlation( sb, tmpList, afterTgtLangs, null, null ) )
 						continue;

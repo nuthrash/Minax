@@ -99,4 +99,30 @@ See [Conepts.md](./Concepts.md)
 - Project opened (some menu items would show after project opened)
 <img src="../Assets/Images/ScreenShots/MWT-Droid-Menu2.png" width="256 " title="MWT Droid Menu - Project opened">
 
+<br />
+
+---
+
+## Translator Selection
+There are many Translators or Translation Services provided by this App.
+However, The Android version has less selection due to the limitation of operating system.  
+
+Besides, not every Translating engine can translate any source language to target language.
+Therefore, I only put 2 source languages and 2 target languages in the App options, that is because I am more familiar with them.
+
+The rules of Translator selection are very simple:
+1. Select the engine which is familiar with source language
+   - The Google Translate come from America, it is more familiar with English.
+   - The Excite Transltor come from Japan, it is more familiar with Japanese.
+   - The Baidu Translator come from China, it is more familiar with Chinese.
+2. Select the engine which is familiar with target language
+   - By 1., we understand and select a engine which is familiar with source language
+   - That selected engine might not be familiar with target language
+     - For exmaple, Chinese is Logogram, and English is Phonogram, the syntax and word sequence are very different with each other.
+     - When you select Google Translate to translate English to Japanese, you may get a acceptable result. But in the reverse direction is not so.
+     - When you select Baidu Translator to translate between Chinese and Japanese, the result is acceptable on bi-direction, that's because these two languages are Logogram.
+3. Translate and Pray
+   - No matter what, the Translating engines are Machine Translation, you should not expect them would translate very well!!
+
+If you do not understand what I talk about, you could try every engine many times to find what is the best with you. 
 

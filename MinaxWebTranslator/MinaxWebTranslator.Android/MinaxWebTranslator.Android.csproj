@@ -21,6 +21,10 @@
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <AndroidKeyStore>true</AndroidKeyStore>
+    <AndroidSigningKeyStore>D:\Prog\VS\Minax\Assets\Releases\Android\Keystores\MinaxWebTranslator.Droid.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>v548sdf#2</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>mwt.droid</AndroidSigningKeyAlias>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
