@@ -100,7 +100,8 @@ namespace Minax.Web.Formats
 			public List<object> Relation { get; set; }
 
 			[JsonProperty( PropertyName = "result" )]
-			public string Result { get; set; }
+			public List<List<object>> Result { get; set; }
+			//public string Result { get; set; }
 		}
 	}
 

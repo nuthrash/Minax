@@ -117,8 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="GlossaryEmpty" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\GlossaryEmpty.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Str0ChineseSimplified" xml:space="preserve">
+    <value>Simplified Chinese</value>
+  </data>
+  <data name="Str0ChineseTraditional" xml:space="preserve">
+    <value>Traditional Chinese</value>
+  </data>
+  <data name="Str0English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Str0Japanese" xml:space="preserve">
+    <value>Japanese</value>
   </data>
 </root>

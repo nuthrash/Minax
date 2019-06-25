@@ -1,8 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:conv="clr-namespace:MinaxWebTranslator.Converters"
              xmlns:exts="clr-namespace:MinaxWebTranslator.Extensions"
              xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
              mc:Ignorable="d" NavigationPage.HasNavigationBar="False"
@@ -11,6 +12,11 @@
         <!--<ToolbarItem Text="TbiClear" IconImageSource="Translator" />-->
         <!--<ToolbarItem Text="Clear" IconImageSource="{exts:ImageResource MinaxWebTranslator.Resources.EditClear.png}"  />-->
     </ContentPage.ToolbarItems>
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<conv:TextCategoryL10nItemsConverter x:Key="TcL10nItemsConverter" />
+		</ResourceDictionary>
+	</ContentPage.Resources>
 
     <Grid x:Name="GdMain">
         <Grid.ColumnDefinitions>
@@ -49,10 +55,9 @@
             </StackLayout>
         </ScrollView>
 
-        <dg:DataGrid x:Name="DgMapping" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding}"
+		<dg:DataGrid x:Name="DgMapping" Grid.Column="0" Grid.Row="1"
                      SelectionEnabled="True" RowHeight="45" HeaderHeight="50" >
-
-            <dg:DataGrid.HeaderFontSize>
+			<dg:DataGrid.HeaderFontSize>
                 <OnIdiom  x:TypeArguments="x:Double">
                     <OnIdiom.Tablet>15</OnIdiom.Tablet>
                     <OnIdiom.Phone>13</OnIdiom.Phone>
@@ -61,7 +66,16 @@
             <dg:DataGrid.Columns>
                 <dg:DataGridColumn x:Name="DgcolOriginal" Title="Original" PropertyName="OriginalText" SortingEnabled="False" />
                 <dg:DataGridColumn Title="Mapping" PropertyName="MappingText" SortingEnabled="False" />
-                <dg:DataGridColumn Title="Category" PropertyName="Category" SortingEnabled="False" />
+				<dg:DataGridColumn x:Name="DgcolCategory" Title="Category" PropertyName="Category" SortingEnabled="False">
+					<!-- Not work with Xamarin.Forms 4.x -->
+					<!--<dg:DataGridColumn.CellTemplate>
+						<DataTemplate>
+							<ContentView HorizontalOptions="Fill" VerticalOptions="Fill">
+								<Label x:Name="LblCategory" Text="{Binding Path=Category, Converter={StaticResource TcL10nItemsConverter}}"  />
+							</ContentView>
+						</DataTemplate>
+					</dg:DataGridColumn.CellTemplate>-->
+				</dg:DataGridColumn>
 
                 <dg:DataGridColumn Title="Description" PropertyName="Description" SortingEnabled="False"/>
                 <dg:DataGridColumn Title="Comment" PropertyName="Comment" SortingEnabled="False" />

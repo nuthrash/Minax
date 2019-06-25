@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Minax.Domain.Translation.SupportedLanguagesExtensions;
 
 namespace Minax.Domain.Translation
 {
@@ -80,6 +79,7 @@ namespace Minax.Domain.Translation
 			//     <glossaryPath>/<engineFolder>/<langFolder>/*.* => <glossaryPath>/<engineFolder>/*.* => <glossaryPath>/*.*,
 			// the later is high priority for overwriting previous terms!!
 
+			// FileHelpers not support SamrtDetect in .Net Standard 2.0
 			var engine = new FileHelpers.DelimitedFileEngine<MappingEntry>( System.Text.Encoding.UTF8 );
 			foreach( var field in engine.Options.Fields )
 				field.IsOptional = true;
@@ -208,6 +208,15 @@ namespace Minax.Domain.Translation
 			return null;
 		}
 
+		/// <summary>
+		/// Check if a file is concerned by a project
+		/// </summary>
+		/// <param name="projFullPathFileName">Source project full-path filename</param>
+		/// <param name="glossaryFullPathFileName">Target glossary full-path file name</param>
+		/// <param name="engineFolderName">Remote Translator/Translation engine folder name for Glossary</param>
+		/// <param name="srcLang">Mapping source language</param>
+		/// <param name="tgtLang">Mapping target language</param>
+		/// <returns>true for concerned</returns>
 		public static bool IsFileConcernedByProject( string projFullPathFileName, string glossaryFullPathFileName,
 									string engineFolderName = "Excite",
 									SupportedSourceLanguage srcLang = SupportedSourceLanguage.Japanese,
@@ -256,7 +265,7 @@ namespace Minax.Domain.Translation
 			try {
 				string zipFileName = Path.GetTempFileName();
 
-				var sampleZip = Properties.Resources.WebNovelsEmpty;
+				var sampleZip = Properties.Resources.GlossaryEmpty;
 				File.WriteAllBytes( zipFileName, sampleZip );
 
 				// NOTE: DO NOT clear old targetPath!! Just overwrite it!

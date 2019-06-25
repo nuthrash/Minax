@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Minax.Web.Translation;
 using System;
@@ -52,6 +52,11 @@ namespace MinaxWebTranslator.Desktop.Views
 				NonEmptyMaxPlaceholder = $"Input some text to be translated, count: {mCurrentInput.Length}/{TranslatingMaxWordCount}",
 			};
 
+			RtbQuickXLangOutput.DataContext = mXlangVM = new ViewModels.BaseViewModel();
+			RtbQuickBaiduOutput.DataContext = mBaiduVM = new ViewModels.BaseViewModel();
+			RtbQuickYoudaoOutput.DataContext = mYoudaoVM = new ViewModels.BaseViewModel();
+			RtbQuickGoogleOutput.DataContext = mGoogleVM = new ViewModels.BaseViewModel();
+
 			mRtbs = new List<RichTextBox> {
 				RtbQuickInput,
 				RtbQuickXLangOutput,
@@ -63,7 +68,32 @@ namespace MinaxWebTranslator.Desktop.Views
 			MessageHub.MessageReceived -= MsgHub_MessageRecevied;
 			MessageHub.MessageReceived += MsgHub_MessageRecevied;
 
-			sTransProgress.ProgressChanged += async ( s1, e1 ) => {
+			sProgressXlang.ProgressChanged += async ( s1, e1 ) => {
+				if( e1.PercentOrErrorCode < 0 && string.IsNullOrWhiteSpace(e1.Message) == false ) {
+					mXlangVM.DataErrorPlaceholder = e1.Message;
+				}
+
+				await MessageHub.SendMessageAsync( this, MessageType.XlatingProgress, e1 );
+			};
+			sProgressBaidu.ProgressChanged += async ( s1, e1 ) => {
+				if( e1.PercentOrErrorCode < 0 && string.IsNullOrWhiteSpace( e1.Message ) == false ) {
+					mBaiduVM.DataErrorPlaceholder = e1.Message;
+				}
+
+				await MessageHub.SendMessageAsync( this, MessageType.XlatingProgress, e1 );
+			};
+			sProgressYoudao.ProgressChanged += async ( s1, e1 ) => {
+				if( e1.PercentOrErrorCode < 0 && string.IsNullOrWhiteSpace( e1.Message ) == false ) {
+					mYoudaoVM.DataErrorPlaceholder = e1.Message;
+				}
+
+				await MessageHub.SendMessageAsync( this, MessageType.XlatingProgress, e1 );
+			};
+			sProgressGoogle.ProgressChanged += async ( s1, e1 ) => {
+				if( e1.PercentOrErrorCode < 0 && string.IsNullOrWhiteSpace( e1.Message ) == false ) {
+					mGoogleVM.DataErrorPlaceholder = e1.Message;
+				}
+
 				await MessageHub.SendMessageAsync( this, MessageType.XlatingProgress, e1 );
 			};
 
@@ -124,6 +154,7 @@ namespace MinaxWebTranslator.Desktop.Views
 
 		private readonly MainWindow mMainWindow; // = Application.Current.MainWindow as MainWindow;
 		private readonly ViewModels.EditingViewModel mEditingVM;
+		private readonly ViewModels.BaseViewModel mXlangVM, mBaiduVM, mYoudaoVM, mGoogleVM;
 		private readonly List<RichTextBox> mRtbs;
 		private volatile bool isTranslating = false;
 		private CancellationTokenSource mCancelTokenSrource = new CancellationTokenSource();
@@ -131,7 +162,10 @@ namespace MinaxWebTranslator.Desktop.Views
 		private string mCurrentInput = "";
 
 		// GUI Progress Indicator
-		private static readonly Progress<Minax.ProgressInfo> sTransProgress = new Progress<Minax.ProgressInfo>();
+		private static readonly Progress<Minax.ProgressInfo> sProgressXlang = new Progress<Minax.ProgressInfo>(),
+					sProgressBaidu = new Progress<Minax.ProgressInfo>(),
+					sProgressYoudao = new Progress<Minax.ProgressInfo>(),
+					sProgressGoogle = new Progress<Minax.ProgressInfo>();
 
 
 		private void _FillAndTriggerXlate( string textQuick )
@@ -206,20 +240,24 @@ namespace MinaxWebTranslator.Desktop.Views
 			List<Task> tasks = new List<Task>();
 
 			if( CbQuickXLang.IsChecked == true ) {
+				mXlangVM.DataErrorPlaceholder = "";
 				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.CrossLanguageFree, sourceText, RtbQuickXLangOutput,
-												mCancelTokenSrource.Token, sTransProgress ) );
+												mCancelTokenSrource.Token, sProgressXlang ) );
 			}
 			if( CbQuickBaidu.IsChecked == true ) {
+				mBaiduVM.DataErrorPlaceholder = "";
 				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.BaiduFree, sourceText, RtbQuickBaiduOutput,
-												mCancelTokenSrource.Token, sTransProgress ) );
+												mCancelTokenSrource.Token, sProgressBaidu ) );
 			}
 			if( CbQuickYoudao.IsChecked == true ) {
+				mYoudaoVM.DataErrorPlaceholder = "";
 				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.YoudaoFree, sourceText, RtbQuickYoudaoOutput,
-												mCancelTokenSrource.Token, sTransProgress ) );
+												mCancelTokenSrource.Token, sProgressYoudao ) );
 			}
 			if( CbQuickGoogle.IsChecked == true ) {
+				mGoogleVM.DataErrorPlaceholder = "";
 				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.GoogleFree, sourceText, RtbQuickGoogleOutput,
-												mCancelTokenSrource.Token, sTransProgress ) );
+												mCancelTokenSrource.Token, sProgressGoogle ) );
 			}
 
 			await Task.WhenAll( tasks );

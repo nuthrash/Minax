@@ -1,4 +1,4 @@
-﻿using Jurassic;
+using Jurassic;
 using Microsoft.International.Converters.TraditionalChineseToSimplifiedConverter;
 using Minax.Collections;
 using Minax.Domain.Translation;
@@ -204,7 +204,7 @@ namespace Minax.Web.Translation
 			}
 			switch( targetLanguage ) {
 				case SupportedTargetLanguage.English:
-					defLoc = sLocExciteEn;
+					//defLoc = sLocExciteEn;
 					tgtLang = "en";
 					break;
 			}
@@ -288,8 +288,6 @@ namespace Minax.Web.Translation
 				var sign = jsEngine.CallGlobalFunction<string>( "token", section, baiduGtk );
 
 				values["query"] = section; // words to be translated
-				//values["sign"] = token( text, "320305.131321201" ); // window.gtk == "320....."
-				//values["sign"] = "453684.134917";
 				values["sign"] = sign;
 
 				if( cancelToken.IsCancellationRequested )
@@ -402,8 +400,11 @@ namespace Minax.Web.Translation
 			string defLoc = sLocYoudaoFree, srcLang = "ja", tgtLang = "zh-CHS"; // from Japanese to ChineseSimplified
 			switch( targetLanguage ) {
 				case SupportedTargetLanguage.English:
-					tgtLang = "en";
-					break;
+					//tgtLang = "en"; // Not Support!!
+					//break;
+					progress?.Report( new ProgressInfo { PercentOrErrorCode = -1,
+						Message = $"Youdao does not support translate from {sourceLanguage.ToL10nString()} to {targetLanguage.ToL10nString()}" } );
+					yield break;
 			}
 
 
@@ -953,7 +954,7 @@ namespace Minax.Web.Translation
 			if( clientYoudao.DefaultRequestHeaders.Accept.Count <= 0 )
 				clientYoudao.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "*/*" ) );
 			if( clientYoudao.DefaultRequestHeaders.UserAgent.Count <= 0 )
-				clientBaidu.DefaultRequestHeaders.Add( "User-Agent", "curl/7.47.7" );
+				clientYoudao.DefaultRequestHeaders.Add( "User-Agent", "curl/7.47.7" );
 
 			Report( progress, 1, "Preparing Translation", null );
 

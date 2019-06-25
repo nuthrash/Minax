@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -74,9 +74,7 @@ namespace Minax.Collections
 				OnPropertyChanged( propertyName );
 			}
 			return true;
-		}
-
-		
+		}		
 
 		private void List_PropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
@@ -119,6 +117,7 @@ namespace Minax.Collections
 		#endregion
 
 		#region "INotifyStoppable members"
+
 		public bool IsNotificationEnabled {
 			get => isNotificationEnabled;
 			set => SetProperty( ref isNotificationEnabled, value );
@@ -199,7 +198,7 @@ namespace Minax.Collections
 			CollectionChanged?.Invoke( this, new NotifyCollectionChangedEventArgs( action, changedItem, index ) );
 		}
 
-		// for Reset, Add, Remove
+		// for Reset, Add, Remove list
 		protected virtual void OnCollectionChanged( NotifyCollectionChangedAction action, IList changedItems )
 		{
 			CollectionChanged?.Invoke( this, new NotifyCollectionChangedEventArgs( action, changedItems ) );

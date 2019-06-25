@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Minax.Properties {
+namespace Minax.Languages {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Minax.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class SupportedLanguages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal SupportedLanguages() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Minax.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Minax.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Minax.Languages.SupportedLanguages", typeof(SupportedLanguages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,12 +61,38 @@ namespace Minax.Properties {
         }
         
         /// <summary>
-        ///   查詢類型 System.Byte[] 的當地語系化資源。
+        ///   查詢類似 Simplified Chinese 的當地語系化字串。
         /// </summary>
-        internal static byte[] GlossaryEmpty {
+        internal static string Str0ChineseSimplified {
             get {
-                object obj = ResourceManager.GetObject("GlossaryEmpty", resourceCulture);
-                return ((byte[])(obj));
+                return ResourceManager.GetString("Str0ChineseSimplified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Traditional Chinese 的當地語系化字串。
+        /// </summary>
+        internal static string Str0ChineseTraditional {
+            get {
+                return ResourceManager.GetString("Str0ChineseTraditional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 English 的當地語系化字串。
+        /// </summary>
+        internal static string Str0English {
+            get {
+                return ResourceManager.GetString("Str0English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Japanese 的當地語系化字串。
+        /// </summary>
+        internal static string Str0Japanese {
+            get {
+                return ResourceManager.GetString("Str0Japanese", resourceCulture);
             }
         }
     }

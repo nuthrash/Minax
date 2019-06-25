@@ -36,7 +36,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Remove="Resources\WebNovelsEmpty.zip" />
+    <None Remove="Resources\GlossaryEmpty.zip" />
   </ItemGroup>
   
   <ItemGroup>
@@ -51,6 +51,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Global.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Languages\SupportedLanguages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SupportedLanguages.resx</DependentUpon>
     </Compile>
     <Compile Update="Languages\TextCategory.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -69,6 +74,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Global.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Languages\SupportedLanguages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SupportedLanguages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Languages\TextCategory.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TextCategory.Designer.cs</LastGenOutput>
@@ -84,7 +93,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\WebNovelsEmpty.zip" />
+    <Resource Include="Resources\GlossaryEmpty.zip" />
   </ItemGroup>
 
 </Project>
