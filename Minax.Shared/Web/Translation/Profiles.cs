@@ -125,7 +125,7 @@ namespace Minax.Web.Translation
 			//( "\"", "「"),
 		};
 
-		public static readonly IReadOnlyList<(string From, string To)> BingXlationAfter2Cht = new List<(string From, string To)> {
+		public static readonly IReadOnlyList<(string From, string To)> MicrosoftXlationAfter2Cht = new List<(string From, string To)> {
 			( ",", "，"), ( "!", "！"), ( "?", "？"), ( "。。。", "…"),
 			//( "\"", "「"),
 		};

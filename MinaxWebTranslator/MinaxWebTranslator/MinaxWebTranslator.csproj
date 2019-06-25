@@ -8,12 +8,14 @@
     <Authors>nuthrash</Authors>
     <Company>Minax</Company>
     <Copyright>Copyright © 2019 nuthrash</Copyright>
-    <PackageProjectUrl>https://github.com/nuthrash/Minax.wiki.git</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/nuthrash/Minax/wiki</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nuthrash/Minax.git</RepositoryUrl>
-    <PackageIconUrl>https://raw.github.com/nuthrash/Minax/master/Images/Translator.png</PackageIconUrl>
+    <PackageIconUrl>https://github.com/nuthrash/Minax/raw/master/Assets/Images/Translator.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>WebTranslator</PackageTags>
     <Description>Minax Web Translator apps common GUI library for Android, iOS, UWP/WinUI systems.</Description>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>MinaxWebTranslator.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
