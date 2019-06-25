@@ -1,0 +1,469 @@
+﻿<MahApps:MetroWindow  x:Class="MinaxWebTranslator.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MinaxWebTranslator.Desktop"
+        xmlns:Commands="clr-namespace:MinaxWebTranslator.Desktop.Commands"
+        xmlns:lang="clr-namespace:MinaxWebTranslator.Desktop.Languages"
+        xmlns:MinaxTranslation="clr-namespace:Minax.Domain.Translation;assembly=Minax.Shared"
+        xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+        mc:Ignorable="d" 
+        Dialog:DialogParticipation.Register="{Binding}"
+        Title="Minax Web Translator" Height="800" Width="1280" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"
+        ShowIconOnTitleBar="True" UseLayoutRounding="True"
+        LeftWindowCommandsOverlayBehavior="Never" RightWindowCommandsOverlayBehavior="Never"
+        WindowButtonCommandsOverlayBehavior="Always" IconOverlayBehavior="Always"
+        Icon="Resources/Translator.png" ShowInTaskbar="True" ResizeMode="CanResizeWithGrip"
+        TitleCharacterCasing="Normal" SaveWindowPosition="True" Panel.ZIndex="9999"
+        Loaded="MetroWindow_Loaded" Closing="Window_Closing">
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style BasedOn="{StaticResource {x:Type Button}}" 
+                   TargetType="{x:Type Button}">
+                <Setter Property="MahApps:ControlsHelper.ContentCharacterCasing" Value="Normal"/>
+            </Style>
+            <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" 
+                   TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="MahApps:ControlsHelper.ContentCharacterCasing" Value="Normal"/>
+            </Style>
+
+            <!-- Remove extra NewLine margin for RichTextBox's Paragraph -->
+            <Style TargetType="{x:Type Paragraph}">
+                <Setter Property="Margin" Value="0" />
+            </Style>
+
+            <!-- MetroWindow CommandsOverlayBehaviors -->
+            <ObjectDataProvider x:Key="WindowCommandsOverlayBehaviorValues"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type MahApps:WindowCommandsOverlayBehavior}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="MahApps:WindowCommandsOverlayBehavior" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+
+            <ControlTemplate x:Key="ProjectToolTipTemplate" TargetType="{x:Type ToolTip}">
+                <Border BorderThickness="1"  CornerRadius="4" Padding="4"
+                        Background="{DynamicResource AccentColorBrush}">
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}"/>
+                            </Style>
+                        </Grid.Resources>
+                        <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Margin="1 0 5 0" Text="Project Name" />
+                        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Margin="1 0 5 0" Text="File Name" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Margin="1 0 5 0" Text="Full Path" />
+                        <GridSplitter Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="{DynamicResource IdealForegroundColorBrush}" Width="2" />
+                        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Margin="3 0 1 0" Text="{Binding Path=ProjectName}" />
+                        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="3 0 1 0" Text="{Binding Path=FileName}" />
+                        <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="3 0 1 0" Text="{Binding Path=FullPathFileName}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <MahApps:MetroWindow.WindowButtonCommands>
+        <MahApps:WindowButtonCommands Style="{DynamicResource MahApps.Metro.Styles.WindowButtonCommands.Win10}" />
+    </MahApps:MetroWindow.WindowButtonCommands>
+
+    <MahApps:MetroWindow.LeftWindowCommands>
+        <MahApps:WindowCommands ShowLastSeparator="False" HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Center" VerticalAlignment="Stretch">
+
+            <Button Margin="0" Padding="0" VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <Menu x:Name="MnMain" Background="Transparent"                      
+                      Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}">
+                    <MenuItem Width="24" Height="24" Margin="0"  VerticalAlignment="Center" Background="Transparent"
+                              ToolTip="Menu" Icon="{IconPacks:Material Kind=Menu}" >
+                        <MenuItem Header="_Project" Foreground="Black">
+                            <MenuItem x:Name="MiProjectNew" Header="_New" Click="MiProjectNew_Click" />
+                            <MenuItem x:Name="MiProjectOpen" Header="_Open" InputGestureText="Ctrl+O" Click="MiProjectOpen_Click"/>
+                            <MenuItem x:Name="MiProjectSave" Header="_Save" InputGestureText="Ctrl+S" Click="MiProjectSave_Click" />
+                            <MenuItem x:Name="MiProjectClose" Header="_Close" Click="MiProjectClose_Click" />
+                            <Separator />
+
+                            <MenuItem x:Name="MiProjClearRecent" Header="Clear Recent Project(s)" Click="MiProjClearRecent_Click" />
+                            <MenuItem x:Name="MiProjRecent" Header="Recent Project(s)">
+                                <MenuItem.ItemContainerStyle>
+                                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                                        <Setter Property="IsCheckable" Value="False" />
+                                        <Setter Property="IsChecked" Value="{Binding Path=IsCurrent, Mode=OneWay}" />
+                                        <EventSetter Event="Click" Handler="MenuItemRecentProject_Click" />
+
+                                        <Style.Triggers>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsChecked" Value="True" />
+                                                    <Condition Property="IsEnabled" Value="True" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter Property="Background" Value="{StaticResource MyMenuItem.Highlight.Background}"/>
+                                                <Setter Property="BorderBrush" Value="{StaticResource MyMenuItem.Highlight.Border}"/>
+                                            </MultiTrigger>
+
+                                            <DataTrigger Binding="{Binding Path=IsCurrent}" Value="True">
+                                                <Setter Property="IsChecked" Value="True" />
+                                                <Setter Property="Background" Value="{StaticResource MyMenuItem.Highlight.Background}"/>
+                                                <Setter Property="BorderBrush" Value="{StaticResource MyMenuItem.Highlight.Border}"/>
+                                            </DataTrigger>
+
+                                        </Style.Triggers>
+                                    </Style>
+                                </MenuItem.ItemContainerStyle>
+                                <MenuItem.ItemTemplate>
+                                    <DataTemplate>
+                                        <DataTemplate.Resources>
+                                            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource {x:Type ToolTip}}">
+                                                <Setter Property="OverridesDefaultStyle" Value="true" />
+                                                <Setter Property="HasDropShadow" Value="True" />
+                                                <Setter Property="Template" Value="{DynamicResource ProjectToolTipTemplate}" />
+                                            </Style>
+                                        </DataTemplate.Resources>
+                                        <TextBlock Text="{Binding Path=ProjectName}" ToolTip="{Binding}" />
+                                    </DataTemplate>
+                                </MenuItem.ItemTemplate>
+                                <MenuItem Header="Nove1"/>
+                                <MenuItem Header="Nove2"/>
+                            </MenuItem>
+                        </MenuItem>
+
+                        <Separator />
+
+                        <MenuItem x:Name="MiTranslatorSelector" Header="_Translator" Foreground="Black" 
+                                  Click="MiTranslatorSelector_Click" UsesItemContainerTemplate="False">
+                            <MenuItem.Icon>
+                                <Image Source="{StaticResource ImgXlatorExcite}" Height="24" Width="24" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <Separator />
+
+                        <MenuItem x:Name="MiLayout" Header="Panel _Layout" Foreground="Black">
+                            <MenuItem x:Name="MiLayoutRestoreDefault" Header="_Restore Default" Click="MiLayoutRestoreDefault_Click" />
+                            <!-- for Debug -->
+                            <MenuItem x:Name="MiLayoutSaveToSettings" Header="[DBG]Save to Settings and File" Visibility="Collapsed" Click="MiLayoutSaveToSettings_Click" />
+                            <MenuItem x:Name="MiLayoutRestoreFromSettings" Header="[DBG]Restore from Settings and File" Visibility="Collapsed" Click="MiLayoutRestoreFromSettings_Click" />
+                        </MenuItem>
+                        <MenuItem x:Name="MiOptions" Header="_Options" Foreground="Black" Click="MiOptions_Click" />
+                        <MenuItem x:Name="MiAbout" Header="About" Foreground="Black" Click="MiAbout_Click" />
+                        <Separator />
+                        
+                        <MenuItem x:Name="MiExit" Header="E_xit" Foreground="Black" Click="MiExit_Click" />
+
+                    </MenuItem>
+                </Menu>
+            </Button>
+        </MahApps:WindowCommands>
+    </MahApps:MetroWindow.LeftWindowCommands>
+    
+    <!-- Flyout Menu, Options -->
+    <MahApps:MetroWindow.Flyouts>
+        <MahApps:FlyoutsControl>
+            
+            <!-- Options Flyout -->
+            <MahApps:Flyout x:Name="FoOptions" Header="Options" Position="Right" AnimateOpacity="False"
+                            CloseButtonIsCancel="True" IsOpen="False" Theme="Dark"
+                            IsModal="False" HorizontalContentAlignment="Stretch"
+                            ClosingFinished="FoOptions_ClosingFinished">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10" Orientation="Vertical" >
+                        <StackPanel.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}"/>
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="Margin" Value="3" />
+                            </Style>
+                            <Style TargetType="MahApps:ToggleSwitch" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}">
+                                <Setter Property="Margin"  Value="3" />
+                                <Setter Property="OnLabel" Value="Enabled" />
+                                <Setter Property="OffLabel" Value="Disabled" />
+                            </Style>
+
+                        </StackPanel.Resources>
+
+                        <GroupBox x:Name="GbOptionProject" Header="Project Settings" Margin="4" IsEnabled="False">
+                            <Grid x:Name="GdOptionProject">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock x:Name="TbProjectNameHeader" Grid.Column="0" Grid.Row="0" Text="Project Name:" HorizontalAlignment="Right" />
+                                <TextBox x:Name="TbProjectName" Grid.Column="1" Grid.Row="0" Margin="3" 
+                                         MahApps:TextBoxHelper.ClearTextButton="True" />
+
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="Mapping Source Language:" HorizontalAlignment="Right" />
+                                <ComboBox x:Name="CbSourceLang" Grid.Column="1" Grid.Row="1"  Margin="6 0 2 0"
+                                                          IsEditable="False" IsTextSearchEnabled="True" SelectedIndex="0"
+                                                          IsSynchronizedWithCurrentItem="True">
+                                    <ComboBoxItem Content="Japanese" Tag="{x:Static MinaxTranslation:SupportedSourceLanguage.Japanese}" />
+                                    <ComboBoxItem Content="English" Tag="{x:Static MinaxTranslation:SupportedSourceLanguage.English}"/>
+                                </ComboBox>
+
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Mapping Target Language:" HorizontalAlignment="Right" />
+                                <ComboBox x:Name="CbTargetLang" Grid.Column="1" Grid.Row="2" Margin="6 0 2 0"
+                                                  IsEditable="False" IsTextSearchEnabled="True" SelectedIndex="0"
+                                                  IsSynchronizedWithCurrentItem="True">
+                                    <ComboBoxItem Content="Chinese Traditional" Tag="{x:Static MinaxTranslation:SupportedTargetLanguage.ChineseTraditional}" />
+                                    <ComboBoxItem Content="English" Tag="{x:Static MinaxTranslation:SupportedTargetLanguage.English}" />
+                                </ComboBox>
+
+                                <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="4" FontWeight="ExtraBlack"  FontStretch="ExtraExpanded" Foreground="Red"
+                                       Text="NOTICE: Some translator engines DO NOT support some Source Language and Target Language pair!" />
+
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="Description:" HorizontalAlignment="Right" />
+                                <TextBox x:Name="TbProjectDesc" Grid.Column="1" Grid.Row="4" Margin="3" 
+                                         MahApps:TextBoxHelper.ClearTextButton="True" />
+
+                                <TextBlock Grid.Column="0" Grid.Row="5" Text="Remote Site:" HorizontalAlignment="Right" />
+                                <TextBox x:Name="TbProjectRemoteSite" Grid.Column="1" Grid.Row="5" Margin="3" 
+                                         MahApps:TextBoxHelper.ClearTextButton="True" />
+
+                                <GridSplitter Height="2" Grid.Column="5" Grid.Row="5" Grid.ColumnSpan="3"
+                                              Background="Transparent"
+                                              HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+
+                                <GroupBox Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2"  MahApps:ControlsHelper.ContentCharacterCasing="Normal"
+                                          Header="Glossary" Margin="3">
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+
+                                        <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Orientation="Horizontal">
+                                            <Button x:Name="BtnGlossaryCreateEmptyFolders" Margin="3" Style="{StaticResource MetroFlatButton}"
+                                                    Content="Create empty glossary sub-folders" Click="BtnGlossaryCreateEmptyFolders_Click"
+                                                    ToolTip="Create empty glossary sub-folders in local project folder" />
+
+                                            <Label Margin="3 0 1 0" HorizontalContentAlignment="Right" FontWeight="Bold"
+                                               VerticalAlignment="Center" Content="Current Glossary Path: " />
+                                            <TextBox x:Name="TbGlossaryPath" Margin="1 0 3 0" HorizontalContentAlignment="Left"
+                                                     VerticalAlignment="Center" IsReadOnly="True"
+                                                     MahApps:TextBoxHelper.SelectAllOnFocus="True"
+                                                     Text="E:\Novel\WebNovels\Glossary" />
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Orientation="Horizontal">
+                                            <Button x:Name="BtnGlossaryDownloadByFileList" Margin="3" Click="BtnGlossaryDownloadByFileList_Click"
+                                                    Content="Download latest glossary files" Style="{StaticResource MetroFlatButton}"
+                                                    ToolTip="Download latest glossary files from remote public web site by Sync. File." />
+                                            <Label Margin="3 0 1 0"  HorizontalContentAlignment="Right"
+                                               VerticalAlignment="Center" Content="Overwrite Policy: " ToolTip="Same file name or folder name overwrite policy" />
+                                            <ComboBox x:Name="CbGlossaryOverwritePolicy" SelectedIndex="0" Margin="0 0 0 3">
+                                                <ComboBoxItem Content="Skip" />
+                                                <ComboBoxItem Content="Force Overwrite Without Asking" />
+                                                <ComboBoxItem Content="Always Asking" />
+                                                <!--<ComboBoxItem Content="New File Date" />-->
+                                                <ComboBoxItem Content="Bigger File Size" />
+                                            </ComboBox>
+                                        </StackPanel>
+
+                                        <Button x:Name="BtnGlossarySyncFile" Grid.Column="0" Grid.Row="2" Content="⚙  Sync. File:"
+                                                Margin="32 0 0 0" ToolTip="Settings" Click="BtnGlossarySyncFile_Click"
+                                                Style="{StaticResource MetroFlatButton}"/>
+                                        <ComboBox x:Name="CbGlossarySyncFile" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Margin="0 2 0 3"
+                                                  VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+                                                  SelectedIndex="0">
+                                            <ComboBoxItem Content="https://raw.githubusercontent.com/nuthrash/AvalonDock/master/source/AvalonDock.sln" />
+                                            <ComboBoxItem Content="https://github.com/nuthrash/AvalonDock/raw/master/source/AutomationTest/Xceed.Wpf.AvalonDock.Test/Xceed.Wpf.AvalonDock.Test.csproj" />
+                                        </ComboBox>
+                                    </Grid>
+                                </GroupBox>
+
+                                <GroupBox Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2"  MahApps:ControlsHelper.ContentCharacterCasing="Normal"
+                                          Header="File Changed Monitor" Margin="3">
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <MahApps:ToggleSwitch Grid.Column="0" Grid.Row="0" IsChecked="True" IsEnabled="False" OnLabel="" OffLabel="" />
+                                        <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Content="Auto modify Mapping content when file renamed" />
+
+                                        <MahApps:ToggleSwitch x:Name="MatsMonitorAutoMergeWhenFileChanged" IsCheckedChanged="MatsMonitorAutoMergeWhenFileChanged_IsCheckedChanged"
+                                                              Grid.Column="0" Grid.Row="1" IsChecked="False" OnLabel="" OffLabel="" />
+                                        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Content="Auto merge Glossary Mapping entries when file added, deleted, changed"
+                                               ToolTip="This option does not contain Project file itself, system would always ask user for prompting!" />
+                                    </Grid>
+                                </GroupBox>
+
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="App Settings" Margin="4">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Keep Recent Project List:" HorizontalAlignment="Right" />
+                                <MahApps:ToggleSwitch x:Name="MatsRemeberRecentProjects" Grid.Column="1" Grid.Row="0"
+                                                      IsChecked="True" />
+
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="Recent Project List Maximum:" HorizontalAlignment="Right" />
+                                <MahApps:NumericUpDown x:Name="ManudRecentProjectMax" Grid.Column="1" Grid.Row="1" Minimum="10" Maximum="200" Value="20" Margin="3"
+                                                   IsEnabled="{Binding ElementName=MatsRemeberRecentProjects, Path=IsChecked}" />
+
+                                <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="3" 
+                                        Content="Clear Recent Project List" Click="MiProjClearRecent_Click"
+                                        IsEnabled="{Binding ElementName=MatsRemeberRecentProjects, Path=IsChecked}"
+                                        Style="{StaticResource MetroFlatButton}" />
+
+                                <GridSplitter Height="2" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3"
+                                              Background="Transparent"
+                                              HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </MahApps:Flyout>
+
+            
+            <!-- Translator Selector Flyout -->
+            <MahApps:Flyout x:Name="FoTranslator" Header="Translator" Position="Right" AnimateOpacity="False"
+                            CloseButtonIsCancel="True" IsOpen="False" Theme="Light"
+                            IsModal="False" HorizontalContentAlignment="Stretch" 
+                            ClosingFinished="FoTranslator_ClosingFinished">
+            </MahApps:Flyout>
+
+            <!-- About and Credits Flyout -->
+            <MahApps:Flyout x:Name="FoAbout" Header="About" Position="Right" AnimateOpacity="False"
+                            CloseButtonIsCancel="True" IsOpen="False" Theme="Adapt"
+                            IsModal="False" HorizontalContentAlignment="Stretch" >
+
+            </MahApps:Flyout>
+        </MahApps:FlyoutsControl>
+    </MahApps:MetroWindow.Flyouts>
+
+    
+    
+    <!-- Main App Grid -->
+    <Grid x:Name="GdMain" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Top AutoClose Flyout -->
+        <MahApps:Flyout x:Name="FoMessage" Grid.Column="0" Grid.Row="0" AreAnimationsEnabled="True" Position="Top"
+                        IsAutoCloseEnabled="True" AutoCloseInterval="4000" CloseButtonVisibility="Collapsed"
+                        IsOpen="False" Panel.ZIndex="99" Theme="Accent" Padding="10" Margin="0"
+                        CloseCommand="{Binding CloseFlyoutCmd}" TitleVisibility="Collapsed"
+                        CloseButtonIsCancel="True" VerticalAlignment="Stretch">
+            <Grid Margin="16 3 16 3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label x:Name="LblAutoCloseTitle" Grid.Column="0" Grid.Row="0" Content="Message Title" FontWeight="Bold" FontSize="18" />
+                <TextBlock x:Name="TbAutoCloseMessage" Grid.Column="0" Grid.Row="1" TextWrapping="WrapWithOverflow"
+                           MahApps:TextBoxHelper.SelectAllOnFocus="True" Margin="5 0 5 0"
+                           Text="Message body body. body &#x0a; body &#x0a; CSCSDSC &#x0a; csdcs &#x0a; csd" />
+
+                <Button Content="{x:Static lang:Global.Str0Ok}" Grid.Column="0" Grid.Row="2" Margin="40 2 40 2"
+                        Command="{Binding CloseCmd}" CommandParameter="{Binding ElementName=FoMessage}" />
+            </Grid>
+        </MahApps:Flyout>
+
+        
+        
+        <!-- Main AvalonDock DockingManager -->
+        <avalonDock:DockingManager Grid.Column="0" Grid.Row="0" x:Name="dockManager" Margin="0" Padding="0"
+                                   AllowMixedOrientation="True" Panel.ZIndex="0" >
+            <avalonDock:DockingManager.Theme>
+                <avalonDock:Vs2013LightTheme/>
+            </avalonDock:DockingManager.Theme>
+            
+            <avalonDock:LayoutRoot >
+                <avalonDock:LayoutPanel Orientation="Horizontal" >
+                    <avalonDock:LayoutAnchorablePaneGroup x:Name="AdlapgMain">
+                        <!-- manually add SourceDockingPanel and TargetDockingPanel programmtically -->
+                    </avalonDock:LayoutAnchorablePaneGroup>
+                </avalonDock:LayoutPanel>
+
+                <avalonDock:LayoutRoot.LeftSide>
+                    <avalonDock:LayoutAnchorSide>
+                        <avalonDock:LayoutAnchorGroup>
+                        </avalonDock:LayoutAnchorGroup>
+                    </avalonDock:LayoutAnchorSide>
+                </avalonDock:LayoutRoot.LeftSide>
+
+                <avalonDock:LayoutRoot.RightSide>
+                    <avalonDock:LayoutAnchorSide>
+                        <!-- manually add MappingDockingPanel, SummaryDockingPanel and QuickTranslationDockingPanel programmtically -->
+                        <avalonDock:LayoutAnchorGroup x:Name="AdlapgRight">
+                        </avalonDock:LayoutAnchorGroup>
+                    </avalonDock:LayoutAnchorSide>
+                </avalonDock:LayoutRoot.RightSide>
+            </avalonDock:LayoutRoot>
+        </avalonDock:DockingManager>
+
+        
+        
+        <!-- Bottom StatusBar -->
+        <StatusBar Grid.Column="0" Grid.Row="1" Margin="0" Padding="0" >
+            <!--<TextBlock x:Name="TbStatusMessage" Text="Status Bar"/>-->
+            <ComboBox x:Name="CbStatusMessages" MahApps:ComboBoxHelper.CharacterCasing="Normal"
+                      Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
+                      Foreground="White" HorizontalAlignment="Stretch"/>
+        </StatusBar>
+    </Grid>
+</MahApps:MetroWindow>

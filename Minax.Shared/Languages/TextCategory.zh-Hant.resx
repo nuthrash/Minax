@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Str0Action" xml:space="preserve">
+    <value>動作(Action)</value>
+  </data>
+  <data name="Str0Adjective" xml:space="preserve">
+    <value>形容詞(Adjective)</value>
+  </data>
+  <data name="Str0Adverb" xml:space="preserve">
+    <value>副詞(Adverb)</value>
+  </data>
+  <data name="Str0Alchemy" xml:space="preserve">
+    <value>鍊金術(Alchemy)</value>
+  </data>
+  <data name="Str0AliasName" xml:space="preserve">
+    <value>別名(AliasName)</value>
+  </data>
+  <data name="Str0Animal" xml:space="preserve">
+    <value>動物(Animal)</value>
+  </data>
+  <data name="Str0BodyOrgan" xml:space="preserve">
+    <value>身體器官(BodyOrgan)</value>
+  </data>
+  <data name="Str0Book" xml:space="preserve">
+    <value>書(Book)</value>
+  </data>
+  <data name="Str0Building" xml:space="preserve">
+    <value>建築(Building)</value>
+  </data>
+  <data name="Str0Character" xml:space="preserve">
+    <value>角色(Character)</value>
+  </data>
+  <data name="Str0City" xml:space="preserve">
+    <value>城鎮(City)</value>
+  </data>
+  <data name="Str0Clothing" xml:space="preserve">
+    <value>衣物(Clothing)</value>
+  </data>
+  <data name="Str0Color" xml:space="preserve">
+    <value>顏色(Color)</value>
+  </data>
+  <data name="Str0Dialect" xml:space="preserve">
+    <value>方言(Dialect)</value>
+  </data>
+  <data name="Str0Education" xml:space="preserve">
+    <value>教育(Education)</value>
+  </data>
+  <data name="Str0Entertainment" xml:space="preserve">
+    <value>娛樂(Entertainment)</value>
+  </data>
+  <data name="Str0Facility" xml:space="preserve">
+    <value>設施(Facility)</value>
+  </data>
+  <data name="Str0FamilyName" xml:space="preserve">
+    <value>家族名(FamilyName)</value>
+  </data>
+  <data name="Str0Food" xml:space="preserve">
+    <value>食物(Food)</value>
+  </data>
+  <data name="Str0Game" xml:space="preserve">
+    <value>遊戲(Game)</value>
+  </data>
+  <data name="Str0HairStyle" xml:space="preserve">
+    <value>髮型(HairStyle)</value>
+  </data>
+  <data name="Str0Housing" xml:space="preserve">
+    <value>住(Housing)</value>
+  </data>
+  <data name="Str0Inventory" xml:space="preserve">
+    <value>庫存(Inventory)</value>
+  </data>
+  <data name="Str0JobPosition" xml:space="preserve">
+    <value>職位(JobPosition)</value>
+  </data>
+  <data name="Str0Language" xml:space="preserve">
+    <value>語言(Language)</value>
+  </data>
+  <data name="Str0Location" xml:space="preserve">
+    <value>地點(Location)</value>
+  </data>
+  <data name="Str0Magic" xml:space="preserve">
+    <value>魔法(Magic)</value>
+  </data>
+  <data name="Str0Maneuver" xml:space="preserve">
+    <value>招式與技能(Maneuver)</value>
+  </data>
+  <data name="Str0Material" xml:space="preserve">
+    <value>材質(Material)</value>
+  </data>
+  <data name="Str0MiddleName" xml:space="preserve">
+    <value>中間名(MiddleName)</value>
+  </data>
+  <data name="Str0MiscTerms" xml:space="preserve">
+    <value>其他項目(MiscTerms)</value>
+  </data>
+  <data name="Str0Monster" xml:space="preserve">
+    <value>怪物(Monster)</value>
+  </data>
+  <data name="Str0Music" xml:space="preserve">
+    <value>音樂(Music)</value>
+  </data>
+  <data name="Str0NickName" xml:space="preserve">
+    <value>暱稱(NickName)</value>
+  </data>
+  <data name="Str0Noun" xml:space="preserve">
+    <value>名詞(Noun)</value>
+  </data>
+  <data name="Str0Organization" xml:space="preserve">
+    <value>組織(Organization)</value>
+  </data>
+  <data name="Str0OtherName" xml:space="preserve">
+    <value>其他名稱(OtherName)</value>
+  </data>
+  <data name="Str0Phenomenon" xml:space="preserve">
+    <value>現象(Phenomenon)</value>
+  </data>
+  <data name="Str0Property" xml:space="preserve">
+    <value>屬性(Property)</value>
+  </data>
+  <data name="Str0ReincarnatedName" xml:space="preserve">
+    <value>轉世名字(ReincarnatedName)</value>
+  </data>
+  <data name="Str0Relation" xml:space="preserve">
+    <value>關係(Relation)</value>
+  </data>
+  <data name="Str0Science" xml:space="preserve">
+    <value>科學(Science)</value>
+  </data>
+  <data name="Str0Shoe" xml:space="preserve">
+    <value>鞋(Shoe)</value>
+  </data>
+  <data name="Str0Social" xml:space="preserve">
+    <value>社會(Social)</value>
+  </data>
+  <data name="Str0Species" xml:space="preserve">
+    <value>種族(Species)</value>
+  </data>
+  <data name="Str0Translator" xml:space="preserve">
+    <value>翻譯器轉字(Translator)</value>
+  </data>
+  <data name="Str0Transportation" xml:space="preserve">
+    <value>運輸(Transportation)</value>
+  </data>
+  <data name="Str0Undefined" xml:space="preserve">
+    <value>未定義(Undefined)</value>
+  </data>
+  <data name="Str0Verbs" xml:space="preserve">
+    <value>動詞(Verbs)</value>
+  </data>
+  <data name="Str0Weapon" xml:space="preserve">
+    <value>武器(Weapon)</value>
+  </data>
+  <data name="Str0Conjunction" xml:space="preserve">
+    <value>連接詞(Conjunction)</value>
+  </data>
+  <data name="Str0Determiners" xml:space="preserve">
+    <value>限定詞(Determiners)</value>
+  </data>
+  <data name="Str0Preposition" xml:space="preserve">
+    <value>介係詞(Preposition)</value>
+  </data>
+  <data name="Str0Pronouns" xml:space="preserve">
+    <value>代名詞(Pronouns)</value>
+  </data>
+  <data name="Str0Accessory" xml:space="preserve">
+    <value>飾品與配件(Accessory)</value>
+  </data>
+  <data name="Str0Car" xml:space="preserve">
+    <value>車輛(Car)</value>
+  </data>
+  <data name="Str0FirstName" xml:space="preserve">
+    <value>名字(FirstName)</value>
+  </data>
+  <data name="Str0Machine" xml:space="preserve">
+    <value>機械(Machine)</value>
+  </data>
+  <data name="Str0Object" xml:space="preserve">
+    <value>物件(Object)</value>
+  </data>
+  <data name="Str0Ship" xml:space="preserve">
+    <value>船艦(Ship)</value>
+  </data>
+</root>

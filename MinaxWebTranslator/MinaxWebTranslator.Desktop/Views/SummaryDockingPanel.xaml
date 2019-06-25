@@ -1,0 +1,67 @@
+﻿<avalonDock:LayoutAnchorable x:Class="MinaxWebTranslator.Desktop.Views.SummaryDockingPanel"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MinaxWebTranslator.Desktop.Views"
+      xmlns:conv="clr-namespace:MinaxWebTranslator.Desktop.Converters"
+      xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+      xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      mc:Ignorable="d" 
+      ContentId="summaryWindow" Title="Summary"
+      AutoHideMinHeight="100" CanClose="False" CanHide="False" CanAutoHide="True">
+
+    <Grid>
+        <Grid.Resources>
+            <conv:TextCategoryL10nItemsConverter x:Key="TcL10nItemsConverter" />
+        </Grid.Resources>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ToolBar x:Name="TbMappingSummaryTool" Grid.Column="0" Grid.Row="0" ToolBarTray.IsLocked="True">
+            <Button x:Name="BtnMappingSummaryToolClearSorting" Margin="3" ToolTip="Clear Sorting"
+                    Click="BtnMappingSummaryToolClearSorting_Click">
+                <IconPacks:Modern Width="16" Height="16" Kind="Clean" />
+            </Button>
+            <Separator />
+            <TextBlock Text="Group By:" Margin="4 0 2 0" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            <ComboBox x:Name="CbSummaryGroupBy" SelectedIndex="0">
+                <ComboBoxItem Content="Category" />
+                <ComboBoxItem Content="File Name" />
+            </ComboBox>
+        </ToolBar>
+
+        <DataGrid x:Name="DgMappingSummary" Grid.Column="0" Grid.Row="1"
+                  GridLinesVisibility="Vertical" ItemsSource="{Binding}"
+                  AutoGenerateColumns="False" CanUserAddRows="False"
+                  CanUserDeleteRows="False" IsTextSearchEnabled="True">
+            <DataGrid.GroupStyle>
+                <GroupStyle ContainerStyle="{StaticResource MyGroupHeaderStyle}">
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <DataGridRowsPresenter />
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="Auto" IsReadOnly="True" Header="Original Text" Binding="{Binding OriginalText}" />
+                <DataGridTextColumn Width="Auto" IsReadOnly="True" Header="Mapping Text" Binding="{Binding MappingText}"/>
+                <!--<DataGridComboBoxColumn Width="Auto" IsReadOnly="True"
+                                            Header="Category" SelectedValueBinding="{Binding Path=Category, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TcL10nItemsConverter}}"
+                                            ItemsSource="{Binding Source={StaticResource TextCategoryEnumValues}, Converter={StaticResource TcL10nItemsConverter}}" />-->
+                <DataGridTextColumn Width="Auto" IsReadOnly="True" Header="Category" Binding="{Binding Path=Category, Converter={StaticResource TcL10nItemsConverter}}"/>
+                <DataGridTextColumn Width="Auto" IsReadOnly="True" Header="Description" Binding="{Binding Description}"/>
+                <DataGridTextColumn Width="Auto" IsReadOnly="True" Header="Comment" Binding="{Binding Comment}"/>
+                <DataGridTextColumn Width="1" IsReadOnly="True" Visibility="Collapsed" Header="ProjectBasedFileName" Binding="{Binding ProjectBasedFileName}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</avalonDock:LayoutAnchorable>

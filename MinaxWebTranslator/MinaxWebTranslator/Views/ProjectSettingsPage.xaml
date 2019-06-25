@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" x:Class="MinaxWebTranslator.Views.ProjectSettingsPage"
+             NavigationPage.HasNavigationBar="False"
+             Appearing="ContentPage_Appearing"
+             Disappearing="ContentPage_Disappearing">
+    <ScrollView Orientation="Vertical" HorizontalOptions="Fill" VerticalOptions="Fill">
+        <StackLayout Orientation="Vertical" HorizontalOptions="Fill"  VerticalOptions="Fill">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Label Text="Project Name: " HorizontalOptions="Start" VerticalOptions="Center"
+                       VerticalTextAlignment="Center"/>
+                <!-- {Binding ProjectName} Project Name shall not be empty -->
+                <Entry x:Name="EtProjectName" Text="TEST" HorizontalOptions="FillAndExpand"
+                       HorizontalTextAlignment="Start" VerticalOptions="Center"
+                       WidthRequest="300" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Label Text="Mapping Source Language: " HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
+                       VerticalTextAlignment="Center"/>
+                <Picker x:Name="PkSourceLang" HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+                        WidthRequest="300" SelectedIndexChanged="PkSourceLang_SelectedIndexChanged" >
+                    <Picker.Items>
+                        <x:String>Japanese</x:String>
+                        <x:String>English</x:String>
+                    </Picker.Items>
+                </Picker>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Label Text="Mapping Target Language: " HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
+                       VerticalTextAlignment="Center"/>
+                <Picker x:Name="PkTargetLang" HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+                        WidthRequest="300" SelectedIndexChanged="PkTargetLang_SelectedIndexChanged" >
+                    <Picker.Items>
+                        <x:String>Traditional Chinese</x:String>
+                        <x:String>English</x:String>
+                    </Picker.Items>
+                </Picker>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Label Text="Description: " HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
+                       VerticalTextAlignment="Center"/>
+                <Entry  Text="{Binding Description}" HorizontalOptions="FillAndExpand"
+                       HorizontalTextAlignment="Start" VerticalOptions="Center"
+                       WidthRequest="300" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Label Text="Remote Site: " HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
+                       VerticalTextAlignment="Center"/>
+                <Entry Text="{Binding RemoteSite}" HorizontalOptions="FillAndExpand"
+                       HorizontalTextAlignment="Start" VerticalOptions="Center"
+                       WidthRequest="300"/>
+            </StackLayout>
+
+            <!--<BoxView HorizontalOptions="FillAndExpand"  VerticalOptions="Center"
+                     HeightRequest="6" Color="DarkSlateBlue" IsVisible="True" />-->
+
+            <!-- Group header and sep. -->
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Start"
+                  BackgroundColor="White"
+                  MinimumHeightRequest="26" Margin="0,14,0,4">
+                <BoxView HorizontalOptions="FillAndExpand"  VerticalOptions="CenterAndExpand"
+                         HeightRequest="2" Color="{StaticResource NavigationPrimary}"
+                         BackgroundColor="White" IsVisible="True" />
+                <Label Margin="8,0,0,0" VerticalTextAlignment="Center" TextColor="Black"
+                       FontSize="Medium" FontAttributes="Bold" BackgroundColor="White"
+                       VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
+                       Text="  Glossary  "/>
+            </Grid>
+
+            <ScrollView Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Spacing="1" >
+                    <Button x:Name="BtnGlossaryCreateEmptyFolders" Margin="0" HorizontalOptions="Start"
+                            VerticalOptions="Center" Clicked="BtnGlossaryCreateEmptyFolders_Clicked"
+                            Text="Create empty glossary sub-folders"/>
+
+                    <Label Margin="3,0,0,0" FontAttributes="Bold"
+                           HorizontalOptions="Start" 
+                           VerticalOptions="Center" Text="Current Glossary Path: " />
+                    <Entry x:Name="TbGlossaryPath" Margin="0,0,3,0" HorizontalOptions="Fill"
+                           VerticalOptions="Center" IsReadOnly="False" 
+                           Text="/emulated/0/Documents/WebNovels/Glossary/cscwecwecsecscdcdcxvdsdwefsesfdfsfsdfscsdcscscscsec" />
+                </StackLayout>
+            </ScrollView>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Button x:Name="BtnGlossaryDownloadByFileList" Margin="3" Clicked="BtnGlossaryDownloadByFileList_Clicked"
+                            Text="Download latest glossary files" />
+                <Label Margin="3,0,1,0" HorizontalTextAlignment="End" 
+                           VerticalTextAlignment="Center" Text="Overwrite Policy: " />
+                <Picker x:Name="CbGlossaryOverwritePolicy" Margin="0,0,0,3"
+                            HorizontalOptions="FillAndExpand">
+                    <Picker.Items>
+                        <x:String>Skip</x:String>
+                        <x:String>Force Overwrite Without Asking</x:String>
+                        <x:String>Always Asking</x:String>
+                        <x:String>Bigger File Size</x:String>
+                    </Picker.Items>
+                </Picker>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Button x:Name="BtnGlossarySyncFile" Text="⚙  Sync. File:"
+                        Margin="32,0,0,0" Clicked="BtnGlossarySyncFile_Clicked" />
+
+                <Picker x:Name="CbGlossarySyncFile" Margin="0,0,0,3" HorizontalOptions="FillAndExpand" >
+                    <Picker.Items>
+                        <x:String>https://raw.githubusercontent.com/nuthrash/AvalonDock/master/source/AvalonDock.sln</x:String>
+                        <x:String>https://github.com/nuthrash/AvalonDock/raw/master/source/AutomationTest/Xceed.Wpf.AvalonDock.Test/Xceed.Wpf.AvalonDock.Test.csproj</x:String>
+                    </Picker.Items>
+                </Picker>
+            </StackLayout>
+
+            <!--<BoxView HorizontalOptions="FillAndExpand"  VerticalOptions="Center"
+                     HeightRequest="6" Color="DarkSlateBlue" IsVisible="True" />-->
+
+            <!-- Group header and sep. -->
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Start"
+                  BackgroundColor="White"
+                  MinimumHeightRequest="26" Margin="0,14,0,4">
+                <BoxView HorizontalOptions="FillAndExpand"  VerticalOptions="CenterAndExpand"
+                         HeightRequest="2" Color="{StaticResource NavigationPrimary}"
+                         BackgroundColor="White" IsVisible="True" />
+                <Label Margin="8,0,0,0" VerticalTextAlignment="Center" TextColor="Black"
+                       FontSize="Medium" FontAttributes="Bold" BackgroundColor="White"
+                       VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
+                       Text="  File Changed Monitor  "/>
+            </Grid>
+
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Switch Grid.Column="0" Grid.Row="0" IsToggled="True" IsEnabled="False" />
+                <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3"
+                       Text="Auto save project configuration file when properly time." />
+                
+                <Switch Grid.Column="0" Grid.Row="1" IsToggled="False" IsEnabled="False" />
+                <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"
+                       Text="Auto modify Mapping content when file renamed (NOT SUPPORT)" />
+
+                <Switch x:Name="SwMonitorAutoMergeWhenFileChanged" Grid.Column="0" Grid.Row="2"
+                        IsToggled="False" IsEnabled="False" HorizontalOptions="FillAndExpand"
+                        Toggled="SwMonitorAutoMergeWhenFileChanged_Toggled" />
+                <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" HorizontalOptions="FillAndExpand"
+                        Text="Auto merge Glossary Mapping entries when file added, deleted, changed (NOT SUPPORT)" />
+            </Grid>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

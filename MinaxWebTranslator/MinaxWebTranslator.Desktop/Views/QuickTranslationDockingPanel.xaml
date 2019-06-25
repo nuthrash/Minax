@@ -1,0 +1,206 @@
+<avalonDock:LayoutAnchorable x:Class="MinaxWebTranslator.Desktop.Views.QuickTranslationDockingPanel"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MinaxWebTranslator.Desktop.Views"
+      xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+      xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      mc:Ignorable="d" 
+      x:Name="AdlaQuickTranslation" ContentId="quickTranslationWindow"
+      Title="Quick Translation" AutoHideMinHeight="100" CanClose="False" CanHide="False" CanAutoHide="True">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+        <Grid x:Name="GdQuick" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style BasedOn="{StaticResource {x:Type Button}}" 
+                   TargetType="{x:Type Button}">
+                    <Setter Property="MahApps:ControlsHelper.ContentCharacterCasing" Value="Normal"/>
+                </Style>
+                <!-- Remove extra NewLine margin for RichTextBox's Paragraph -->
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0" />
+                </Style>                
+            </Grid.Resources>            
+            
+
+            <!-- Input box -->
+            <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="3" Text="Input:" />
+            <RichTextBox x:Name="RtbQuickInput" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1"
+                     VerticalAlignment="Stretch" Margin="3"
+                     MahApps:TextBoxHelper.SelectAllOnFocus="False"
+                     MahApps:TextBoxHelper.ClearTextButton="True"
+                     MahApps:TextBoxHelper.UseFloatingWatermark="True"
+                     MahApps:TextBoxHelper.WatermarkWrapping="WrapWithOverflow"
+                     MahApps:TextBoxHelper.Watermark="{Binding NonEmptyMaxPlaceholder}" >
+                <RichTextBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="MiQuickInputClearAndPaste" Header="Clear and Paste" Click="BtnQuickClearAndPaste_Click"/>
+                        <Separator />
+                        <MenuItem Command="ApplicationCommands.Paste" />
+                        <MenuItem Command="ApplicationCommands.SelectAll" />
+                        <MenuItem Command="ApplicationCommands.Undo" />
+                        <MenuItem Command="ApplicationCommands.Cut" />
+                        <MenuItem Command="ApplicationCommands.Copy" />
+                    </ContextMenu>
+                </RichTextBox.ContextMenu>
+            </RichTextBox>
+
+            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal">
+                <Button x:Name="BtnQuickTrans" Margin="3" HorizontalContentAlignment="Center" 
+                        VerticalContentAlignment="Stretch" IsEnabled="False" Click="BtnQuickTrans_Click">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" >
+                        <MahApps:ProgressRing x:Name="MaprQuickTrans" Visibility="Collapsed" IsActive="True" Height="16" Width="16" Margin="4 0 4 0"/>
+                        <TextBlock x:Name="TbQuickTrans" FontSize="12px" Text="Translate" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="BtnQuickClearAndPaste" VerticalAlignment="Center" Margin="3"
+                        Content="Clear and Paste"
+                        Click="BtnQuickClearAndPaste_Click"/>
+            </StackPanel>
+
+
+            <GridSplitter Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Height="3" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+
+            <!-- Select translator sources and each outputs -->
+            <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- src 1: Cross Language translator -->
+                <CheckBox x:Name="CbQuickXLang" Grid.Column="0" Grid.Row="0" Margin="3" Content="CrossLanguage" IsChecked="true" />
+                <Button x:Name="BtnQuickXLangCopy" Grid.Column="1" Grid.Row="0" Margin="2"
+                    Content="Copy" ToolTip="Copy all text to clipboard" Click="BtnQuickXLangCopy_Click"  />
+                <RichTextBox x:Name="RtbQuickXLangOutput" Grid.Column="2" Grid.Row="0" Margin="2" Background="LightYellow"
+							 MahApps:TextBoxHelper.UseFloatingWatermark="False"
+							 MahApps:TextBoxHelper.WatermarkWrapping="WrapWithOverflow"
+                             MahApps:TextBoxHelper.Watermark="{Binding DataErrorPlaceholder}">
+                    <RichTextBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="MiQuickXLangCopyAll" Header="Copy All"  />
+                            <Separator />
+                            <MenuItem Command="ApplicationCommands.Paste"/>
+                            <MenuItem Command="ApplicationCommands.SelectAll" />
+                            <MenuItem Command="ApplicationCommands.Undo" />
+                            <MenuItem Command="ApplicationCommands.Cut"/>
+                            <MenuItem Command="ApplicationCommands.Copy"/>
+                        </ContextMenu>
+                    </RichTextBox.ContextMenu>
+                </RichTextBox>
+
+                <!-- src 2: Baidu translator -->
+                <CheckBox x:Name="CbQuickBaidu" Grid.Column="0" Grid.Row="1" Margin="3" Content="Baidu" IsChecked="true" />
+                <Button x:Name="BtnQuickBaiduCopy" Grid.Column="1" Grid.Row="1" Margin="2"
+                    Content="Copy" ToolTip="Copy all text to clipboard" Click="BtnQuickBaiduCopy_Click"  />
+                <RichTextBox x:Name="RtbQuickBaiduOutput" Grid.Column="2" Grid.Row="1" Margin="2" Background="LightYellow"
+							 MahApps:TextBoxHelper.UseFloatingWatermark="False"
+							 MahApps:TextBoxHelper.WatermarkWrapping="WrapWithOverflow"
+                             MahApps:TextBoxHelper.Watermark="{Binding DataErrorPlaceholder}" >
+                    <RichTextBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="MiQuickBaiduCopyAll" Header="Copy All" Click="BtnQuickBaiduCopy_Click" />
+                            <Separator />
+                            <MenuItem Command="ApplicationCommands.Paste"/>
+                            <MenuItem Command="ApplicationCommands.SelectAll" />
+                            <MenuItem Command="ApplicationCommands.Undo" />
+                            <MenuItem Command="ApplicationCommands.Cut"/>
+                            <MenuItem Command="ApplicationCommands.Copy"/>
+                        </ContextMenu>
+                    </RichTextBox.ContextMenu>
+                </RichTextBox>
+
+                <!-- src 3: Youdao translator -->
+                <CheckBox x:Name="CbQuickYoudao" Grid.Column="0" Grid.Row="2" Margin="3" Content="Youdao" IsChecked="True" />
+                <Button x:Name="BtnQuickYoudaoCopy" Grid.Column="1" Grid.Row="2" Margin="2"
+                    Content="Copy" ToolTip="Copy all text to clipboard" Click="BtnQuickYoudaoCopy_Click" />
+                <RichTextBox x:Name="RtbQuickYoudaoOutput" Grid.Column="2" Grid.Row="2" Margin="2" Background="LightYellow"
+							 MahApps:TextBoxHelper.UseFloatingWatermark="False"
+							 MahApps:TextBoxHelper.WatermarkWrapping="WrapWithOverflow"
+                             MahApps:TextBoxHelper.Watermark="{Binding DataErrorPlaceholder}" >
+                    <RichTextBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="MiQuickYoudaoCopyAll" Header="Copy All" Click="BtnQuickYoudaoCopy_Click"/>
+                            <Separator />
+                            <MenuItem Command="ApplicationCommands.Paste"/>
+                            <MenuItem Command="ApplicationCommands.SelectAll" />
+                            <MenuItem Command="ApplicationCommands.Undo" />
+                            <MenuItem Command="ApplicationCommands.Cut"/>
+                            <MenuItem Command="ApplicationCommands.Copy"/>
+                        </ContextMenu>
+                    </RichTextBox.ContextMenu>
+                </RichTextBox>
+
+                <!-- src 4: Google translator -->
+                <CheckBox x:Name="CbQuickGoogle" Grid.Column="0" Grid.Row="3" Margin="3" IsChecked="True" Content="Google" />
+                <Button x:Name="BtnQuickGoogleCopy" Grid.Column="1" Grid.Row="3" Margin="2"
+                    Content="Copy" ToolTip="Copy all text to clipboard" Click="BtnQuickGoogleCopy_Click" />
+                <RichTextBox x:Name="RtbQuickGoogleOutput" Grid.Column="2" Grid.Row="3" Margin="2" Background="LightYellow"
+							 MahApps:TextBoxHelper.UseFloatingWatermark="False"
+							 MahApps:TextBoxHelper.WatermarkWrapping="WrapWithOverflow"
+                             MahApps:TextBoxHelper.Watermark="{Binding DataErrorPlaceholder}" >
+                    <RichTextBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="MiQuickGoogleCopyAll" Header="Copy All" Click="BtnQuickGoogleCopy_Click"/>
+                            <Separator />
+                            <MenuItem Command="ApplicationCommands.Paste"/>
+                            <MenuItem Command="ApplicationCommands.SelectAll" />
+                            <MenuItem Command="ApplicationCommands.Undo" />
+                            <MenuItem Command="ApplicationCommands.Cut"/>
+                            <MenuItem Command="ApplicationCommands.Copy"/>
+                        </ContextMenu>
+                    </RichTextBox.ContextMenu>
+                </RichTextBox>
+
+
+                <!-- Integrated output buttons -->
+                <Separator Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4">
+                    <Separator.RenderTransform>
+                        <ScaleTransform ScaleY="2" />
+                    </Separator.RenderTransform>
+                </Separator>
+                <TextBlock Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" Margin="2" Text="Integrated Output:" />
+                <Button x:Name="BtnQuickIntOutputCopy" Grid.Column="1" Grid.Row="4" Margin="3 3 3 5"
+                    Content="Copy" ToolTip="Copy all text to clipboard" Click="BtnQuickIntOutputCopy_Click" />
+            </Grid>
+
+            <!-- Integrated output -->
+            <RichTextBox x:Name="RtbQuickIntOutput" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Background="LightYellow">
+                <RichTextBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="MiQuickIntOutputCopyAll" Header="Copy All" Click="BtnQuickIntOutputCopy_Click"/>
+                        <Separator />
+                        <MenuItem Command="ApplicationCommands.Paste"/>
+                        <MenuItem Command="ApplicationCommands.SelectAll" />
+                        <MenuItem Command="ApplicationCommands.Undo" />
+                        <MenuItem Command="ApplicationCommands.Cut"/>
+                        <MenuItem Command="ApplicationCommands.Copy"/>
+                    </ContextMenu>
+                </RichTextBox.ContextMenu>
+            </RichTextBox>
+        </Grid>
+    </ScrollViewer>
+</avalonDock:LayoutAnchorable>

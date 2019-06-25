@@ -1,0 +1,444 @@
+﻿<UserControl x:Class="MinaxWebTranslator.Desktop.Views.AboutCreditsPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MinaxWebTranslator.Desktop.Views"
+             xmlns:lang="clr-namespace:MinaxWebTranslator.Desktop.Languages"
+             xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" Loaded="AboutCreditsPanel_Loaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Color x:Key="Primary">#2196F3</Color>
+        <Color x:Key="Accent">#96d1ff</Color>
+        <Color x:Key="LightTextColor">#999999</Color>
+
+        <Style TargetType="Hyperlink">
+            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=NavigateUri}" />
+            <EventSetter Event="RequestNavigate" Handler="Hyperlink_RequestNavigate" />
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="{x:Type IconPacks:PackIconEntypo}">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <!--<Setter Property="Foreground" Value="{StaticResource AccentColorBrush}" />-->
+            <Setter Property="Foreground" Value="DarkRed" />
+        </Style>
+        <Style TargetType="{x:Type IconPacks:PackIconFontAwesome}">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="DarkRed" />
+        </Style>
+        <Style TargetType="{x:Type IconPacks:PackIconMaterial}">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="DarkRed" />
+        </Style>
+        <Style TargetType="{x:Type IconPacks:PackIconMaterialLight}">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="DarkRed" />
+        </Style>
+        <Style TargetType="{x:Type IconPacks:PackIconModern}">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="DarkRed" />
+        </Style>
+        <Style TargetType="{x:Type IconPacks:PackIconOcticons}">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="DarkRed" />
+        </Style>
+        <Style TargetType="{x:Type IconPacks:PackIconSimpleIcons}">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="DarkRed" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <TabControl MahApps:TabControlHelper.Transition="Up">
+            <!-- TabItem 1: About -->
+            <TabItem Header="About">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" 
+                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                                Margin="10 5 10 25">
+                        <Image Source="/Resources/Translator.png" Height="64" Width="64" />
+                        <Label VerticalContentAlignment="Center" FontSize="24px" FontWeight="Bold"
+                               Content="Minax Web Translator" />
+                    </StackPanel>
+
+                    <GridSplitter Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom"
+                                  IsEnabled="False"
+                                  HorizontalAlignment="Stretch" Height="2"/>
+
+                    <RichTextBox x:Name="RtbDescription" Grid.Column="0" Grid.Row="1"
+                                 IsReadOnly="True" IsDocumentEnabled="True"
+                                 BorderThickness="0"
+                                 BorderBrush="Transparent" FontSize="14px">
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="3" />
+                            </Style>
+
+                            <Style TargetType="Hyperlink">
+                                <EventSetter Event="RequestNavigate" Handler="Hyperlink_RequestNavigate" />
+                            </Style>
+                        </RichTextBox.Resources>
+                        <FlowDocument>
+                            <Paragraph>
+                                Minax Web Translator is not a translator, but just an
+                                <Bold>agent and text mapping-replacer</Bold> for remote web translator/translation result.
+                            </Paragraph>
+                            <Paragraph>
+                                It works with some online web sites and APIs, such as
+                                <Bold>Excite, CROSS-transer, Weblio, Baidu, Youdao, Google, Microsoft/Bing</Bold> etc..
+                            </Paragraph>
+                            
+                            <Paragraph />
+
+                            <Paragraph>Version: 0.0.1</Paragraph>
+                            <Paragraph>
+                                Project Site:
+                                <Hyperlink NavigateUri="https://github.com/nuthrash/Minax">https://github.com/nuthrash/Minax</Hyperlink>
+                            </Paragraph>
+                            <Paragraph>Wiki:
+                                <Hyperlink NavigateUri="https://github.com/nuthrash/Minax/wiki">https://github.com/nuthrash/Minax/wiki</Hyperlink>
+                            </Paragraph>
+                            <Paragraph>App Usage:
+                                <Hyperlink NavigateUri="https://github.com/nuthrash/Minax/blob/master/MinaxWebTranslator/Readme.md">https://github.com/nuthrash/Minax/blob/master/MinaxWebTranslator/Readme.md</Hyperlink>
+                            </Paragraph>
+                            <Paragraph>App Concepts:
+                                <Hyperlink NavigateUri="https://github.com/nuthrash/Minax/blob/master/MinaxWebTranslator/Concepts.md">https://github.com/nuthrash/Minax/blob/master/MinaxWebTranslator/Concepts.md</Hyperlink>
+                            </Paragraph>
+                            <Paragraph>Sample Projects:
+                                <Hyperlink NavigateUri="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects">https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects</Hyperlink>
+                            </Paragraph>
+
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
+            </TabItem>
+
+            
+            <!-- TabItem 2: Credits -->
+            <TabItem Header="Credits">
+                <ScrollViewer x:Name="SvCredits">
+                    <StackPanel Orientation="Vertical">
+                        <Expander Header="Web Translators" IsExpanded="True" Margin="4 8 4 8">
+                            <ListView x:Name="LvWebXlators" ItemsSource="{Binding}"
+                                      ScrollViewer.CanContentScroll="False"
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                      PreviewMouseWheel="SvCredits_PreviewMouseWheel">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="32" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <!-- (Icon, Title, Hyperlink) -->
+                                            <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Stretch="Uniform"
+                                                   Source="{Binding Icon}" VerticalAlignment="Center"/>
+
+                                            <Label Grid.Column="1" Grid.Row="0" Content="{Binding Title}" FontWeight="Bold" FontSize="14px" />
+                                            <TextBlock Grid.Column="1" Grid.Row="1" FontSize="11px">
+                                                <Hyperlink NavigateUri="{Binding Hyperlink}" ToolTip="{Binding Hyperlink}"
+                                                           RequestNavigate="Hyperlink_RequestNavigate">
+                                                    <Hyperlink.Inlines>
+                                                        <Run Text="{Binding Hyperlink}" />
+                                                    </Hyperlink.Inlines>
+                                                </Hyperlink>
+                                            </TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Expander>
+
+                        <Expander Header="Icons" IsExpanded="True" Margin="4 8 4 8" HorizontalAlignment="Stretch">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock>
+                                        <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/Wikipedia:Public_domain">
+                                            <Hyperlink.Inlines>
+                                                <Run Text="{x:Static lang:Global.Str0PublicDomain}" />
+                                            </Hyperlink.Inlines>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                    <IconPacks:PackIconFontAwesome Kind="CreativeCommonsPdBrands" />
+
+                                    <Separator Margin="4 0 4 0" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                    
+                                    <TextBlock>
+                                        <Hyperlink NavigateUri="https://opensource.org/licenses/MIT">
+                                            <Hyperlink.Inlines>
+                                                <Run Text="{x:Static lang:Global.Str0MitLicense}" />
+                                            </Hyperlink.Inlines>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                    <Separator />
+                                </StackPanel>
+
+                                <Separator />
+
+                                <DataGrid x:Name="DgCreditsIcons" ItemsSource="{Binding}" CanUserAddRows="False"
+                                          CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="False"
+                                          AutoGenerateColumns="False" GridLinesVisibility="Vertical"
+                                          HorizontalAlignment="Stretch"
+                                          PreviewMouseWheel="SvCredits_PreviewMouseWheel">
+                                    <DataGrid.Resources>
+                                        <Style TargetType="Hyperlink">
+                                            <EventSetter Event="Click" Handler="DataGridHyperlink_Click"/>
+                                        </Style>
+                                    </DataGrid.Resources>
+
+                                    <DataGrid.Columns>
+                                        <DataGridTemplateColumn Header="Image" Width="24" IsReadOnly="True">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Image Source="{Binding Icon}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTextColumn Header="Title" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Title}" />
+                                        <DataGridTextColumn Header="Author" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Author}" />
+                                        <DataGridTextColumn Header="License" Width="Auto" IsReadOnly="True" Binding="{Binding Path=License}" />
+                                        <DataGridHyperlinkColumn Header="Hyperlink" Width="*" IsReadOnly="True" Binding="{Binding Path=Hyperlink}" />
+                                        <DataGridTextColumn Header="Note" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Note}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <Separator />
+                                <Label FontWeight="Bold" Content="NOTE: other icons were re-drawn by Minax project, or come from MahApps.Metro.IconPacks library under MIT license." />
+                            </StackPanel>
+                        </Expander>
+
+                        <Expander Header="Third-party Toolkits, Libraries, and Controls" IsExpanded="True" Margin="4 8 4 8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+
+                                <Image Grid.Column="0" Grid.Row="0" Height="24" Width="24" Margin="4" Source="{StaticResource ImgMahAppsLogo}" />
+                                <TextBlock Grid.Column="1" Grid.Row="0">
+                                    <Hyperlink NavigateUri="https://mahapps.com/">MahApps
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconSimpleIcons Grid.Column="0" Grid.Row="1" Kind="GitHub" />
+                                <TextBlock Grid.Column="1" Grid.Row="1">
+                                    <Hyperlink
+                                        NavigateUri="https://github.com/Dirkster99/AvalonDock">AvalonDock
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="2" Kind="Json"/>
+                                <TextBlock Grid.Column="1" Grid.Row="2" >
+                                    <Hyperlink
+                                        NavigateUri="https://www.newtonsoft.com/json">Json.NET
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="3" Kind="LanguageHtml5" />
+                                <TextBlock Grid.Column="1" Grid.Row="3">
+                                    <Hyperlink
+                                        NavigateUri="https://html-agility-pack.net/">HtmlAgilityPack
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="4" Kind="LanguageJavascript" />
+                                <TextBlock Grid.Column="1" Grid.Row="4">
+                                    <Hyperlink
+                                        NavigateUri="https://github.com/paulbartrum/jurassic">Jurassic
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconOcticons Grid.Column="0" Grid.Row="5"  Kind="FileCode" />
+                                <TextBlock Grid.Column="1" Grid.Row="5">
+                                    <Hyperlink
+                                        NavigateUri="https://www.filehelpers.net/">FileHelpers
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconSimpleIcons Grid.Column="0" Grid.Row="6"  Kind="GitHub" />
+                                <TextBlock Grid.Column="1" Grid.Row="6">
+                                    <Hyperlink
+                                        NavigateUri="https://github.com/nharren/HtmlToXamlConverter">HtmlToXamlConverter
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconModern Grid.Column="0" Grid.Row="7"  Kind="SocialNuget" />
+                                <TextBlock Grid.Column="1" Grid.Row="7">
+                                    <Hyperlink
+                                        NavigateUri="https://www.nuget.org/packages/ChineseConverter">ChineseConverter
+                                    </Hyperlink>
+                                </TextBlock>
+                            </Grid>
+                        </Expander>
+
+
+                        <Expander Header="Softwares, Forums, and Project Hosting" IsExpanded="True" Margin="4 8 4 8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="0" Kind="Visualstudio" />
+                                <TextBlock Grid.Column="1" Grid.Row="0">
+                                <Hyperlink
+                                    NavigateUri="https://visualstudio.microsoft.com/">Visual Studio
+                                </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="1" Kind="Brush" />
+                                <TextBlock Grid.Column="1" Grid.Row="1">
+                                    <Hyperlink NavigateUri="https://www.getpaint.net/">Paint.NET
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconSimpleIcons Grid.Column="0" Grid.Row="2" Kind="Inkscape" />
+                                <TextBlock Grid.Column="1" Grid.Row="2">
+                                    <Hyperlink NavigateUri="https://www.inkscape.org">Inkscape
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="3" Kind="FormatAnnotationPlus" />
+                                <TextBlock Grid.Column="1" Grid.Row="3">
+                                    <Hyperlink NavigateUri="https://www.iphotodraw.com/">iPhotoDraw
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="4"  Kind="Translate" />
+                                <TextBlock Grid.Column="1" Grid.Row="4">
+                                    <Hyperlink NavigateUri="https://zhconvert.org/">Fanhuaji (繁化姬)
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconSimpleIcons Grid.Column="0" Grid.Row="5"  Kind="StackOverflow" />
+                                <TextBlock Grid.Column="1" Grid.Row="5" IsHyphenationEnabled="True">
+                                    <Hyperlink NavigateUri="https://stackoverflow.com">Stack Overflow
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="6"  Kind="ForumOutline" />
+                                <TextBlock Grid.Column="1" Grid.Row="6">
+                                    <Hyperlink NavigateUri="https://social.msdn.microsoft.com/Forums">MSDN Forums
+                                    </Hyperlink>
+                                </TextBlock>
+
+                                <IconPacks:PackIconSimpleIcons Grid.Column="0" Grid.Row="7"  Kind="GitHub" />
+                                <TextBlock Grid.Column="1" Grid.Row="7">
+                                    <Hyperlink NavigateUri="https://github.com/">GitHub
+                                    </Hyperlink>
+                                </TextBlock>
+                            </Grid>
+                        </Expander>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            
+            <!-- TabItem 3: Online Tools -->
+            <TabItem Header="Online Tools">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                    <GroupBox Header="Chinese Converters">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Content="Fanhuaji (繁化姬)" />
+                            <TextBlock Grid.Column="1" Grid.Row="0">
+                                <Hyperlink NavigateUri="https://zhconvert.org/">https://zhconvert.org/
+                                </Hyperlink>
+                            </TextBlock>
+
+                            <Label Grid.Column="0" Grid.Row="1" Content="Chinese Converter (中文轉換)" />
+                            <TextBlock Grid.Column="1" Grid.Row="1">
+                                <Hyperlink NavigateUri="https://www.chineseconverter.com">https://www.chineseconverter.com
+                                </Hyperlink>
+                            </TextBlock>
+                            
+                            <Label Grid.Column="0" Grid.Row="2" Content="Google Translator Chinese Converter" />
+                            <TextBlock Grid.Column="1" Grid.Row="2">
+                                <Hyperlink NavigateUri="https://translate.google.com/?tab=wT#view=home&amp;op=translate&amp;sl=zh-CN&amp;tl=zh-TW">https://translate.google.com/?tab=wT#view=home&amp;op=translate&amp;sl=zh-CN&amp;tl=zh-TW
+                                </Hyperlink>
+                            </TextBlock>
+                        </Grid>                        
+                    </GroupBox>
+
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
