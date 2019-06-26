@@ -25,7 +25,7 @@ See [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebT
 - To Be Designed...  
 <br />
 
-## Build Environmnet
+## Build Environment
 - Microsoft Visual Studio 2019 16.1.4
 - .Net Framework 4.7 SDK
 - .Net Core 3.0 preview6 (just for testing)
