@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using Android.App;
 using Android.Content.PM;
@@ -15,10 +15,13 @@ namespace MinaxWebTranslator.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            TabLayoutResource = Resource.Layout.Tabbar;
-            ToolbarResource = Resource.Layout.Toolbar;
+            //TabLayoutResource = Resource.Layout.Tabbar;
+            //ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+
+			TabLayoutResource = Resource.Layout.Tabbar;
+			ToolbarResource = Resource.Layout.Toolbar;
 
 			Rg.Plugins.Popup.Popup.Init( this, savedInstanceState );
 			Plugin.InputKit.Platforms.Droid.Config.Init( this, savedInstanceState );
@@ -34,7 +37,6 @@ namespace MinaxWebTranslator.Droid
 
 			Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-			//LoadApplication(new App());
 			LoadApplication( new App( Android.OS.Environment.GetExternalStoragePublicDirectory( Android.OS.Environment.DirectoryDocuments ).AbsolutePath ) );
 		}
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

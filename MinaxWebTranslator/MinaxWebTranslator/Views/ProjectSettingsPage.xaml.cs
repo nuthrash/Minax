@@ -21,7 +21,7 @@ namespace MinaxWebTranslator.Views
 			get => mProject;
 			set {
 				mProject = value;
-				if( mProject == null )
+				if( mProject == null || mProject.Project == null )
 					return;
 
 				EtProjectName.Text = mProject.ProjectName;
@@ -43,6 +43,9 @@ namespace MinaxWebTranslator.Views
 						PkTargetLang.SelectedIndex = 1;
 						break;
 				}
+
+				EtProjectDesc.Text = mProject.Project.Description;
+				EtProjectRemoteSite.Text = mProject.Project.RemoteSite;
 			}
 
 		}
@@ -51,6 +54,9 @@ namespace MinaxWebTranslator.Views
 
 		public SupportedSourceLanguage CurrentSourceLanguage { get; private set; }
 		public SupportedTargetLanguage CurrentTargetLanguage { get; private set; }
+
+		public string CurrentProjectDescription => EtProjectDesc.Text;
+		public string CurrentProjectRemoteSite => EtProjectRemoteSite.Text;
 
 		internal bool NeedReloading { get; set; }
 

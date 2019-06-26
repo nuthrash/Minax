@@ -58,7 +58,7 @@ See [Conepts.md](./Concepts.md)
 - Translator
   - Select Translator and fill required field(s): Menu -> Translator
   <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Translator1.jpg" title="MWT Desktop Translator1"> <br />
-  - When select a **charged** Translation API, you might fill required field(s) or keep blank util click Translate button to ask it or them.
+  - When select a **charged** Translation API, you might fill required field(s) or keep blank until click Translate button to ask it or them.
   <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Translator2.jpg" title="MWT Desktop Translator2">
 
 
@@ -71,7 +71,7 @@ This feature is the main feature of this App to translate large size text.
 - Step 5: Click Translate button in Target panel
 <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Target3-note.jpg" title="MWT Desktop Translator1">
   - The translated text would show on the Target box in Target panel. <br />
-  - The mapped text world be marked with bold.  
+  - The mapped text would be marked with bold.  
 
   <br />
 
@@ -81,8 +81,8 @@ therefore the Input box is restricted to max 500 words.
 
 ![MWT-WinDesktop-QuickTranslation2](../Assets/Images/ScreenShots/MWT-WinDesktop-QuickTranslation2.jpg "Quick Translation Panel")
 
-The basic usage is same with main translating feature, besides you select multiple Translators to translate short text simultaneously.
-And the "Integrated Output" box would integrate all selected Translators' output to a single section.
+The basic usage is same with main translating feature, besides you can select multiple Translators to translate short text simultaneously.
+And the "Integrated Output" box would integrate all selected Translators' output text to a single section.
 
 ---
 
@@ -139,3 +139,17 @@ The rules of Translator selection are very simple:
 
 If you do not understand what I talk about, you could try every engine many times to find what is the best for you. 
 
+<br />
+
+### Service Availability
+This App almost works with remote web translation services, whether via Web Page or Web APIs.
+No App can ensure remote services always online or usable, because the network and service availabilities are heavily depend on user's environment.  
+
+Therefore, when you encounter some problems in translating, first thing is to check your environment, then retry again.
+Sometimes, it just caused by network latency.
+Maybe after you retry the operation, it would work again.  
+
+In addition to the network problem, there are other situations which cause the operation failed.  
+One of them is the service providers changed their HTML codes. Another situation maybe they blocked out-of-quota requests.  
+The latter might be resolved by retrying later in hours.  
+The former shall call the programmer to see what happened.

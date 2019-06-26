@@ -222,7 +222,16 @@ namespace MinaxWebTranslator.Views
 							if( mProject.Project.TargetLanguage != mProjSettingsPage.CurrentTargetLanguage ) {
 								mProject.Project.TargetLanguage = mProjSettingsPage.CurrentTargetLanguage;
 								langChanged = true;
-							}							
+							}
+
+							if( mProject.Project.Description != mProjSettingsPage.CurrentProjectDescription ) {
+								mProject.Project.Description = mProjSettingsPage.CurrentProjectDescription;
+								changed = true;
+							}
+							if( mProject.Project.RemoteSite != mProjSettingsPage.CurrentProjectRemoteSite ) {
+								mProject.Project.RemoteSite = mProjSettingsPage.CurrentProjectRemoteSite;
+								changed = true;
+							}
 
 							if( langChanged ) {
 								TranslatorHelpers.SourceLanguage = mProject.Project.SourceLanguage;

@@ -140,10 +140,10 @@
                                 <Hyperlink NavigateUri="https://github.com/nuthrash/Minax/wiki">https://github.com/nuthrash/Minax/wiki</Hyperlink>
                             </Paragraph>
                             <Paragraph>App Usage:
-                                <Hyperlink NavigateUri="https://github.com/nuthrash/Minax/blob/master/MinaxWebTranslator/Readme.md">https://github.com/nuthrash/Minax/blob/master/MinaxWebTranslator/Readme.md</Hyperlink>
+								<Hyperlink NavigateUri="https://nuthrash.github.io/Minax/MinaxWebTranslator/">https://nuthrash.github.io/Minax/MinaxWebTranslator/</Hyperlink>
                             </Paragraph>
                             <Paragraph>App Concepts:
-                                <Hyperlink NavigateUri="https://github.com/nuthrash/Minax/blob/master/MinaxWebTranslator/Concepts.md">https://github.com/nuthrash/Minax/blob/master/MinaxWebTranslator/Concepts.md</Hyperlink>
+								<Hyperlink NavigateUri="https://nuthrash.github.io/Minax/MinaxWebTranslator/Concepts.html">https://nuthrash.github.io/Minax/MinaxWebTranslator/Concepts.html</Hyperlink>
                             </Paragraph>
                             <Paragraph>Sample Projects:
                                 <Hyperlink NavigateUri="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects">https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects</Hyperlink>

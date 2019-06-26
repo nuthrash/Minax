@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MinaxWebTranslator.Desktop.Views.TranslatorSelectorPanel"
+<UserControl x:Class="MinaxWebTranslator.Desktop.Views.TranslatorSelectorPanel"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -191,7 +191,7 @@
             </Grid>
 
             <Label x:Name="LblWarningCharged" Foreground="DarkRed" Visibility="Collapsed"
-                   Content="NOTE: Above field(s) content would be saved to private App location. If you think that is danganous, you shall not key in anything!!"/>
+                   Content="NOTE: Above field(s) content would be saved to private App location. If you think that is dangerous, you shall not key in anything!!"/>
         </StackPanel>
 
         <Separator />

@@ -6,7 +6,10 @@ Sample Translation Project files.
 
 ## GlossaryFileList.txt
 
-This file stores many relative paths (to this folder) of Glossary sub-folders and files. It shall be an UTF-8 pure text file!
+This file stores many relative paths (to this folder) of Glossary sub-folders and files.
+- It shall be an **UTF-8 pure text file**!
+- Each line presents a relative folder name or file name
+- A file name shall has extension, like .tsv, otherwise this name would be considered as a folder name!
 
 ### Content sample
 ```
@@ -20,4 +23,4 @@ This file stores many relative paths (to this folder) of Glossary sub-folders an
  ```
 
 ## GlossaryEmpty.zip
-This file compress some empty glossary folders which can be extract to Project folder by yourself.
+This file compressed some empty glossary folders (not contain any glossary file) which can be extracted to Project folder by yourself.
