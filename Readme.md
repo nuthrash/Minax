@@ -5,9 +5,18 @@ Minax is a series of sub-projects and Apps for myself.
 ## Minax Web Translator
 - The Windows and Android Apps for remote Web Translator.  
 
-See [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/)
+<table border='0'>
+<tr>
+  <td valign="center">
+	See <a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/">MinaxWebTranslator</a> 
+  </td>
+  <td>
+<img src="Assets/Images/Translator.png" width=48 /> 
+  </td>
+</tr>
+</table>
 
-![MWT-WinDesktop-Target3-note.jpg](./Assets/Images/ScreenShots/MWT-WinDesktop-Target3-note.jpg "Minax Web Translator Desktop version")
+![MWT-WinDesktop-Target3-note.jpg](./Assets/Images/ScreenShots/MWT-WinDesktop-Target3-note.jpg "Minax Web Translator Desktop version") 
 
 - [Windows Desktop version](https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator#windows-desktop)
 - [Android version](https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator#android)

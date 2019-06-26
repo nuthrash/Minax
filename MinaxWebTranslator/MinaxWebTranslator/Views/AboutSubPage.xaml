@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -90,11 +90,11 @@
                     <Label Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Start">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="https://github.com/nuthrash/Minax"
+								<Span Text="https://nuthrash.github.io/Minax/"
                                       TextColor="Blue" TextDecorations="Underline">
                                     <Span.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding OpenWebCmd}"
-                                                CommandParameter="https://github.com/nuthrash/Minax" />
+                                                CommandParameter="https://nuthrash.github.io/Minax/" />
                                     </Span.GestureRecognizers>
                                 </Span>
                             </FormattedString>

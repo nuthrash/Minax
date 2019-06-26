@@ -8,12 +8,12 @@
     <Authors>nuthrash</Authors>
     <Company>Minax</Company>
     <Copyright>Copyright © 2019 nuthrash</Copyright>
-    <PackageProjectUrl>https://github.com/nuthrash/Minax/wiki</PackageProjectUrl>
+    <PackageProjectUrl>https://nuthrash.github.io/Minax/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nuthrash/Minax.git</RepositoryUrl>
     <PackageIconUrl>https://github.com/nuthrash/Minax/raw/master/Assets/Images/Translator.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>WebTranslator</PackageTags>
-    <Description>Minax Web Translator apps common GUI library for Android, iOS, UWP/WinUI systems.</Description>
+    <Description>Minax Web Translator apps common GUI library for Android systems.</Description>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>MinaxWebTranslator.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -151,6 +151,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\TranslatorSelectorPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\WaitingView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿using Minax.Domain.Translation;
+using Minax.Domain.Translation;
 using MinaxWebTranslator.Models;
 using Plugin.Toast;
 using System;
@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.AlertDialogModal;
 using Xamarin.Forms.Xaml;
 
 namespace MinaxWebTranslator.Views
@@ -62,8 +63,19 @@ namespace MinaxWebTranslator.Views
 			CbGlossarySyncFile.Items.Clear();
 			CbGlossaryOverwritePolicy.SelectedIndex = 0;
 
-			sNetProgrss.ProgressChanged += async ( s1, e1 ) => {
-				// TODO: show download progress message...
+			mNetProgrss.ProgressChanged += async ( s1, e1 ) => {
+				if( e1.PercentOrErrorCode >= 0 && e1.PercentOrErrorCode <= 100 ) {
+					MainThread.BeginInvokeOnMainThread( async () => {
+						// show download progress message...
+						if( e1.PercentOrErrorCode == 100 && mNetWaitDlg != null ) {
+							await mNetWaitDlg.Dismiss();
+							return;
+						}
+
+						if( mNetWaitView != null )
+							mNetWaitView.Message = $"Please wait for operation finished...{e1.PercentOrErrorCode}%";
+					} );
+				}
 				await MessageHub.SendMessageAsync( this, MessageType.NetProgress, e1 );
 			};
 		}
@@ -71,7 +83,9 @@ namespace MinaxWebTranslator.Views
 		private MainPage mMainPage;
 		private ProjectModel mProject;
 		private CancellationTokenSource mCancelTokenSrource = new CancellationTokenSource();
-		private static readonly Progress<Minax.ProgressInfo> sNetProgrss = new Progress<Minax.ProgressInfo>();
+		private readonly Progress<Minax.ProgressInfo> mNetProgrss = new Progress<Minax.ProgressInfo>();
+		private AlertDialogPage mNetWaitDlg;
+		private Views.WaitingView mNetWaitView;
 
 		private void ContentPage_Appearing( object sender, EventArgs e )
 		{
@@ -151,10 +165,30 @@ namespace MinaxWebTranslator.Views
 
 			ProjectManager.Instance.MappingMonitor?.Stop();
 
+			// show waiting dialog...
+			if( mNetWaitView == null )
+				mNetWaitView = new WaitingView { Message = "Please wait for operation finished...0%" };
+
+			if( mNetWaitDlg != null ) {
+				await mNetWaitDlg.Dismiss();
+			} else {
+				mNetWaitView.Message = "Please wait for operation finished...0%";
+				mNetWaitDlg = new AlertDialogBuilder()
+					.SetView( mNetWaitView )
+					.SetPositiveButton( Languages.Global.Str0Cancel, async () => {
+						if( mCancelTokenSrource.IsCancellationRequested == false )
+							mCancelTokenSrource.Cancel();
+						await mNetWaitDlg.Dismiss();
+						mCancelTokenSrource = new CancellationTokenSource();
+					} )
+					.Build();
+			}
+			await mNetWaitDlg.Show( this );
+
 			var rst = await ProjectManager.Instance.FetchFilesByFileListLink(
 					CbGlossarySyncFile.SelectedItem.ToString(),
 					ProjectManager.Instance.MappingMonitor.BaseProjectPath, policy,
-					mCancelTokenSrource, sNetProgrss, this );
+					mCancelTokenSrource, mNetProgrss, this );
 
 			if( rst == false ) {
 				await DisplayAlert( "Operation Failed", "Download remote Glossary file(s) by file link failed!", "OK" );

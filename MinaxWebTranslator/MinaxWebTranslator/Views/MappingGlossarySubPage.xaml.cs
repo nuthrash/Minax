@@ -1,4 +1,4 @@
-﻿using Minax.Collections;
+using Minax.Collections;
 using Minax.Domain.Translation;
 using MinaxWebTranslator.Models;
 using System;
@@ -92,7 +92,6 @@ namespace MinaxWebTranslator.Views
 					break;
 				case MessageType.DataReload:
 					if( data is ProjectModel reloadModel ) {
-
 						ReloadMapping();
 					}
 					break;
