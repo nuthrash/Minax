@@ -4,8 +4,8 @@
 **Minax Web Translator** app is **not** a translator. It just an **agent and text mapping-replacer** for remote web translator/translation result.
 It works with some online web sites and APIs, such as Excite, CROSS-transer, Weblio, Baidu, Youdao, Google, Microsoft/Bing etc..
 
-- Wiki: https://github.com/nuthrash/Minax/wiki
-- Sample Projects: https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects
+- Wiki: [https://github.com/nuthrash/Minax/wiki](https://github.com/nuthrash/Minax/wiki)
+- Sample Projects: [https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects](https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects)
 
 <br />
 
@@ -103,11 +103,14 @@ And the "Integrated Output" box would integrate all selected Translators' output
 
 <img src="../Assets/Images/ScreenShots/MWT-Droid-Main.png" width="256 " title="MWT Droid Main - Startup">
 
+
 #### Menu
-- No project opened
+- No project opened  
+
 <img src="../Assets/Images/ScreenShots/MWT-Droid-Menu1.png" width="256 " title="MWT Droid Menu - No project opened">
 
-- Project opened (some menu items would show after project opened)
+- Project opened (some menu items would show after project opened)  
+
 <img src="../Assets/Images/ScreenShots/MWT-Droid-Menu2.png" width="256 " title="MWT Droid Menu - Project opened">
 
 <br />
