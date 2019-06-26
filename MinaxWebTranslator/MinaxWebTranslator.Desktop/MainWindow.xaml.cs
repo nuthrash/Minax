@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Minax.Collections;
 using Minax.Domain.Translation;
@@ -410,10 +410,8 @@ namespace MinaxWebTranslator.Desktop
 			if( Profiles.DefaultEngineFolders.ContainsKey( mCurrentRemoteType ) )
 				xlatorFolder = Profiles.DefaultEngineFolders[mCurrentRemoteType];
 
-			bool ret = await ProjectManager.Instance.OpenAndMonitorGlossaryFiles( model, xlatorFolder,
+			await ProjectManager.Instance.OpenAndMonitorGlossaryFiles( model, xlatorFolder,
 						model.Project.SourceLanguage, model.Project.TargetLanguage );
-			if( ret == false )
-				return false;
 
 			var mon = ProjectManager.Instance.MappingMonitor;
 			if( mon == null )
@@ -885,7 +883,7 @@ namespace MinaxWebTranslator.Desktop
 			mProjFileName = fullPathFileName;
 
 			if( false == await _ReloadAllMappingData( mProject ) ) {
-				this.ShowAutoCloseMessage( "Operation Failed", "Load project files failed!!" );
+				await this.ShowMessageAsync( "Operation Failed", "Load project files failed!!" );
 				return false;
 			}
 
@@ -1065,11 +1063,15 @@ namespace MinaxWebTranslator.Desktop
 
 			ProjectManager.Instance.MappingMonitor?.Stop();
 
+			var ctrl = await this.ShowProgressAsync( "Opertion Processing",
+						"Downloading remote Glossary file(s)...", true );
+
 			var rst = await ProjectManager.Instance.FetchFilesByFileListLink(
 					CbGlossarySyncFile.SelectedItem.ToString(),
 					ProjectManager.Instance.MappingMonitor.BaseProjectPath, policy,
 					mCancelTokenSrource, sTransProgress, this );
 
+			await ctrl.CloseAsync();
 			if( rst == false ) {
 				await this.ShowMessageAsync( "Operation Failed", "Download remote Glossary file(s) by file link failed!" );
 				ProjectManager.Instance.MappingMonitor?.Start();
@@ -1077,8 +1079,8 @@ namespace MinaxWebTranslator.Desktop
 			}
 
 			// reload Mapping Tables
-			var ctrl = await this.ShowProgressAsync( "Opertion Processing",
-							"Download remote Glossart file(s) succeed," +
+			ctrl = await this.ShowProgressAsync( "Opertion Processing",
+							"Download remote Glossary file(s) succeed," +
 							" then please wait for reloading all Mapping Tables.", true );
 			ProjectManager.Instance.MappingMonitor?.ReloadFileList();
 			rst = await _ReloadAllMappingData( mProject );

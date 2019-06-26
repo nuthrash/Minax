@@ -8,14 +8,14 @@
     <FileVersion>0.0.1.0</FileVersion>
     <Version>0.0.1</Version>
     <RootNamespace>Minax</RootNamespace>
-    <Description>A multi-targets common shared library for Minax series projects among .Net Core, .Net Standard and full-version .Net Framework</Description>
+    <Description>A multi-targets common shared library for Minax series projects among .Net Core, .Net Standard and full-function .Net Framework</Description>
     <Copyright>Copyright © 2019 nuthrash</Copyright>
     <RepositoryUrl>https://github.com/nuthrash/Minax.git</RepositoryUrl>
-    <RepositoryType>GitHub</RepositoryType>
+    <RepositoryType>git</RepositoryType>
     <PackageTags>Minax.Shared</PackageTags>
     <PackageReleaseNotes>Initial base project</PackageReleaseNotes>
     <PackageIconUrl></PackageIconUrl>
-    <PackageProjectUrl>https://github.com/nuthrash/Minax/wiki</PackageProjectUrl>
+    <PackageProjectUrl>https://nuthrash.github.io/Minax/</PackageProjectUrl>
     <NeutralLanguage></NeutralLanguage>
     <LangVersion>7.3</LangVersion>
     <SignAssembly>true</SignAssembly>

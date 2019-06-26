@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -187,11 +187,12 @@ namespace MinaxWebTranslator.Views
 					case MenuItemType.ProjectSettingsClosed:
 						if( mProjSettingsPage.NeedReloading ) {
 							// when glossary file downloaded from remote site...
-							_SetProjChanged();
+							//_SetProjChanged();
 
 							ProjectManager.Instance.SaveProject( mProject, mProjFileName );
+							await MessageHub.SendMessageAsync( this, MessageType.ProjectSaved, mProject );
 							// perform reloading Mapping and Project
-							_SetupByProject();
+							await _SetupByProject();
 
 							// trigger DetailPage to reload all mapping methods
 							await MessageHub.SendMessageAsync( this, MessageType.DataReload, mProject );
@@ -339,7 +340,7 @@ namespace MinaxWebTranslator.Views
 				}
 
 				// done, update binding and menu
-				_SetupByProject();
+				await _SetupByProject();
 			}
 			catch( Exception ex ) {
 				System.Diagnostics.Trace.WriteLine( "MainPage._OpenProject() got exception, EX: " + ex.Message );
@@ -361,14 +362,14 @@ namespace MinaxWebTranslator.Views
 			mProject = newProj;
 			mProjFileName = fullPathFileName;
 
-			_SetupByProject();
+			await _SetupByProject();
 			return true;
 		}
 
-		private async void _SetupByProject( bool sendDataReloadMsg = false )
+		private async Task<bool> _SetupByProject( bool sendDataReloadMsg = false )
 		{
 			if( mProject == null )
-				return;
+				return false;
 
 			mProjFileName = mProject.FullPathFileName;
 
@@ -379,7 +380,7 @@ namespace MinaxWebTranslator.Views
 			if( Profiles.DefaultEngineFolders.ContainsKey( mXlatorPage.SelectedTranslatorType ) )
 				xlatorFolder = Profiles.DefaultEngineFolders[mXlatorPage.SelectedTranslatorType];
 
-			bool ret = await ProjectManager.Instance.OpenAndMonitorGlossaryFiles( mProject, xlatorFolder,
+			await ProjectManager.Instance.OpenAndMonitorGlossaryFiles( mProject, xlatorFolder,
 						mProject.Project.SourceLanguage, mProject.Project.TargetLanguage );
 
 			var mon = ProjectManager.Instance.MappingMonitor;
@@ -409,6 +410,7 @@ namespace MinaxWebTranslator.Views
 
 
 			mDetailPage.IsEnabled = true;
+			return true;
 		}
 
 		private async void _CloseProject( bool sendMessage = false )
@@ -573,7 +575,7 @@ namespace MinaxWebTranslator.Views
 
 			// reload Mapping Tables		
 			ProjectManager.Instance.MappingMonitor?.ReloadFileList();
-			_SetupByProject( sendDataReloadMsg );
+			await _SetupByProject( sendDataReloadMsg );
 
 			return true;
 		}

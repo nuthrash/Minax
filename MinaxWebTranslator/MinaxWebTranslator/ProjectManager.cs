@@ -1,4 +1,4 @@
-﻿using Minax.Collections;
+using Minax.Collections;
 using Minax.Domain.Translation;
 using Minax.IO;
 using Minax.Web.Translation;
@@ -461,11 +461,17 @@ namespace MinaxWebTranslator
 					if( remoteRelFiles == null || remoteRelFiles.Length <= 0 )
 						return true;
 
-					foreach( var relFn in remoteRelFiles ) {
+					for( int i = 0; i < remoteRelFiles.Length; ++i ){
 						try {
+							var relFn = remoteRelFiles[i];
 							var locFn = Path.GetFullPath( Path.Combine( targetPath, relFn ) );
 							if( Directory.Exists( locFn ) ) {
-								continue;
+								goto exit1;
+							}
+							if( Path.HasExtension( locFn ) == false ) {
+								// this locFn is a directory
+								Directory.CreateDirectory( locFn );
+								goto exit1;
 							}
 
 							Uri relUri = new Uri( uri, relFn );
@@ -473,19 +479,25 @@ namespace MinaxWebTranslator
 							response = await client.GetAsync( relUri );
 							if( response == null || response.IsSuccessStatusCode == false ||
 								response.Content.Headers.ContentLength <= 0 )
-								continue;
+								goto exit1;
 
 							if( File.Exists( locFn ) ) {
 								var rst = await mainPage.DisplayAlert( "Overwrite Confirm",
 									$"Glossary File \"{locFn}\" existed, do you want to overwrite it?", "Yes", "No" );
 
 								if( rst != true )
-									continue;
+									goto exit1;
 							}
 
 							using( var stream = new FileStream( locFn, FileMode.Create, FileAccess.ReadWrite, FileShare.None ) ) {
 								await response.Content.CopyToAsync( stream );
 							}
+
+						exit1:
+							progress?.Report( new Minax.ProgressInfo {
+								PercentOrErrorCode = i,
+								Message = $"Glossary File \"{locFn}\" created.",
+							} );
 						}
 						catch { }
 					}

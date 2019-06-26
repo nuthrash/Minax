@@ -1,4 +1,4 @@
-﻿using Minax.IO;
+using Minax.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -67,7 +67,12 @@ namespace Minax.Web
 						try {
 							var locFn = Path.GetFullPath( Path.Combine( targetPath, relFn ) );
 							if( Directory.Exists( locFn ) ) {
-								continue;
+								goto exit1;
+							}
+							if( Path.HasExtension(locFn) == false ) {
+								// this locFn is a directory
+								Directory.CreateDirectory( locFn );
+								goto exit1;
 							}
 
 							Uri relUri = new Uri( uri, relFn );
@@ -75,16 +80,16 @@ namespace Minax.Web
 							response = await client.GetAsync( relUri );
 							if( response == null || response.IsSuccessStatusCode == false ||
 								response.Content.Headers.ContentLength <= 0 )
-								continue;
+								goto exit1;
 
 							if( File.Exists( locFn ) ) {
 								switch( policy ) {
 									case OverwritePolicy.Skip:
-										continue;
+										goto exit1;
 									case OverwritePolicy.FileSizeLarger:
 										using( var fileStream = new FileStream( locFn, FileMode.Open, FileAccess.Read, FileShare.Read ) ) {
 											if( fileStream.Length >= response.Content.Headers.ContentLength )
-												continue;
+												goto exit1;
 										}
 										break;
 								}
@@ -94,6 +99,7 @@ namespace Minax.Web
 								await response.Content.CopyToAsync( stream );
 							}
 
+						exit1:
 							progress?.Report( new ProgressInfo {
 								PercentOrErrorCode = (i + 1) / remoteRelFiles.Length,
 								Message = $"Fetched {i + 1}/{remoteRelFiles.Length} files.",

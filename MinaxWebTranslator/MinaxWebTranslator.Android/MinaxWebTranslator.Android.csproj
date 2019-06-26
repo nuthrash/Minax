@@ -25,6 +25,7 @@
     <AndroidSigningKeyStore>D:\Prog\VS\Minax\Assets\Releases\Android\Keystores\MinaxWebTranslator.Droid.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>v548sdf#2</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>mwt.droid</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>v548sdf#2</AndroidSigningKeyPass>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
