@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Minax Web Translator (MWT) Concepts</title>
+</head>
+<body>
+
+    <h1 id="minax-web-translator-mwt-concepts">Minax Web Translator (MWT) Concepts</h1>
+<h2 id="simple-concepts">Simple Concepts</h2>
+<ul>
+<li>Step 1: Input source text.</li>
+<li>Step 2: Replace each <code>MappingEntry</code>'s <code>OriginalText</code> to a non-replaceable string for each translator/translation platform.</li>
+<li>Step 3: Invoke remote Translator/Translation site to perform <strong>Statistical Machine Translation</strong> (<strong>SMT</strong>), <strong>Neural Machine Translation</strong> (<strong>NMT</strong>), or other translation technologies.</li>
+<li>Step 4: Receive translated text which contains non-replaceable strings.</li>
+<li>Step 5: Replace each non-replaceable string to corresponding <code>MappingEntry</code>'s <code>MappingText</code> .</li>
+</ul>
+<p>That's all.</p>
+<br />
+<h3 id="non-replaceable-string">Non-replaceable string</h3>
+<p>This term means the string would be keeped after translating, like &quot;ABC123&quot;.</p>
+<ul>
+<li>In fact, many translating engines would replace text to strange format, like &quot;1.23&quot; to &quot;1,23&quot;. It seems caused by localization culture number format.</li>
+<li>Therefore, we shall find the non-replaceable string format rules for each engine.</li>
+<li>Some translating engine, like <strong>Microsoft Translator Text API V3</strong>, directly support this feature by inserting some pre-defined HTML element class name</li>
+</ul>
+<br />
+<h3 id="translator-or-translation">Translator or Translation</h3>
+<p>These two terms are almost exchangeable in all cases. However, we use <strong>Translator</strong> to mean <em>Web Page based translator site</em> like Google Translate. Meanwhile, use <strong>Translation</strong> for <em>API-based translation service</em> like Google Translation API v2.
+<br />
+<br /></p>
+<h2 id="mappingentry">MappingEntry</h2>
+<p>This class contains five fields:</p>
+<ol>
+<li><code>OriginalText</code>: The original text want to replace or keep. <strong>This field cannot be empty but maybe full of whitespace text</strong> .</li>
+<li><code>MappingText</code>: The mapping text want to be replaced or keeped.</li>
+<li><code>Category</code>: This <code>MappingEntry</code>'s category to classify. Such as character name, family name, material, etc..</li>
+<li><code>Description</code>: The text describe this <code>MappingEntry</code>'s meanings or comments.</li>
+<li><code>Comment</code>: The extra text to comment this <code>MappingEntry</code> about something.</li>
+</ol>
+<p>The screenshot:
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-MappingProject.jpg" alt="MWT-WinDesktop-MappingProject" title="MWT MappingProject of Desktop version" /></p>
+<br />
+<p>MappingEntry entries are located in</p>
+<ol>
+<li>Translation Project file</li>
+<li>Glossary Mapping file(s)</li>
+</ol>
+<br />
+<h2 id="folders">Folders</h2>
+<ul>
+<li>Base Project folder
+<ul>
+<li>The folder contains Translation Project file is the base project folder, like <a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects/">TranslationProjects</a></li>
+<li>It is not necessary to consider as a dedicated folder for a project, and you can put many project files in same folder.</li>
+<li>In the contrary, this folder is parsed from the file name of opened project, MWT would not delete other project file forcibly.</li>
+</ul>
+</li>
+<li>Glossary folder
+<ul>
+<li>The glossary Mapping files locate in Glossary/* sub-folders, like <a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects/Glossary/">TranslationProjects/Glossary</a></li>
+<li>You cannot specify Glossary path or folder name. It shall be named &quot;Glossary&quot; folder name and located inside base project path.</li>
+</ul>
+</li>
+</ul>
+<br />
+<h2 id="glossary-file">Glossary File</h2>
+<p>A glossary file is a file which stores some mapping text/terms.
+It might be a simple two columns text file, table-based text file, Excel file, Translation Memory eXchange (TMX) XML file, or other translation related file format.</p>
+<br />
+<h3 id="supported-file-formats">Supported File Formats</h3>
+<ul>
+<li>Currently, MWT only support tab-separated values (TSV) .tsv and camma-separated values (CSV) .csv (MWT would detect by itself!)</li>
+<li><strong>Each file shall be UTF-8 encoded with BOM</strong> .</li>
+<li>Columns
+<ul>
+<li>First row may be Column Name, or row data</li>
+<li>Like <code>MappingEntry</code>, when a glossary file has first row with Column Name, their sequence is prefer <code>OriginalText</code>, <code>MappingText</code>, <code>Category</code>, <code>Description</code>, and <code>Comment</code>.</li>
+<li>Otherwise, first-two column names shall be <code>OriginalText</code> and <code>MappingText</code>. Other fields are optional.</li>
+<li>That means, <strong>each glossary file shall has at least two columns</strong> for <code>OriginalText</code> and <code>MappingText</code> (like <a href="https://translate.google.com/toolkit">Google Translation toolkit</a> ), and the Column Name row is not necessary.</li>
+</ul>
+</li>
+</ul>
+<h2 id="mapping-priority">Mapping Priority</h2>
+<p>When there are some glossary files and Project configuration file, they have themselves Mapping tables.
+Therefore combine them to a merged Mapping table shall sort all entries with priority.</p>
+<p>The project folder might look like <a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects/">TranslationProjects</a> , but the folder itself is not necessary.
+Just a Project configuration file (.conf) is enough to use this App, and the Glossary sub-folders can create later.</p>
+<p>Priorities from high to low are:</p>
+<ol>
+<li>Project configuration file's Mapping entries</li>
+<li>Cross remote translator/translation engine(s) glossary Mapping entries</li>
+<li>Remote translator/translation engine's glossary Mapping entries</li>
+<li>Remote translator/translation engine's <code>&lt;SourceLanguage&gt;2&lt;TargetLanguage&gt;</code> glossary Mapping entries</li>
+</ol>
+<p>That means any Mapping entry can be overwritten by Translation Project Mapping entry.</p>
+<p>Merge sequence:</p>
+<ol>
+<li>From deepest glossary Mapping files to Translation Project file</li>
+</ol>
+<ul>
+<li>The formers would be overwritten by later.</li>
+</ul>
+<ol start="2">
+<li>From smaller glossary file name to larger when all glossary files are sorted by numeric sequence in same folder
+<ul>
+<li>This rule is focus on the files have same prefix string with number file names.</li>
+<li>Example: The entry with same <code>OriginalText</code> content in File1.csv would be overwritten by File2.csv</li>
+<li>Therefore, you can create your own glossary file to overwrite other glossary Mapping entries by give it a vary large number file name, like File99999.csv.</li>
+</ul>
+</li>
+<li>Besides 2., other glossary Mapping files would be sorted by alphabet sequence, then merge them from a to z.
+<ul>
+<li>In fact, it is prefer to <strong>put same Category Mapping entries to files with same prefix string plus number</strong>, like MiscTerms1.csv, MiscTerms2.csv.</li>
+<li>If you put many different Category entries in a file, it is not determining what is the last entry to be merged.</li>
+</ul>
+</li>
+<li>If cannot find any glossary Mapping file in Glossary sub-folders, it is OK, MWT would go through with Mapping entries inside Project file</li>
+</ol>
+<h3 id="file-changed-monitoring">File Changed Monitoring</h3>
+<p>Only <u>MWT Windows Desktop version</u> has this feature!</p>
+<ul>
+<li>When a new glossary Mapping file put into Glossary sub-folders
+<ul>
+<li>Any Mapping entry with same <code>OriginalText</code> content may be replaced or not, totally depends on the priority rules.</li>
+<li>In addition, the new file name shall also to be considered!</li>
+</ul>
+</li>
+<li>When an existed glossary Mapping file was deleted
+<ul>
+<li>The merged Mapping entries would be re-sorted with priority</li>
+<li>When some Mapping entries have same <code>OriginalText</code> content, highest priority entry would become current entry.</li>
+<li>That means, the <code>MappingText</code> content would be replaced from &quot;ABC&quot; (old entry) to &quot;CBA&quot; (current entry).</li>
+</ul>
+</li>
+</ul>
+<br />
+<hr />
+<h1 id="translation-api-services">Translation API Services</h1>
+<h2 id="microsoft-translator-text-api-v3.0">Microsoft Translator Text API v3.0</h2>
+<ul>
+<li>Documents: <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-reference">https://docs.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-reference</a></li>
+<li>How to sign-up: <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/translator/translator-text-how-to-signup">https://docs.microsoft.com/en-us/azure/cognitive-services/translator/translator-text-how-to-signup</a></li>
+</ul>
+<h2 id="google-cloud-translation-api-v2">Google Cloud Translation API v2</h2>
+<ul>
+<li>Documents: <a href="https://cloud.google.com/translate/docs">https://cloud.google.com/translate/docs</a></li>
+<li>How to create API key: <a href="https://cloud.google.com/docs/authentication/api-keys">https://cloud.google.com/docs/authentication/api-keys</a></li>
+<li>Cloud Translation API v3 (beta): <a href="https://cloud.google.com/translate/docs/intro-to-v3">https://cloud.google.com/translate/docs/intro-to-v3</a>
+<ul>
+<li>In this version, it seems has free quota (200000? words)!!</li>
+</ul>
+</li>
+</ul>
+<h2 id="baidu-translation-api">Baidu Translation API (百度翻译开放平台)</h2>
+<ul>
+<li>Documents (简体中文): <a href="http://api.fanyi.baidu.com/api/trans/product/apidoc">http://api.fanyi.baidu.com/api/trans/product/apidoc</a></li>
+<li>Where to request APP ID and Secret Key (简体中文): <a href="http://api.fanyi.baidu.com/api/trans/product/desktop">http://api.fanyi.baidu.com/api/trans/product/desktop</a></li>
+</ul>
+<h2 id="youdao-translation-api-api">Youdao Translation API (有道智云翻译 API)</h2>
+<ul>
+<li>Docuemnts (简体中文): <a href="https://ai.youdao.com/docs/doc-trans-api.s#p01">https://ai.youdao.com/docs/doc-trans-api.s#p01</a></li>
+<li>Where to request App Key (App ID) and App Secret (简体中文): <a href="https://ai.youdao.com/doc.s#guide">https://ai.youdao.com/doc.s#guide</a></li>
+</ul>
+
+
+</body>
+</html>

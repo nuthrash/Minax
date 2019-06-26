@@ -39,7 +39,7 @@ See [Conepts.md](./Concepts.md)
 <br />
 
 - Hideable Panels
-<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main3-Hidable.jpg" title="MWT Desktop Main - Hideable">
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main3-Hideable.jpg" title="MWT Desktop Main - Hideable">
   - You can hide some panels to focus on Target panel
 
 ### Menu
@@ -124,7 +124,7 @@ Therefore, I only put 2 source languages and 2 target languages in the App optio
 The rules of Translator selection are very simple:
 1. Select the engine which is familiar with source language
    - The Google Translate come from America, it is more familiar with English.
-   - The Excite Transltor come from Japan, it is more familiar with Japanese.
+   - The Excite Translator come from Japan, it is more familiar with Japanese.
    - The Baidu Translator come from China, it is more familiar with Chinese.
 2. Select the engine which is familiar with target language
    - By 1., we understand and select a engine which is familiar with source language
