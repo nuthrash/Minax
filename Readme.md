@@ -1,6 +1,8 @@
 ﻿# Overview
 
-Minax is a series of sub-projects and Apps for myself.
+Minax is a series of sub-projects and Apps for myself.  
+
+<br />
 
 ## Minax Web Translator
 - The Windows and Android Apps for remote Web Translator.  
