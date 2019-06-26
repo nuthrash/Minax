@@ -74,7 +74,7 @@ It works with some online web sites and APIs, such as Excite, CROSS-transer, Web
 <ul>
 <li>Select Translator and fill required field(s): Menu -&gt; Translator
 <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Translator1.jpg" title="MWT Desktop Translator1"> <br /></li>
-<li>When select a <strong>charged</strong> Translation API, you might fill required field(s) or keep blank util click Translate button to ask it or them.
+<li>When select a <strong>charged</strong> Translation API, you might fill required field(s) or keep blank until click Translate button to ask it or them.
 <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Translator2.jpg" title="MWT Desktop Translator2"></li>
 </ul>
 </li>
@@ -94,7 +94,7 @@ It works with some online web sites and APIs, such as Excite, CROSS-transer, Web
 <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Target3-note.jpg" title="MWT Desktop Translator1"></p>
 <ul>
 <li>The translated text would show on the Target box in Target panel. <br /></li>
-<li>The mapped text world be marked with bold.</li>
+<li>The mapped text would be marked with bold.</li>
 </ul>
 <br />
 </li>
@@ -103,8 +103,8 @@ It works with some online web sites and APIs, such as Excite, CROSS-transer, Web
 <p>This feature is a simple feature to quick translate small piece of text,
 therefore the Input box is restricted to max 500 words.</p>
 <p><img src="../Assets/Images/ScreenShots/MWT-WinDesktop-QuickTranslation2.jpg" alt="MWT-WinDesktop-QuickTranslation2" title="Quick Translation Panel" /></p>
-<p>The basic usage is same with main translating feature, besides you select multiple Translators to translate short text simultaneously.
-And the &quot;Integrated Output&quot; box would integrate all selected Translators' output to a single section.</p>
+<p>The basic usage is same with main translating feature, besides you can select multiple Translators to translate short text simultaneously.
+And the &quot;Integrated Output&quot; box would integrate all selected Translators' output text to a single section.</p>
 <hr />
 <h2 id="xamarin.forms">Xamarin.Forms</h2>
 <ul>
@@ -176,6 +176,17 @@ Therefore, I only put 2 source languages and 2 target languages in the App optio
 </li>
 </ol>
 <p>If you do not understand what I talk about, you could try every engine many times to find what is the best for you.</p>
+<br />
+<h3 id="service-availability">Service Availability</h3>
+<p>This App almost works with remote web translation services, whether via Web Page or Web APIs.
+No App can ensure remote services always online or usable, because the network and service availabilities are heavily depend on user's environment.</p>
+<p>Therefore, when you encounter some problems in translating, first thing is to check your environment, then retry again.
+Sometimes, it just caused by network latency.
+Maybe after you retry the operation, it would work again.</p>
+<p>In addition to the network problem, there are other situations which may cause the operation failed.<br />
+One of them is the service providers changed their HTML codes. Another situation maybe they blocked out-of-quota requests.<br />
+The latter might be resolved by retrying later in hours.<br />
+The former shall call the programmer to see what happened.</p>
 
 
 </body>
