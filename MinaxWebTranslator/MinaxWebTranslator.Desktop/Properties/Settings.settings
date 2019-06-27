@@ -18,7 +18,7 @@
       <Value Profile="(Default)">https://github.com/nuthrash/Minax/raw/master/MinaxWebTranslator/TranslationProjects/GlossaryFileList.txt</Value>
     </Setting>
     <Setting Name="RemoteXlatorType" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Excite</Value>
     </Setting>
     <Setting Name="XlatorCrypto" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

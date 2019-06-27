@@ -40,6 +40,12 @@ See [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebT
 
 ### Minax Web Translator
 
+#### v0.0.1
+Initial release
+
 <br />
 
 ### Minax.Shared
+#### v0.0.1
+Initial release
+
