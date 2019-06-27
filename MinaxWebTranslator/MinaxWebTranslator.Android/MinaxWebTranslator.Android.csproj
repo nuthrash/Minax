@@ -41,6 +41,9 @@
     <BundleAssemblies>false</BundleAssemblies>
     <LangVersion>7.3</LangVersion>
     <MandroidI18n>CJK</MandroidI18n>
+    <AndroidUseAapt2>true</AndroidUseAapt2>
+    <AndroidDexTool>d8</AndroidDexTool>
+    <AndroidLinkTool>r8</AndroidLinkTool>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -84,7 +84,7 @@ namespace MinaxWebTranslator.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Excite")]
         public string RemoteXlatorType {
             get {
                 return ((string)(this["RemoteXlatorType"]));
