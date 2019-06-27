@@ -39,6 +39,13 @@ See [MinaxWebTranslator](https://nuthrash.github.io/Minax/MinaxWebTranslator/)
 
 ### Minax Web Translator
 
+#### v0.0.1
+Initial release
+
 <br />
 
 ### Minax.Shared
+#### v0.0.1
+Initial release
+
+
