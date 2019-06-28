@@ -61,6 +61,30 @@ namespace MinaxWebTranslator.Languages {
         }
         
         /// <summary>
+        ///   查詢類似 &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
+        ///&lt;head&gt;
+        ///&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+        ///&lt;/head&gt;
+        ///&lt;body&gt;
+        ///
+        ///&lt;p&gt;Minax Web Translator is not a translator, but just an &lt;b&gt;agent and text mapping-replacer&lt;/b&gt; for remote web translator/translation services.&lt;br&gt;
+        ///It works with some online web sites and APIs, such as &lt;b&gt;Excite, CROSS-transer, Weblio, Baidu, Youdao, Google, Microsoft/Bing&lt;/b&gt; etc..&lt;/p&gt;
+        ///
+        ///&lt;br&gt;
+        ///
+        ///&lt;table border=&quot;0&quot; valign=&quot;center&quot;&gt;
+        ///  &lt;tr&gt;
+        ///    &lt;td align=&quot;right&quot;&gt;Version: &lt;/td&gt;
+        ///	&lt;td&gt;{App [字串的其餘部分已遭截斷]&quot;; 的當地語系化字串。
+        /// </summary>
+        public static string AppAbout {
+            get {
+                return ResourceManager.GetString("AppAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Cancel 的當地語系化字串。
         /// </summary>
         public static string Str0Cancel {

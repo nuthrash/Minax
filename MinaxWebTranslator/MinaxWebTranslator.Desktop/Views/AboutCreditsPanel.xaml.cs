@@ -1,4 +1,4 @@
-﻿using MinaxWebTranslator.Desktop.Models;
+using MinaxWebTranslator.Desktop.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
@@ -20,6 +20,24 @@ namespace MinaxWebTranslator.Desktop.Views
 			mMainWindow = mainWindow;
 
 			InitializeComponent();
+
+			// load AppAbout.html with {AppVersion} replaced text to WebBrowser
+			var appVer = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+			string aboutStr = Languages.Global.AppAbout.Replace( "{AppVersion}", appVer.ToString() );
+			//var xamlStr = HTMLConverter.HtmlToXamlConverter.ConvertHtmlToXaml( aboutStr, false );
+			//RtbDescription.SelectAll();
+			//using( var ms = new System.IO.MemoryStream( System.Text.Encoding.UTF8.GetBytes( xamlStr )) )
+			//	RtbDescription.Selection.Load(ms, DataFormats.Xaml );
+
+			////RtbDescription.Selection.
+			//WebBrowser wb = new WebBrowser();
+			//wb.NavigateToString( aboutStr );
+			WbDescription.NavigateToString( aboutStr );
+			WbDescription.Navigating += ( s1, e1 ) => {
+				// navigate hyperlink by external web browser
+				Process.Start( e1.Uri.ToString() );
+				e1.Cancel = true;
+			};
 		}
 
 		private MainWindow mMainWindow;

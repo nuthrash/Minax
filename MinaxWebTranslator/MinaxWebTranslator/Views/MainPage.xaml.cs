@@ -299,6 +299,7 @@ namespace MinaxWebTranslator.Views
 				}
 
 				// check file source
+				var projFileName = fullPathFileName;
 				if( fullPathFileName.StartsWith( @"content://com.google.android.apps.docs.storage" ) ||
 					File.Exists( fullPathFileName ) == false ) {
 					// selected from Google Drive app, so try to store it to a common public document folder
@@ -307,7 +308,7 @@ namespace MinaxWebTranslator.Views
 						docPath = PublicDocumentsPath;
 
 					var projPath = Path.Combine( docPath, "MinaxWebTranslator" );
-					var projFileName = Path.Combine( projPath, fileData.FileName );
+					projFileName = Path.Combine( projPath, fileData.FileName );
 					bool rst = false;
 					rst = await DisplayAlert( "Save As Confirm",
 							$"The selected file \"{fileName}\" is stored in remote net disk drive or " +
@@ -333,19 +334,16 @@ namespace MinaxWebTranslator.Views
 						await DisplayAlert( "Operation Failed", $"Save project file \"{projFileName}\" failed!", "OK" );
 						return;
 					}
-
-					mProjFileName = projFileName;
-				} else {
-					mProjFileName = fullPathFileName;
 				}
 
 				_CloseProject();
 
 				// manually add PorjectModel instance to ProjectManager
-				mProject = ProjectManager.Instance.AddProject( mProjFileName, projObj );
+				mProject = ProjectManager.Instance.AddProject( projFileName, projObj );
 				if( mProject != null ) {
 					ProjectManager.Instance.MarkAsCurrent( mProject );
 					ProjectManager.Instance.SaveListToSettings();
+					mProjFileName = projFileName;
 				}
 
 				// done, update binding and menu

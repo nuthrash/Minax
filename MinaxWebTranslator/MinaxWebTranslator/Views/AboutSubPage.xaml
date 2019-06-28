@@ -28,14 +28,20 @@
         </Grid.RowDefinitions>
         <StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                <ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand">
-                    <Image Source="{exts:ImageResource MinaxWebTranslator.Resources.Translator.png}" VerticalOptions="Center" HeightRequest="64" />
-                </ContentView>
+                <!--<ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand">-->
+                    <!--<Image Margin="40,10,5,40" Source="{exts:ImageResource MinaxWebTranslator.Resources.Translator.png}" VerticalOptions="Center" HeightRequest="64" />-->
+				<Image Margin="0,20,0,20" Source="{exts:ImageResource MinaxWebTranslator.Resources.Translator.png}" VerticalOptions="Center" HeightRequest="64" />
+				<Label VerticalTextAlignment="Center" FontSize="Large" FontAttributes="Bold"
+                       Text="Minax Web Translator" TextColor="DarkBlue" />
+                <!--</ContentView>-->
             </StackLayout>
         </StackLayout>
-        <ScrollView Grid.Row="1">
+
+		<WebView x:Name="WvDescription" Grid.Column="0" Grid.Row="1" HorizontalOptions="Fill" VerticalOptions="Fill" />
+        <!--<ScrollView Grid.Row="1">
             <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="10">
-                <Label FontSize="22">
+				<WebView x:Name="WvDescription" HorizontalOptions="Fill" VerticalOptions="Fill" />
+				<Label FontSize="22">
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
@@ -134,7 +140,7 @@
                     </Label>
                 </Grid>
             </StackLayout>
-        </ScrollView>
+        </ScrollView>-->
     </Grid>
     
 </ContentPage>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,23 +61,26 @@ namespace MinaxWebTranslator.Views
 			}
 		}
 
-		private async void BtnClearAndPaste_Clicked( object sender, EventArgs e )
+		private async void ContentPage_Disappearing( object sender, EventArgs e )
 		{
-			EdMain.Text = SourceText = await Clipboard.GetTextAsync();
+			SourceText = EdMain.Text;
 			await MessageHub.SendMessageAsync( this, MessageType.SourceTextChanged, SourceText );
 		}
 
-		private async void BtnClear_Clicked( object sender, EventArgs e )
+		private async void BtnClearAndPaste_Clicked( object sender, EventArgs e )
+		{
+			EdMain.Text = SourceText = await Clipboard.GetTextAsync();
+		}
+
+		private void BtnClear_Clicked( object sender, EventArgs e )
 		{
 			EdMain.Text = SourceText = "";
-			await MessageHub.SendMessageAsync( this, MessageType.SourceTextChanged, SourceText );
 		}
 
 		private async void BtnAppend_Clicked( object sender, EventArgs e )
 		{
 			EdMain.Text += await Clipboard.GetTextAsync();
 			SourceText = EdMain.Text;
-			await MessageHub.SendMessageAsync( this, MessageType.SourceTextChanged, SourceText );
 		}
 	}
 }

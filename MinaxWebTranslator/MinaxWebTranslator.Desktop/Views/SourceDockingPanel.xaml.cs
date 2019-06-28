@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Documents;
 using Xceed.Wpf.AvalonDock.Layout;
@@ -34,6 +34,10 @@ namespace MinaxWebTranslator.Desktop.Views
 			RtbSource.GotFocus += ( s1, e1 ) => {
 				SourceText = null;
 			};
+			RtbSource.LostKeyboardFocus += async ( s1, e1 ) => {
+				mSourceText = new TextRange( RtbSource.Document.ContentStart, RtbSource.Document.ContentEnd ).Text;
+				await MessageHub.SendMessageAsync( this, MessageType.SourceTextChanged, mSourceText );
+			};
 
 			MessageHub.MessageReceived -= MsgHub_MessageRecevied;
 			MessageHub.MessageReceived += MsgHub_MessageRecevied;
@@ -65,8 +69,8 @@ namespace MinaxWebTranslator.Desktop.Views
 			if( RtbSource.Selection.IsEmpty )
 				return;
 
-			await MessageHub.SendMessageAsync( this, MessageType.XlatingQuickWithText, 
-						new TextRange(RtbSource.Selection.Start, RtbSource.Selection.End).Text );
+			await MessageHub.SendMessageAsync( this, MessageType.XlatingQuickWithText,
+												RtbSource.Selection.Text );
 		}
 
 		private async void BtnSourceClearAndPaste_Click( object sender, RoutedEventArgs e )
