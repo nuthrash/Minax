@@ -41,7 +41,6 @@
     <None Remove="Resources\BaiduTranslator.png" />
     <None Remove="Resources\Bing.png" />
     <None Remove="Resources\CrossLanguage.png" />
-    <None Remove="Resources\DefaultAvalonDockLayout.adconf" />
     <None Remove="Resources\Excite.png" />
     <None Remove="Resources\GoogleTranslator.png" />
     <None Remove="Resources\Microsoft.png" />
@@ -73,11 +72,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dirkster.AvalonDock" Version="3.5.7" />
-    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="3.5.7" />
+    <PackageReference Include="Dirkster.AvalonDock" Version="3.5.8" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="3.5.8" />
     <PackageReference Include="FileHelpers" Version="3.4.0" />
     <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0391" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0158" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0179" />
   </ItemGroup>
 
   <ItemGroup>
@@ -94,7 +93,6 @@
     <Resource Include="Resources\BaiduTranslator.png" />
     <Resource Include="Resources\Bing.png" />
     <Resource Include="Resources\CrossLanguage.png" />
-    <Resource Include="Resources\DefaultAvalonDockLayout.adconf" />
     <Resource Include="Resources\Excite.png" />
     <Resource Include="Resources\GoogleTranslator.png" />
     <Resource Include="Resources\Microsoft.png" />
@@ -108,6 +106,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Global.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Languages\ProjectGlossary.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProjectGlossary.resx</DependentUpon>
     </Compile>
     <Compile Update="Languages\WebXlator.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -130,6 +133,10 @@
     <EmbeddedResource Update="Languages\Global.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Global.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Languages\ProjectGlossary.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProjectGlossary.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Languages\WebXlator.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

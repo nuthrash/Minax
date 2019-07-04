@@ -47,7 +47,7 @@
   
   <ItemGroup>
     <PackageReference Include="FileHelpers" Version="3.4.0" />
-	<PackageReference Include="HtmlAgilityPack" Version="1.11.7" />
+	<PackageReference Include="HtmlAgilityPack" Version="1.11.8" />
 	<PackageReference Include="Jurassic.Unofficial" Version="2019.6.5" />
 	<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
@@ -68,6 +68,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>TextCategory.resx</DependentUpon>
     </Compile>
+    <Compile Update="Languages\WebXlator.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>WebXlator.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -87,6 +92,10 @@
     <EmbeddedResource Update="Languages\TextCategory.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TextCategory.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Languages\WebXlator.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WebXlator.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

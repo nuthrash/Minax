@@ -1,28 +1,17 @@
-﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Minax.Collections;
 using Minax.Domain.Translation;
 using Minax.Web.Translation;
 using MinaxWebTranslator.Desktop.Models;
-using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Xceed.Wpf.AvalonDock.Controls;
 using Xceed.Wpf.AvalonDock.Layout;
-using static Minax.Domain.Translation.SupportedLanguagesExtensions;
 
 namespace MinaxWebTranslator.Desktop.Views
 {
@@ -33,6 +22,10 @@ namespace MinaxWebTranslator.Desktop.Views
 	{
 		internal bool IsProjectChanged => mProjChanged;
 
+		public MappingDockingPanel() : this( Application.Current.MainWindow as MainWindow )
+		{
+
+		}
 		public MappingDockingPanel( MainWindow mainWindow )
 		{
 			mMainWindow = mainWindow;
@@ -451,26 +444,31 @@ namespace MinaxWebTranslator.Desktop.Views
 			if( list == null )
 				return;
 
-			var newOrig = await mMainWindow.ShowInputAsync( "Add New Mapping", "New Original Text:", sInputSettings );
+			var newOrig = await mMainWindow.ShowInputAsync( Languages.ProjectGlossary.Str0AddNewMapping,
+									Languages.ProjectGlossary.Str0NewOriginalText, sInputSettings );
 
 			// show warning about OriginalText is empty (it maybe full of whitespace characters!!)
 			if( string.IsNullOrEmpty( newOrig ) ) {
-				await mMainWindow.ShowMessageAsync( "Original Text Error", "The Original Text shall not be empty!!" );
+				// user may cancel the Input dialog, so ignore null or empty newOrig directly
+				//await mMainWindow.ShowMessageAsync( Languages.ProjectGlossary.Str0OriginalTextError,
+				//			Languages.ProjectGlossary.Str0OriginalTextShallNotEmpty );
 				return;
 			}
 			if( string.IsNullOrWhiteSpace( newOrig ) ) {
-				await mMainWindow.ShowMessageAsync( "Original Text Warning", "The Original Text seems full of whitespace text, take care of it!!" );
+				await mMainWindow.ShowMessageAsync( Languages.ProjectGlossary.Str0OriginalTextWarning,
+							Languages.ProjectGlossary.Str0OriginalTextWhitespaceTakeCare );
 			}
 
 			// show warning about OriginalText is only one word
 			if( newOrig.Length <= 1 ) {
-				await mMainWindow.ShowMessageAsync( "Original Text Warning", "The Original Text might too short to replaced many words incorrectly!!" );
+				await mMainWindow.ShowMessageAsync( Languages.ProjectGlossary.Str0OriginalTextWarning,
+							Languages.ProjectGlossary.Str0OriginalTextTooShortWarning );
 			}
 
 			// check orig is existed
 			var first = list.FirstOrDefault( item => item.OriginalText == newOrig );
 			if( first != null ) {
-				await mMainWindow.ShowMessageAsync( "Duplicate Text", $"Sorry! The Original Text of new Mapping \"{newOrig}\" duplicated with existed item!!" );
+				await mMainWindow.ShowMessageAsync( Languages.Global.Str0DuplicateText, string.Format( Languages.ProjectGlossary.Str1OriginalTextDupicatedWarning, newOrig ) );
 				DgMappingProjConf.SelectedItem = first;
 				return;
 			}

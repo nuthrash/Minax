@@ -79,7 +79,7 @@ namespace Minax.Domain.Translation
 			//     <glossaryPath>/<engineFolder>/<langFolder>/*.* => <glossaryPath>/<engineFolder>/*.* => <glossaryPath>/*.*,
 			// the later is high priority for overwriting previous terms!!
 
-			// FileHelpers not support SamrtDetect in .Net Standard 2.0
+			// FileHelpers not support SmartDetect in .Net Standard 2.0
 			var engine = new FileHelpers.DelimitedFileEngine<MappingEntry>( System.Text.Encoding.UTF8 );
 			foreach( var field in engine.Options.Fields )
 				field.IsOptional = true;

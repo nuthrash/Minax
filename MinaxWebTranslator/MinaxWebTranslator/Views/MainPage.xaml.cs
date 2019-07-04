@@ -110,13 +110,13 @@ namespace MinaxWebTranslator.Views
 				switch( id ) {
 					case MenuItemType.Others:
 						MenuPages.Add( id, new NavigationPage( new DetailOthersPage() ) {
-							Title = "About other aspects of the Minax Web Translator"
+							Title = Languages.Global.Str0OthersAbout
 						} );
 						break;
 
 					case MenuItemType.RecentProjectRequest:
 						mRecentPage = new RecentProjectsPage( this );
-						MenuPages.Add( id, new NavigationPage( mRecentPage ) { Title = "Recent Project(s)"} );
+						MenuPages.Add( id, new NavigationPage( mRecentPage ) { Title = Languages.ProjectGlossary.Str0RecentProjects } );
 						break;
 					case MenuItemType.RecentProjectSelected:
 						if( MenuPages.ContainsKey( MenuItemType.RecentProjectRequest ) == false ||
@@ -155,7 +155,7 @@ namespace MinaxWebTranslator.Views
 						return;
 
 					case MenuItemType.TranslatorSelectorRequest:
-						MenuPages.Add( id, new NavigationPage( mXlatorPage ) { Title = "Translator Selector"} );
+						MenuPages.Add( id, new NavigationPage( mXlatorPage ) { Title = Languages.WebXlator.Str0XlatorSelector } );
 						break;
 					case MenuItemType.TranslatorSelectorClosed:
 						if( CurrentXlator != mXlatorPage.SelectedTranslator ) {
@@ -182,13 +182,11 @@ namespace MinaxWebTranslator.Views
 
 					case MenuItemType.ProjectSettingsRequest:
 						mProjSettingsPage.CurrentProject = mProject;
-						MenuPages.Add( id, new NavigationPage( mProjSettingsPage ) { Title = "Project&App Settings"} );
+						MenuPages.Add( id, new NavigationPage( mProjSettingsPage ) { Title = Languages.ProjectGlossary.Str0ProjectAndAppSettings } );
 						break;
 					case MenuItemType.ProjectSettingsClosed:
 						if( mProjSettingsPage.NeedReloading ) {
 							// when glossary file downloaded from remote site...
-							//_SetProjChanged();
-
 							ProjectManager.Instance.SaveProject( mProject, mProjFileName );
 							await MessageHub.SendMessageAsync( this, MessageType.ProjectSaved, mProject );
 							// perform reloading Mapping and Project
@@ -200,8 +198,8 @@ namespace MinaxWebTranslator.Views
 							var changed = false;
 							if( mProject.ProjectName != mProjSettingsPage.CurrentProjectName ) {
 								if( string.IsNullOrWhiteSpace( mProjSettingsPage.CurrentProjectName ) ) {
-									await DisplayAlert( "Field Error",
-										"The Project Name field cannot be empty or full of whitespace words!", Languages.Global.Str0Ok );
+									await DisplayAlert( Languages.Global.Str0FieldError,
+										Languages.ProjectGlossary.Str0ProjectNameFieldCantEmptyOrWhitespaces, Languages.Global.Str0Ok );
 									mProjSettingsPage.CurrentProject = mProject;
 									return;
 								}
@@ -272,7 +270,6 @@ namespace MinaxWebTranslator.Views
 		private void _SaveAppSettings()
 		{
 			Properties.Settings.Default.Save();
-
 		}
 
 		private async void _OpenProject()
@@ -293,8 +290,9 @@ namespace MinaxWebTranslator.Views
 					projObj = Minax.Utils.DeserializeFromXml<TranslationProject>( ms );
 
 				if( projObj == null ) {
-					await DisplayAlert( "Please select again",
-							$"The selected file \"{fullPathFileName}\" is not a valid project file!", "Confirm" );
+					await DisplayAlert( Languages.Global.Str0PlzSelectAgain,
+							string.Format( Languages.ProjectGlossary.Str1SelectedFileInvalid, fullPathFileName ),
+							Languages.Global.Str0Confirm );
 					return;
 				}
 
@@ -310,16 +308,16 @@ namespace MinaxWebTranslator.Views
 					var projPath = Path.Combine( docPath, "MinaxWebTranslator" );
 					projFileName = Path.Combine( projPath, fileData.FileName );
 					bool rst = false;
-					rst = await DisplayAlert( "Save As Confirm",
-							$"The selected file \"{fileName}\" is stored in remote net disk drive or " +
-							"in a non-suitable location for following procdure.\n" +
-							$"It is prefer to save it to public Document folder \"{projFileName}\".", "Yes", "Cancel" );
+					rst = await DisplayAlert( Languages.Global.Str0SaveAsConfirm,
+							string.Format( Languages.Global.Str2SelectedFileSaveToPublicFolderAsk, fileName, projFileName ),
+							Languages.Global.Str0Yes, Languages.Global.Str0Cancel );
 					if( rst != true )
 						return;
 
 					if( File.Exists( projFileName ) ) {
-						rst = await DisplayAlert( "Overwrite Confirm",
-								$"Do you want to overwrite existed project file {projFileName}?", "Yes", "No" );
+						rst = await DisplayAlert( Languages.Global.Str0OverwriteConfirm,
+								string.Format( Languages.ProjectGlossary.Str1OverwriteProjectFileInPublicFolderAsk, projFileName),
+								Languages.Global.Str0Yes, Languages.Global.Str0No );
 						if( rst != true )
 							return;
 
@@ -331,7 +329,9 @@ namespace MinaxWebTranslator.Views
 					}
 
 					if( false == TranslationProject.SerializeToXml( projObj, projFileName ) ) {
-						await DisplayAlert( "Operation Failed", $"Save project file \"{projFileName}\" failed!", "OK" );
+						await DisplayAlert( Languages.Global.Str0OperationFailed,
+								string.Format( Languages.ProjectGlossary.Str1SaveProjectFileFailed, projFileName),
+								Languages.Global.Str0Ok );
 						return;
 					}
 				}
@@ -361,7 +361,7 @@ namespace MinaxWebTranslator.Views
 
 			var newProj = ProjectManager.Instance.OpenProject( fullPathFileName );
 			if( newProj == null ) {
-				await DisplayAlert( "Operation Failed", "Open project failed!", Languages.Global.Str0Ok );
+				await DisplayAlert( Languages.Global.Str0OperationFailed, Languages.ProjectGlossary.Str0OpenProjectFailed, Languages.Global.Str0Ok );
 				return false;
 			}
 
@@ -455,14 +455,15 @@ namespace MinaxWebTranslator.Views
 			_DumpProjModelMappingTable( mProject );
 
 			if( ProjectManager.Instance.SaveProject( mProject, mProject.FullPathFileName ) == false ) {
-				await DisplayAlert( "Operation Failed", $"Save project \"{mProject.ProjectName}\" failed!!", Languages.Global.Str0Ok );
+				await DisplayAlert( Languages.Global.Str0OperationFailed,
+						string.Format(Languages.ProjectGlossary.Str1SaveProjectFileFailed, mProject.ProjectName),
+						Languages.Global.Str0Ok );
 				return;
 			}
 
 			_SetProjChanged( false );
 
-			//await DisplayAlert( "Opertion succeed", "Curret project saved.", Languages.Global.Str0Ok );
-			CrossToastPopUp.Current.ShowToastMessage( "Curret project saved." );
+			CrossToastPopUp.Current.ShowToastMessage( Languages.ProjectGlossary.Str0CurrentProjectSaved );
 			await MessageHub.SendMessageAsync( this, MessageType.ProjectSaved, mProject );
 		}
 
@@ -525,7 +526,7 @@ namespace MinaxWebTranslator.Views
 		{
 			if( mProject != null && mProjChanged ) {
 				if( forceSaving == false ) {
-					var actions = await DisplayActionSheet( "Do you want to save modified project?",
+					var actions = await DisplayActionSheet( Languages.ProjectGlossary.Str0SaveModifiedProjectAsk,
 											Languages.Global.Str0Cancel, null,
 											Languages.Global.Str0Yes, Languages.Global.Str0No );
 					if( actions == Languages.Global.Str0Cancel )
@@ -542,7 +543,9 @@ namespace MinaxWebTranslator.Views
 				_DumpProjModelMappingTable( mProject );
 
 				if( ProjectManager.Instance.SaveProject( mProject, mProjFileName ) == false ) {
-					await DisplayAlert( "Operation Failed", "Save project failed!!", "OK" );
+					await DisplayAlert( Languages.Global.Str0OperationFailed,
+							string.Format( Languages.ProjectGlossary.Str1SaveProjectFileFailed, mProjFileName ),
+							Languages.Global.Str0Ok );
 					return false;
 				}
 			}
@@ -642,24 +645,13 @@ namespace MinaxWebTranslator.Views
 						var rst = false;
 
 						if( mAutoMergeWhenFileChanged == false ) {
-							rst = await DisplayAlert( "Keep Mapping Confirm",
-									"Glossary file " + $"\"{args.FullPath}\" " +
-										"was been deleted!\nDo you want to keep its Mapping entries?",
-									"Yes", "No" );
-							//rst = await DisplayActionSheet( "Do you want to save modified project?",
-							//				Languages.Global.Str0Cancel, null,
-							//				Languages.Global.Str0Yes, Languages.Global.Str0No );
-
-							//rst = await DisplayActionSheet( "Keep Mapping Confirm",
-							//			"Glossary file " + $"\"{args.FullPath}\" " +
-							//			"was been deleted!\nDo you want to keep its Mapping entries?",
-							//			MessageDialogStyle.AffirmativeAndNegative, sMetroDlgYesNoSettings );
+							rst = await DisplayAlert( Languages.ProjectGlossary.Str0KeepMappingConfirm,
+										string.Format( Languages.ProjectGlossary.Str1GlossaryFileDeletedKeepAsk, args.FullPath),
+										Languages.Global.Str0Yes, Languages.Global.Str0No );
 						}
 						if( rst == false ) {
 							// remove Mapping from Glossary Tab
 							await MessageHub.SendMessageAsync( this, MessageType.GlossaryDeleted, args );
-
-							//_UpdateStatus( $"Glossary file \"{args.FullPath}\" had been removed!" );
 						}
 					} );
 					break;
@@ -674,42 +666,22 @@ namespace MinaxWebTranslator.Views
 						if( mon.MonitoringFileList.Contains( args.FullPath ) ) {
 							// the Changed file is Monitoring file, then delete original MappingModel data
 
-							//MessageDialogResult rst = MessageDialogResult.Canceled;
 							var rst = false;
 							if( args.FullPath == mProject.FullPathFileName ) {
 								if( mProjChanged ) {
-									rst = await DisplayAlert( "Save Projectg Confirm",
-											"Project file " + $"\"{args.FullPath}\" " +
-										"has been modified somewhere!\n" +
-										"Do you want to save current project configuration file to OVERWRITE it?",
-											"Yes", "No" );
+									rst = await DisplayAlert( Languages.ProjectGlossary.Str0SaveProjectConfirm,
+												string.Format( Languages.ProjectGlossary.Str1UpdateGlossaryFileMappingAsk, args.FullPath ),
+												Languages.Global.Str0Yes, Languages.Global.Str0No );
 
-									//rst = await this.ShowMessageAsync( "Save Project Confirm",
-									//	"Project file " + $"\"{args.FullPath}\" " +
-									//	"has been modified somewhere!\n" +
-									//	"Do you want to save current project configuration file to OVERWRITE it?",
-									//	MessageDialogStyle.AffirmativeAndNegative, sMetroDlgYesNoSettings );
-
-									//if( rst == MessageDialogResult.Affirmative ) {
 									if( rst == true ) {
 										await this._CheckAndAskProjSaving( true );
 										return;
 									}
 								}
 								else {
-									rst = await DisplayAlert( "Update Mapping Confirm",
-											"Project file " + $"\"{args.FullPath}\" " +
-											"has been modified somewhere!\n" +
-											"Do you want to update newer Mapping entries?",
-											"Yes", "No" );
-
-									//rst = await this.ShowMessageAsync( "Update Mapping Confirm",
-									//		"Project file " + $"\"{args.FullPath}\" " +
-									//		"has been modified somewhere!\n" +
-									//		"Do you want to update newer Mapping entries?",
-									//		MessageDialogStyle.AffirmativeAndNegative,
-									//		sMetroDlgYesNoSettings );
-									//if( rst != MessageDialogResult.Affirmative )
+									rst = await DisplayAlert( Languages.ProjectGlossary.Str0UpdateMappingConfirm,
+												string.Format( Languages.ProjectGlossary.Str1UpdateProjectFileMappingAsk, args.FullPath ),
+												Languages.Global.Str0Yes, Languages.Global.Str0No );
 									if( rst != true )
 										return;
 
@@ -725,7 +697,6 @@ namespace MinaxWebTranslator.Views
 									mProject.IsCurrent = false;
 									mProject.Project.MappingTable?.Clear();
 									mProject.Project = null;
-									//await _ReloadAllMappingData( mProject );
 									if( true == await this._LoadProj( args.FullPath ) ) {
 										// update DataGrid/ListView
 										await MessageHub.SendMessageAsync( this, MessageType.ProjectUpdated, mProject );
@@ -738,26 +709,15 @@ namespace MinaxWebTranslator.Views
 									rst = true;
 								}
 								else {
-									rst = await DisplayAlert( "Update Mapping Confirm",
-											"Glossary file " + $"\"{args.FullPath}\" " +
-											"has been modified somewhere!\n" +
-											"Do you want to update newer Mapping entries?",
-											"Yes", "No" );
-
-									//rst = await this.ShowMessageAsync( "Update Mapping Confirm",
-									//	"Glossary file " + $"\"{args.FullPath}\" " +
-									//	"has been modified somewhere!\n" +
-									//	"Do you want to update newer Mapping entries?",
-									//	MessageDialogStyle.AffirmativeAndNegative,
-									//	sMetroDlgYesNoSettings );
+									rst = await DisplayAlert( Languages.ProjectGlossary.Str0UpdateMappingConfirm,
+												string.Format( Languages.ProjectGlossary.Str1UpdateGlossaryFileMappingAsk, args.FullPath ),
+												Languages.Global.Str0Yes, Languages.Global.Str0No );
 								}
-								//if( rst != MessageDialogResult.Affirmative )
 								if( rst != true )
 									return;
 
 								await MessageHub.SendMessageAsync( this, MessageType.GlossaryUpdated, args );
 
-								//_UpdateStatus( $"Glossary file \"{args.FullPath}\" has been updated and merged!" );
 							}
 						}
 						else {
@@ -774,20 +734,10 @@ namespace MinaxWebTranslator.Views
 							//var rst = MessageDialogResult.Affirmative;
 							var rst = true;
 							if( mAutoMergeWhenFileChanged == false ) {
-								rst = await DisplayAlert( "Add Mapping Confirm",
-											"A new Glossary file " + $"\"{args.FullPath}\" " +
-											"has been added somewhere!\n" +
-											"Do you want to add Mapping entries?",
-											"Yes", "No" );
-
-								//rst = await this.ShowMessageAsync( "Add Mapping Confirm",
-								//		"A new Glossary file " + $"\"{args.FullPath}\" " +
-								//		"has been added somewhere!\n" +
-								//		"Do you want to add Mapping entries?",
-								//		MessageDialogStyle.AffirmativeAndNegative,
-								//		sMetroDlgYesNoSettings );
+								rst = await DisplayAlert( Languages.ProjectGlossary.Str0AddMappingConfirm,
+											string.Format( Languages.ProjectGlossary.Str1AddGlossaryFileMappingAsk, args.FullPath ),
+											Languages.Global.Str0Yes, Languages.Global.Str0No );
 							}
-							//if( rst != MessageDialogResult.Affirmative )
 							if( rst != true )
 								return;
 
@@ -795,8 +745,6 @@ namespace MinaxWebTranslator.Views
 								return;
 
 							await MessageHub.SendMessageAsync( this, MessageType.GlossaryNew, args );
-
-							//_UpdateStatus( $"A new Glossary file \"{args.FullPath}\" has been added and merged!" );
 						}
 
 					} );
@@ -818,20 +766,10 @@ namespace MinaxWebTranslator.Views
 						var rst = true;
 
 						if( mAutoMergeWhenFileChanged == false ) {
-							rst = await DisplayAlert( "Add Mapping Confirm",
-											"A new Glossary file " + $"\"{args.FullPath}\" " +
-											"has been added somewhere!\n" +
-											"Do you want to add Mapping entries?",
-											"Yes", "No" );
-
-							//rst = await this.ShowMessageAsync( "Add Mapping Confirm",
-							//			"A new Glossary file " + $"\"{args.FullPath}\" " +
-							//			"has been added somewhere!\n" +
-							//			"Do you want to add Mapping entries?",
-							//			MessageDialogStyle.AffirmativeAndNegative,
-							//			sMetroDlgYesNoSettings );
+							rst = await DisplayAlert( Languages.ProjectGlossary.Str0AddMappingConfirm,
+											string.Format( Languages.ProjectGlossary.Str1AddGlossaryFileMappingAsk, args.FullPath ),
+											Languages.Global.Str0Yes, Languages.Global.Str0No );
 						}
-						//if( rst != MessageDialogResult.Affirmative )
 						if( rst != true )
 							return;
 
@@ -839,8 +777,6 @@ namespace MinaxWebTranslator.Views
 							return;
 
 						await MessageHub.SendMessageAsync( this, MessageType.GlossaryNew, args );
-
-						//_UpdateStatus( $"A new Glossary file \"{args.FullPath}\" has been created and merged!" );
 					} );
 
 					break;

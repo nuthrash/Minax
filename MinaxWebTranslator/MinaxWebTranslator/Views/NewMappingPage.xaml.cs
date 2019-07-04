@@ -1,4 +1,4 @@
-﻿using Minax.Collections;
+using Minax.Collections;
 using Minax.Domain.Translation;
 using System;
 using System.Collections.Generic;
@@ -71,24 +71,24 @@ namespace MinaxWebTranslator.Views
 		{
 			var newOrig = EditingModel.OriginalText;
 			if( string.IsNullOrEmpty( newOrig ) ) {
-				await DisplayAlert( "Original Text Error", "Original Text cannot be empty!", Languages.Global.Str0Ok );
+				await DisplayAlert( Languages.ProjectGlossary.Str0OriginalTextError, Languages.ProjectGlossary.Str0OriginalTextShallNotEmpty, Languages.Global.Str0Ok );
 				return;
 			}
 			if( string.IsNullOrWhiteSpace( newOrig ) ) {
-				await DisplayAlert( "Original Text Warning",
-					"The Original Text seems full of whitespace text, take care of it!!", Languages.Global.Str0Ok );
+				await DisplayAlert( Languages.ProjectGlossary.Str0OriginalTextWarning,
+					Languages.ProjectGlossary.Str0OriginalTextWhitespaceTakeCare, Languages.Global.Str0Ok );
 			}
 
 			if( newOrig.Length <= 1 ) {
-				await DisplayAlert( "Original Text Warning",
-					"The Original Text might too short to replaced many words incorrectly!!", Languages.Global.Str0Ok );
+				await DisplayAlert( Languages.ProjectGlossary.Str0OriginalTextWarning,
+					Languages.ProjectGlossary.Str0OriginalTextTooShortWarning , Languages.Global.Str0Ok );
 			}
 
 			// check orig is existed
 			var first = TargetList?.FirstOrDefault( item => item.OriginalText == newOrig );
 			if( first != null ) {
-				await DisplayAlert( "Duplicate Text",
-					$"Sorry! The Original Text of new Mapping \"{newOrig}\" duplicated with existed item!!", Languages.Global.Str0Ok );
+				await DisplayAlert( Languages.Global.Str0DuplicateText,
+						string.Format(Languages.ProjectGlossary.Str1OriginalTextDupicatedWarning, newOrig), Languages.Global.Str0Ok );
 				return;
 			}
 

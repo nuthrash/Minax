@@ -2,6 +2,8 @@
 
 Minax is a series of sub-projects and Apps for myself.  
 
+[Readme - 繁體中文版](./Readme.zh-Hant.md)
+
 <br />
 
 ## Minax Web Translator
@@ -40,12 +42,23 @@ See [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebT
 
 ### Minax Web Translator
 
+#### v0.0.2
+1. Add zh-Hant (繁體中文) locale and documents.
+2. Fix MinaxWebTranslator Target translate button does not enabled after Source box key some text.
+3. Fix other bugs and some mis-typed words.
+
 #### v0.0.1
 Initial release
 
 <br />
 
 ### Minax.Shared
+
+#### v0.0.2
+1. Add zh-Hant (繁體中文) locale and documents.
+2. Fix Minax.Shared Profiles DefaultEngineFolders' Microsoft folder name
+3. Fix other bugs and some mis-typed words.
+
 #### v0.0.1
 Initial release
 

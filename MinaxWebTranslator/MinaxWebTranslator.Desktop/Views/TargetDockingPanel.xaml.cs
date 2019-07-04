@@ -1,25 +1,12 @@
-﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Minax.Web.Translation;
 using MinaxWebTranslator.Desktop.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Security;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Xceed.Wpf.AvalonDock.Controls;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace MinaxWebTranslator.Desktop.Views
@@ -54,7 +41,10 @@ namespace MinaxWebTranslator.Desktop.Views
 
 		public bool SyncTargetScroll => CbTargetSyncScroll.IsChecked == true;
 
+		public TargetDockingPanel() : this( Application.Current.MainWindow as MainWindow )
+		{
 
+		}
 		public TargetDockingPanel( MainWindow mainWindow )
 		{
 			mMainWindow = mainWindow;
@@ -99,10 +89,10 @@ namespace MinaxWebTranslator.Desktop.Views
 				} else {
 					var miDialog = new Views.MultipleInputsDialog() {
 						MainWindow = mMainWindow,
-						Title = "Fill Baidu Translation API (Charged) Settings",
+						Title = string.Format( Languages.WebXlator.Str1FillXlationApiChargedSettings, Languages.WebXlator.Str0Baidu ),
 						InputFields = new List<InputFieldModel> {
 							new InputFieldModel { FieldName = "APP ID", TypeInfo = typeof(SecureString) },
-							new InputFieldModel { FieldName = "Secret Key", TypeInfo = typeof(SecureString) }
+							new InputFieldModel { FieldName = Languages.WebXlator.Str0SecretKey, TypeInfo = typeof(SecureString) }
 						},
 					};
 					await mMainWindow.ShowMetroDialogAsync( miDialog );
@@ -114,7 +104,7 @@ namespace MinaxWebTranslator.Desktop.Views
 						foreach( var rst in results ) {
 							if( rst.FieldName == "APP ID" && rst.Value is SecureString ss1 )
 								ssAppId = ss1;
-							else if( rst.FieldName == "Secret Key" && rst.Value is SecureString ss2 )
+							else if( rst.FieldName == Languages.WebXlator.Str0SecretKey && rst.Value is SecureString ss2 )
 								ssSecKey = ss2;
 						}
 
@@ -151,10 +141,10 @@ namespace MinaxWebTranslator.Desktop.Views
 				else {
 					var miDialog = new Views.MultipleInputsDialog() {
 						MainWindow = mMainWindow,
-						Title = "Fill Youdao Translation API (Charged) Settings",
+						Title = string.Format( Languages.WebXlator.Str1FillXlationApiChargedSettings, Languages.WebXlator.Str0Youdao ),
 						InputFields = new List<InputFieldModel> {
-							new InputFieldModel { FieldName = "APP Key", TypeInfo = typeof(SecureString) },
-							new InputFieldModel { FieldName = "APP Secret", TypeInfo = typeof(SecureString) }
+							new InputFieldModel { FieldName = Languages.WebXlator.Str0AppKey, TypeInfo = typeof(SecureString) },
+							new InputFieldModel { FieldName = Languages.WebXlator.Str0AppSecret, TypeInfo = typeof(SecureString) }
 						},
 					};
 					await mMainWindow.ShowMetroDialogAsync( miDialog );
@@ -163,9 +153,9 @@ namespace MinaxWebTranslator.Desktop.Views
 					if( miDialog.Results != null && miDialog.Results.Count >= 2 ) {
 						SecureString ssAppKey = null, ssAppSec = null;
 						foreach( var rst in miDialog.Results ) {
-							if( rst.FieldName == "APP Key" && rst.Value is SecureString ss1 )
+							if( rst.FieldName == Languages.WebXlator.Str0AppKey && rst.Value is SecureString ss1 )
 								ssAppKey = ss1;
-							else if( rst.FieldName == "APP Secret" && rst.Value is SecureString ss2 )
+							else if( rst.FieldName == Languages.WebXlator.Str0AppSecret && rst.Value is SecureString ss2 )
 								ssAppSec = ss2;
 						}
 
@@ -199,9 +189,9 @@ namespace MinaxWebTranslator.Desktop.Views
 				else {
 					var miDialog = new Views.MultipleInputsDialog() {
 						MainWindow = mMainWindow,
-						Title = "Fill Google Translation API V2 (Charged) Settings",
+						Title = Languages.WebXlator.Str0FillGoogleApiChargedV2Settings,
 						InputFields = new List<InputFieldModel> {
-							new InputFieldModel { FieldName = "API Key", TypeInfo = typeof(SecureString) },
+							new InputFieldModel { FieldName = Languages.WebXlator.Str0ApiKey, TypeInfo = typeof(SecureString) },
 						},
 					};
 					await mMainWindow.ShowMetroDialogAsync( miDialog );
@@ -210,7 +200,7 @@ namespace MinaxWebTranslator.Desktop.Views
 					if( miDialog.Results != null && miDialog.Results.Count >= 1 ) {
 						SecureString ssApiKey = null;
 						foreach( var rst in miDialog.Results ) {
-							if( rst.FieldName == "API Key" && rst.Value is SecureString ss1 )
+							if( rst.FieldName == Languages.WebXlator.Str0ApiKey && rst.Value is SecureString ss1 )
 								ssApiKey = ss1;
 						}
 
@@ -242,9 +232,9 @@ namespace MinaxWebTranslator.Desktop.Views
 				else {
 					var miDialog = new Views.MultipleInputsDialog() {
 						MainWindow = mMainWindow,
-						Title = "Fill Microsoft Translation API V3 (Charged) Settings",
+						Title = Languages.WebXlator.Str0FillMicrosoftApiChargedV3Settings,
 						InputFields = new List<InputFieldModel> {
-							new InputFieldModel { FieldName = "Subscription Key", TypeInfo = typeof(SecureString) },
+							new InputFieldModel { FieldName = "Ocp-Apim-Subscription-Key", TypeInfo = typeof(SecureString) },
 						},
 					};
 					await mMainWindow.ShowMetroDialogAsync( miDialog );
@@ -253,7 +243,7 @@ namespace MinaxWebTranslator.Desktop.Views
 					if( miDialog.Results != null && miDialog.Results.Count >= 1 ) {
 						SecureString ssSubKey = null;
 						foreach( var rst in miDialog.Results ) {
-							if( rst.FieldName == "Subscription Key" && rst.Value is SecureString ss1 )
+							if( rst.FieldName == "Ocp-Apim-Subscription-Key" && rst.Value is SecureString ss1 )
 								ssSubKey = ss1;
 						}
 
@@ -318,7 +308,7 @@ namespace MinaxWebTranslator.Desktop.Views
 			}
 
 			if( string.IsNullOrWhiteSpace( SourceText ) ) {
-				await mMainWindow.ShowMessageAsync( "Operation Cancelled", "Please input some useful text to Source box!" );
+				await mMainWindow.ShowMessageAsync( Languages.Global.Str0OperationCancelled, Languages.WebXlator.Str0PlzInputSourceBox );
 				return;
 			}
 
@@ -448,20 +438,18 @@ namespace MinaxWebTranslator.Desktop.Views
 				}
 
 				if( result )
-					mMainWindow.ShowAutoCloseMessage( "Translating Result", "Translating succeded!" );
+					mMainWindow.ShowAutoCloseMessage( Languages.WebXlator.Str0XlatingResult, Languages.WebXlator.Str0XlatingSucceed );
 				else if( isCharged )
-					await mMainWindow.ShowMessageAsync( "Translating Failed",
-								"Translation failed!\nMaybe some necessary field(s) is/are missing or wrong typed when using Transaltion API (Charged)? " );
+					await mMainWindow.ShowMessageAsync( Languages.WebXlator.Str0XlatingFailed, Languages.WebXlator.Str0XlatingFailedFieldMissing );
 				else
-					await mMainWindow.ShowMessageAsync( "Translating Failed",
-								"Translating failed!\nPlease retry latter! Maybe the network is disconnected, or remote web site is busy." );
+					await mMainWindow.ShowMessageAsync( Languages.WebXlator.Str0XlatingFailed, Languages.WebXlator.Str0XlatingFailedNetRetry );
 			}
 			catch( OperationCanceledException oce ) {
-				await mMainWindow.ShowMessageAsync( "Translating Cancelled", "Translation aborted! Exception: " + oce.Message );
+				await mMainWindow.ShowMessageAsync( Languages.WebXlator.Str0XlatingCancelled, string.Format( Languages.WebXlator.Str1XlatingAbortedException, oce.Message ) );
 
 			}
 			catch( Exception ex ) {
-				await mMainWindow.ShowMessageAsync( "Translating Result", "Translation failed! Exception: " + ex.Message );
+				await mMainWindow.ShowMessageAsync( Languages.WebXlator.Str0XlatingResult, string.Format( Languages.WebXlator.Str1XlatingFailedException, ex.Message ) );
 			}
 
 			mCancelTokenSrource = new CancellationTokenSource();

@@ -1,4 +1,4 @@
-﻿using MinaxWebTranslator.Commands;
+using MinaxWebTranslator.Commands;
 using System;
 using System.Windows.Input;
 
@@ -12,7 +12,7 @@ namespace MinaxWebTranslator.ViewModels
 
         public AboutViewModel()
         {
-            Title = "About";
+            Title = Languages.Global.Str0About;
         }
     }
 }

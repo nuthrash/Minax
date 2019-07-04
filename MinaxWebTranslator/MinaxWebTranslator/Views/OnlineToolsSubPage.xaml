@@ -1,12 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:MinaxWebTranslator.ViewModels"
-             xmlns:ctrl="clr-namespace:MinaxWebTranslator.Controls"
-             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
-             xmlns:exts="clr-namespace:MinaxWebTranslator.Extensions"
+             xmlns:lang="clr-namespace:MinaxWebTranslator.Languages"
              mc:Ignorable="d" x:Class="MinaxWebTranslator.Views.OnlineToolsSubPage"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
@@ -27,7 +25,7 @@
     <ScrollView Orientation="Vertical" HorizontalOptions="Fill" VerticalOptions="Fill">
         <StackLayout Orientation="Vertical" HorizontalOptions="Fill" VerticalOptions="Fill">
 
-            <!-- Group header and sep. -->
+            <!-- Chinese Converters group header and sep. -->
             <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Start"
                   BackgroundColor="White"
                   MinimumHeightRequest="26" Margin="0,4,0,4">
@@ -37,7 +35,7 @@
                 <Label Margin="8,0,0,0" VerticalTextAlignment="Center" TextColor="Black"
                        FontSize="Medium" FontAttributes="Bold" BackgroundColor="White"
                        VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
-                       Text="   Chinese Converters  "/>
+                       Text="{x:Static lang:Global.Str0ChineseConverters}"/>
             </Grid>
 
             <ScrollView Orientation="Horizontal" HorizontalOptions="Fill">
@@ -54,15 +52,15 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="0" Text="Title" BackgroundColor="#E0E6F8" />
-                    <Label Grid.Column="1" Grid.Row="0" Text="Hyperlink" BackgroundColor="#E0E6F8" />
+					<Label Grid.Column="0" Grid.Row="0" Text="{x:Static lang:Global.Str0Title}" BackgroundColor="#E0E6F8" />
+					<Label Grid.Column="1" Grid.Row="0" Text="{x:Static lang:Global.Str0Hyperlink}" BackgroundColor="#E0E6F8" />
 
                     <Label Grid.Column="0" Grid.Row="1" Text="Fanhuaji (繁化姬)" />
                     <Label Grid.Column="1" Grid.Row="1">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="https://zhconvert.org/"
-                                                  TextColor="Blue" TextDecorations="Underline">
+                                      TextColor="Blue" TextDecorations="Underline">
                                     <Span.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding OpenWebCmd}"
                                                         CommandParameter="https://zhconvert.org/" />
@@ -77,10 +75,10 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="https://www.chineseconverter.com"
-                                                  TextColor="Blue" TextDecorations="Underline">
+                                      TextColor="Blue" TextDecorations="Underline">
                                     <Span.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding OpenWebCmd}"
-                                                        CommandParameter="https://www.chineseconverter.com" />
+                                                              CommandParameter="https://www.chineseconverter.com" />
                                     </Span.GestureRecognizers>
                                 </Span>
                             </FormattedString>
@@ -92,10 +90,10 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="https://translate.google.com/?tab=wT#view=home&amp;op=translate&amp;sl=zh-CN&amp;tl=zh-TW"
-                                                  TextColor="Blue" TextDecorations="Underline">
+                                      TextColor="Blue" TextDecorations="Underline">
                                     <Span.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding OpenWebCmd}"
-                                                        CommandParameter="https://translate.google.com/?tab=wT#view=home&amp;op=translate&amp;sl=zh-CN&amp;tl=zh-TW" />
+                                                              CommandParameter="https://translate.google.com/?tab=wT#view=home&amp;op=translate&amp;sl=zh-CN&amp;tl=zh-TW" />
                                     </Span.GestureRecognizers>
                                 </Span>
                             </FormattedString>

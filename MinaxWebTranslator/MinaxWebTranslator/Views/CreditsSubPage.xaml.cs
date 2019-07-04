@@ -1,4 +1,4 @@
-﻿using MinaxWebTranslator.Models;
+using MinaxWebTranslator.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,42 +17,48 @@ namespace MinaxWebTranslator.Views
 		{
 			InitializeComponent();
 
-			//var srcExcite = ImageSource.FromResource( "MinaxWebTranslator.Resources.Excite.png" );
-			//var srcGoogle = ImageSource.FromResource( "MinaxWebTranslator.Resources.GoogleTranslator.png" );
+			var srcExcite = ImageSource.FromResource( "MinaxWebTranslator.Resources.Excite.png" );
+			var srcCrossLang = ImageSource.FromResource( "MinaxWebTranslator.Resources.CrossLanguage.png" );
+			var srcWeblio = ImageSource.FromResource( "MinaxWebTranslator.Resources.WeblioTranslator.png" );
+			var srcBaidu = ImageSource.FromResource( "MinaxWebTranslator.Resources.BaiduTranslator.png" );
+			var srcYoudao = ImageSource.FromResource( "MinaxWebTranslator.Resources.YoudaoTranslator.png" );
+			var srcGoogle = ImageSource.FromResource( "MinaxWebTranslator.Resources.GoogleTranslator.png" );
+			var srcMicrosoft = ImageSource.FromResource( "MinaxWebTranslator.Resources.Microsoft.png" );
 
-			//mIconCredits = new List<CreditsItemModel> {
-			//	new CreditsItemModel { Icon = srcGoogle, Title = "Google Translate Logo (vector version)",
-			//			Author = "Google Inc.", License = "Public Domain",
-			//			Hyperlink = "https://commons.wikimedia.org/wiki/File:Google_Translate_logo.svg",
-			//			Note = "Converted to .png by Minax project."
-			//	},
+			mWebXlators = new List<CreditsItemModel> {
+				new CreditsItemModel {
+					Icon = srcExcite, Title = $"Excite {Languages.Global.Str0Translator} (エキサイト翻訳)",
+					Hyperlink = "https://www.excite.co.jp/world/",
+				},
+				new CreditsItemModel {
+					Icon = srcCrossLang, Title = $"CrossLanguage {Languages.Global.Str0Translator} (CROSS-Transer)",
+					Hyperlink = "http://cross.transer.com",
+				},
+				new CreditsItemModel {
+					Icon = srcWeblio, Title = $"Weblio {Languages.Global.Str0Translator} (Weblio 翻訳)",
+					Hyperlink = "https://translate.weblio.jp/",
+				},
+				new CreditsItemModel {
+					Icon = srcBaidu, Title = $"{Languages.WebXlator.Str0Baidu} {Languages.Global.Str0Translator} (百度翻译)",
+					Hyperlink = "https://fanyi.baidu.com",
+				},
+				new CreditsItemModel {
+					Icon = srcYoudao, Title = $"{Languages.WebXlator.Str0Youdao} {Languages.Global.Str0Translator} (有道翻译)",
+					Hyperlink = "http://fanyi.youdao.com",
+				},
+				new CreditsItemModel {
+					Icon = srcGoogle, Title = $"Google {Languages.Global.Str0Translator}",
+					Hyperlink = "https://translate.google.com/",
+				},
+				new CreditsItemModel {
+					Icon = srcMicrosoft, Title = $"Microsoft/Bing {Languages.Global.Str0Translator}",
+					Hyperlink = "https://www.bing.com/translator",
+				},
+			};
 
-			//	new CreditsItemModel { Icon = srcExcite, Title = "Excite 1 Logo",
-			//			Author = "Excite Inc.", License = "Public Domain?",
-			//			Hyperlink = "https://freebiesupply.com/logos/excite-1-logo/",
-			//			//Hyperlink = "https://worldvectorlogo.com/logo/excite-1",
-			//			Note = "Shrinked by Minax project.",
-			//	},
-			//};
-
-			//DgCreditsIcons.ItemsSource = mIconCredits;
-
-
-			//mCredits3rdParty = new List<CreditsItemModel> {
-			//	new CreditsItemModel {
-			//		Title = "Json.NET", Hyperlink = "https://www.newtonsoft.com/json",
-			//	},
-			//	new CreditsItemModel {
-			//		Title = "HtmlAgilityPack", Hyperlink = "https://html-agility-pack.net/",
-			//	},
-			//	new CreditsItemModel {
-			//		Title = "FileHelpers", Hyperlink = "https://www.filehelpers.net/",
-			//	},
-			//};
-			//DgCredits3rdParty.ItemsSource = mCredits3rdParty;
+			LvWebXlators.ItemsSource = mWebXlators;
 		}
 
-		//private List<CreditsItemModel> mIconCredits;
-		private List<CreditsItemModel> mCredits3rdParty;
+		private List<CreditsItemModel> mWebXlators;
 	}
 }

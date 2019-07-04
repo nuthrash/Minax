@@ -1,10 +1,6 @@
 using Minax.Web.Translation;
-using MinaxWebTranslator.Models;
-using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -36,7 +32,7 @@ namespace MinaxWebTranslator.Views
 			EtQuickInput.MaxLength = TranslatingMaxWordCount;
 
 			this.BindingContext = mEditingVM = new ViewModels.EditingViewModel() {
-				NonEmptyMaxPlaceholder = $"Input some text to be translated, count: {mCurrentInput.Length}/{TranslatingMaxWordCount}",
+				NonEmptyMaxPlaceholder = string.Format( Languages.WebXlator.Str2InputTextCountFractions, mCurrentInput.Length, TranslatingMaxWordCount ),
 			};
 
 			EtQuickXLangOutput.BindingContext = mXlangVM = new ViewModels.BaseViewModel();
@@ -82,7 +78,7 @@ namespace MinaxWebTranslator.Views
 					text = "";
 
 				mCurrentInput = text; // DO NOT let mCurrentInput become empty
-				mEditingVM.NonEmptyMaxPlaceholder = $"Input some text to be translated, count: {mCurrentInput.Length}/{TranslatingMaxWordCount}";
+				mEditingVM.NonEmptyMaxPlaceholder = string.Format( Languages.WebXlator.Str2InputTextCountFractions, mCurrentInput.Length, TranslatingMaxWordCount );
 				if( text.Length > TranslatingMaxWordCount ) {
 					if( mDeferredWorker != null )
 						mDeferredWorker.Dispose();
@@ -93,7 +89,7 @@ namespace MinaxWebTranslator.Views
 							if( mDeferredWorker != null )
 								mDeferredWorker.Dispose();
 							mDeferredWorker = null;
-							mEditingVM.NonEmptyMaxPlaceholder = $"Input some text to be translated, count: {mCurrentInput.Length}/{TranslatingMaxWordCount}";
+							mEditingVM.NonEmptyMaxPlaceholder = string.Format( Languages.WebXlator.Str2InputTextCountFractions, mCurrentInput.Length, TranslatingMaxWordCount );
 							BtnQuickTrans.IsEnabled = true;
 						} );
 					}, text.Substring( 0, TranslatingMaxWordCount ), 200, Timeout.Infinite );
@@ -181,23 +177,23 @@ namespace MinaxWebTranslator.Views
 
 			var sourceText = EtQuickInput.Text;
 			if( string.IsNullOrWhiteSpace( sourceText ) ) {
-				await DisplayAlert( "Opertion Cancelled",
-						"Please fill some text in Quick Translation Input text box!", "OK" );
+				await DisplayAlert( Languages.Global.Str0OperationCancelled,
+						Languages.WebXlator.Str0QuickXlationPlzInputText, Languages.Global.Str0Ok );
 				return;
 			}
 
 			// when not translating
 			if( sourceText.Length > TranslatingMaxWordCount ) {
-				await DisplayAlert( "Opertion Warning",
-						$"The Quick Translation Input text count is exceed {TranslatingMaxWordCount}!", "OK" );
+				await DisplayAlert( Languages.Global.Str0OperationWarning,
+						string.Format( Languages.WebXlator.Str1QuiclXlationInputCountMax, TranslatingMaxWordCount ), Languages.Global.Str0Ok );
 				return;
 			}
 
 			if( CbQuickXLang.IsChecked != true &&
 				CbQuickYoudao.IsChecked != true &&
 				CbQuickGoogle.IsChecked != true ) {
-				await DisplayAlert( "Opertion Warning",
-						"Please select at least one translator!", "OK" );
+				await DisplayAlert( Languages.Global.Str0OperationWarning,
+						Languages.WebXlator.Str0PlzSelectXlator, Languages.Global.Str0Ok );
 				return;
 			}
 

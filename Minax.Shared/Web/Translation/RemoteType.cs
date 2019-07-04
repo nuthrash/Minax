@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Minax.Web.Translation
 {
@@ -13,12 +13,12 @@ namespace Minax.Web.Translation
 		#region "Web Page types"
 
 		/// <summary>
-		/// Excite Transltor (エキサイト翻訳). Powered by KODENSHA
+		/// Excite Translator (エキサイト翻訳). Powered by KODENSHA
 		/// </summary>
 		/// <remarks>https://www.excite.co.jp/world/</remarks>
 		Excite = 1,
 		/// <summary>
-		/// Weblio Transltor (Weblio 翻訳)
+		/// Weblio Translator (Weblio 翻訳)
 		/// </summary>
 		/// <remarks>https://translate.weblio.jp</remarks>
 		Weblio = 10,
@@ -28,21 +28,21 @@ namespace Minax.Web.Translation
 		/// <remarks>https://www.crosslanguage.co.jp/ http://cross.transer.com/ </remarks>
 		CrossLanguage = 20,
 		/// <summary>
-		/// Baidu Transltor (百度翻译)
+		/// Baidu Translator (百度翻译)
 		/// </summary>
 		/// <remarks>https://fanyi.baidu.com/</remarks>
 		Baidu = 30,
 		/// <summary>
-		/// Youdao Transltor (有道翻译)
+		/// Youdao Translator (有道翻译)
 		/// </summary>
 		/// <remarks>http://fanyi.youdao.com</remarks>
 		Youdao = 40,
 		/// <summary>
-		/// Google Transltor
+		/// Google Translator
 		/// </summary>
 		Google = 50,
 		/// <summary>
-		/// Microsoft/Bing Transltor
+		/// Microsoft/Bing Translator
 		/// </summary>
 		Microsoft = 60,
 
@@ -102,6 +102,7 @@ namespace Minax.Web.Translation
 		/// <remarks>https://cloud.google.com/translate/docs/ https://translation.googleapis.com/language/translate/v2</remarks>
 		GoogleCharged = 250,
 		//GoogleChargedV3 = 251,
+
 		/// <summary>
 		/// Microsoft Translation API (Charged) V3
 		/// </summary>

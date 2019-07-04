@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lang="clr-namespace:MinaxWebTranslator.Languages"
              mc:Ignorable="d" x:Class="MinaxWebTranslator.Views.ProjectSettingsPage"
              NavigationPage.HasNavigationBar="False"
              Appearing="ContentPage_Appearing"
@@ -10,7 +11,7 @@
     <ScrollView Orientation="Vertical" HorizontalOptions="Fill" VerticalOptions="Fill">
         <StackLayout Orientation="Vertical" HorizontalOptions="Fill"  VerticalOptions="Fill">
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label Text="Project Name: " HorizontalOptions="Start" VerticalOptions="Center"
+                <Label Text="{x:Static lang:ProjectGlossary.Str0ProjectName}" HorizontalOptions="Start" VerticalOptions="Center"
                        VerticalTextAlignment="Center"/>
                 <!-- {Binding ProjectName} Project Name shall not be empty -->
                 <Entry x:Name="EtProjectName" Text="TEST" HorizontalOptions="FillAndExpand"
@@ -19,7 +20,7 @@
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label Text="Mapping Source Language: " HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
+				<Label Text="{x:Static lang:ProjectGlossary.Str0MappingSourceLanguage}" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
                        VerticalTextAlignment="Center"/>
                 <Picker x:Name="PkSourceLang" HorizontalOptions="FillAndExpand" VerticalOptions="Center"
                         WidthRequest="300" SelectedIndexChanged="PkSourceLang_SelectedIndexChanged" >
@@ -31,7 +32,7 @@
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label Text="Mapping Target Language: " HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
+				<Label Text="{x:Static lang:ProjectGlossary.Str0MappingTargetLanguage}" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
                        VerticalTextAlignment="Center"/>
                 <Picker x:Name="PkTargetLang" HorizontalOptions="FillAndExpand" VerticalOptions="Center"
                         WidthRequest="300" SelectedIndexChanged="PkTargetLang_SelectedIndexChanged" >
@@ -43,14 +44,14 @@
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label Text="Description: " HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
+				<Label Text="{x:Static lang:ProjectGlossary.Str0Description}" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
                        VerticalTextAlignment="Center"/>
                 <Entry x:Name="EtProjectDesc" HorizontalOptions="FillAndExpand"
                        HorizontalTextAlignment="Start" VerticalOptions="Center"
                        WidthRequest="300" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label Text="Remote Site: " HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
+				<Label Text="{x:Static lang:ProjectGlossary.Str0RemoteSite}" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
                        VerticalTextAlignment="Center"/>
 				<Entry x:Name="EtProjectRemoteSite" HorizontalOptions="FillAndExpand"
                        HorizontalTextAlignment="Start" VerticalOptions="Center"
@@ -70,18 +71,18 @@
                 <Label Margin="8,0,0,0" VerticalTextAlignment="Center" TextColor="Black"
                        FontSize="Medium" FontAttributes="Bold" BackgroundColor="White"
                        VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
-                       Text="  Glossary  "/>
+                       Text="{x:Static lang:ProjectGlossary.Str0GlossaryGroup}"/>
             </Grid>
 
             <ScrollView Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Spacing="1" >
                     <Button x:Name="BtnGlossaryCreateEmptyFolders" Margin="0" HorizontalOptions="Start"
                             VerticalOptions="Center" Clicked="BtnGlossaryCreateEmptyFolders_Clicked"
-                            Text="Create empty glossary sub-folders"/>
+                            Text="{x:Static lang:ProjectGlossary.Str0CreateEmptyGlossarySubfolders}"/>
 
                     <Label Margin="3,0,0,0" FontAttributes="Bold"
                            HorizontalOptions="Start" 
-                           VerticalOptions="Center" Text="Current Glossary Path: " />
+                           VerticalOptions="Center" Text="{x:Static lang:ProjectGlossary.Str0CurrentGlossaryPath}" />
                     <Entry x:Name="TbGlossaryPath" Margin="0,0,3,0" HorizontalOptions="Fill"
                            VerticalOptions="Center" IsReadOnly="False" 
                            Text="/emulated/0/Documents/WebNovels/Glossary/cscwecwecsecscdcdcxvdsdwefsesfdfsfsdfscsdcscscscsec" />
@@ -90,9 +91,9 @@
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                 <Button x:Name="BtnGlossaryDownloadByFileList" Margin="3" Clicked="BtnGlossaryDownloadByFileList_Clicked"
-                            Text="Download latest glossary files" />
+                            Text="{x:Static lang:ProjectGlossary.Str0DownloadLatestGlossaryFiles}" />
                 <Label Margin="3,0,1,0" HorizontalTextAlignment="End" 
-                           VerticalTextAlignment="Center" Text="Overwrite Policy: " />
+                           VerticalTextAlignment="Center" Text="{x:Static lang:ProjectGlossary.Str0OverwritePolicy}" />
                 <Picker x:Name="CbGlossaryOverwritePolicy" Margin="0,0,0,3"
                             HorizontalOptions="FillAndExpand">
                     <Picker.Items>
@@ -105,7 +106,7 @@
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Button x:Name="BtnGlossarySyncFile" Text="⚙  Sync. File:"
+				<Button x:Name="BtnGlossarySyncFile" Text="{x:Static lang:ProjectGlossary.Str0SyncFileSettings}"
                         Margin="32,0,0,0" Clicked="BtnGlossarySyncFile_Clicked" />
 
                 <Picker x:Name="CbGlossarySyncFile" Margin="0,0,0,3" HorizontalOptions="FillAndExpand" >
@@ -129,7 +130,7 @@
                 <Label Margin="8,0,0,0" VerticalTextAlignment="Center" TextColor="Black"
                        FontSize="Medium" FontAttributes="Bold" BackgroundColor="White"
                        VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
-                       Text="  File Changed Monitor  "/>
+                       Text="{x:Static lang:ProjectGlossary.Str0FileChangedMonitor}"/>
             </Grid>
 
             <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Start">
@@ -148,17 +149,17 @@
 
                 <Switch Grid.Column="0" Grid.Row="0" IsToggled="True" IsEnabled="False" />
                 <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3"
-                       Text="Auto save project configuration file when properly time." />
+                       Text="{x:Static lang:ProjectGlossary.Str0AutoSaveProject}" />
                 
                 <Switch Grid.Column="0" Grid.Row="1" IsToggled="False" IsEnabled="False" />
                 <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"
-                       Text="Auto modify Mapping content when file renamed (NOT SUPPORT)" />
+                       Text="{x:Static lang:ProjectGlossary.Str0AutoModifyMappingContentWhenFileRenamed}" />
 
                 <Switch x:Name="SwMonitorAutoMergeWhenFileChanged" Grid.Column="0" Grid.Row="2"
                         IsToggled="False" IsEnabled="False" HorizontalOptions="FillAndExpand"
                         Toggled="SwMonitorAutoMergeWhenFileChanged_Toggled" />
                 <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" HorizontalOptions="FillAndExpand"
-                        Text="Auto merge Glossary Mapping entries when file added, deleted, changed (NOT SUPPORT)" />
+                        Text="{x:Static lang:ProjectGlossary.Str0AutoMergeGlossaryMappingEntriesWhenFileChanged}" />
             </Grid>
 
         </StackLayout>

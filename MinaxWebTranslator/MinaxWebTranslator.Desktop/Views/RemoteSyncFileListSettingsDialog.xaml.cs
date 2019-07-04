@@ -1,21 +1,10 @@
-﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Minax.Collections;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MinaxWebTranslator.Desktop.Views
 {
@@ -100,25 +89,26 @@ namespace MinaxWebTranslator.Desktop.Views
 		private async void BtnCustomAdd_Click( object sender, RoutedEventArgs e )
 		{
 			if( CustomGlossaryFileListLocations.Count >= CustomGlossaryFileListCountMax ) {
-				ParentWindow.ShowModalMessageExternal( "Glossary File List Warning", "File list count has reach maximum!!" );
+				ParentWindow.ShowModalMessageExternal( Languages.ProjectGlossary.Str0GlossaryFileListWarning, Languages.ProjectGlossary.Str0FileListCountHasReachMaximum );
 				return;
 			}
 
-			var newFileList = ParentWindow.ShowModalInputExternal( "Add Glossary File List", "File list location:", mInputSettings );
+			var newFileList = ParentWindow.ShowModalInputExternal( Languages.ProjectGlossary.Str0AddGlossaryFileList,
+											Languages.ProjectGlossary.Str0FileListLocation, mInputSettings );
 			// show warning about OriginalText is all white spaces
 			if( string.IsNullOrWhiteSpace( newFileList ) ) {
 				// maybe cancelled!!
-				//await ParentWindow.ShowMessageAsync( "Glossary File List Error", "File list location shall not be full of white space!!" );
+				//await ParentWindow.ShowMessageAsync( Languages.ProjectGlossary.Str0GlossaryFileListError, "File list location shall not be full of white space!!" );
 				return;
 			}
 			if( CustomGlossaryFileListLocations.Contains( newFileList ) ) {
-				ParentWindow.ShowModalMessageExternal( "Glossary File List Warning", "File list location is existed!!" );
+				ParentWindow.ShowModalMessageExternal( Languages.ProjectGlossary.Str0GlossaryFileListWarning, Languages.ProjectGlossary.Str0FileListLocationIsExisted );
 				return;
 			}
 
 			// try to fetch file list text file
 			if( false == await _CheckAndTryToFetchFile( newFileList ) ) {
-				ParentWindow.ShowModalMessageExternal( "Glossary File List Error", "File list cannot be feteched or may be an invalid formatted text file!" );
+				ParentWindow.ShowModalMessageExternal( Languages.ProjectGlossary.Str0GlossaryFileListError, Languages.ProjectGlossary.Str0FileListCantFetchOrInvalid );
 				return;
 			}
 
@@ -141,24 +131,24 @@ namespace MinaxWebTranslator.Desktop.Views
 				DefaultText = loc
 			};
 
-			var newFileList = ParentWindow.ShowModalInputExternal( "Modify Glossary File List", "File list location:", modifySettings );
+			var newFileList = ParentWindow.ShowModalInputExternal( Languages.ProjectGlossary.Str0ModifyGlossaryFileList, Languages.ProjectGlossary.Str0FileListLocation, modifySettings );
 			if( newFileList == loc )
 				return;
 
 			if( CustomGlossaryFileListLocations.Contains( newFileList ) ) {
-				ParentWindow.ShowModalMessageExternal( "Glossary File List Warning", "File list location is existed!!" );
+				ParentWindow.ShowModalMessageExternal( Languages.ProjectGlossary.Str0GlossaryFileListWarning, Languages.ProjectGlossary.Str0FileListLocationIsExisted );
 				return;
 			}
 
 			// show warning about OriginalText is all white spaces
 			if( string.IsNullOrWhiteSpace( newFileList ) ) {
 				// maybe cancelled!!
-				//await ParentWindow.ShowMessageAsync( "Glossary File List Error", "File list location shall not be full of white space!!" );
+				//await ParentWindow.ShowMessageAsync( Languages.ProjectGlossary.Str0GlossaryFileListError, "File list location shall not be full of white space!!" );
 				return;
 			}
 
 			if( false == await _CheckAndTryToFetchFile( newFileList ) ) {
-				ParentWindow.ShowModalMessageExternal( "Glossary File List Error", "File list cannot be feteched or may be an invalid formatted text file!" );
+				ParentWindow.ShowModalMessageExternal( Languages.ProjectGlossary.Str0GlossaryFileListError, Languages.ProjectGlossary.Str0FileListCantFetchOrInvalid );
 				return;
 			}
 

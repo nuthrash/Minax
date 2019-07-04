@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Str0ApiKey" xml:space="preserve">
+    <value>API Key</value>
+  </data>
+  <data name="Str0ApiKeyField" xml:space="preserve">
+    <value>API Key: </value>
+  </data>
+  <data name="Str0ApiKeyToolTip" xml:space="preserve">
+    <value>API Key string for your subscription to Translation API</value>
+  </data>
+  <data name="Str0AppIdField" xml:space="preserve">
+    <value>APP ID: </value>
+  </data>
+  <data name="Str0AppIdToolTip" xml:space="preserve">
+    <value>APP ID string for your subscription to Translation API</value>
+  </data>
+  <data name="Str0AppKey" xml:space="preserve">
+    <value>APP Key(APP ID)</value>
+  </data>
+  <data name="Str0AppKeyField" xml:space="preserve">
+    <value>APP Key(APP ID): </value>
+  </data>
+  <data name="Str0AppKeyToolTip" xml:space="preserve">
+    <value>APP Key (App ID) string for your subscription to Translation API</value>
+  </data>
+  <data name="Str0AppSecret" xml:space="preserve">
+    <value>APP Secret</value>
+  </data>
+  <data name="Str0AppSecretField" xml:space="preserve">
+    <value>APP Secret: </value>
+  </data>
+  <data name="Str0AppSecretToolTip" xml:space="preserve">
+    <value>APP Secret string for your subscription to Translation API</value>
+  </data>
+  <data name="Str0Baidu" xml:space="preserve">
+    <value>Baidu</value>
+  </data>
+  <data name="Str0BaiduXlationChargedChina" xml:space="preserve">
+    <value>Baidu Translation charged APIs from China</value>
+  </data>
+  <data name="Str0BaiduXlationChina" xml:space="preserve">
+    <value>Baidu Translation from China</value>
+  </data>
+  <data name="Str0BaiduXlatorChina" xml:space="preserve">
+    <value>Baidu Translator from China</value>
+  </data>
+  <data name="Str0Converted2PngByMinaxProject" xml:space="preserve">
+    <value>Converted to .png by Minax project.</value>
+  </data>
+  <data name="Str0CurrentXlatorField" xml:space="preserve">
+    <value>Current Translator: </value>
+  </data>
+  <data name="Str0ErrorMessage" xml:space="preserve">
+    <value> ErrorMessage:</value>
+  </data>
+  <data name="Str0ExciteXlatorJapan" xml:space="preserve">
+    <value>Excite Translator from Japan</value>
+  </data>
+  <data name="Str0FailedClearOldTextRetry" xml:space="preserve">
+    <value>Failed to clear old text, retried too manay times!</value>
+  </data>
+  <data name="Str0FailedLocation" xml:space="preserve">
+    <value>Failed localtion: {0}</value>
+  </data>
+  <data name="Str0FailedTranslatedRetry" xml:space="preserve">
+    <value>Failed to translated strings, retried too manay times!</value>
+  </data>
+  <data name="Str0FillGoogleApiChargedV2Settings" xml:space="preserve">
+    <value>Fill Google Translation API V2 (Charged) Settings</value>
+  </data>
+  <data name="Str0FillMicrosoftApiChargedV3Settings" xml:space="preserve">
+    <value>Fill Microsoft Translation API V3 (Charged) Settings</value>
+  </data>
+  <data name="Str0GoogleXlationAmerica" xml:space="preserve">
+    <value>Google Translation from America</value>
+  </data>
+  <data name="Str0GoogleXlationChargedAmerica" xml:space="preserve">
+    <value>Google Translation charged APIs from America</value>
+  </data>
+  <data name="Str0GoogleXlatorAmerica" xml:space="preserve">
+    <value>Google Translator from America</value>
+  </data>
+  <data name="Str0HowCreateApikey" xml:space="preserve">
+    <value>How to create API key</value>
+  </data>
+  <data name="Str0HowSignUp" xml:space="preserve">
+    <value>How to sign-up</value>
+  </data>
+  <data name="Str0InputField" xml:space="preserve">
+    <value>Input: </value>
+  </data>
+  <data name="Str0IntegratedOutput" xml:space="preserve">
+    <value>Integrated Output:</value>
+  </data>
+  <data name="Str0LangChineseTraditional" xml:space="preserve">
+    <value>Chinese Traditional</value>
+  </data>
+  <data name="Str0LangEnglish" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Str0LangJapanese" xml:space="preserve">
+    <value>Japanese</value>
+  </data>
+  <data name="Str0MicrosoftXlationAmerica" xml:space="preserve">
+    <value>Microsoft Translation from America</value>
+  </data>
+  <data name="Str0MicrosoftXlationChargedAmerica" xml:space="preserve">
+    <value>Microsoft Translation charged APIs from America</value>
+  </data>
+  <data name="Str0MicrosoftXlatorAmerica" xml:space="preserve">
+    <value>Microsoft/Bing Transltor from America</value>
+  </data>
+  <data name="Str0MsAvailableRegions" xml:space="preserve">
+    <value>Available Regions</value>
+  </data>
+  <data name="Str0NavigateFailed" xml:space="preserve">
+    <value>Failed to navigate web translator location, retried too manay times!</value>
+  </data>
+  <data name="Str0NoteSecureStore" xml:space="preserve">
+    <value>NOTE: Above field(s) content would be saved to private App location. If you think that is not safe, you shall not key in anything!!</value>
+  </data>
+  <data name="Str0NoticeSrcTgtPairMayNotSupport" xml:space="preserve">
+    <value>NOTICE: Some translator engines DO NOT support some Source Language and Target Language pair!</value>
+  </data>
+  <data name="Str0PlzInputSourceBox" xml:space="preserve">
+    <value>Please input some useful text to Source box!</value>
+  </data>
+  <data name="Str0PlzSelectXlator" xml:space="preserve">
+    <value>Please select at least one translator!</value>
+  </data>
+  <data name="Str0PreparingTranslation" xml:space="preserve">
+    <value>Preparing Translation...</value>
+  </data>
+  <data name="Str0QuickXlation" xml:space="preserve">
+    <value>Quick Translation</value>
+  </data>
+  <data name="Str0QuickXlationPlzInputText" xml:space="preserve">
+    <value>Please fill some text in Quick Translation Input text box!</value>
+  </data>
+  <data name="Str0SecretKey" xml:space="preserve">
+    <value>Secret Key</value>
+  </data>
+  <data name="Str0SecretKeyField" xml:space="preserve">
+    <value>Secret Key: </value>
+  </data>
+  <data name="Str0SecretKeyToolTip" xml:space="preserve">
+    <value>Secret Key string for your subscription to Translation API</value>
+  </data>
+  <data name="Str0ServerRegionField" xml:space="preserve">
+    <value>Server Region: </value>
+  </data>
+  <data name="Str0ShrinkedByMinaxProject" xml:space="preserve">
+    <value>Shrinked by Minax project.</value>
+  </data>
+  <data name="Str0SubKeyToolTip" xml:space="preserve">
+    <value>Subscription Key for your subscription to Translator Text API</value>
+  </data>
+  <data name="Str0SubMultiServiceRegion" xml:space="preserve">
+    <value>The region of the multi-service subscription</value>
+  </data>
+  <data name="Str0SubscriptionKey" xml:space="preserve">
+    <value>Subscription Key</value>
+  </data>
+  <data name="Str0SubscriptionKeyField" xml:space="preserve">
+    <value>Subscription Key:</value>
+  </data>
+  <data name="Str0WeblioXlatorJapan" xml:space="preserve">
+    <value>Weblio Translator from Japan</value>
+  </data>
+  <data name="Str0WhereRequestAppIdAndSecretKey" xml:space="preserve">
+    <value>Where to request APP ID and Secret Key</value>
+  </data>
+  <data name="Str0WhereRequestAppKeyAndAppSecret" xml:space="preserve">
+    <value>Where to request App Key (App ID) and App Secret</value>
+  </data>
+  <data name="Str0XlatingCancelled" xml:space="preserve">
+    <value>Translating Cancelled</value>
+  </data>
+  <data name="Str0XlatingFailed" xml:space="preserve">
+    <value>Translating Failed</value>
+  </data>
+  <data name="Str0XlatingFailedFieldMissing" xml:space="preserve">
+    <value>Translation failed!
+Maybe some necessary field(s) is/are missing or mis-typed when using Translation API (Charged)?</value>
+  </data>
+  <data name="Str0XlatingFailedNetRetry" xml:space="preserve">
+    <value>Translating failed!
+Please retry latter! Maybe the network is disconnected, or remote web site is busy.</value>
+  </data>
+  <data name="Str0XlatingResult" xml:space="preserve">
+    <value>Translating Result</value>
+  </data>
+  <data name="Str0XlatingSucceed" xml:space="preserve">
+    <value>Translating succeed!</value>
+  </data>
+  <data name="Str0XTranserXlationJapan" xml:space="preserve">
+    <value>CROSS-Transer Translation from Japan</value>
+  </data>
+  <data name="Str0XTranserXlatorJapan" xml:space="preserve">
+    <value>CROSS-Transer Translator from Japan</value>
+  </data>
+  <data name="Str0Youdao" xml:space="preserve">
+    <value>Youdao</value>
+  </data>
+  <data name="Str0YoudaoXlationChargedChina" xml:space="preserve">
+    <value>Youdao Translation charged APIs from China</value>
+  </data>
+  <data name="Str0YoudaoXlationChina" xml:space="preserve">
+    <value>Youdao Translation from China</value>
+  </data>
+  <data name="Str0YoudaoXlatorChina" xml:space="preserve">
+    <value>Youdao Translator from China</value>
+  </data>
+  <data name="Str1FillXlationApiChargedSettings" xml:space="preserve">
+    <value>Fill {0} Translation API (Charged) Settings</value>
+  </data>
+  <data name="Str1QuiclXlationInputCountMax" xml:space="preserve">
+    <value>The Quick Translation Input text count is exceed {0}!</value>
+  </data>
+  <data name="Str1TranslateError" xml:space="preserve">
+    <value>Something wrong when translating, StatusCode: {0}</value>
+  </data>
+  <data name="Str1TranslatingError" xml:space="preserve">
+    <value>Tanslating error:  {0}</value>
+  </data>
+  <data name="Str1XlatingAbortedException" xml:space="preserve">
+    <value>Translating aborted! Exception: {0}</value>
+  </data>
+  <data name="Str1XlatingFailedException" xml:space="preserve">
+    <value>Translating failed! Exception: {0}</value>
+  </data>
+  <data name="Str1XlationApiCharged" xml:space="preserve">
+    <value>{0} Translation API (Charged)</value>
+  </data>
+  <data name="Str1XlationApiFree" xml:space="preserve">
+    <value>{0} API (Free)</value>
+  </data>
+  <data name="Str2InputTextCountFractions" xml:space="preserve">
+    <value>Input some text to be translated, count: {0}/{1}</value>
+  </data>
+  <data name="Str2TranslatedFractions" xml:space="preserve">
+    <value>{0}/{1} Translated</value>
+  </data>
+  <data name="Str2TranslateErrorMessage" xml:space="preserve">
+    <value>Something wrong when translating, ErrorCode: {0}, Message: {1}</value>
+  </data>
+  <data name="Str2TranslatingErrorMessage" xml:space="preserve">
+    <value>Translating failed! ErrorCode: {0}, ErrorMessage: {1}</value>
+  </data>
+  <data name="Str2YoudaoNotSupportSrc2Tgt" xml:space="preserve">
+    <value>Youdao does not support translate from {0} to {1}</value>
+  </data>
+  <data name="Str0XlationApi" xml:space="preserve">
+    <value>Translation API</value>
+  </data>
+  <data name="Str1FieldForApiToolTip" xml:space="preserve">
+    <value>{0} string for your subscription to Translation API</value>
+  </data>
+  <data name="Str0AppId" xml:space="preserve">
+    <value>APP ID</value>
+  </data>
+  <data name="Str0InputOrPasteSourceTextToXlated" xml:space="preserve">
+    <value>Input or paste source text to be translated...</value>
+  </data>
+  <data name="Str0XlatorSelector" xml:space="preserve">
+    <value>Translator Selector</value>
+  </data>
+</root>

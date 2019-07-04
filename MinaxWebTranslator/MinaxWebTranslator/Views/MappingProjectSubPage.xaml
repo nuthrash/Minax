@@ -6,6 +6,7 @@
 			 xmlns:conv="clr-namespace:MinaxWebTranslator.Converters"
              xmlns:exts="clr-namespace:MinaxWebTranslator.Extensions"
              xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+			 xmlns:lang="clr-namespace:MinaxWebTranslator.Languages"
              mc:Ignorable="d" NavigationPage.HasNavigationBar="False"
              x:Class="MinaxWebTranslator.Views.MappingProjectSubPage">
     <ContentPage.ToolbarItems>
@@ -64,9 +65,9 @@
                 </OnIdiom>
             </dg:DataGrid.HeaderFontSize>
             <dg:DataGrid.Columns>
-                <dg:DataGridColumn x:Name="DgcolOriginal" Title="Original" PropertyName="OriginalText" SortingEnabled="False" />
-                <dg:DataGridColumn Title="Mapping" PropertyName="MappingText" SortingEnabled="False" />
-				<dg:DataGridColumn x:Name="DgcolCategory" Title="Category" PropertyName="Category" SortingEnabled="False">
+				<dg:DataGridColumn Title="{x:Static lang:ProjectGlossary.Str0OriginalText}" PropertyName="OriginalText" SortingEnabled="False" />
+				<dg:DataGridColumn Title="{x:Static lang:ProjectGlossary.Str0MappingText}" PropertyName="MappingText" SortingEnabled="False" />
+				<dg:DataGridColumn Title="{x:Static lang:ProjectGlossary.Str0Category}" PropertyName="Category" SortingEnabled="False">
 					<!-- Not work with Xamarin.Forms 4.x -->
 					<!--<dg:DataGridColumn.CellTemplate>
 						<DataTemplate>
@@ -77,8 +78,8 @@
 					</dg:DataGridColumn.CellTemplate>-->
 				</dg:DataGridColumn>
 
-                <dg:DataGridColumn Title="Description" PropertyName="Description" SortingEnabled="False"/>
-                <dg:DataGridColumn Title="Comment" PropertyName="Comment" SortingEnabled="False" />
+				<dg:DataGridColumn Title="{x:Static lang:Global.Str0Description}" PropertyName="Description" SortingEnabled="False"/>
+				<dg:DataGridColumn Title="{x:Static lang:Global.Str0Comment}" PropertyName="Comment" SortingEnabled="False" />
                 <!--<dg:DataGridColumn Title="ProjectBasedFileName" PropertyName="ProjectBasedFileName"  />-->
             </dg:DataGrid.Columns>
 

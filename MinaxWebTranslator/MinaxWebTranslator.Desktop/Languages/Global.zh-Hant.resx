@@ -121,17 +121,284 @@
   <data name="AppAbout" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AppAbout.zh-Hant.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="Str0About" xml:space="preserve">
+    <value>關於</value>
+  </data>
+  <data name="Str0Add" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="Str0AppReady" xml:space="preserve">
+    <value>APP 準備好了</value>
+  </data>
+  <data name="Str0AsiaPacific" xml:space="preserve">
+    <value>亞太(Asia Pacific)</value>
+  </data>
+  <data name="Str0Author" xml:space="preserve">
+    <value>作者</value>
+  </data>
+  <data name="Str0AutoTop" xml:space="preserve">
+    <value>自動移到頂端</value>
+  </data>
   <data name="Str0Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>取消</value>
+  </data>
+  <data name="Str0ChineseConverters" xml:space="preserve">
+    <value>中文轉換器</value>
+  </data>
+  <data name="Str0Clear" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="Str0ClearAndPaste" xml:space="preserve">
+    <value>清除並貼上</value>
+  </data>
+  <data name="Str0ClearAndPasteFromClipboard" xml:space="preserve">
+    <value>清除內容並貼上剪貼簿文字</value>
+  </data>
+  <data name="Str0ClearSorting" xml:space="preserve">
+    <value>清除現有排序</value>
+  </data>
+  <data name="Str0Close" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="Str0Comment" xml:space="preserve">
+    <value>註解</value>
+  </data>
+  <data name="Str0Copy" xml:space="preserve">
+    <value>複製</value>
+  </data>
+  <data name="Str0CopyAll" xml:space="preserve">
+    <value>複製所有</value>
+  </data>
+  <data name="Str0CopyAndXlateSelection" xml:space="preserve">
+    <value>複製並翻譯選擇範圍</value>
+  </data>
+  <data name="Str0CopyToolTip" xml:space="preserve">
+    <value>複製所有文字到剪貼簿</value>
+  </data>
+  <data name="Str0Credits" xml:space="preserve">
+    <value>致謝</value>
+  </data>
+  <data name="Str0Custom" xml:space="preserve">
+    <value>自訂</value>
+  </data>
+  <data name="Str0DecreaseFontSize" xml:space="preserve">
+    <value>縮小字型尺寸</value>
+  </data>
+  <data name="Str0Default" xml:space="preserve">
+    <value>預設</value>
   </data>
   <data name="Str0DefaultTextFontFamilyName" xml:space="preserve">
     <value>Microsoft JhengHei UI</value>
     <comment>微軟正黑體</comment>
   </data>
+  <data name="Str0Delete" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="Str0DeleteConfirm" xml:space="preserve">
+    <value>刪除確認</value>
+  </data>
+  <data name="Str0Description" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="Str0Disabled" xml:space="preserve">
+    <value>已禁用</value>
+  </data>
+  <data name="Str0Docuemnts" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="Str0DuplicateText" xml:space="preserve">
+    <value>重複文字</value>
+  </data>
+  <data name="Str0Enabled" xml:space="preserve">
+    <value>已啟用</value>
+  </data>
+  <data name="Str0Europe" xml:space="preserve">
+    <value>歐洲(Europe)</value>
+  </data>
+  <data name="Str0Exit" xml:space="preserve">
+    <value>離開</value>
+  </data>
+  <data name="Str0FieldCantEmptyOrWhitespaces" xml:space="preserve">
+    <value>此欄位不得為空或全為空白文字！</value>
+  </data>
+  <data name="Str0FieldError" xml:space="preserve">
+    <value>欄位錯誤</value>
+  </data>
+  <data name="Str0FileName" xml:space="preserve">
+    <value>檔案名稱</value>
+  </data>
+  <data name="Str0FullPath" xml:space="preserve">
+    <value>完整路徑</value>
+  </data>
+  <data name="Str0Global" xml:space="preserve">
+    <value>全域(Global)</value>
+  </data>
+  <data name="Str0Hyperlink" xml:space="preserve">
+    <value>超連結</value>
+  </data>
+  <data name="Str0Icons" xml:space="preserve">
+    <value>圖示集</value>
+  </data>
+  <data name="Str0Image" xml:space="preserve">
+    <value>影像</value>
+  </data>
+  <data name="Str0IncreaseFontSize" xml:space="preserve">
+    <value>放大字型尺寸</value>
+  </data>
+  <data name="Str0License" xml:space="preserve">
+    <value>授權</value>
+  </data>
+  <data name="Str0Menu" xml:space="preserve">
+    <value>選單</value>
+  </data>
+  <data name="Str0MitLicense" xml:space="preserve">
+    <value>MIT 授權</value>
+  </data>
+  <data name="Str0MoveDown" xml:space="preserve">
+    <value>下移</value>
+  </data>
+  <data name="Str0MoveDownByPage" xml:space="preserve">
+    <value>下移一頁</value>
+  </data>
+  <data name="Str0MoveToDocEnd" xml:space="preserve">
+    <value>移到文末</value>
+  </data>
+  <data name="Str0MoveToDocStart" xml:space="preserve">
+    <value>移到文頭</value>
+  </data>
+  <data name="Str0MoveUp" xml:space="preserve">
+    <value>上移</value>
+  </data>
+  <data name="Str0MoveUpByPage" xml:space="preserve">
+    <value>上移一頁</value>
+  </data>
+  <data name="Str0New" xml:space="preserve">
+    <value>新建</value>
+  </data>
+  <data name="Str0No" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="Str0NorthAmerica" xml:space="preserve">
+    <value>北美(North America)</value>
+  </data>
+  <data name="Str0Note" xml:space="preserve">
+    <value>註釋</value>
+  </data>
   <data name="Str0Ok" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="Str0OnlineTools" xml:space="preserve">
+    <value>線上工具</value>
+  </data>
+  <data name="Str0Open" xml:space="preserve">
+    <value>開啟</value>
+  </data>
+  <data name="Str0OperationFailed" xml:space="preserve">
+    <value>操作失敗</value>
+  </data>
+  <data name="Str0OperationFinished" xml:space="preserve">
+    <value>操作完成</value>
+  </data>
+  <data name="Str0OperationProcessing" xml:space="preserve">
+    <value>操作執行中</value>
+  </data>
+  <data name="Str0OperationSuccessful" xml:space="preserve">
+    <value>操作成功</value>
+  </data>
+  <data name="Str0OperationWarning" xml:space="preserve">
+    <value>操作警告</value>
+  </data>
+  <data name="Str0Options" xml:space="preserve">
+    <value>選項</value>
+  </data>
+  <data name="Str0OtherIconsLicense" xml:space="preserve">
+    <value>注意：其他圖示是由 Minax 專案重新繪製，或是來自 MahApps.Metro.IconPacks 套件（皆為MIT 授權）</value>
+  </data>
+  <data name="Str0OverwriteConfirm" xml:space="preserve">
+    <value>覆寫確認</value>
+  </data>
+  <data name="Str0PanelLayout" xml:space="preserve">
+    <value>面板佈局</value>
+  </data>
+  <data name="Str0Paste" xml:space="preserve">
+    <value>貼上</value>
+  </data>
+  <data name="Str0Project" xml:space="preserve">
+    <value>專案</value>
+  </data>
+  <data name="Str0ProjectName" xml:space="preserve">
+    <value>專案名稱</value>
+  </data>
+  <data name="Str0PublicDomain" xml:space="preserve">
+    <value>公眾領域</value>
+  </data>
+  <data name="Str0RestoreDefault" xml:space="preserve">
+    <value>恢復原始佈局</value>
+  </data>
+  <data name="Str0Save" xml:space="preserve">
+    <value>儲存</value>
+  </data>
+  <data name="Str0SaveConfirm" xml:space="preserve">
+    <value>儲存確認</value>
+  </data>
+  <data name="Str0SelectFileNameToSave" xml:space="preserve">
+    <value>選擇要儲存的檔名</value>
+  </data>
+  <data name="Str0Settings" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="Str0SoftForumsHosting" xml:space="preserve">
+    <value>軟體、論壇和專案託管</value>
+  </data>
+  <data name="Str0Source" xml:space="preserve">
+    <value>來源</value>
+  </data>
+  <data name="Str0Summary" xml:space="preserve">
+    <value>摘要</value>
+  </data>
+  <data name="Str0SyncWithSource" xml:space="preserve">
+    <value>與來源同步</value>
+  </data>
+  <data name="Str0Target" xml:space="preserve">
+    <value>目標</value>
+  </data>
+  <data name="Str0TempSaveSecureValueSession" xml:space="preserve">
+    <value>在本次程式執行期間中暫存安全性文字</value>
+  </data>
+  <data name="Str0ThirdPartyLibrariesControls" xml:space="preserve">
+    <value>第三方工具箱、函式庫和控制項</value>
+  </data>
+  <data name="Str0Title" xml:space="preserve">
+    <value>標題</value>
+  </data>
   <data name="Str0Translate" xml:space="preserve">
-    <value>Translate</value>
+    <value>翻譯</value>
+  </data>
+  <data name="Str0Translator" xml:space="preserve">
+    <value>翻譯器</value>
+  </data>
+  <data name="Str0WebXlators" xml:space="preserve">
+    <value>網路翻譯器</value>
+  </data>
+  <data name="Str0Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="Str1CurrentSecureStringLength" xml:space="preserve">
+    <value>目前安全性文字長度為 {0}</value>
+  </data>
+  <data name="Str1GotException" xml:space="preserve">
+    <value>遇到例外：{0}</value>
+  </data>
+  <data name="Str2ErrorCodeMessage" xml:space="preserve">
+    <value>錯誤碼：{0}，錯誤訊息：{1}</value>
+  </data>
+  <data name="Str2FetchedFilesFractions" xml:space="preserve">
+    <value>已取得 {0}/{1} 檔案</value>
+  </data>
+  <data name="Str2OldFileRenamed" xml:space="preserve">
+    <value>舊檔案 "{0}" 已被更名為 "{1}"</value>
+  </data>
+  <data name="Str0OperationCancelled" xml:space="preserve">
+    <value>操作取消</value>
   </data>
 </root>

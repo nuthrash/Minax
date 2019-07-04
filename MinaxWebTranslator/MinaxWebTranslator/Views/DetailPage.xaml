@@ -1,28 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:views="clr-namespace:MinaxWebTranslator.Views"
+			xmlns:lang="clr-namespace:MinaxWebTranslator.Languages"
             mc:Ignorable="d" x:Class="MinaxWebTranslator.Views.DetailPage"
             Title="Minax Web Translator">
     <TabbedPage.Children>
-        <NavigationPage x:Name="PgSource" Title="Source">
+        <NavigationPage x:Name="PgSource" Title="{x:Static lang:Global.Str0Source}">
             <x:Arguments>
                 <views:SourcePage/>
             </x:Arguments>
         </NavigationPage>
-        <NavigationPage x:Name="PgTarget" Title="Target">
+		<NavigationPage x:Name="PgTarget" Title="{x:Static lang:Global.Str0Target}">
             <x:Arguments>
                 <views:TargetPage/>
             </x:Arguments>
         </NavigationPage>
-        <NavigationPage x:Name="PgQuickXlation" Title="Quick Translation">
+		<NavigationPage x:Name="PgQuickXlation" Title="{x:Static lang:WebXlator.Str0QuickXlation}">
             <x:Arguments>
                 <views:QuickTranslationPage/>
             </x:Arguments>
         </NavigationPage>
-        <NavigationPage x:Name="PgSummary" Title="Summary">
+		<NavigationPage x:Name="PgSummary" Title="{x:Static lang:Global.Str0Summary}">
             <x:Arguments>
                 <views:SummaryPage/>
             </x:Arguments>

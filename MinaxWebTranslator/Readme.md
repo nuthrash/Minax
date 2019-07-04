@@ -2,17 +2,19 @@
 
 # Overview
 **Minax Web Translator** app is **not** a translator. It just an **agent and text mapping-replacer** for remote web translator/translation result.
-It works with some online web sites and APIs, such as Excite, CROSS-transer, Weblio, Baidu, Youdao, Google, Microsoft/Bing etc..
+It works with some online web sites and APIs, such as **Excite, CROSS-transer, Weblio, Baidu, Youdao, Google, Microsoft/Bing** etc..
 
-- Wiki: https://github.com/nuthrash/Minax/wiki
-- Sample Projects: https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects
+- Wiki: [https://github.com/nuthrash/Minax/wiki](https://github.com/nuthrash/Minax/wiki)
+- Sample Projects: [https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects](https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects)
+
+[Readme - 繁體中文版](./Readme.zh-Hant.md)
 
 <br />
 
 ---
 
 # Concepts and Translation API information
-See [Conepts.md](./Concepts.md)
+See [Conepts.md](./Concepts.md)  ([Concepts - 繁體中文版](./Concepts.zh-Hant.md))
 <br />
 <br />
 
@@ -99,6 +101,11 @@ And the "Integrated Output" box would integrate all selected Translators' output
   1. Operating System: Android 5.0 (API Level 21 - Lollipop) and above
   2. Target API Version: Android 9.0 (API Level 28 - Pie)
   3. Privilege Access: local storage, network, cache, diagnostic, account, external store, write settings, write secure settings
+- Not Support
+  1. Auto restore original content after App sleep
+  2. File Changed Monitor
+
+<br />
 
 #### Main Page
 - Startup
@@ -107,9 +114,11 @@ And the "Integrated Output" box would integrate all selected Translators' output
 
 #### Menu
 - No project opened
+
 <img src="../Assets/Images/ScreenShots/MWT-Droid-Menu1.png" width="256 " title="MWT Droid Menu - No project opened">
 
 - Project opened (some menu items would show after project opened)
+
 <img src="../Assets/Images/ScreenShots/MWT-Droid-Menu2.png" width="256 " title="MWT Droid Menu - Project opened">
 
 <br />

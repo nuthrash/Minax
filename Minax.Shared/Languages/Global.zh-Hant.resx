@@ -120,8 +120,14 @@
   <data name="Str0AccountPermissionError" xml:space="preserve">
     <value>帳戶權限錯誤</value>
   </data>
+  <data name="Str0AllGlossaryFileFetched" xml:space="preserve">
+    <value>已取得所有 Glossary 檔案</value>
+  </data>
   <data name="Str0AutoDetect" xml:space="preserve">
     <value>自動偵測</value>
+  </data>
+  <data name="Str0CantFetchRemoteGlossaryFileList" xml:space="preserve">
+    <value>無法取得遠端 Glossary 檔案列表</value>
   </data>
   <data name="Str0Clear" xml:space="preserve">
     <value>清除</value>
@@ -144,7 +150,7 @@
   <data name="Str0LangEn" xml:space="preserve">
     <value>英文</value>
   </data>
-  <data name="Str0LangJapan" xml:space="preserve">
+  <data name="Str0LangJapanese" xml:space="preserve">
     <value>日文</value>
   </data>
   <data name="Str0Message" xml:space="preserve">
@@ -158,6 +164,9 @@
   </data>
   <data name="Str0NoData" xml:space="preserve">
     <value>無資料</value>
+  </data>
+  <data name="Str0NoGlossaryFileCanFetch" xml:space="preserve">
+    <value>無法取得任何 Glossary 檔案</value>
   </data>
   <data name="Str0OK" xml:space="preserve">
     <value>確認</value>
@@ -204,7 +213,16 @@
   <data name="Str1ConnecToFailed" xml:space="preserve">
     <value>連線到 {0} 失敗！</value>
   </data>
+  <data name="Str1GlossaryFileCreated" xml:space="preserve">
+    <value>Glossary 檔案 "{0}" 已建立</value>
+  </data>
+  <data name="Str1GotException" xml:space="preserve">
+    <value>遇到例外：{0}</value>
+  </data>
   <data name="Str1SomethingWrongMSG" xml:space="preserve">
     <value>某些地方出錯了！ 訊息：{0}</value>
+  </data>
+  <data name="Str2FetchFilesFractions" xml:space="preserve">
+    <value>已取得 {0}/{1} 檔案</value>
   </data>
 </root>

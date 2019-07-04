@@ -120,8 +120,14 @@
   <data name="Str0AccountPermissionError" xml:space="preserve">
     <value>Account Permission Error</value>
   </data>
+  <data name="Str0AllGlossaryFileFetched" xml:space="preserve">
+    <value>All glossary files fetched.</value>
+  </data>
   <data name="Str0AutoDetect" xml:space="preserve">
     <value>Auto Detect</value>
+  </data>
+  <data name="Str0CantFetchRemoteGlossaryFileList" xml:space="preserve">
+    <value>Cannot fetch remote glossary list file.</value>
   </data>
   <data name="Str0Clear" xml:space="preserve">
     <value>Clear</value>
@@ -144,11 +150,8 @@
   <data name="Str0LangEn" xml:space="preserve">
     <value>English</value>
   </data>
-  <data name="Str0LangJapan" xml:space="preserve">
-    <value>Japan</value>
-  </data>
-  <data name="Str0LanguageChanged" xml:space="preserve">
-    <value>Language changed... Please restart this program to take effect!</value>
+  <data name="Str0LangJapanese" xml:space="preserve">
+    <value>Japanese</value>
   </data>
   <data name="Str0Message" xml:space="preserve">
     <value>Message</value>
@@ -161,6 +164,9 @@
   </data>
   <data name="Str0NoData" xml:space="preserve">
     <value>No Data</value>
+  </data>
+  <data name="Str0NoGlossaryFileCanFetch" xml:space="preserve">
+    <value>No glossary file can fetch.</value>
   </data>
   <data name="Str0OK" xml:space="preserve">
     <value>OK</value>
@@ -207,10 +213,16 @@
   <data name="Str1ConnecToFailed" xml:space="preserve">
     <value>Connect to {0} failed!</value>
   </data>
-  <data name="Str1DateTimeFileNameFormat" xml:space="preserve">
-    <value>{0:yyMMdd_HHmmss}</value>
+  <data name="Str1GlossaryFileCreated" xml:space="preserve">
+    <value>Glossary File "{0}" created.</value>
+  </data>
+  <data name="Str1GotException" xml:space="preserve">
+    <value>Got Exception: {0}</value>
   </data>
   <data name="Str1SomethingWrongMSG" xml:space="preserve">
     <value>Something wrong! Message: {0}</value>
+  </data>
+  <data name="Str2FetchFilesFractions" xml:space="preserve">
+    <value>Fetched {0}/{1} files.</value>
   </data>
 </root>

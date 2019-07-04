@@ -1,4 +1,4 @@
-﻿using Minax.Collections;
+using Minax.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +61,7 @@ namespace MinaxWebTranslator.Views
 					return false;
 
 				// response.Content.Headers.LastModified almost can't get...
-				string responseString = response.Content.ReadAsStringAsync().Result;
+				string responseString = await response.Content.ReadAsStringAsync();
 				if( string.IsNullOrWhiteSpace( responseString ) )
 					return false;
 
@@ -101,23 +101,24 @@ namespace MinaxWebTranslator.Views
 		private async void BtnCustomAdd_Clicked( object sender, EventArgs e )
 		{
 			if( CustomGlossaryFileListLocations.Count >= CustomGlossaryFileListCountMax ) {
-				await DisplayAlert( "Glossary File List Warning", "File list count has reach maximum!!", "OK" );
+				await DisplayAlert( Languages.ProjectGlossary.Str0GlossaryFileListWarning, Languages.ProjectGlossary.Str0FileListCountHasReachMaximum, Languages.Global.Str0Ok );
 				return;
 			}
 
-			var newFileList = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync( "File List Location", "", "https://" );
+			var newFileList = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync( Languages.ProjectGlossary.Str0FileListLocationField, "", "https://" );
 			if( string.IsNullOrWhiteSpace( newFileList ) ) {
 				// maybe cancelled!!
 				return;
 			}
 			if( CustomGlossaryFileListLocations.Contains( newFileList ) ) {
-				await DisplayAlert( "Glossary File List Warning", "File list location is existed!!", "OK" );
+				await DisplayAlert( Languages.ProjectGlossary.Str0GlossaryFileListWarning, Languages.ProjectGlossary.Str0FileListLocationIsExisted, Languages.Global.Str0Ok );
 				return;
 			}
 
 			// try to fetch file list text file
 			if( false == await _CheckAndTryToFetchFile( newFileList ) ) {
-				await DisplayAlert( "Glossary File List Error", "File list cannot be feteched or may be an invalid formatted text file!", "OK" );
+				await DisplayAlert( Languages.ProjectGlossary.Str0GlossaryFileListError,
+						Languages.ProjectGlossary.Str0FileListCantFetchOrInvalid, Languages.Global.Str0Ok );
 				return;
 			}
 
@@ -163,12 +164,13 @@ namespace MinaxWebTranslator.Views
 			if( string.IsNullOrWhiteSpace( loc ) || idx < 0 )
 				return;
 
-			var newFileList = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync( "File List Location", "", loc );
+			var newFileList = await Plugin.DialogKit.CrossDiaglogKit.Current.GetInputTextAsync( Languages.ProjectGlossary.Str0FileListLocationField, "", loc );
 			if( newFileList == loc )
 				return;
 
 			if( CustomGlossaryFileListLocations.Contains( newFileList ) ) {
-				await DisplayAlert( "Glossary File List Warning", "File list location is existed!!", "OK" );
+				await DisplayAlert( Languages.ProjectGlossary.Str0GlossaryFileListWarning,
+						Languages.ProjectGlossary.Str0FileListLocationIsExisted, Languages.Global.Str0Ok );
 				return;
 			}
 
@@ -179,7 +181,8 @@ namespace MinaxWebTranslator.Views
 			}
 
 			if( false == await _CheckAndTryToFetchFile( newFileList ) ) {
-				await DisplayAlert( "Glossary File List Error", "File list may be an invalid formatted text file!", "OK" );
+				await DisplayAlert( Languages.ProjectGlossary.Str0GlossaryFileListError,
+						Languages.ProjectGlossary.Str0FileListCantFetchOrInvalid, Languages.Global.Str0Ok );
 				return;
 			}
 

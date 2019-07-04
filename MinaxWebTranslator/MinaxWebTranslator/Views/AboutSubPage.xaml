@@ -27,120 +27,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                <!--<ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand">-->
-                    <!--<Image Margin="40,10,5,40" Source="{exts:ImageResource MinaxWebTranslator.Resources.Translator.png}" VerticalOptions="Center" HeightRequest="64" />-->
+			<StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
 				<Image Margin="0,20,0,20" Source="{exts:ImageResource MinaxWebTranslator.Resources.Translator.png}" VerticalOptions="Center" HeightRequest="64" />
 				<Label VerticalTextAlignment="Center" FontSize="Large" FontAttributes="Bold"
                        Text="Minax Web Translator" TextColor="DarkBlue" />
-                <!--</ContentView>-->
-            </StackLayout>
+			</StackLayout>
         </StackLayout>
 
 		<WebView x:Name="WvDescription" Grid.Column="0" Grid.Row="1" HorizontalOptions="Fill" VerticalOptions="Fill" />
-        <!--<ScrollView Grid.Row="1">
-            <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="10">
-				<WebView x:Name="WvDescription" HorizontalOptions="Fill" VerticalOptions="Fill" />
-				<Label FontSize="22">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="Minax Web Translator" FontAttributes="Bold" FontSize="22" />
-                                <Span Text=" " />
-                                <Span Text="0.0.1" ForegroundColor="{StaticResource LightTextColor}" />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label x:Name="LblAboutApp">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="This app is not a translator, but just an " />
-                                <Span Text=" " />
-                                <Span Text="agent and text mapping-replacer" FontAttributes="Bold" />
-                                <Span Text=" for remote web translator result." />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="It works with some web sites and APIs, such as" />
-                                <Span Text=" " />
-                                <Span Text="Excite, CROSS-transer, Weblio, Baidu, Youdao, Google, Microsoft/Bing" FontAttributes="Bold" />
-                                <Span Text=" " />
-                                <Span Text="etc.." />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="End"
-                           Text="Project Site:"/>
-                    <Label Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Start">
-                        <Label.FormattedText>
-                            <FormattedString>
-								<Span Text="https://nuthrash.github.io/Minax/"
-                                      TextColor="Blue" TextDecorations="Underline">
-                                    <Span.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenWebCmd}"
-                                                CommandParameter="https://nuthrash.github.io/Minax/" />
-                                    </Span.GestureRecognizers>
-                                </Span>
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-
-                    <Label Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="End" 
-                           Text="Wiki:"/>
-                    <Label Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Start">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="https://github.com/nuthrash/Minax/wiki"
-                                      TextColor="Blue" TextDecorations="Underline">
-                                    <Span.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenWebCmd}"
-                                                CommandParameter="https://github.com/nuthrash/Minax/wiki" />
-                                    </Span.GestureRecognizers>
-                                </Span>
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-
-                    <Label Grid.Column="0" Grid.Row="2" HorizontalTextAlignment="End" 
-                           Text="Sample Projects:"/>
-                    <Label Grid.Column="1" Grid.Row="2" HorizontalTextAlignment="Start">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects"
-                                      TextColor="Blue" TextDecorations="Underline">
-                                    <Span.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenWebCmd}"
-                                                CommandParameter="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects" />
-                                    </Span.GestureRecognizers>
-                                </Span>
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </Grid>
-            </StackLayout>
-        </ScrollView>-->
-    </Grid>
+	</Grid>
     
 </ContentPage>

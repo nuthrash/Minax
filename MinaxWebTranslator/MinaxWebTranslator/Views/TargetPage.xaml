@@ -1,21 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lang="clr-namespace:MinaxWebTranslator.Languages"
              mc:Ignorable="d" x:Class="MinaxWebTranslator.Views.TargetPage"
              NavigationPage.HasNavigationBar="False" >
     <StackLayout x:Name="SlTranslate">
         <ScrollView Orientation="Horizontal">
             <StackLayout Grid.Column="0" Grid.Row="0" HorizontalOptions="FillAndExpand" Spacing="3"
                          VerticalOptions="StartAndExpand" Orientation="Horizontal">
-                <Button x:Name="BtnTargetTranslate" Text="Translate" ContentLayout="Left, 5"
+                <Button x:Name="BtnTargetTranslate" Text="{x:Static lang:Global.Str0Translate}" ContentLayout="Left, 5"
                         IsEnabled="False" Clicked="BtnTargetTranslate_Clicked" />
-                <Button x:Name="BtnCopyAll" Text="Copy All" Clicked="BtnCopyAll_Clicked" />
+				<Button x:Name="BtnCopyAll" Text="{x:Static lang:Global.Str0CopyAll}" Clicked="BtnCopyAll_Clicked" />
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand">
                     <Switch x:Name="SwAutoTop" IsToggled="False" Toggled="SwAutoTop_Toggled" />
-                    <Label Text="Auto Top" />
+					<Label Text="{x:Static lang:Global.Str0AutoTop}" />
                 </StackLayout>
             </StackLayout>
         </ScrollView>
@@ -38,7 +39,7 @@
             <ActivityIndicator x:Name="AiBusy" Grid.Column="1" Grid.Row="0" HorizontalOptions="End" VerticalOptions="Start"
                                HeightRequest="56" WidthRequest="56" IsRunning="False" />
             <Label x:Name="LblTargetPercent" Grid.Column="1" Grid.Row="0" HorizontalOptions="End" VerticalOptions="Start"
-                   Text="00%" Margin="0,17,14,0" IsVisible="False" />
+                   Text="000%" Margin="0,17,14,0" IsVisible="False" />
         </Grid>
     </StackLayout>
 </ContentPage>

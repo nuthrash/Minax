@@ -1,4 +1,4 @@
-﻿using Minax.Collections;
+using Minax.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -342,10 +342,29 @@ namespace Minax.Domain.Translation
 
 		public class MappingEventArgs : EventArgs
 		{
+			/// <summary>
+			/// Event type
+			/// </summary>
 			public MonitorEvents Event { get; set; }
+
+			/// <summary>
+			/// Current full-path file name
+			/// </summary>
 			public string FullPath { get; set; }
+
+			/// <summary>
+			/// Old full-path file name (not current file name)
+			/// </summary>
 			public string OldFullPath { get; set; }
+
+			/// <summary>
+			/// Current Mapping data
+			/// </summary>
 			public object MappingData { get; set; }
+
+			/// <summary>
+			/// Original Mapping Data (not current Mapping data)
+			/// </summary>
 			public object OriginalMappingData { get; set; }
 
 			public MappingEventArgs( MonitorEvents @event, string oldFullPath = null, string fullPath = null,
@@ -393,7 +412,8 @@ namespace Minax.Domain.Translation
 				mWatcher.Renamed -= OnFileRenamed;
 				try {
 					// seems Xamarin.Forms in Android not supported this method...
-					mWatcher.Dispose();
+					if( mDisposed != true && mDisposing != true )
+						mWatcher.Dispose();
 				}
 				catch { }
 			}

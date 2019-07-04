@@ -426,7 +426,7 @@ namespace MinaxWebTranslator
 		/// <param name="policy">Overwrite policy for same file name</param>
 		/// <param name="cancelToken">Cancellation token</param>
 		/// <param name="progress">Progress instance</param>
-		/// <param name="mainWindow">MainWindow instance</param>
+		/// <param name="mainPage">MainPage instance</param>
 		/// <returns>true for success</returns>
 		public async Task<bool> FetchFilesByFileListLink( string fileListLink, string targetPath,
 											OverwritePolicy policy, CancellationTokenSource cancelToken,
@@ -482,11 +482,11 @@ namespace MinaxWebTranslator
 								goto exit1;
 
 							if( File.Exists( locFn ) ) {
-								var rst = await mainPage.DisplayAlert( "Overwrite Confirm",
-									$"Glossary File \"{locFn}\" existed, do you want to overwrite it?", "Yes", "No" );
-
+								var rst = await mainPage.DisplayAlert( Languages.Global.Str0OverwriteConfirm,
+												string.Format( Languages.ProjectGlossary.Str1OverwriteGlossaryFileAsk, locFn ),
+												Languages.Global.Str0Yes, Languages.Global.Str0No );
 								if( rst != true )
-									goto exit1;
+									continue;
 							}
 
 							using( var stream = new FileStream( locFn, FileMode.Create, FileAccess.ReadWrite, FileShare.None ) ) {
@@ -495,8 +495,8 @@ namespace MinaxWebTranslator
 
 						exit1:
 							progress?.Report( new Minax.ProgressInfo {
-								PercentOrErrorCode = i,
-								Message = $"Glossary File \"{locFn}\" created.",
+								PercentOrErrorCode = (i + 1) * 100 / remoteRelFiles.Length,
+								Message = string.Format( Languages.ProjectGlossary.Str1GlossaryFileCreated, locFn ),
 							} );
 						}
 						catch { }
@@ -523,7 +523,7 @@ namespace MinaxWebTranslator
 		/// <param name="policy">Overwrite policy for same file name</param>
 		/// <param name="cancelToken">Canllation token</param>
 		/// <param name="progress">Progress instance</param>
-		/// <param name="mainWindow">MainWindow instance</param>
+		/// <param name="mainPage">MainPage instance</param>
 		/// <returns>true for success</returns>
 		public static async Task<bool> FetchFilesByFileListLink( Uri ftpFileListLink, string targetPath,
 											OverwritePolicy policy, CancellationTokenSource cancelToken,
@@ -552,7 +552,7 @@ namespace MinaxWebTranslator
 					response.StatusCode != FtpStatusCode.CommandOK ) {
 					progress?.Report( new Minax.ProgressInfo {
 						PercentOrErrorCode = 100,
-						Message = $"Cannot fetch remote glossary list file.",
+						Message = Languages.ProjectGlossary.Str0CantFetchRemoteGlossaryFileList,
 						InfoObject = response,
 					} );
 					return false;
@@ -568,7 +568,7 @@ namespace MinaxWebTranslator
 				if( string.IsNullOrWhiteSpace( responseString ) ) {
 					progress?.Report( new Minax.ProgressInfo {
 						PercentOrErrorCode = 100,
-						Message = $"No glossary file can fetch.",
+						Message = Languages.ProjectGlossary.Str0NoGlossaryFileCanFetch,
 					} );
 					return false;
 				}
@@ -577,7 +577,7 @@ namespace MinaxWebTranslator
 				if( remoteRelFiles == null || remoteRelFiles.Length <= 0 ) {
 					progress?.Report( new Minax.ProgressInfo {
 						PercentOrErrorCode = 100,
-						Message = $"No glossary file can fetch.",
+						Message = Languages.ProjectGlossary.Str0NoGlossaryFileCanFetch,
 					} );
 					return true;
 				}
@@ -601,8 +601,9 @@ namespace MinaxWebTranslator
 							continue;
 
 						if( File.Exists( locFn ) ) {
-							var rst = await mainPage.DisplayAlert( "Overwrite Confirm",
-									$"Glossary File \"{locFn}\" existed, do you want to overwrite it?", "Yes", "No" );
+							var rst = await mainPage.DisplayAlert( Languages.Global.Str0OverwriteConfirm,
+														string.Format( Languages.ProjectGlossary.Str1OverwriteGlossaryFileAsk, locFn ),
+														Languages.Global.Str0Yes, Languages.Global.Str0No );
 
 							if( rst != true )
 								continue;
@@ -614,8 +615,9 @@ namespace MinaxWebTranslator
 						}
 
 						progress?.Report( new Minax.ProgressInfo {
-							PercentOrErrorCode = (i + 1) / remoteRelFiles.Length,
-							Message = $"Fetched {i + 1}/{remoteRelFiles.Length} files.",
+							PercentOrErrorCode = (i + 1) * 100 / remoteRelFiles.Length,
+							//Message = string.Format( Languages.Global.Str2FetchedFilesFractions, i + 1, remoteRelFiles.Length ),
+							Message = string.Format( Languages.ProjectGlossary.Str1GlossaryFileCreated, locFn ),
 						} );
 					}
 					catch { }
@@ -632,7 +634,7 @@ namespace MinaxWebTranslator
 
 			progress?.Report( new Minax.ProgressInfo {
 				PercentOrErrorCode = 100,
-				Message = $"All glossary files fetched.",
+				Message = Languages.ProjectGlossary.Str0AllGlossaryFileFetched,
 			} );
 
 			return true;

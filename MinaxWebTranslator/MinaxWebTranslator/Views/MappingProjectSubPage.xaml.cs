@@ -51,7 +51,7 @@ namespace MinaxWebTranslator.Views
 
 
 			Label noData = new Label();
-			noData.Text = "NO DATA";
+			noData.Text = Languages.Global.Str0NoData;
 			noData.FontAttributes = FontAttributes.Bold;
 			noData.FontSize = Device.GetNamedSize( NamedSize.Large, typeof( Label ) );
 			noData.HorizontalOptions = LayoutOptions.CenterAndExpand;

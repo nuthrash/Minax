@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -11,26 +11,19 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"  
-               Source="{Binding ImageSource}" />
-        <Label Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" TextColor="Transparent">
-            <Label.FormattedText>
-                <FormattedString>
-                    <Span x:Name="SpImage" Text="ImageNavigateUri">
-                        <Span.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding OpenWebCommand}"
-                                                  CommandParameter="{Binding ImageNavigateUri}" />
-                        </Span.GestureRecognizers>
-                    </Span>
-                </FormattedString>
-            </Label.FormattedText>
-        </Label>
+		<Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Aspect="AspectFit"
+               Source="{Binding ImageSource}">
+			<Image.GestureRecognizers>
+				<TapGestureRecognizer Command="{Binding OpenWebCommand}"
+                                      CommandParameter="{Binding ImageNavigateUri}" />
+			</Image.GestureRecognizers>
+		</Image>
 
-        <Label x:Name="LblText" Grid.Column="1" Grid.Row="0" TextColor="Black" FontAttributes="Bold" VerticalTextAlignment="Center">
+		<Label x:Name="LblText" Grid.Column="1" Grid.Row="0" TextColor="Black" FontAttributes="Bold" VerticalTextAlignment="Center">
             <Label.FormattedText>
                 <FormattedString>
                     <Span x:Name="SpText" Text="{Binding Text}"

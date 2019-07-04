@@ -5,19 +5,14 @@ using Minax.Web.Translation;
 using Microsoft.International.Converters.TraditionalChineseToSimplifiedConverter;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Threading;
 using Minax;
 
 namespace MinaxWebTranslator.Desktop
@@ -117,8 +112,14 @@ namespace MinaxWebTranslator.Desktop
 					CurrentUsedModels.Add( model );
 				}
 			}
-			catch {
+			catch( Exception ex ) {
+				_Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslatingError, ex.Message ), ex );
 				return false;
+			}
+
+			// finally, scroll to top
+			if( AutoScrollToTop && rtbDst.LineCount() > 0 ) {
+				rtbDst.ScrollToHome();
 			}
 
 			return result;
@@ -201,8 +202,14 @@ namespace MinaxWebTranslator.Desktop
 					CurrentUsedModels.Add( model );
 				}
 			}
-			catch {
+			catch( Exception ex ) {
+				_Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslatingError, ex.Message ), ex );
 				return false;
+			}
+
+			// finally, scroll to top
+			if( AutoScrollToTop && rtbDst.LineCount() > 0 ) {
+				rtbDst.ScrollToHome();
 			}
 
 			return result;
@@ -252,12 +259,12 @@ namespace MinaxWebTranslator.Desktop
 				}
 			}
 			catch( Exception ex ) {
-				_Report( progress, -1, "Tanslating error: " + ex.Message, ex );
+				_Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslatingError, ex.Message ), ex );
 				return false;
 			}
 
 			// finally, scroll to top
-			if( AutoScrollToTop && text.Length > 0 ) {
+			if( AutoScrollToTop && rtbDst.LineCount() > 0 ) {
 				rtbDst.ScrollToHome();
 			}
 
@@ -304,12 +311,12 @@ namespace MinaxWebTranslator.Desktop
 				}
 			}
 			catch( Exception ex ) {
-				_Report( progress, -1, "Tanslating error: " + ex.Message, ex );
+				_Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslatingError, ex.Message ), ex );
 				return false;
 			}
 
 			// finally, scroll to top
-			if( AutoScrollToTop ) {
+			if( AutoScrollToTop && rtbDst.LineCount() > 0 ) {
 				rtbDst.ScrollToHome();
 			}
 
@@ -361,7 +368,7 @@ namespace MinaxWebTranslator.Desktop
 
 			bool rst = await _WaitBrowserLoaded( browser, defLoc, RemoteType.CrossLanguage, 3 );
 			if( rst == false ) {
-				_Report( progress, -1, "Failed to navigate web translator location, retried too manay times!", $"Failed localtion: {defLoc}" );
+				_Report( progress, -1, Languages.WebXlator.Str0NavigateFailed, string.Format( Languages.WebXlator.Str0FailedLocation, defLoc) );
 				return false;
 			}
 
@@ -405,14 +412,14 @@ namespace MinaxWebTranslator.Desktop
 			if( cancelToken.IsCancellationRequested )
 				return false;
 
-			_Report( progress, 1, "Preparing Translation", null );
+			_Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			rtbDst.Document.Blocks.Clear();
 
 			// wait for clear button
 			rst = await _WaitForSelector( browser, "a#source-erace", defLoc );
 			if( rst == false ) {
-				_Report( progress, -1, "Failed to navigate web translator location, retried too manay times!", $"Failed localtion: {defLoc}" );
+				_Report( progress, -1, Languages.WebXlator.Str0NavigateFailed, string.Format( Languages.WebXlator.Str0FailedLocation, defLoc ) );
 				browser.Navigate( defLoc );
 				return false;
 			}
@@ -460,9 +467,9 @@ namespace MinaxWebTranslator.Desktop
 								@"document.querySelectorAll('div#org-error').length;"
 							} );
 
-						var errStr = "Failed to translated strings, retried too manay times!";
+						var errStr = Languages.WebXlator.Str0FailedTranslatedRetry;
 						if( tstrLen > 0 ) {
-							errStr += " ErrorMessage: " + (string)browser.InvokeScript( "eval", new[] {
+							errStr += Languages.WebXlator.Str0ErrorMessage + (string)browser.InvokeScript( "eval", new[] {
 												@"document.querySelector('div#org-error').textContent;"
 											} );
 						}
@@ -507,19 +514,19 @@ namespace MinaxWebTranslator.Desktop
 					_AddText( rtbDst, sb.ToString() );
 
 					_Report( progress, (int)(++xlatedSectionCnt * 100 / sections.Count),
-							$"{xlatedSectionCnt}/{sections.Count} Translated", section );
+						string.Format( Languages.WebXlator.Str2TranslatedFractions, xlatedSectionCnt, sections.Count ), section );
 				}
 				catch( OperationCanceledException ) {
 					throw; // re-throw to outside 
 				}
 				catch( Exception ex ) {
-					_Report( progress, -1, "Tanslating error: " + ex.Message, ex );
+					_Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslatingError, ex.Message ), ex );
 					return false;
 				}
 			}
 
 			// finally, scroll to top
-			if( AutoScrollToTop && text.Length > 0 ) {
+			if( AutoScrollToTop && rtbDst.LineCount() > 0 ) {
 				rtbDst.ScrollToHome();
 			}
 
@@ -543,7 +550,7 @@ namespace MinaxWebTranslator.Desktop
 			// step 0: load default location, Host is "fanyi.baidu.com"
 			bool rst = await _WaitBrowserLoaded( browser, defLoc, RemoteType.Baidu, 3 );
 			if( rst == false ) {
-				_Report( progress, -1, "Failed to navigate web translator location, retried too manay times!", $"Failed localtion: {defLoc}" );
+				_Report( progress, -1, Languages.WebXlator.Str0NavigateFailed, string.Format( Languages.WebXlator.Str0FailedLocation, defLoc ) );
 				return false;
 			}
 
@@ -593,13 +600,13 @@ namespace MinaxWebTranslator.Desktop
 				return false;
 
 			cancelToken.ThrowIfCancellationRequested();
-			_Report( progress, 1, "Preparing Translation", null );
+			_Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			rtbDst.Document.Blocks.Clear();
 
 			rst = await _WaitForSelector( browser, "a.textarea-clear-btn", defLoc );
 			if( rst == false ) {
-				_Report( progress, -1, "Failed to navigate web translator location, retried too manay times!", $"Failed localtion: {defLoc}" );
+				_Report( progress, -1, Languages.WebXlator.Str0NavigateFailed, string.Format( Languages.WebXlator.Str0FailedLocation, defLoc ) );
 				browser.Navigate( defLoc );
 				return false;
 			}
@@ -609,7 +616,7 @@ namespace MinaxWebTranslator.Desktop
 			// the a.textarea-clear-btn's style would null when first and un-finished loading...
 			rst = await _WaitForStyle( browser, "a.textarea-clear-btn", defLoc );
 			if( rst != true ) {
-				_Report( progress, -1, "Failed to navigate web translator location, retried too manay times!", $"Failed localtion: {defLoc}" );
+				_Report( progress, -1, Languages.WebXlator.Str0NavigateFailed, string.Format( Languages.WebXlator.Str0FailedLocation, defLoc ) );
 				return false;
 			}
 
@@ -655,9 +662,9 @@ namespace MinaxWebTranslator.Desktop
 								@"document.querySelectorAll('div.long-text-prompt-wrap').length;"
 							} );
 
-						var errStr = "Failed to translated strings, retried too manay times!";
+						var errStr = Languages.WebXlator.Str0FailedTranslatedRetry;
 						if( tstrLen > 0 ) {
-							errStr += " ErrorMessage: " + (string)browser.InvokeScript( "eval", new[] {
+							errStr += Languages.WebXlator.Str0ErrorMessage + (string)browser.InvokeScript( "eval", new[] {
 												@"document.querySelector('div.long-text-prompt-wrap').textContent;"
 											} );
 						}
@@ -711,19 +718,19 @@ namespace MinaxWebTranslator.Desktop
 					_AddText( rtbDst, sb.ToString() );
 
 					_Report( progress, (int)(++xlatedSectionCnt * 100 / sections.Count),
-							$"{xlatedSectionCnt}/{sections.Count} Translated", section );
+						string.Format( Languages.WebXlator.Str2TranslatedFractions, xlatedSectionCnt, sections.Count ), section );
 				}
 				catch( OperationCanceledException ) {
 					throw; // re-throw to outside 
 				}
 				catch( Exception ex ) {
-					_Report( progress, -1, "Tanslating error: " + ex.Message, ex );
+					_Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslatingError, ex.Message ), ex );
 					return false;
 				}
 			}
 
 			// finally, scroll to top
-			if( AutoScrollToTop && sb.Length > 0 ) {
+			if( AutoScrollToTop && rtbDst.LineCount() > 0 ) {
 				rtbDst.ScrollToHome();
 			}
 
@@ -738,11 +745,16 @@ namespace MinaxWebTranslator.Desktop
 			// https://ai.youdao.com/product-fanyi.s 
 			// prepare default location
 			string defLoc = sLocYoudaoCht;
-			//switch( TargetLanguage ) {
-			//	case SupportedTargetLanguage.English: // Youdao NOT support JA2EN
-			//		defLoc = sLocYoudaoEn;
-			//		break;
-			//}
+			switch( TargetLanguage ) {
+				case SupportedTargetLanguage.English: // Youdao NOT support JA2EN
+					//defLoc = sLocYoudaoEn;
+					//break;
+					progress?.Report( new ProgressInfo {
+						PercentOrErrorCode = -1,
+						Message = string.Format( Languages.WebXlator.Str2YoudaoNotSupportSrc2Tgt, SourceLanguage.ToL10nString(), TargetLanguage.ToL10nString() )
+					} );
+					return false;
+			}
 
 			// only support Chinese ==> English by Youdao!!
 			if( TargetLanguage == SupportedTargetLanguage.English && SourceLanguage != SupportedSourceLanguage.ChineseSimplified )
@@ -751,7 +763,7 @@ namespace MinaxWebTranslator.Desktop
 			// step 0: load default location, Host is "fanyi.youdao.com"
 			bool rst = await _WaitBrowserLoaded( browser, defLoc, RemoteType.Youdao, 3 );
 			if( rst == false ) {
-				_Report( progress, -1, "Failed to navigate web translator location, retried too manay times!", $"Failed localtion: {defLoc}" );
+				_Report( progress, -1, Languages.WebXlator.Str0NavigateFailed, string.Format( Languages.WebXlator.Str0FailedLocation, defLoc ) );
 				return false;
 			}
 
@@ -793,14 +805,14 @@ namespace MinaxWebTranslator.Desktop
 				return false;
 
 			cancelToken.ThrowIfCancellationRequested();
-			_Report( progress, 1, "Preparing Translation", null );
+			_Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			rtbDst.Document.Blocks.Clear();
 
 			// wait for textarea inputOriginal loaded
 			rst = await _WaitForSelector( browser, "#inputOriginal", defLoc );
 			if( rst == false ) {
-				_Report( progress, -1, "Failed to navigate web translator location, retried too manay times!", $"Failed localtion: {defLoc}" );
+				_Report( progress, -1, Languages.WebXlator.Str0NavigateFailed, string.Format( Languages.WebXlator.Str0FailedLocation, defLoc ) );
 				return false;
 			}
 
@@ -815,7 +827,7 @@ namespace MinaxWebTranslator.Desktop
 					// clear old text!!
 					rst = await _WaitForSelector( browser, "#inputDelete", defLoc );
 					if( rst == false ) {
-						_Report( progress, -1, "Failed to clear old text, retried too manay times!", section );
+						_Report( progress, -1, Languages.WebXlator.Str0FailedClearOldTextRetry, section );
 						return false;
 					}
 
@@ -823,7 +835,7 @@ namespace MinaxWebTranslator.Desktop
 					// the inputDelete's style would null when first and un-finished loading...
 					rst = await _WaitForStyle( browser, "a#inputDelete", defLoc );
 					if( rst != true ) {
-						_Report( progress, -1, "Failed to navigate web translator location, retried too manay times!", $"Failed localtion: {defLoc}" );
+						_Report( progress, -1, Languages.WebXlator.Str0NavigateFailed, string.Format( Languages.WebXlator.Str0FailedLocation, defLoc ) );
 						return false;
 					}
 
@@ -847,9 +859,9 @@ namespace MinaxWebTranslator.Desktop
 					if( rst == false ) {
 						// extract Web Translator's error string DIV
 						var errBlock = docObj.getElementById( "inputTargetError" );
-						var errStr = "Failed to translated strings, retried too manay times!";
+						var errStr = Languages.WebXlator.Str0FailedTranslatedRetry;
 						if( "none" != errBlock.style.display ) {
-							errStr += " ErrorMessage: " + errBlock.textContent;
+							errStr += Languages.WebXlator.Str0ErrorMessage + errBlock.textContent;
 						}
 
 						_Report( progress, -1, errStr, section );
@@ -934,19 +946,19 @@ namespace MinaxWebTranslator.Desktop
 					_AddText( rtbDst, sb.ToString() );
 
 					_Report( progress, (int)(++xlatedSectionCnt * 100 / sections.Count),
-							$"{xlatedSectionCnt}/{sections.Count} Translated", section );
+						string.Format( Languages.WebXlator.Str2TranslatedFractions, xlatedSectionCnt, sections.Count ), section );
 				}
 				catch( OperationCanceledException ) {
 					throw; // re-throw to outside 
 				}
 				catch( Exception ex ) {
-					_Report( progress, -1, "Translating error: " + ex.Message, ex );
+					_Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslatingError, ex.Message ), ex );
 					return false;
 				}
 			}
 
 			// finally, scroll to top
-			if( AutoScrollToTop && sb.Length > 0 ) {
+			if( AutoScrollToTop && rtbDst.LineCount() > 0 ) {
 				rtbDst.ScrollToHome();
 			}
 
@@ -996,13 +1008,14 @@ namespace MinaxWebTranslator.Desktop
 
 			// slice to some encoded uri text sections
 			List<string> sections = null;
+			// force slice sections to very small pieces for escaped URL string 
 			//if( false == _SliceUrl2EncodedSections( defLocPrefix, text, 1900, out sections ) ||
 			if( false == _SliceSections( text, (1900 - defLocPrefix.Length) / 9, out sections ) ||
 				sections == null || sections.Count <= 0 )
 				return false;
 
 			cancelToken.ThrowIfCancellationRequested();
-			_Report( progress, 1, "Preparing Translation", null );
+			_Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			rtbDst.Document.Blocks.Clear();
 
@@ -1029,7 +1042,7 @@ namespace MinaxWebTranslator.Desktop
 						if( checkRetry-- <= 0 ) {
 							// extract Web Translator's error string by overflow
 							// gt-ovfl-ctr > gt-ovfl-msg, gt-ovfl-ctr > gt-ovfl-xlt
-							var errStr = "Failed to translated strings, retried too manay times!";
+							var errStr = Languages.WebXlator.Str0FailedTranslatedRetry;
 
 							_Report( progress, -1, errStr, section );
 							return false;
@@ -1091,19 +1104,19 @@ namespace MinaxWebTranslator.Desktop
 					_AddText( rtbDst, sb.ToString() );
 
 					_Report( progress, (int)(++xlatedSectionCnt * 100 / sections.Count),
-							$"{xlatedSectionCnt}/{sections.Count} Translated", section );
+						string.Format( Languages.WebXlator.Str2TranslatedFractions, xlatedSectionCnt, sections.Count ), section );
 				}
 				catch( OperationCanceledException ) {
 					throw; // re-throw to outside 
 				}
 				catch( Exception ex ) {
-					_Report( progress, -1, "Translating error: " + ex.Message, ex );
+					_Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslatingError, ex.Message ), ex );
 					return false;
 				}
 			}
 
 			// finally, scroll to top
-			if( AutoScrollToTop && sb.Length > 0 ) {
+			if( AutoScrollToTop && rtbDst.LineCount() > 0 ) {
 				rtbDst.ScrollToHome();
 			}
 
@@ -1170,7 +1183,7 @@ namespace MinaxWebTranslator.Desktop
 				return false;
 
 			cancelToken.ThrowIfCancellationRequested();
-			_Report( progress, 1, "Preparing Translation", null );
+			_Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			rtbDst.Document.Blocks.Clear();
 
@@ -1213,9 +1226,9 @@ namespace MinaxWebTranslator.Desktop
 								@"document.querySelectorAll('div#t_err.b_hide').length;"
 							} );
 
-							var errStr = "Failed to translated strings, retried too manay times!";
+							var errStr = Languages.WebXlator.Str0FailedTranslatedRetry;
 							if( outOptBarCnt <= 0 )
-								errStr += " ErrorMessage: " + docObj.getElementById( "t_err" ).textContent + " ";
+								errStr += Languages.WebXlator.Str0ErrorMessage + docObj.getElementById( "t_err" ).textContent + " ";
 
 							_Report( progress, -1, errStr, section );
 							return false;
@@ -1296,19 +1309,19 @@ namespace MinaxWebTranslator.Desktop
 					_AddText( rtbDst, sb.ToString() );
 
 					_Report( progress, (int)(++xlatedSectionCnt * 100 / sections.Count),
-							$"{xlatedSectionCnt}/{sections.Count} Translated", section );
+						string.Format( Languages.WebXlator.Str2TranslatedFractions, xlatedSectionCnt, sections.Count ), section );
 				}
 				catch( OperationCanceledException ) {
 					throw; // re-throw to outside 
 				}
 				catch( Exception ex ) {
-					_Report( progress, -1, "Translating error: " + ex.Message, ex );
+					_Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslatingError, ex.Message ), ex );
 					return false;
 				}
 			}
 
 			// finally, scroll to top
-			if( AutoScrollToTop && sb.Length > 0 ) {
+			if( AutoScrollToTop && rtbDst.LineCount() > 0 ) {
 				rtbDst.ScrollToHome();
 			}
 
@@ -1429,13 +1442,8 @@ namespace MinaxWebTranslator.Desktop
 		private static readonly string sLocBaiduCht = "https://fanyi.baidu.com/#jp/cht/しかも";
 		private static readonly string sLocBaiduEn = "https://fanyi.baidu.com/#jp/en/しかも";
 		private static readonly string sLocYoudaoCht = "http://fanyi.youdao.com/";
-		//private static readonly string sLocGoogleCht = "https://translate.google.com/?op=translate&sl=ja&tl=zh-TW&text=しかも";
-		//private static readonly string sLocGoogleEn = "https://translate.google.com/?op=translate&sl=ja&tl=en&text=しかも";
 		private static readonly string sLocGoogleChtPrefix = "https://translate.google.com/?op=translate&sl=ja&tl=zh-TW&text=";
-		//private static readonly string sLocGoogleChtDocPrefix = "https://translate.google.com/?op=docs&sl=ja&tl=zh-TW";
-		//private static readonly string sLocGoogleChtDocPrefix2 = "https://translate.google.com/#view=home&op=docs&sl=ja&tl=zh-TW";
 		private static readonly string sLocGoogleEnPrefix = "https://translate.google.com/?op=translate&sl=ja&tl=en&text=";
-		//private static readonly string sLocGoogleEnDocPrefix = "https://translate.google.com/?op=docs&sl=ja&tl=en";
 		private static readonly string sLocBingCht = "https://www.bing.com/translator?to=zh-CHT&text=Change";
 		private static readonly string sLocBingEn = "https://www.bing.com/translator?to=en&text=しかも";
 

@@ -1,4 +1,4 @@
-﻿using Minax.Collections;
+using Minax.Collections;
 using Minax.Domain.Translation;
 using MinaxWebTranslator.Converters;
 using MinaxWebTranslator.Models;
@@ -106,7 +106,7 @@ namespace MinaxWebTranslator.Views
 			// collect Category == null entries
 			var catEmptyList = list.Where( x => x.Category == null );
 			it.Add( new ObservableList<MappingMonitor.MappingModel>( catEmptyList ) {
-				GroupedLongName = "NO CATEGORY",
+				GroupedLongName = Languages.Global.Str0NoCategory,
 			} );
 
 			LvMappingSummary.ItemsSource = it;

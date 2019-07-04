@@ -1,4 +1,4 @@
-﻿using Minax;
+using Minax;
 using Minax.Web.Translation;
 using MinaxWebTranslator.Desktop.Models;
 using MinaxWebTranslator.Models;
@@ -115,18 +115,18 @@ namespace MinaxWebTranslator.Views
 				}
 				else {
 					var inputs = new List<InputFieldModel> {
-							new InputFieldModel { FieldName = "APP ID", TypeInfo = typeof(SecureString) },
-							new InputFieldModel { FieldName = "Secret Key", TypeInfo = typeof(SecureString) }
+							new InputFieldModel { FieldName = Languages.WebXlator.Str0AppId, TypeInfo = typeof(SecureString) },
+							new InputFieldModel { FieldName = Languages.WebXlator.Str0SecretKey, TypeInfo = typeof(SecureString) }
 						};
 
-					var resultTuple = await _ShowInputDialog( "Fill Baidu Translation API (Charged) Settings", inputs );
+					var resultTuple = await _ShowInputDialog( string.Format( Languages.WebXlator.Str1FillXlationApiChargedSettings, Languages.WebXlator.Str0Baidu), inputs );
 					var results = resultTuple.Item1;
 					if( results != null && results.Count >= 2 ) {
 						SecureString ssAppId = null, ssSecKey = null;
 						foreach( var rst in results ) {
-							if( rst.FieldName == "APP ID" && rst.Value is SecureString ss1 )
+							if( rst.FieldName == Languages.WebXlator.Str0AppId && rst.Value is SecureString ss1 )
 								ssAppId = ss1;
-							else if( rst.FieldName == "Secret Key" && rst.Value is SecureString ss2 )
+							else if( rst.FieldName == Languages.WebXlator.Str0SecretKey && rst.Value is SecureString ss2 )
 								ssSecKey = ss2;
 						}
 
@@ -162,18 +162,18 @@ namespace MinaxWebTranslator.Views
 				}
 				else {
 					var inputs = new List<InputFieldModel> {
-							new InputFieldModel { FieldName = "APP Key", TypeInfo = typeof(SecureString) },
-							new InputFieldModel { FieldName = "APP Secret", TypeInfo = typeof(SecureString) }
+							new InputFieldModel { FieldName = Languages.WebXlator.Str0AppKey, TypeInfo = typeof(SecureString) },
+							new InputFieldModel { FieldName = Languages.WebXlator.Str0AppSecret, TypeInfo = typeof(SecureString) }
 						};
 
-					var resultTuple = await _ShowInputDialog( "Fill Youdao Translation API (Charged) Settings", inputs );
+					var resultTuple = await _ShowInputDialog( string.Format( Languages.WebXlator.Str1FillXlationApiChargedSettings, Languages.WebXlator.Str0Youdao ), inputs );
 					var results = resultTuple.Item1;
 					if( results != null && results.Count >= 2 ) {
 						SecureString ssAppKey = null, ssAppSecret = null;
 						foreach( var rst in results ) {
-							if( rst.FieldName == "APP Key" && rst.Value is SecureString ss1 )
+							if( rst.FieldName == Languages.WebXlator.Str0AppKey && rst.Value is SecureString ss1 )
 								ssAppKey = ss1;
-							else if( rst.FieldName == "APP Secret" && rst.Value is SecureString ss2 )
+							else if( rst.FieldName == Languages.WebXlator.Str0AppSecret && rst.Value is SecureString ss2 )
 								ssAppSecret = ss2;
 						}
 
@@ -206,15 +206,15 @@ namespace MinaxWebTranslator.Views
 				}
 				else {
 					var inputs = new List<InputFieldModel> {
-						new InputFieldModel { FieldName = "API Key", TypeInfo = typeof(SecureString) },
+						new InputFieldModel { FieldName = Languages.WebXlator.Str0ApiKey, TypeInfo = typeof(SecureString) },
 					};
 
-					var resultTuple = await _ShowInputDialog( "Fill Google Translation API V2 (Charged) Settings", inputs );
+					var resultTuple = await _ShowInputDialog( Languages.WebXlator.Str0FillGoogleApiChargedV2Settings, inputs );
 					var results = resultTuple.Item1;
 					if( results != null && results.Count >= 1 ) {
 						SecureString ssApiKey = null;
 						foreach( var rst in results ) {
-							if( rst.FieldName == "API Key" && rst.Value is SecureString ss1 )
+							if( rst.FieldName == Languages.WebXlator.Str0ApiKey && rst.Value is SecureString ss1 )
 								ssApiKey = ss1;
 						}
 
@@ -245,15 +245,17 @@ namespace MinaxWebTranslator.Views
 				}
 				else {
 					var inputs = new List<InputFieldModel> {
-						new InputFieldModel { FieldName = "Subscription Key", TypeInfo = typeof(SecureString) },
+						//new InputFieldModel { FieldName = Languages.WebXlator.Str0SubscriptionKey, TypeInfo = typeof(SecureString) },
+						new InputFieldModel { FieldName = "Ocp-Apim-Subscription-Key", TypeInfo = typeof(SecureString) },
 					};
 
-					var resultTuple = await _ShowInputDialog( "Fill Microsoft Translation API V3 (Charged) Settings", inputs );
+					var resultTuple = await _ShowInputDialog( Languages.WebXlator.Str0FillMicrosoftApiChargedV3Settings, inputs );
 					var results = resultTuple.Item1;
 					if( results != null && results.Count >= 1 ) {
 						SecureString ssApiKey = null;
 						foreach( var rst in results ) {
-							if( rst.FieldName == "Subscription Key" && rst.Value is SecureString ss1 )
+							//if( rst.FieldName == Languages.WebXlator.Str0SubscriptionKey && rst.Value is SecureString ss1 )
+							if( rst.FieldName == "Ocp-Apim-Subscription-Key" && rst.Value is SecureString ss1 )
 								ssApiKey = ss1;
 						}
 
@@ -311,7 +313,8 @@ namespace MinaxWebTranslator.Views
 		private async void BtnTargetTranslate_Clicked( object sender, EventArgs e )
 		{
 			if( string.IsNullOrWhiteSpace( SourceText ) ) {
-				await DisplayAlert( "Warning", "Please input something in Source page!", "OK" );
+				await DisplayAlert( Languages.Global.Str0OperationWarning,
+						Languages.WebXlator.Str0PlzInputSourceBox, Languages.Global.Str0Ok );
 				return;
 			}
 
@@ -423,21 +426,23 @@ namespace MinaxWebTranslator.Views
 				}
 
 				if( result )
-					CrossToastPopUp.Current.ShowToastMessage( "Translating succeded!" );
+					CrossToastPopUp.Current.ShowToastMessage( Languages.WebXlator.Str0XlatingSucceed );
 				else if( isCharged )
-					await DisplayAlert( "Translating Failed",
-								"Translating failed!\nMaybe some necessary field(s) is/are missing or wrong typed when using Transaltion API (Charged)? ",
+					await DisplayAlert( Languages.WebXlator.Str0XlatingFailed,
+								Languages.WebXlator.Str0XlatingFailedFieldMissing,
 								Languages.Global.Str0Ok );
 				else
-					await DisplayAlert( "Translating Failed",
-								"Translating failed!\nPlease retry latter! Maybe the network is disconnected, or remote web site is busy.",
+					await DisplayAlert( Languages.WebXlator.Str0XlatingFailed,
+								Languages.WebXlator.Str0XlatingFailedNetRetry,
 								Languages.Global.Str0Ok );
 			}
 			catch( OperationCanceledException oce ) {
-				await DisplayAlert( "Translating Cancelled", "Translation aborted! Exception: " + oce.Message, Languages.Global.Str0Ok );
+				await DisplayAlert( Languages.WebXlator.Str0XlatingCancelled,
+						string.Format( Languages.WebXlator.Str1XlatingAbortedException, oce.Message), Languages.Global.Str0Ok );
 			}
 			catch( Exception ex ) {
-				await DisplayAlert( "Translating Failed", "Translation failed! Exception: " + ex.Message, Languages.Global.Str0Ok );
+				await DisplayAlert( Languages.WebXlator.Str0XlatingFailed,
+						string.Format( Languages.WebXlator.Str1XlatingFailedException, ex.Message ), Languages.Global.Str0Ok );
 			}
 
 			mCancelTokenSrource = new CancellationTokenSource();

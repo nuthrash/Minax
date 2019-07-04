@@ -1,4 +1,4 @@
-﻿using MinaxWebTranslator.Desktop.Models;
+using MinaxWebTranslator.Desktop.Models;
 using Plugin.InputKit.Shared.Controls;
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using CheckBox = Plugin.InputKit.Shared.Controls.CheckBox;
 
 namespace MinaxWebTranslator.Views
 {

@@ -628,11 +628,11 @@ namespace MinaxWebTranslator.Desktop
 								goto exit1;
 
 							if( File.Exists( locFn ) ) {
-								var rst = await mainWindow.ShowMessageAsync( "Overwrite Confirm",
-											$"Glossary File \"{locFn}\" existed, do you want to overwrite it?",
+								var rst = await mainWindow.ShowMessageAsync( Languages.Global.Str0OverwriteConfirm,
+											string.Format(Languages.ProjectGlossary.Str1OverwriteGlossaryFileAsk, locFn),
 											MessageDialogStyle.AffirmativeAndNegative );
 								if( rst != MessageDialogResult.Affirmative )
-									goto exit1;
+									continue;
 							}
 
 							using( var stream = new FileStream( locFn, FileMode.Create, FileAccess.ReadWrite, FileShare.None ) ) {
@@ -641,8 +641,8 @@ namespace MinaxWebTranslator.Desktop
 
 						exit1:
 							progress?.Report( new Minax.ProgressInfo {
-								PercentOrErrorCode = i,
-								Message = $"Glossary File \"{locFn}\" created.",
+								PercentOrErrorCode = (i + 1) * 100 / remoteRelFiles.Length,
+								Message = string.Format( Languages.ProjectGlossary.Str1GlossaryFileCreated, locFn ),
 							} );
 						}
 						catch { }
@@ -699,7 +699,7 @@ namespace MinaxWebTranslator.Desktop
 					response.StatusCode != FtpStatusCode.CommandOK ) {
 					progress?.Report( new Minax.ProgressInfo {
 						PercentOrErrorCode = 100,
-						Message = $"Cannot fetch remote glossary list file.",
+						Message = Languages.ProjectGlossary.Str0CantFetchRemoteGlossaryFileList,
 						InfoObject = response,
 					} );
 					return false;
@@ -715,7 +715,7 @@ namespace MinaxWebTranslator.Desktop
 				if( string.IsNullOrWhiteSpace( responseString ) ) {
 					progress?.Report( new Minax.ProgressInfo {
 						PercentOrErrorCode = 100,
-						Message = $"No glossary file can fetch.",
+						Message = Languages.ProjectGlossary.Str0NoGlossaryFileCanFetch,
 					} );
 					return false;
 				}
@@ -724,7 +724,7 @@ namespace MinaxWebTranslator.Desktop
 				if( remoteRelFiles == null || remoteRelFiles.Length <= 0 ) {
 					progress?.Report( new Minax.ProgressInfo {
 						PercentOrErrorCode = 100,
-						Message = $"No glossary file can fetch.",
+						Message = Languages.ProjectGlossary.Str0NoGlossaryFileCanFetch,
 					} );
 					return true;
 				}
@@ -748,8 +748,8 @@ namespace MinaxWebTranslator.Desktop
 							continue;
 
 						if( File.Exists( locFn ) ) {
-							var rst = await mainWindow.ShowMessageAsync( "Overwrite Confirm",
-											$"Glossary File \"{locFn}\" existed, do you want to overwrite it?",
+							var rst = await mainWindow.ShowMessageAsync( Languages.Global.Str0OverwriteConfirm,
+											string.Format( Languages.ProjectGlossary.Str1OverwriteGlossaryFileAsk, locFn ),
 											MessageDialogStyle.AffirmativeAndNegative );
 							if( rst != MessageDialogResult.Affirmative )
 								continue;
@@ -761,8 +761,9 @@ namespace MinaxWebTranslator.Desktop
 						}
 
 						progress?.Report( new Minax.ProgressInfo {
-							PercentOrErrorCode = (i + 1) / remoteRelFiles.Length,
-							Message = $"Fetched {i + 1}/{remoteRelFiles.Length} files.",
+							PercentOrErrorCode = (i + 1) * 100 / remoteRelFiles.Length,
+							//Message = string.Format( Languages.Global.Str2FetchedFilesFractions, i + 1, remoteRelFiles.Length ),
+							Message = string.Format( Languages.ProjectGlossary.Str1GlossaryFileCreated, locFn ),
 						} );
 					}
 					catch { }
@@ -779,7 +780,7 @@ namespace MinaxWebTranslator.Desktop
 
 			progress?.Report( new Minax.ProgressInfo {
 				PercentOrErrorCode = 100,
-				Message = $"All glossary files fetched.",
+				Message = Languages.ProjectGlossary.Str0AllGlossaryFileFetched,
 			} );
 
 			return true;

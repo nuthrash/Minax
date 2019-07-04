@@ -21,7 +21,7 @@
             <!-- Current Translator -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <Label HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                               Content="Current Translator: " />
+                               Content="{x:Static lang:WebXlator.Str0CurrentXlatorField}" />
                 <Label x:Name="LblCurrent" FontWeight="Bold" FontSize="18px"
                            HorizontalContentAlignment="Left"  VerticalContentAlignment="Center"
                            Content="Excite"/>
@@ -39,30 +39,36 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Column="0" Grid.Row="0">
-                        <Hyperlink 
-                            NavigateUri="http://api.fanyi.baidu.com/api/trans/product/apidoc">Docuemnts
-                        </Hyperlink>
+                <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center">
+                    <Hyperlink 
+                        NavigateUri="http://api.fanyi.baidu.com/api/trans/product/apidoc">
+						<Hyperlink.Inlines>
+							<Run Text="{x:Static lang:Global.Str0Docuemnts}" />
+						</Hyperlink.Inlines>
+                    </Hyperlink>
                 </TextBlock>
                 <TextBlock Grid.Column="1" Grid.Row="0">
-                            <Hyperlink 
-                                NavigateUri="http://api.fanyi.baidu.com/api/trans/product/desktop">Where to request APP ID and Secret Key
-                            </Hyperlink>
+                    <Hyperlink 
+                        NavigateUri="http://api.fanyi.baidu.com/api/trans/product/desktop">
+						<Hyperlink.Inlines>
+							<Run Text="{x:Static lang:WebXlator.Str0WhereRequestAppIdAndSecretKey}" />
+						</Hyperlink.Inlines>
+                    </Hyperlink>
                 </TextBlock>
                 <Label Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Right"
                                VerticalContentAlignment="Center"
-                               Content="APP ID: " />
+                               Content="{x:Static lang:WebXlator.Str0AppIdField}" />
                 <TextBox x:Name="TbXlatorBaiduAppId" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" MaxLength="64" 
                          MahApps:TextBoxHelper.AutoWatermark="True" MahApps:TextBoxHelper.ClearTextButton="True"
-                         MahApps:TextBoxHelper.Watermark="APP ID string for your subscription to Translation API"
+                         MahApps:TextBoxHelper.Watermark="{x:Static lang:WebXlator.Str0AppIdToolTip}"
                          TextChanged="TbXlatorBaiduAppId_TextChanged" />
 
                 <Label Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Right"
                                VerticalContentAlignment="Center"
-                               Content="Secret Key: " />
+                               Content="{x:Static lang:WebXlator.Str0SecretKeyField}" />
                 <TextBox x:Name="TbXlatorBaiduSecretKey" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" MaxLength="64" 
                          MahApps:TextBoxHelper.AutoWatermark="True" MahApps:TextBoxHelper.ClearTextButton="True"
-                         MahApps:TextBoxHelper.Watermark="Secret Key string for your subscription to Translation API"
+                         MahApps:TextBoxHelper.Watermark="{x:Static lang:WebXlator.Str0SecretKeyToolTip}"
                          TextChanged="TbXlatorBaiduSecretKey_TextChanged"/>
             </Grid>
 
@@ -77,37 +83,43 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                
-                <TextBlock Grid.Column="0" Grid.Row="0">
+
+				<TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center">
                     <Hyperlink 
-                        NavigateUri="https://ai.youdao.com/docs/doc-trans-api.s#p01">Docuemnts
+                        NavigateUri="https://ai.youdao.com/docs/doc-trans-api.s#p01">
+						<Hyperlink.Inlines>
+							<Run Text="{x:Static lang:Global.Str0Docuemnts}" />
+						</Hyperlink.Inlines>
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock Grid.Column="1" Grid.Row="0">
                     <Hyperlink 
-                        NavigateUri="https://ai.youdao.com/doc.s#guide">Where to request App Key (App ID) and App Secret
+                        NavigateUri="https://ai.youdao.com/doc.s#guide">
+						<Hyperlink.Inlines>
+							<Run Text="{x:Static lang:WebXlator.Str0WhereRequestAppKeyAndAppSecret}" />
+						</Hyperlink.Inlines>
                     </Hyperlink>
                 </TextBlock>
 
                 <Label Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Right"
                        VerticalContentAlignment="Center"
-                       Content="App Key (App ID): " />
+                       Content="{x:Static lang:WebXlator.Str0AppKeyField}" />
                 <TextBox x:Name="TbXlatorYoudaoAppKey" Grid.Column="1" Grid.Row="1" MaxLength="64" KeyboardNavigation.TabNavigation="Continue"
                          MahApps:TextBoxHelper.AutoWatermark="True" MahApps:TextBoxHelper.ClearTextButton="True"
-                         MahApps:TextBoxHelper.Watermark="App Key (App ID) string for your subscription to Translation API"
+                         MahApps:TextBoxHelper.Watermark="{x:Static lang:WebXlator.Str0AppKeyToolTip}"
                          TextChanged="TbXlatorYoudaoAppKey_TextChanged"/>
 
                 <Label Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Right"
                        VerticalContentAlignment="Center"
-                       Content="App Secret: " />
+                       Content="{x:Static lang:WebXlator.Str0AppSecretField}" />
                 <TextBox x:Name="TbXlatorYoudaoAppSecret" Grid.Column="1" Grid.Row="2" MaxLength="64"
                          MahApps:TextBoxHelper.AutoWatermark="True" MahApps:TextBoxHelper.ClearTextButton="True"
-                         MahApps:TextBoxHelper.Watermark="App Secret Key string for your subscription to Translation API"
+                         MahApps:TextBoxHelper.Watermark="{x:Static lang:WebXlator.Str0AppSecretToolTip}"
                          TextChanged="TbXlatorYoudaoAppSecret_TextChanged"/>
             </Grid>
 
             <!-- Google API settings -->
-            <Grid x:Name="GdGoogleApi" Visibility="Collapsed">
+			<Grid x:Name="GdGoogleApi" Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -117,24 +129,30 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                
-                <TextBlock Grid.Column="0" Grid.Row="0">
+
+				<TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center">
                     <Hyperlink 
-                        NavigateUri="https://cloud.google.com/translate/docs">Docuemnts
+                        NavigateUri="https://cloud.google.com/translate/docs">
+						<Hyperlink.Inlines>
+							<Run Text="{x:Static lang:Global.Str0Docuemnts}" />
+						</Hyperlink.Inlines>
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock Grid.Column="1" Grid.Row="0">
                     <Hyperlink 
-                        NavigateUri="https://cloud.google.com/docs/authentication/api-keys">How to create API key
+                        NavigateUri="https://cloud.google.com/docs/authentication/api-keys">
+						<Hyperlink.Inlines>
+							<Run Text="{x:Static lang:WebXlator.Str0HowCreateApikey}" />
+						</Hyperlink.Inlines>
                     </Hyperlink>
                 </TextBlock>
 
                 <Label Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Right"
                        VerticalContentAlignment="Center"
-                       Content="API Key: " />
+                       Content="{x:Static lang:WebXlator.Str0ApiKeyField}" />
                 <TextBox x:Name="TbXlatorGoogleApiKey" Grid.Column="1" Grid.Row="1" MaxLength="64"
                          MahApps:TextBoxHelper.AutoWatermark="True" MahApps:TextBoxHelper.ClearTextButton="True"
-                         MahApps:TextBoxHelper.Watermark="API key string for your subscription to Translation API"
+                         MahApps:TextBoxHelper.Watermark="{x:Static lang:WebXlator.Str0ApiKeyToolTip}"
                          TextChanged="TbXlatorGoogleApiKey_TextChanged"/>
             </Grid>
 
@@ -150,27 +168,32 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                
-                <TextBlock Grid.Column="0" Grid.Row="0">
+
+				<TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center">
                     <Hyperlink 
                         NavigateUri="https://docs.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-reference">
-                        Docuemnts
+                        <Hyperlink.Inlines>
+							<Run Text="{x:Static lang:Global.Str0Docuemnts}" />
+						</Hyperlink.Inlines>
                     </Hyperlink>
                 </TextBlock>
                 <TextBlock Grid.Column="1" Grid.Row="0">
                     <Hyperlink 
-                        NavigateUri="https://docs.microsoft.com/en-us/azure/cognitive-services/translator/translator-text-how-to-signup">How to sign-up
+                        NavigateUri="https://docs.microsoft.com/en-us/azure/cognitive-services/translator/translator-text-how-to-signup">
+						<Hyperlink.Inlines>
+							<Run Text="{x:Static lang:WebXlator.Str0HowSignUp}" />
+						</Hyperlink.Inlines>
                     </Hyperlink>
                 </TextBlock>
 
                 <Label Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Right"
                                VerticalContentAlignment="Center"
-                               Content="Server Region: " />
+                               Content="{x:Static lang:WebXlator.Str0ServerRegionField}" />
                 <ComboBox x:Name="CbXlatorMicrosoftServer" Grid.Column="1" Grid.Row="1" SelectedIndex="0" Margin="2">
-                    <ComboBoxItem Content="Global" ToolTip="api.cognitive.microsofttranslator.com" />
-                    <ComboBoxItem Content="North America" ToolTip="api-nam.cognitive.microsofttranslator.com" />
-                    <ComboBoxItem Content="Europe" ToolTip="api-eur.cognitive.microsofttranslator.com" />
-                    <ComboBoxItem Content="Asia Pacific" ToolTip="api-apc.cognitive.microsofttranslator.com" />
+                    <ComboBoxItem Content="{x:Static lang:Global.Str0Global}" ToolTip="api.cognitive.microsofttranslator.com" />
+					<ComboBoxItem Content="{x:Static lang:Global.Str0NorthAmerica}" ToolTip="api-nam.cognitive.microsofttranslator.com" />
+					<ComboBoxItem Content="{x:Static lang:Global.Str0Europe}" ToolTip="api-eur.cognitive.microsofttranslator.com" />
+					<ComboBoxItem Content="{x:Static lang:Global.Str0AsiaPacific}" ToolTip="api-apc.cognitive.microsofttranslator.com" />
                 </ComboBox>
 
                 <Label Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Right"
@@ -178,7 +201,7 @@
                                Content="Ocp-Apim-Subscription-Key: " />
                 <TextBox x:Name="TbXlatorMicrosoftSubKey" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" MaxLength="128" 
                          MahApps:TextBoxHelper.AutoWatermark="True" MahApps:TextBoxHelper.ClearTextButton="True"
-                         MahApps:TextBoxHelper.Watermark="Azure secret key for your subscription to Translator Text API"
+                         MahApps:TextBoxHelper.Watermark="{x:Static lang:WebXlator.Str0SubKeyToolTip}"
                          TextChanged="TbXlatorMicrosoftSubKey_TextChanged" />
                 <Label Grid.Column="0" Grid.Row="3" HorizontalContentAlignment="Right"
                                VerticalContentAlignment="Center"
@@ -186,12 +209,12 @@
                 <TextBox x:Name="TbXlatorMicrosoftSubRegion" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left"
                          ToolTip="{x:Static lang:WebXlator.Str0MsAvailableRegions}"
                          MahApps:TextBoxHelper.AutoWatermark="True" MahApps:TextBoxHelper.ClearTextButton="True"
-                         MahApps:TextBoxHelper.Watermark="The region of the multi-service subscription"
+                         MahApps:TextBoxHelper.Watermark="{x:Static lang:WebXlator.Str0SubMultiServiceRegion}"
                          TextChanged="TbXlatorMicrosoftSubRegion_TextChanged" />
             </Grid>
 
             <Label x:Name="LblWarningCharged" Foreground="DarkRed" Visibility="Collapsed"
-                   Content="NOTE: Above field(s) content would be saved to private App location. If you think that is dangerous, you shall not key in anything!!"/>
+                   Content="{x:Static lang:WebXlator.Str0NoteSecureStore}"/>
         </StackPanel>
 
         <Separator />

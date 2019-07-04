@@ -82,7 +82,7 @@ namespace MinaxWebTranslator.ViewModels
 				switch( columnName ) {
 					case nameof( NonEmptyString ):
 						if( string.IsNullOrWhiteSpace( NonEmptyString ) )
-							return "This field cannot be empty or full of white text!";
+							return Languages.Global.Str0FieldCantEmptyOrWhitespaces;
 						break;
 				}
 				return null;

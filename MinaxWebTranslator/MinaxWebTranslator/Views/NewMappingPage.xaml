@@ -1,29 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lang="clr-namespace:MinaxWebTranslator.Languages"
              mc:Ignorable="d" Appearing="ContentPage_Appearing"
              x:Class="MinaxWebTranslator.Views.NewMappingPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="TbiCancel" Text="Cancel" Clicked="TbiCancel_Clicked" />
-        <ToolbarItem x:Name="TbiSave" Text="Save" Clicked="TbiSave_Clicked" />
+		<ToolbarItem x:Name="TbiCancel" Text="{x:Static lang:Global.Str0Cancel}" Clicked="TbiCancel_Clicked" />
+		<ToolbarItem x:Name="TbiSave" Text="{x:Static lang:Global.Str0Save}" Clicked="TbiSave_Clicked" />
     </ContentPage.ToolbarItems>
 
     <StackLayout Spacing="20" Padding="15">
-        <Label Text="Original Text" FontSize="Medium" />
+        <Label Text="{x:Static lang:ProjectGlossary.Str0OriginalText}" FontSize="Medium" />
         <Entry Text="{Binding EditingModel.OriginalText}" FontSize="Small" />
-        
-        <Label Text="Mapping Text" FontSize="Medium" />
+
+		<Label Text="{x:Static lang:ProjectGlossary.Str0MappingText}" FontSize="Medium" />
         <Entry x:Name="EtMappingText" Text="{Binding EditingModel.MappingText}" FontSize="Small" Margin="0" />
 
-        <Label Text="Category" FontSize="Medium" />
+		<Label Text="{x:Static lang:ProjectGlossary.Str0Category}" FontSize="Medium" />
         <Picker x:Name="PkCategory" />
         
-        <Label Text="Description" FontSize="Medium" />
+        <Label Text="{x:Static lang:Global.Str0Description}" FontSize="Medium" />
         <Entry Text="{Binding EditingModel.Description}" FontSize="Small" Margin="0" />
-        
-        <Label Text="Comment" FontSize="Medium" />
+
+		<Label Text="{x:Static lang:Global.Str0Comment}" FontSize="Medium" />
         <Entry Text="{Binding EditingModel.Comment}" FontSize="Small" Margin="0" />
     </StackLayout>
 </ContentPage>

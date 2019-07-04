@@ -121,23 +121,158 @@
   <data name="AppAbout" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AppAbout.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="Str0About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Str0Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Str0AppReady" xml:space="preserve">
+    <value>APP ready</value>
+  </data>
   <data name="Str0AsiaPacific" xml:space="preserve">
     <value>Asia Pacific</value>
+  </data>
+  <data name="Str0Author" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="Str0AutoTop" xml:space="preserve">
+    <value>Auto Top</value>
   </data>
   <data name="Str0Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Str0ChineseConverters" xml:space="preserve">
+    <value>Chinese Converters</value>
+  </data>
+  <data name="Str0Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Str0ClearAndPaste" xml:space="preserve">
+    <value>Clear and Paste</value>
+  </data>
+  <data name="Str0ClearAndPasteFromClipboard" xml:space="preserve">
+    <value>Clear and Paste from Clipboard</value>
+  </data>
+  <data name="Str0ClearSorting" xml:space="preserve">
+    <value>Clear Sorting</value>
+  </data>
+  <data name="Str0Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Str0Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="Str0Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Str0CopyAll" xml:space="preserve">
+    <value>Copy All</value>
+  </data>
+  <data name="Str0CopyAndXlateSelection" xml:space="preserve">
+    <value>Copy and Translate Selection</value>
+  </data>
+  <data name="Str0CopyToolTip" xml:space="preserve">
+    <value>Copy all text to clipboard</value>
+  </data>
+  <data name="Str0Credits" xml:space="preserve">
+    <value>Credits</value>
+  </data>
+  <data name="Str0Custom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="Str0DecreaseFontSize" xml:space="preserve">
+    <value>Decrease Font Size</value>
+  </data>
+  <data name="Str0Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
   <data name="Str0DefaultTextFontFamilyName" xml:space="preserve">
     <value>Arial</value>
+  </data>
+  <data name="Str0Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Str0DeleteConfirm" xml:space="preserve">
+    <value>Delete Confirm</value>
+  </data>
+  <data name="Str0Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Str0Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="Str0Docuemnts" xml:space="preserve">
+    <value>Docuemnts</value>
+  </data>
+  <data name="Str0DuplicateText" xml:space="preserve">
+    <value>Duplicate Text</value>
+  </data>
+  <data name="Str0Enabled" xml:space="preserve">
+    <value>Enabled</value>
   </data>
   <data name="Str0Europe" xml:space="preserve">
     <value>Europe</value>
   </data>
+  <data name="Str0Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Str0FieldCantEmptyOrWhitespaces" xml:space="preserve">
+    <value>This field cannot be empty or full of whitespace text!</value>
+  </data>
+  <data name="Str0FieldError" xml:space="preserve">
+    <value>Field Error</value>
+  </data>
+  <data name="Str0FileName" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="Str0FullPath" xml:space="preserve">
+    <value>Full Path</value>
+  </data>
   <data name="Str0Global" xml:space="preserve">
     <value>Global</value>
   </data>
+  <data name="Str0Hyperlink" xml:space="preserve">
+    <value>Hyperlink</value>
+  </data>
+  <data name="Str0Icons" xml:space="preserve">
+    <value>Icons</value>
+  </data>
+  <data name="Str0Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="Str0IncreaseFontSize" xml:space="preserve">
+    <value>Increase Font Size</value>
+  </data>
+  <data name="Str0License" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="Str0Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
   <data name="Str0MitLicense" xml:space="preserve">
     <value>MIT License</value>
+  </data>
+  <data name="Str0MoveDown" xml:space="preserve">
+    <value>Move Down</value>
+  </data>
+  <data name="Str0MoveDownByPage" xml:space="preserve">
+    <value>Move Down by Page</value>
+  </data>
+  <data name="Str0MoveToDocEnd" xml:space="preserve">
+    <value>Move to Doc. End</value>
+  </data>
+  <data name="Str0MoveToDocStart" xml:space="preserve">
+    <value>Move to Doc. Start</value>
+  </data>
+  <data name="Str0MoveUp" xml:space="preserve">
+    <value>Move Up</value>
+  </data>
+  <data name="Str0MoveUpByPage" xml:space="preserve">
+    <value>Move Up by Page</value>
+  </data>
+  <data name="Str0New" xml:space="preserve">
+    <value>New</value>
   </data>
   <data name="Str0No" xml:space="preserve">
     <value>No</value>
@@ -145,16 +280,124 @@
   <data name="Str0NorthAmerica" xml:space="preserve">
     <value>North America</value>
   </data>
+  <data name="Str0Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
   <data name="Str0Ok" xml:space="preserve">
     <value>OK</value>
+  </data>
+  <data name="Str0OnlineTools" xml:space="preserve">
+    <value>Online Tools</value>
+  </data>
+  <data name="Str0Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Str0OperationCancelled" xml:space="preserve">
+    <value>Operation Cancelled</value>
+  </data>
+  <data name="Str0OperationFailed" xml:space="preserve">
+    <value>Operation Failed</value>
+  </data>
+  <data name="Str0OperationFinished" xml:space="preserve">
+    <value>Operation Finished</value>
+  </data>
+  <data name="Str0OperationProcessing" xml:space="preserve">
+    <value>Operation Processing</value>
+  </data>
+  <data name="Str0OperationSuccessful" xml:space="preserve">
+    <value>Operation Successful</value>
+  </data>
+  <data name="Str0OperationWarning" xml:space="preserve">
+    <value>Opertion Warning</value>
+  </data>
+  <data name="Str0Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="Str0OtherIconsLicense" xml:space="preserve">
+    <value>NOTE: other icons were re-drawn by Minax project, or come from MahApps.Metro.IconPacks library under MIT license.</value>
+  </data>
+  <data name="Str0OverwriteConfirm" xml:space="preserve">
+    <value>Overwrite Confirm</value>
+  </data>
+  <data name="Str0PanelLayout" xml:space="preserve">
+    <value>Panel Layout</value>
+  </data>
+  <data name="Str0Paste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="Str0Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="Str0ProjectName" xml:space="preserve">
+    <value>Project Name</value>
   </data>
   <data name="Str0PublicDomain" xml:space="preserve">
     <value>Public Domain</value>
   </data>
+  <data name="Str0RestoreDefault" xml:space="preserve">
+    <value>Restore Default</value>
+  </data>
+  <data name="Str0Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Str0SaveConfirm" xml:space="preserve">
+    <value>Save Confirm</value>
+  </data>
+  <data name="Str0SelectFileNameToSave" xml:space="preserve">
+    <value>Select File Name to Save</value>
+  </data>
+  <data name="Str0Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Str0SoftForumsHosting" xml:space="preserve">
+    <value>Softwares, Forums, and Project Hosting</value>
+  </data>
+  <data name="Str0Source" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="Str0Summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="Str0SyncWithSource" xml:space="preserve">
+    <value>Sync. with Source</value>
+  </data>
+  <data name="Str0Target" xml:space="preserve">
+    <value>Target</value>
+  </data>
+  <data name="Str0TempSaveSecureValueSession" xml:space="preserve">
+    <value>Temp. save secure value in this session</value>
+  </data>
+  <data name="Str0ThirdPartyLibrariesControls" xml:space="preserve">
+    <value>Third-party Toolkits, Libraries, and Controls</value>
+  </data>
+  <data name="Str0Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
   <data name="Str0Translate" xml:space="preserve">
     <value>Translate</value>
   </data>
+  <data name="Str0Translator" xml:space="preserve">
+    <value>Translator</value>
+  </data>
+  <data name="Str0WebXlators" xml:space="preserve">
+    <value>Web Translators</value>
+  </data>
   <data name="Str0Yes" xml:space="preserve">
     <value>Yes</value>
+  </data>
+  <data name="Str1CurrentSecureStringLength" xml:space="preserve">
+    <value>Current secure string length is {0}</value>
+  </data>
+  <data name="Str1GotException" xml:space="preserve">
+    <value>Got Exception: {0}</value>
+  </data>
+  <data name="Str2ErrorCodeMessage" xml:space="preserve">
+    <value>ErrorCode: {0}, ErrorMessage: {1}</value>
+  </data>
+  <data name="Str2FetchedFilesFractions" xml:space="preserve">
+    <value>Fetched {0}/{1} files.</value>
+  </data>
+  <data name="Str2OldFileRenamed" xml:space="preserve">
+    <value>Old file "{0}" has been renamed to "{1}"</value>
   </data>
 </root>

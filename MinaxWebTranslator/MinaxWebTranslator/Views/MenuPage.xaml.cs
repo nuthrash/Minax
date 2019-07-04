@@ -1,4 +1,4 @@
-﻿using Minax.Collections;
+using Minax.Collections;
 using MinaxWebTranslator.Models;
 using System;
 using System.Collections.Generic;
@@ -20,27 +20,27 @@ namespace MinaxWebTranslator.Views
 
 			// Project group
 			mProjectGroup = new ObservableList<HomeMenuItem> {
-				GroupedLongName = "Project",
+				GroupedLongName = Languages.Global.Str0Project,
 				GroupedShortName = "P",
 			};
 
-			//mProjectGroup.Add( new HomeMenuItem { Id = MenuItemType.ProjectNew, Title = "New" } );
-			mProjectGroup.Add( new HomeMenuItem { Id = MenuItemType.ProjectOpen, Title = "Open" } );
-			//mProjectGroup.Add( new HomeMenuItem { Id = MenuItemType.ProjectSave, Title = "Save" } );
-			//mProjectGroup.Add( new HomeMenuItem { Id = MenuItemType.ProjectClose, Title = "Close" } );
+			//mProjectGroup.Add( new HomeMenuItem { Id = MenuItemType.ProjectNew, Title = Languages.Global.Str0New } );
+			mProjectGroup.Add( new HomeMenuItem { Id = MenuItemType.ProjectOpen, Title = Languages.Global.Str0Open } );
+			//mProjectGroup.Add( new HomeMenuItem { Id = MenuItemType.ProjectSave, Title = Languages.Global.Str0Save } );
+			//mProjectGroup.Add( new HomeMenuItem { Id = MenuItemType.ProjectClose, Title = Languages.Global.Str0Close } );
 			//mProjectGroup.Add( mProjectSettingsMenu );
-			mProjectGroup.Add( new HomeMenuItem { Id = MenuItemType.RecentProjectRequest, Title = "Recent Project(s)" } );
+			mProjectGroup.Add( new HomeMenuItem { Id = MenuItemType.RecentProjectRequest, Title = Languages.ProjectGlossary.Str0RecentProjects } );
 
 
 			// Options group
 			var optionMenuItems = new ObservableList<HomeMenuItem> {
-				GroupedLongName = "Options",
+				GroupedLongName = Languages.Global.Str0Options,
 				GroupedShortName = "O",
 			};
 
-			mXlatorMenu = new HomeMenuItem { Id = MenuItemType.TranslatorSelectorRequest, Title = "Translator" };
+			mXlatorMenu = new HomeMenuItem { Id = MenuItemType.TranslatorSelectorRequest, Title = Languages.Global.Str0Translator };
 			optionMenuItems.Add( mXlatorMenu );
-			optionMenuItems.Add( new HomeMenuItem { Id = MenuItemType.Others, Title = "About" } );
+			optionMenuItems.Add( new HomeMenuItem { Id = MenuItemType.Others, Title = Languages.Global.Str0About } );
 
 
 			mGroupMenuItems.Add( mProjectGroup );
@@ -102,10 +102,10 @@ namespace MinaxWebTranslator.Views
 
 		private HomeMenuItem mXlatorMenu = null;
 		private static readonly HomeMenuItem mProjectSettingsMenu = new HomeMenuItem {
-			Id = MenuItemType.ProjectSettingsRequest, Title = "Settings"
+			Id = MenuItemType.ProjectSettingsRequest, Title = Languages.Global.Str0Settings
 		},
-			mProjectSaveMenu = new HomeMenuItem { Id = MenuItemType.ProjectSave, Title = "Save" },
-			mProjectCloseMenu = new HomeMenuItem { Id = MenuItemType.ProjectClose, Title = "Close" };
+			mProjectSaveMenu = new HomeMenuItem { Id = MenuItemType.ProjectSave, Title = Languages.Global.Str0Save },
+			mProjectCloseMenu = new HomeMenuItem { Id = MenuItemType.ProjectClose, Title = Languages.Global.Str0Close };
 
 	}
 }

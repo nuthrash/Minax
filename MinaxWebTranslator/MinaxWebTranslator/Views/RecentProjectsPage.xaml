@@ -1,26 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lang="clr-namespace:MinaxWebTranslator.Languages"
              mc:Ignorable="d" x:Class="MinaxWebTranslator.Views.RecentProjectsPage"
              NavigationPage.HasNavigationBar="False"
              Title="Recent File List and Settings" Appearing="ContentPage_Appearing">
     <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
         <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-            <Label Text="Remeber Recent Projects: " VerticalOptions="Center" />
+            <Label Text="{x:Static lang:ProjectGlossary.Str0KeepRecentProjectList}" VerticalOptions="Center" />
             <Switch x:Name="SwRemeberRecent" VerticalOptions="Center" IsToggled="True"
                     Toggled="SwRemeberRecent_Toggled"/>
         </StackLayout>
         <ScrollView Orientation="Horizontal">
             <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                <Label Text="Maximum Recent Projects: " VerticalOptions="Center" />
+				<Label Text="{x:Static lang:ProjectGlossary.Str0RecentProjectListMaximum}" VerticalOptions="Center" />
                 <Editor x:Name="EdRecentMax" HorizontalOptions="StartAndExpand" IsReadOnly="True" />
                 <Stepper x:Name="SpRecentMax" Maximum="200" Minimum="10" ValueChanged="SpRecentMax_ValueChanged" />
             </StackLayout>
         </ScrollView>
         <StackLayout Orientation="Horizontal">
-            <Button x:Name="BtnRecentProjClearAll" Text="Clear All Recent Projects"
+			<Button x:Name="BtnRecentProjClearAll" Text="{x:Static lang:ProjectGlossary.Str0ClearRecentProjectList}"
                     HorizontalOptions="Center" Margin="3" Clicked="BtnRecentProjClearAll_Clicked" />
         </StackLayout>
 

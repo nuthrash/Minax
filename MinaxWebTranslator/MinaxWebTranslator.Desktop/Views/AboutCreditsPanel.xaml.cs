@@ -1,6 +1,11 @@
 using MinaxWebTranslator.Desktop.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -21,23 +26,7 @@ namespace MinaxWebTranslator.Desktop.Views
 
 			InitializeComponent();
 
-			// load AppAbout.html with {AppVersion} replaced text to WebBrowser
-			var appVer = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-			string aboutStr = Languages.Global.AppAbout.Replace( "{AppVersion}", appVer.ToString() );
-			//var xamlStr = HTMLConverter.HtmlToXamlConverter.ConvertHtmlToXaml( aboutStr, false );
-			//RtbDescription.SelectAll();
-			//using( var ms = new System.IO.MemoryStream( System.Text.Encoding.UTF8.GetBytes( xamlStr )) )
-			//	RtbDescription.Selection.Load(ms, DataFormats.Xaml );
-
-			////RtbDescription.Selection.
-			//WebBrowser wb = new WebBrowser();
-			//wb.NavigateToString( aboutStr );
-			WbDescription.NavigateToString( aboutStr );
-			WbDescription.Navigating += ( s1, e1 ) => {
-				// navigate hyperlink by external web browser
-				Process.Start( e1.Uri.ToString() );
-				e1.Cancel = true;
-			};
+			RtbDescription.FontFamily = this.FontFamily;
 		}
 
 		private MainWindow mMainWindow;
@@ -69,6 +58,21 @@ namespace MinaxWebTranslator.Desktop.Views
 
 		private void AboutCreditsPanel_Loaded( object sender, RoutedEventArgs e )
 		{
+			// load AppAbout.html with {AppVersion} replaced text to RichTextBox
+			var appVer = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+			string aboutStr = Languages.Global.AppAbout.Replace( "{AppVersion}", appVer.ToString() );
+
+			var xamlStr = HTMLConverter.HtmlToXamlConverter.ConvertHtmlToXaml( aboutStr, false );
+			StringBuilder sb = new StringBuilder( xamlStr );
+			// adjust Table visual effects
+			sb.Replace( "<Table>", "<Table TextAlignment=\"Justify\"><Table.Columns><TableColumn Width=\"Auto\"/><TableColumn Width=\"Auto\"/><TableColumn Width=\"Auto\"/></Table.Columns>" );
+			sb.Replace( "<TableRow><TableCell ", "<TableRow><TableCell TextAlignment=\"Right\" " );
+			sb.Replace( "BorderThickness=\"1,1,1,1\"", "BorderThickness=\"0,0,0,0\"" );
+			sb.Replace( "</TableCell><TableCell ", "</TableCell><TableCell ColumnSpan=\"4\" " );
+			var range = new TextRange( RtbDescription.Document.ContentStart, RtbDescription.Document.ContentEnd );
+			using( var ms = new MemoryStream( Encoding.UTF8.GetBytes( sb.ToString() ) ) )
+				range.Load( ms, DataFormats.Xaml );
+
 			var conv = new ImageSourceConverter();
 
 			var srcExcite = conv.ConvertFromString( "pack://application:,,,/Resources/Excite.png" ) as ImageSource;
@@ -80,29 +84,29 @@ namespace MinaxWebTranslator.Desktop.Views
 			var srcMicrosoft = conv.ConvertFromString( "pack://application:,,,/Resources/Microsoft.png" ) as ImageSource;
 
 			mWebXlators = new List<CreditsItemModel> {
-				new CreditsItemModel { Title = "Excite Translator (エキサイト翻訳)", Hyperlink = "https://www.excite.co.jp/world/", Icon = srcExcite },
-				new CreditsItemModel { Title = "CrossLanguage Translator (CROSS-Transer)", Hyperlink = "http://cross.transer.com", Icon = srcCrossLang },
-				new CreditsItemModel { Title = "Weblio Translator (Weblio 翻訳)", Hyperlink = "https://translate.weblio.jp/", Icon = srcWeblio },
-				new CreditsItemModel { Title = "Baidu Translator (百度翻译)", Hyperlink = "https://fanyi.baidu.com", Icon = srcBaidu },
-				new CreditsItemModel { Title = "Youdao Translator (有道翻译)", Hyperlink = "http://fanyi.youdao.com", Icon = srcYoudao },
-				new CreditsItemModel { Title = "Google Translator", Hyperlink = "https://translate.google.com/", Icon = srcGoogle },
-				new CreditsItemModel { Title = "Microsoft/Bing Translator", Hyperlink = "https://www.bing.com/translator", Icon = srcMicrosoft },
+				new CreditsItemModel { Title = $"Excite {Languages.Global.Str0Translator} (エキサイト翻訳)", Hyperlink = "https://www.excite.co.jp/world/", Icon = srcExcite },
+				new CreditsItemModel { Title = $"CrossLanguage {Languages.Global.Str0Translator} (CROSS-Transer)", Hyperlink = "http://cross.transer.com", Icon = srcCrossLang },
+				new CreditsItemModel { Title = $"Weblio {Languages.Global.Str0Translator} (Weblio 翻訳)", Hyperlink = "https://translate.weblio.jp/", Icon = srcWeblio },
+				new CreditsItemModel { Title = $"{Languages.WebXlator.Str0Baidu} {Languages.Global.Str0Translator} (百度翻译)", Hyperlink = "https://fanyi.baidu.com", Icon = srcBaidu },
+				new CreditsItemModel { Title = $"{Languages.WebXlator.Str0Youdao} {Languages.Global.Str0Translator} (有道翻译)", Hyperlink = "http://fanyi.youdao.com", Icon = srcYoudao },
+				new CreditsItemModel { Title = $"Google {Languages.Global.Str0Translator}", Hyperlink = "https://translate.google.com/", Icon = srcGoogle },
+				new CreditsItemModel { Title = $"Microsoft/Bing {Languages.Global.Str0Translator}", Hyperlink = "https://www.bing.com/translator", Icon = srcMicrosoft },
 			};
 			LvWebXlators.ItemsSource = mWebXlators;
 
 
 			mIconCredits = new List<CreditsItemModel> {
 				new CreditsItemModel { Icon = srcGoogle, Title = "Google Translate Logo (vector version)",
-						Author = "Google Inc.", License = "Public Domain",
+						Author = "Google Inc.", License = Languages.Global.Str0PublicDomain,
 						Hyperlink = "https://commons.wikimedia.org/wiki/File:Google_Translate_logo.svg",
-						Note = "Converted to .png by Minax project."
+						Note = Languages.WebXlator.Str0Converted2PngByMinaxProject
 				},
 
 				new CreditsItemModel { Icon = srcExcite, Title = "Excite 1 Logo",
-						Author = "Excite Inc.", License = "Public Domain?",
+						Author = "Excite Inc.", License = Languages.Global.Str0PublicDomain,
 						Hyperlink = "https://freebiesupply.com/logos/excite-1-logo/",
 						//Hyperlink = "https://worldvectorlogo.com/logo/excite-1",
-						Note = "Shrinked by Minax project.",
+						Note = Languages.WebXlator.Str0ShrinkedByMinaxProject,
 				},
 			};
 

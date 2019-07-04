@@ -186,7 +186,7 @@ namespace Minax
 				sUtf8Bom = utf8WithBom.GetPreamble();
 			}
 
-			// NO need to chech which is shorter...
+			// NO need to check which is shorter...
 			// var shorter = sUtf8Bom.Length <= first3Bytes.Length ? sUtf8Bom : first3Bytes;
 			for( int i = 0; i < sUtf8Bom.Length; ++i ) {
 				if( sUtf8Bom[i] != first3Bytes[i] )

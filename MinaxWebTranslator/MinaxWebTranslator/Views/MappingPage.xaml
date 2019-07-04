@@ -1,8 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			xmlns:lang="clr-namespace:MinaxWebTranslator.Languages"
             xmlns:views="clr-namespace:MinaxWebTranslator.Views"
             mc:Ignorable="d" x:Class="MinaxWebTranslator.Views.MappingPage"
             Title="Mapping Collections" NavigationPage.HasNavigationBar="False"
@@ -14,7 +15,7 @@
                 <views:MappingAllSubPage/>
             </x:Arguments>
         </NavigationPage>
-        <NavigationPage x:Name="PgMappingProject" Title="Project">
+		<NavigationPage x:Name="PgMappingProject" Title="{x:Static lang:Global.Str0Project}">
             <x:Arguments>
                 <views:MappingProjectSubPage/>
             </x:Arguments>

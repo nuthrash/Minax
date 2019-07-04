@@ -1,19 +1,20 @@
-﻿<Dialog:CustomDialog x:Class="MinaxWebTranslator.Desktop.Views.RemoteSyncFileListSettingsDialog"
+<Dialog:CustomDialog x:Class="MinaxWebTranslator.Desktop.Views.RemoteSyncFileListSettingsDialog"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MinaxWebTranslator.Desktop.Views"
+      xmlns:lang="clr-namespace:MinaxWebTranslator.Desktop.Languages"
       xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
       xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       mc:Ignorable="d" 
-      Title="Remote Sync. File List Settings"
+      Title="{x:Static lang:ProjectGlossary.Str0RemoteSyncFileListSettings}"
       Loaded="CustomDialog_Loaded" >
 
     <StackPanel>
         <TextBlock Foreground="DarkRed" TextWrapping="Wrap" Margin="4"
-                   Text="NOTE: The remote File List file stores many relative paths (to the site root) of Glossary sub-folders and files. It shall be an UTF-8 pure text file!" />
+                   Text="{x:Static lang:ProjectGlossary.Str0RemoteSyncFileListNote}" />
 
         <Separator />
 
@@ -27,7 +28,7 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
-                       Content="Default" FontWeight="Bold"/>
+                       Content="{x:Static lang:Global.Str0Default}" FontWeight="Bold"/>
             <TextBox x:Name="TbDefault" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="4 0 0 0"
                      IsReadOnly="True" MahApps:TextBoxHelper.SelectAllOnFocus="True"
                      Text="https://raw.githubusercontent.com/nuthrash/AvalonDock/master/source/AvalonDock.sln"/>
@@ -48,7 +49,7 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
-                       Content="Custom" FontWeight="Bold"/>
+                       Content="{x:Static lang:Global.Str0Custom}" FontWeight="Bold"/>
             <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
                 <StackPanel.Resources>
                     <Style x:Key="LvCustomHasItemStyle" TargetType="Button" BasedOn="{StaticResource MetroFlatButton}">
@@ -63,17 +64,17 @@
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Resources>
-                <Button x:Name="BtnCustomAdd" Content="Add" Click="BtnCustomAdd_Click" FontSize="12px" Margin="3" Padding="3"
-                        ToolTip="Add remote glossary file list text file" Style="{StaticResource MetroFlatButton}" />
-                <Button x:Name="BtnCustomDelete" Content="Delete" Click="BtnCustomDelete_Click"
-                        ToolTip="Delete selected file list" Style="{DynamicResource LvCustomHasItemStyle}" />
+				<Button x:Name="BtnCustomAdd" Content="{x:Static lang:Global.Str0Add}" Click="BtnCustomAdd_Click" FontSize="12px" Margin="3" Padding="3"
+                        ToolTip="{x:Static lang:ProjectGlossary.Str0AddRemoteGlossaryFileListTextFile}" Style="{StaticResource MetroFlatButton}" />
+				<Button x:Name="BtnCustomDelete" Content="{x:Static lang:Global.Str0Delete}" Click="BtnCustomDelete_Click"
+                        ToolTip="{x:Static lang:ProjectGlossary.Str0DeleteSelectedFileList}" Style="{DynamicResource LvCustomHasItemStyle}" />
                 <Button x:Name="BtnCustomMoveUp" Content="↑" FontWeight="Black" Click="BtnCustomMoveUp_Click"
-                        ToolTip="Move selected file list up" Style="{DynamicResource LvCustomHasItemStyle}" />
+                        ToolTip="{x:Static lang:ProjectGlossary.Str0MoveSelectedFileListUp}" Style="{DynamicResource LvCustomHasItemStyle}" />
                 <Button x:Name="BtnCustomMoveDown" Content="↓" FontWeight="Black"  Click="BtnCustomMoveDown_Click"
-                        ToolTip="Move selected file list down" Style="{DynamicResource LvCustomHasItemStyle}" />
+                        ToolTip="{x:Static lang:ProjectGlossary.Str0MoveSelectedFileListDown}" Style="{DynamicResource LvCustomHasItemStyle}" />
                 <Button x:Name="BtnCustomEdit" Content="🖊"  Click="BtnCustomEdit_Click"
-                        ToolTip="Modify selected file list" Style="{DynamicResource LvCustomHasItemStyle}" />
-                <Label Content="Count:" VerticalAlignment="Center" Margin="0" Padding="4 0 0 0"
+                        ToolTip="{x:Static lang:ProjectGlossary.Str0ModifySelectedFileList}" Style="{DynamicResource LvCustomHasItemStyle}" />
+				<Label Content="{x:Static lang:ProjectGlossary.Str0Count}" VerticalAlignment="Center" Margin="0" Padding="4 0 0 0"
                        HorizontalContentAlignment="Right"/>
                 <Label x:Name="LblCustomCount" Content="0/20" VerticalAlignment="Center"/>
             </StackPanel>
@@ -90,7 +91,7 @@
 
         <!-- Command Buttons -->
         <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
-            <Button Content="Close" Margin="3" IsCancel="true" Click="CustomDialogClose_Click"  />
+			<Button Content="{x:Static lang:Global.Str0Close}" Margin="3" IsCancel="true" Click="CustomDialogClose_Click"  />
         </StackPanel>
     </StackPanel>
 </Dialog:CustomDialog>

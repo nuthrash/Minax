@@ -39,6 +39,9 @@ namespace MinaxWebTranslator.Desktop.Views
 
 		internal int TranslatingMaxWordCount { get; private set; } = Properties.Settings.Default.QuickTranslationWordMax;
 
+		public QuickTranslationDockingPanel() : this( Application.Current.MainWindow as MainWindow )
+		{
+		}
 		public QuickTranslationDockingPanel( MainWindow mainWindow )
 		{
 			mMainWindow = mainWindow;
@@ -49,7 +52,7 @@ namespace MinaxWebTranslator.Desktop.Views
 			//this.Content = new ViewModels.EditingViewModel();
 			GdQuick.DataContext = mEditingVM = new ViewModels.EditingViewModel() {
 				// ClearAndPasteCmd and CopyAllCmd cannot work normally under AvalonDock's LayoutAnchorable!!
-				NonEmptyMaxPlaceholder = $"Input some text to be translated, count: {mCurrentInput.Length}/{TranslatingMaxWordCount}",
+				NonEmptyMaxPlaceholder = string.Format( Languages.WebXlator.Str2InputTextCountFractions, mCurrentInput.Length, TranslatingMaxWordCount ),
 			};
 
 			RtbQuickXLangOutput.DataContext = mXlangVM = new ViewModels.BaseViewModel();
@@ -100,7 +103,7 @@ namespace MinaxWebTranslator.Desktop.Views
 			RtbQuickInput.TextChanged += ( s1, e1 ) => {
 				var text = new TextRange( RtbQuickInput.Document.ContentStart, RtbQuickInput.Document.ContentEnd ).Text;
 				mCurrentInput = text;
-				mEditingVM.NonEmptyMaxPlaceholder = $"Input some text to be translated, count: {mCurrentInput.Length}/{TranslatingMaxWordCount}";
+				mEditingVM.NonEmptyMaxPlaceholder = string.Format( Languages.WebXlator.Str2InputTextCountFractions, mCurrentInput.Length, TranslatingMaxWordCount );
 				if( text.Length > TranslatingMaxWordCount ) {
 					if( mDeferredWorker != null )
 						mDeferredWorker.Dispose();
@@ -112,7 +115,7 @@ namespace MinaxWebTranslator.Desktop.Views
 							if( mDeferredWorker != null )
 								mDeferredWorker.Dispose();
 							mDeferredWorker = null;
-							mEditingVM.NonEmptyMaxPlaceholder = $"Input some text to be translated, count: {mCurrentInput.Length}/{TranslatingMaxWordCount}";
+							mEditingVM.NonEmptyMaxPlaceholder = string.Format( Languages.WebXlator.Str2InputTextCountFractions, mCurrentInput.Length, TranslatingMaxWordCount );
 							BtnQuickTrans.IsEnabled = true;
 						} );
 					}, text.Substring(0, TranslatingMaxWordCount - 2), 200, Timeout.Infinite );
@@ -173,6 +176,7 @@ namespace MinaxWebTranslator.Desktop.Views
 			RtbQuickInput.Document.Blocks.Clear();
 			RtbQuickInput.AppendText( textQuick );
 			AdlaQuickTranslation.IsActive = true; // focus to this DockingPanel
+			AdlaQuickTranslation.IsSelected = true; // focus to this DockingPanel
 			AdlaQuickTranslation.Show();
 			RtbQuickInput.Focus();
 			BtnQuickTrans.RaiseEvent( new RoutedEventArgs( System.Windows.Controls.Button.ClickEvent ) );
@@ -213,20 +217,20 @@ namespace MinaxWebTranslator.Desktop.Views
 
 			// when not translating
 			if( string.IsNullOrWhiteSpace( sourceText ) ) {
-				await mMainWindow.ShowMessageAsync( "Opertion Cancelled",
-									"Please fill some text in Quick Translation Input text box!" );
+				await mMainWindow.ShowMessageAsync( Languages.Global.Str0OperationCancelled,
+									Languages.WebXlator.Str0QuickXlationPlzInputText );
 				return;
 			}
 
 			if( sourceText.Length > TranslatingMaxWordCount ) {
-				await mMainWindow.ShowMessageAsync( "Opertion Warning",
-									$"The Quick Translation Input text count is exceed {TranslatingMaxWordCount}!" );
+				await mMainWindow.ShowMessageAsync( Languages.Global.Str0OperationWarning,
+									string.Format(Languages.WebXlator.Str1QuiclXlationInputCountMax, TranslatingMaxWordCount ) );
 				return;
 			}
 
 			if( CbQuickXLang.IsChecked != true && CbQuickBaidu.IsChecked != true &&
 				CbQuickYoudao.IsChecked != true && CbQuickGoogle.IsChecked != true ) {
-				await mMainWindow.ShowMessageAsync( "Opertion Warning", "Please select at least one translator!" );
+				await mMainWindow.ShowMessageAsync( Languages.Global.Str0OperationWarning, Languages.WebXlator.Str0PlzSelectXlator );
 				return;
 			}
 

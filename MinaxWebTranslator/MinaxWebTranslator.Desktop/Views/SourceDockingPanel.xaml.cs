@@ -22,6 +22,11 @@ namespace MinaxWebTranslator.Desktop.Views
 
 		internal event EventHandler<EventArgs> SourceTextChanged;
 
+		public SourceDockingPanel() : this( Application.Current.MainWindow as MainWindow )
+		{
+
+		}
+
 		public SourceDockingPanel( MainWindow mainWindow )
 		{
 			mMainWindow = mainWindow;

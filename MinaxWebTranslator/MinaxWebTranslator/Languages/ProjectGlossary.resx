@@ -1,0 +1,443 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Str0AddGlossaryFileList" xml:space="preserve">
+    <value>Add Glossary File List</value>
+  </data>
+  <data name="Str0AddMappingConfirm" xml:space="preserve">
+    <value>Add Mapping Confirm</value>
+  </data>
+  <data name="Str0AddNewMapping" xml:space="preserve">
+    <value>Add New Mapping</value>
+  </data>
+  <data name="Str0AddRemoteGlossaryFileListTextFile" xml:space="preserve">
+    <value>Add remote glossary file list text file</value>
+  </data>
+  <data name="Str0AllGlossaryFileFetched" xml:space="preserve">
+    <value>All glossary files fetched.</value>
+  </data>
+  <data name="Str0AlwaysAsking" xml:space="preserve">
+    <value>Always Asking</value>
+  </data>
+  <data name="Str0AppSettings" xml:space="preserve">
+    <value>App Settings</value>
+  </data>
+  <data name="Str0AutoMergeGlossaryMappingEntriesWhenFileChanged" xml:space="preserve">
+    <value>Auto merge Glossary Mapping entries when file added, deleted, changed  (NOT SUPPORT)</value>
+  </data>
+  <data name="Str0AutoMergeGlossaryMappingEntriesWhenFileChangedToolTip" xml:space="preserve">
+    <value>This option does not contain Project file itself, system would always ask user for prompting!</value>
+  </data>
+  <data name="Str0AutoModifyMappingContentWhenFileRenamed" xml:space="preserve">
+    <value>Auto modify Mapping content when file renamed  (NOT SUPPORT)</value>
+  </data>
+  <data name="Str0BiggerFileSize" xml:space="preserve">
+    <value>Bigger File Size</value>
+  </data>
+  <data name="Str0CantFetchRemoteGlossaryFileList" xml:space="preserve">
+    <value>Cannot fetch the remote glossary list file.</value>
+  </data>
+  <data name="Str0Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Str0ClearExistedRecentProjectListAsk" xml:space="preserve">
+    <value>Are you sure want to clear existed Recent Project List?</value>
+  </data>
+  <data name="Str0ClearRecentProjectList" xml:space="preserve">
+    <value>Clear Recent Project List</value>
+  </data>
+  <data name="Str0Count" xml:space="preserve">
+    <value>Count: </value>
+  </data>
+  <data name="Str0CreateEmptyGlossarySubfolders" xml:space="preserve">
+    <value>Create empty glossary sub-folders</value>
+  </data>
+  <data name="Str0CreateEmptyGlossarySubfoldersToolTip" xml:space="preserve">
+    <value>Create empty glossary sub-folders in local project folder</value>
+  </data>
+  <data name="Str0CreateGlossaryFolderFailed" xml:space="preserve">
+    <value>Create Glossary sub-folders failed!!</value>
+  </data>
+  <data name="Str0CreateGlossaryFolderSucceed" xml:space="preserve">
+    <value>Create Glossary sub-folders succeed!</value>
+  </data>
+  <data name="Str0CurrentGlossaryPath" xml:space="preserve">
+    <value>Current Glossary Path:</value>
+  </data>
+  <data name="Str0CurrentProjectSaved" xml:space="preserve">
+    <value>Current project saved.</value>
+  </data>
+  <data name="Str0DeleteSelectedFileList" xml:space="preserve">
+    <value>Delete selected file list text file</value>
+  </data>
+  <data name="Str0Description" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="Str0DownloadAndMergeRemoteGlossaryFilesSucceed" xml:space="preserve">
+    <value>Download and merge remote Glossary file(s) succeed!</value>
+  </data>
+  <data name="Str0DownloadGlossaryFilesSucceedWaitReloading" xml:space="preserve">
+    <value>Download remote Glossary file(s) succeed,  then please wait for reloading all Mapping tables.</value>
+  </data>
+  <data name="Str0DownloadingRemoteGlossaryFiles" xml:space="preserve">
+    <value>Downloading remote Glossary file(s)...</value>
+  </data>
+  <data name="Str0DownloadLatestGlossaryFiles" xml:space="preserve">
+    <value>Download latest glossary files</value>
+  </data>
+  <data name="Str0DownloadLatestGlossaryFilesToolTip" xml:space="preserve">
+    <value>Download latest glossary files from remote public web site by Sync. File.</value>
+  </data>
+  <data name="Str0DownloadRemoteGlossaryFilesByLinkFailed" xml:space="preserve">
+    <value>Download remote Glossary file(s) by file list link failed!</value>
+  </data>
+  <data name="Str0FileChangedMonitor" xml:space="preserve">
+    <value>  File Changed Monitor  </value>
+  </data>
+  <data name="Str0FileListCantFetchOrInvalid" xml:space="preserve">
+    <value>File list cannot be feteched or may be an invalid formatted text file!</value>
+  </data>
+  <data name="Str0FileListCountHasReachMaximum" xml:space="preserve">
+    <value>File list count has reach maximum!!</value>
+  </data>
+  <data name="Str0FileListLocationField" xml:space="preserve">
+    <value>File list location: </value>
+  </data>
+  <data name="Str0FileListLocationIsExisted" xml:space="preserve">
+    <value>File list location is existed!!</value>
+  </data>
+  <data name="Str0ForceOverwriteWithoutAsking" xml:space="preserve">
+    <value>Force Overwrite Without Asking</value>
+  </data>
+  <data name="Str0GlossaryFileListError" xml:space="preserve">
+    <value>Glossary File List Error</value>
+  </data>
+  <data name="Str0GlossaryFileListWarning" xml:space="preserve">
+    <value>Glossary File List Warning</value>
+  </data>
+  <data name="Str0GroupBy" xml:space="preserve">
+    <value>Group By:</value>
+  </data>
+  <data name="Str0KeepMappingConfirm" xml:space="preserve">
+    <value>Keep Mapping Confirm</value>
+  </data>
+  <data name="Str0KeepRecentProjectList" xml:space="preserve">
+    <value>Keep Recent Project List: </value>
+  </data>
+  <data name="Str0LoadProjectFilesFailed" xml:space="preserve">
+    <value>Load project files failed!</value>
+  </data>
+  <data name="Str0MappingSourceLanguage" xml:space="preserve">
+    <value>Mapping Source Language:</value>
+  </data>
+  <data name="Str0MappingTargetLanguage" xml:space="preserve">
+    <value>Mapping Target Language:</value>
+  </data>
+  <data name="Str0MappingText" xml:space="preserve">
+    <value>Mapping Text</value>
+  </data>
+  <data name="Str0MergeGlossaryFilesFailed" xml:space="preserve">
+    <value>Merge remote Glossary file(s) failed!</value>
+  </data>
+  <data name="Str0ModifyGlossaryFileList" xml:space="preserve">
+    <value>Modify Glossary File List</value>
+  </data>
+  <data name="Str0ModifySelectedFileList" xml:space="preserve">
+    <value>Modify selected file list location</value>
+  </data>
+  <data name="Str0MoveSelectedFileListDown" xml:space="preserve">
+    <value>Move selected file list text file down</value>
+  </data>
+  <data name="Str0MoveSelectedFileListUp" xml:space="preserve">
+    <value>Move selected file list text file up</value>
+  </data>
+  <data name="Str0NewFileDate" xml:space="preserve">
+    <value>New File Date</value>
+  </data>
+  <data name="Str0NewOriginalText" xml:space="preserve">
+    <value>New Original Text:</value>
+  </data>
+  <data name="Str0NoGlossaryFileCanFetch" xml:space="preserve">
+    <value>No glossary file can fetch.</value>
+  </data>
+  <data name="Str0OriginalText" xml:space="preserve">
+    <value>Original Text</value>
+  </data>
+  <data name="Str0OriginalTextError" xml:space="preserve">
+    <value>Original Text Error</value>
+  </data>
+  <data name="Str0OriginalTextShallNotEmpty" xml:space="preserve">
+    <value>The Original Text shall not be empty!!</value>
+  </data>
+  <data name="Str0OriginalTextTooShortWarning" xml:space="preserve">
+    <value>The Original Text might too short to replaced many words incorrectly!!</value>
+  </data>
+  <data name="Str0OriginalTextWarning" xml:space="preserve">
+    <value>Original Text Warning</value>
+  </data>
+  <data name="Str0OriginalTextWhitespaceTakeCare" xml:space="preserve">
+    <value>The Original Text seems full of whitespace text, take care of it!!</value>
+  </data>
+  <data name="Str0OverwritePolicy" xml:space="preserve">
+    <value>Overwrite Policy:</value>
+  </data>
+  <data name="Str0OverwritePolicyToolTip" xml:space="preserve">
+    <value>Same file name or folder name overwrite policy</value>
+  </data>
+  <data name="Str0PlzWaitReloadMappingTables" xml:space="preserve">
+    <value>Please wait for reloading all Mapping Tables.</value>
+  </data>
+  <data name="Str0ProjectName" xml:space="preserve">
+    <value>Project Name:</value>
+  </data>
+  <data name="Str0ProjectNameFieldCantEmptyOrWhitespaces" xml:space="preserve">
+    <value>The Project Name field cannot be empty or full of whitespace text!</value>
+  </data>
+  <data name="Str0ProjectSettings" xml:space="preserve">
+    <value>Project Settings</value>
+  </data>
+  <data name="Str0RecentProjectListMaximum" xml:space="preserve">
+    <value>Recent Project List Maximum:</value>
+  </data>
+  <data name="Str0RecentProjects" xml:space="preserve">
+    <value>Recent Project(s)</value>
+  </data>
+  <data name="Str0ReloadingGlossaryFileFailed" xml:space="preserve">
+    <value>Reloading Glossary file(s) failed!</value>
+  </data>
+  <data name="Str0ReloadingGlossaryFileSucceed" xml:space="preserve">
+    <value>Reloading Glossary file(s) succeed!</value>
+  </data>
+  <data name="Str0RemoteSite" xml:space="preserve">
+    <value>Remote Site:</value>
+  </data>
+  <data name="Str0RemoteSyncFileListNote" xml:space="preserve">
+    <value>NOTE: The remote File List file stores many relative paths (to the site root) of Glossary sub-folders and files. It shall be an UTF-8 pure text file!</value>
+  </data>
+  <data name="Str0RemoteSyncFileListSettings" xml:space="preserve">
+    <value>Remote Sync. File List Settings</value>
+  </data>
+  <data name="Str0SaveCurrentProjectFailed" xml:space="preserve">
+    <value>Save current project failed!!</value>
+  </data>
+  <data name="Str0SaveModifiedProjectAsk" xml:space="preserve">
+    <value>Do you want to save modified project?</value>
+  </data>
+  <data name="Str0SaveProjectConfirm" xml:space="preserve">
+    <value>Save Project Confirm</value>
+  </data>
+  <data name="Str0SaveProjectFailed" xml:space="preserve">
+    <value>Save project failed!!</value>
+  </data>
+  <data name="Str0SelectExistedProjectFile" xml:space="preserve">
+    <value>Select an existed Translation Project file</value>
+  </data>
+  <data name="Str0SelectTranslationProjectFileName" xml:space="preserve">
+    <value>Select a preferred Translation Project file name</value>
+  </data>
+  <data name="Str0Skip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="Str0SyncFileSettings" xml:space="preserve">
+    <value>⚙  Sync. File:</value>
+  </data>
+  <data name="Str0TranslationProjectExt" xml:space="preserve">
+    <value>Translation Project File(*.conf)|*.conf</value>
+  </data>
+  <data name="Str0UpdateMappingConfirm" xml:space="preserve">
+    <value>Update Mapping Confirm</value>
+  </data>
+  <data name="Str1AddGlossaryFileMappingAsk" xml:space="preserve">
+    <value>A new Glossary file "{0}" has been added somewhere!
+Do you want to add new Mapping entries?</value>
+  </data>
+  <data name="Str1CreateProjectFailed" xml:space="preserve">
+    <value>Create project "{0}" failed!</value>
+  </data>
+  <data name="Str1CreateProjectSucceed" xml:space="preserve">
+    <value>Create project "{0}" succeed.</value>
+  </data>
+  <data name="Str1GlossaryFileAddedAndMerged" xml:space="preserve">
+    <value>Glossary file "{0}" has been added and merged!</value>
+  </data>
+  <data name="Str1GlossaryFileCreated" xml:space="preserve">
+    <value>Glossary File "{0}" created.</value>
+  </data>
+  <data name="Str1GlossaryFileDeletedKeepAsk" xml:space="preserve">
+    <value>Glossary file "{0}" was been deleted!
+Do you want to keep its Mapping entries?</value>
+  </data>
+  <data name="Str1GlossaryFileRemoved" xml:space="preserve">
+    <value>Glossary file "{0}" had been removed!</value>
+  </data>
+  <data name="Str1GlossaryFileUpdatedAndMerged" xml:space="preserve">
+    <value>Glossary file "{0}" has been updated and merged!</value>
+  </data>
+  <data name="Str1GotException" xml:space="preserve">
+    <value>Got Exception: {0}</value>
+  </data>
+  <data name="Str1OpenProjectFailed" xml:space="preserve">
+    <value>Open project "{0}" failed!</value>
+  </data>
+  <data name="Str1OpenProjectSucceed" xml:space="preserve">
+    <value>Open project "{0}" succeed.</value>
+  </data>
+  <data name="Str1OriginalTextDupicatedWarning" xml:space="preserve">
+    <value>Sorry! The Original Text of new Mapping "{0}" duplicated with existed item!!</value>
+  </data>
+  <data name="Str1OverwriteGlossaryFileAsk" xml:space="preserve">
+    <value>Glossary File "{0}" existed, do you want to overwrite it?</value>
+  </data>
+  <data name="Str1OverwriteProjectFileAsk" xml:space="preserve">
+    <value>Project file "{0}" has been modified somewhere!
+Do you want to save current project configuration file to OVERWRITE it?</value>
+  </data>
+  <data name="Str1UpdateGlossaryFileMappingAsk" xml:space="preserve">
+    <value>Glossary file "{0}" has been modified somewhere!
+Do you want to update newer Mapping entries?</value>
+  </data>
+  <data name="Str1UpdateProjectFileMappingAsk" xml:space="preserve">
+    <value>Project file "{0}" has been modified somewhere!
+Do you want to update newer Mapping entries?</value>
+  </data>
+  <data name="Str0AutoSaveProject" xml:space="preserve">
+    <value>Auto save project configuration file on properly time.</value>
+  </data>
+  <data name="Str0GlossaryGroup" xml:space="preserve">
+    <value>  Glossary  </value>
+  </data>
+  <data name="Str1PlzWaitOperationFinished" xml:space="preserve">
+    <value>Please wait for operation finished...{0}%</value>
+  </data>
+  <data name="Str0ProjectAndAppSettings" xml:space="preserve">
+    <value>Project&amp;App Settings</value>
+  </data>
+  <data name="Str0OpenProjectFailed" xml:space="preserve">
+    <value>Open project failed!</value>
+  </data>
+  <data name="Str1OverwriteProjectFileInPublicFolderAsk" xml:space="preserve">
+    <value>Do you want to overwrite existed project file {0}?</value>
+  </data>
+  <data name="Str1SaveProjectFileFailed" xml:space="preserve">
+    <value>Save project file "{0}" failed!!</value>
+  </data>
+  <data name="Str1SelectedFileInvalid" xml:space="preserve">
+    <value>The selected file "{0}" is not a valid project file!</value>
+  </data>
+</root>

@@ -1,4 +1,4 @@
-﻿using Minax.Collections;
+using Minax.Collections;
 using Minax.Web.Translation;
 using MinaxWebTranslator.Models;
 using System;
@@ -60,6 +60,9 @@ namespace MinaxWebTranslator.Views
 		{
 			InitializeComponent();
 
+			// clear Items
+			PkMicrosoftServerRegion.Items.Clear();
+
 			// prepare charged API Grid list
 			mChargedApiGrids = new List<Grid> { GdBaiduApi, GdYoudaoApi, GdGoogleApi, GdMicrosoftApi };
 
@@ -116,19 +119,19 @@ namespace MinaxWebTranslator.Views
 			var srcMicrosoft = ImageSource.FromResource( "MinaxWebTranslator.Resources.Microsoft.png" );
 
 			var list = new ObservableList<TranslatorSelector> {
-				new TranslatorSelector { RemoteType = RemoteType.Excite, Header="Excite", Checked = true, Icon = srcExcite, Description = "Excite Translator from Japan" },
-				new TranslatorSelector { RemoteType = RemoteType.CrossLanguageFree, Header="CROSS-Transer", Checked = false, Icon = srcCrossLang, Description = "CROSS-Transer from Japan" },
-				new TranslatorSelector { RemoteType = RemoteType.Weblio, Header="Weblio", Checked = false, Icon = srcWeblio, Description = "Weblio Transltor from Japan" },
-				//new TranslatorSelector { RemoteType = RemoteType.BaiduFree, Header="Baidu", Checked = false, Icon = srcBaidu, Description = "Baidu Transltor from China" },
-				new TranslatorSelector { RemoteType = RemoteType.YoudaoFree, Header="Youdao", Checked = false, Icon = srcYoudao, Description = "Youdao Transltor from China" },
-				new TranslatorSelector { RemoteType = RemoteType.GoogleFree, Header="Google", Checked = false, Icon = srcGoogle, Description = "Google Transltor from America" },
+				new TranslatorSelector { RemoteType = RemoteType.Excite, Header="Excite", Checked = true, Icon = srcExcite, Description = Languages.WebXlator.Str0ExciteXlatorJapan },
+				new TranslatorSelector { RemoteType = RemoteType.CrossLanguageFree, Header="CROSS-Transer", Checked = false, Icon = srcCrossLang, Description = Languages.WebXlator.Str0XTranserXlatorJapan },
+				new TranslatorSelector { RemoteType = RemoteType.Weblio, Header="Weblio", Checked = false, Icon = srcWeblio, Description = Languages.WebXlator.Str0WeblioXlatorJapan },
+				//new TranslatorSelector { RemoteType = RemoteType.BaiduFree, Header="Baidu", Checked = false, Icon = srcBaidu, Description = Languages.WebXlator.Str0BaiduXlatorChina },
+				new TranslatorSelector { RemoteType = RemoteType.YoudaoFree, Header=Languages.WebXlator.Str0Youdao, Checked = false, Icon = srcYoudao, Description = Languages.WebXlator.Str0YoudaoXlatorChina },
+				new TranslatorSelector { RemoteType = RemoteType.GoogleFree, Header="Google", Checked = false, Icon = srcGoogle, Description = Languages.WebXlator.Str0GoogleXlatorAmerica },
 
 				new TranslatorSelector { IsSeparator = true },
 
-				new TranslatorSelector { RemoteType = RemoteType.BaiduCharged, Header="Baidu Translation API", Checked = false, Icon = srcBaidu, Description = "Baidu Translation charged APIs from China" },
-				new TranslatorSelector { RemoteType = RemoteType.YoudaoCharged, Header="Youdao Translation API", Checked = false, Icon = srcYoudao, Description = "Youdao Translation charged APIs from China" },
-				new TranslatorSelector { RemoteType = RemoteType.GoogleCharged, Header="Google Translation API", Checked = false, Icon = srcGoogle, Description = "Google Translation charged APIs from America" },
-				new TranslatorSelector { RemoteType = RemoteType.MicrosoftCharged, Header="Microsoft Translation API", Checked = false, Icon = srcMicrosoft, Description = "Microsoft Translation charged APIs from America" },
+				new TranslatorSelector { RemoteType = RemoteType.BaiduCharged, Header=$"{Languages.WebXlator.Str0Baidu} {Languages.WebXlator.Str0XlationApi}", Checked = false, Icon = srcBaidu, Description = Languages.WebXlator.Str0BaiduXlationChargedChina },
+				new TranslatorSelector { RemoteType = RemoteType.YoudaoCharged, Header=$"{Languages.WebXlator.Str0Youdao} {Languages.WebXlator.Str0XlationApi}", Checked = false, Icon = srcYoudao, Description = Languages.WebXlator.Str0YoudaoXlationChargedChina },
+				new TranslatorSelector { RemoteType = RemoteType.GoogleCharged, Header=$"Google {Languages.WebXlator.Str0XlationApi}", Checked = false, Icon = srcGoogle, Description = Languages.WebXlator.Str0GoogleXlationChargedAmerica },
+				new TranslatorSelector { RemoteType = RemoteType.MicrosoftCharged, Header=$"Microsoft {Languages.WebXlator.Str0XlationApi}", Checked = false, Icon = srcMicrosoft, Description = Languages.WebXlator.Str0MicrosoftXlationChargedAmerica },
 
 			};
 
@@ -154,10 +157,19 @@ namespace MinaxWebTranslator.Views
 
 		private void ContentPage_Appearing( object sender, EventArgs e )
 		{
+			PkMicrosoftServerRegion.SelectedIndexChanged -= PkMicrosoftServerRegion_SelectedIndexChanged;
+
+			// prepare i10n server region list
+			PkMicrosoftServerRegion.ItemsSource = new List<string> {
+				$"{Languages.Global.Str0Global} (api.cognitive.microsofttranslator.com)",
+				$"{Languages.Global.Str0NorthAmerica} (api-nam.cognitive.microsofttranslator.com)",
+				$"{Languages.Global.Str0Europe} (api-eur.cognitive.microsofttranslator.com)",
+				$"{Languages.Global.Str0AsiaPacific} (api-apc.cognitive.microsofttranslator.com)",
+			};
+
 			// prepare app settings
 			ReloadSettings();
 
-			PkMicrosoftServerRegion.SelectedIndexChanged -= PkMicrosoftServerRegion_SelectedIndexChanged;
 			PkMicrosoftServerRegion.SelectedIndexChanged += PkMicrosoftServerRegion_SelectedIndexChanged;
 		}
 

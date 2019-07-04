@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls;
 using Minax.Domain.Translation;
 using MinaxWebTranslator.Desktop.Converters;
 using System.ComponentModel;
@@ -15,6 +15,9 @@ namespace MinaxWebTranslator.Desktop.Views
 	/// </summary>
 	public partial class SummaryDockingPanel : LayoutAnchorable
 	{
+		public SummaryDockingPanel() : this( Application.Current.MainWindow as MainWindow )
+		{ }
+
 		public SummaryDockingPanel( MetroWindow mainWindow )
 		{
 			mMainWindow = mainWindow;

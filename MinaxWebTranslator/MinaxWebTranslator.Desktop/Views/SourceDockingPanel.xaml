@@ -4,10 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MinaxWebTranslator.Desktop.Views"
+             xmlns:lang="clr-namespace:MinaxWebTranslator.Desktop.Languages"
              xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
              xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
-             ContentId="sourceWindow" x:Name="AdlaSource" Title="Source" CanClose="false" CanHide="False">
+             ContentId="sourceWindow" x:Name="AdlaSource" Title="{x:Static lang:Global.Str0Source}" CanClose="false" CanHide="False">
     <Grid x:Name="GdSource">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -30,21 +31,21 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-                <Button x:Name="BtnSourceClearAndPaste" Content="Clear and Paste from Clipboard" Margin="3" Click="BtnSourceClearAndPaste_Click" />
-                <Button x:Name="BtnSourceClear" Content="Clear" Margin="3" Click="BtnSourceClear_Click" />
-                <Button x:Name="BtnSourcePaste" Content="Paste" Margin="3" Click="BtnSourcePaste_Click" />
+				<Button x:Name="BtnSourceClearAndPaste" Content="{x:Static lang:Global.Str0ClearAndPasteFromClipboard}" Margin="3" Click="BtnSourceClearAndPaste_Click" />
+				<Button x:Name="BtnSourceClear" Content="{x:Static lang:Global.Str0Clear}" Margin="3" Click="BtnSourceClear_Click" />
+				<Button x:Name="BtnSourcePaste" Content="{x:Static lang:Global.Str0Paste}" Margin="3" Click="BtnSourcePaste_Click" />
             </StackPanel>
         </Grid>
 
         <RichTextBox x:Name="RtbSource" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
                      VerticalScrollBarVisibility="Auto" TextOptions.TextFormattingMode="Display"
                      MahApps:TextBoxHelper.UseFloatingWatermark="False"
-                     MahApps:TextBoxHelper.Watermark="Input or paste original text to be translated..."
+                     MahApps:TextBoxHelper.Watermark="{x:Static lang:WebXlator.Str0InputOrPasteSourceTextToXlated}"
                      FontSize="14px" AutoWordSelection="True">
             <RichTextBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem x:Name="MiSourceClearAndPaste" Header="Clear and Paste" Click="BtnSourceClearAndPaste_Click" />
-                    <MenuItem x:Name="MiSourceCopyAndTranslateSelection" Header="Copy and Translate Selection"
+					<MenuItem x:Name="MiSourceClearAndPaste" Header="{x:Static lang:Global.Str0ClearAndPaste}" Click="BtnSourceClearAndPaste_Click" />
+					<MenuItem x:Name="MiSourceCopyAndTranslateSelection" Header="{x:Static lang:Global.Str0CopyAndXlateSelection}"
                               Click="MiSourceCopyAndTranslateSelection_Click" />
                     <Separator />
                     <MenuItem Command="ApplicationCommands.Paste"/>
@@ -53,13 +54,13 @@
                     <MenuItem Command="ApplicationCommands.Cut"/>
                     <MenuItem Command="ApplicationCommands.Copy"/>
                     <Separator />
-                    <MenuItem Command="EditingCommands.MoveDownByPage" Header="Move Down by Page" />
-                    <MenuItem Command="EditingCommands.MoveUpByPage" Header="Move Up by Page"/>
-                    <MenuItem Command="EditingCommands.MoveToDocumentEnd" Header="Move to Doc. End"/>
-                    <MenuItem Command="EditingCommands.MoveToDocumentStart" Header="Move to Doc. Start"/>
+					<MenuItem Command="EditingCommands.MoveDownByPage" Header="{x:Static lang:Global.Str0MoveDownByPage}" />
+					<MenuItem Command="EditingCommands.MoveUpByPage" Header="{x:Static lang:Global.Str0MoveUpByPage}"/>
+					<MenuItem Command="EditingCommands.MoveToDocumentEnd" Header="{x:Static lang:Global.Str0MoveToDocEnd}"/>
+					<MenuItem Command="EditingCommands.MoveToDocumentStart" Header="{x:Static lang:Global.Str0MoveToDocStart}"/>
                     <Separator />
-                    <MenuItem Command="EditingCommands.IncreaseFontSize" Header="Increase Font Size"/>
-                    <MenuItem Command="EditingCommands.DecreaseFontSize" Header="Decrease Font Size"/>
+					<MenuItem Command="EditingCommands.IncreaseFontSize" Header="{x:Static lang:Global.Str0IncreaseFontSize}"/>
+					<MenuItem Command="EditingCommands.DecreaseFontSize" Header="{x:Static lang:Global.Str0DecreaseFontSize}"/>
                 </ContextMenu>
             </RichTextBox.ContextMenu>
             <FlowDocument>

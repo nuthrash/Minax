@@ -4,12 +4,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MinaxWebTranslator.Desktop.Views"
+	  xmlns:lang="clr-namespace:MinaxWebTranslator.Desktop.Languages"
       xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
       xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       mc:Ignorable="d" 
       x:Name="AdlaQuickTranslation" ContentId="quickTranslationWindow"
-      Title="Quick Translation" AutoHideMinHeight="100" CanClose="False" CanHide="False" CanAutoHide="True">
+      Title="{x:Static lang:WebXlator.Str0QuickXlation}" AutoHideMinHeight="100" CanClose="False" CanHide="False" CanAutoHide="True">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" >
         <Grid x:Name="GdQuick" Visibility="Visible">
@@ -37,7 +38,7 @@
             
 
             <!-- Input box -->
-            <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="3" Text="Input:" />
+			<TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="3" Text="{x:Static lang:WebXlator.Str0Input}" />
             <RichTextBox x:Name="RtbQuickInput" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1"
                      VerticalAlignment="Stretch" Margin="3"
                      MahApps:TextBoxHelper.SelectAllOnFocus="False"
@@ -47,7 +48,7 @@
                      MahApps:TextBoxHelper.Watermark="{Binding NonEmptyMaxPlaceholder}" >
                 <RichTextBox.ContextMenu>
                     <ContextMenu>
-                        <MenuItem x:Name="MiQuickInputClearAndPaste" Header="Clear and Paste" Click="BtnQuickClearAndPaste_Click"/>
+                        <MenuItem x:Name="MiQuickInputClearAndPaste" Header="{x:Static lang:Global.Str0ClearAndPaste}" Click="BtnQuickClearAndPaste_Click"/>
                         <Separator />
                         <MenuItem Command="ApplicationCommands.Paste" />
                         <MenuItem Command="ApplicationCommands.SelectAll" />
@@ -63,12 +64,12 @@
                         VerticalContentAlignment="Stretch" IsEnabled="False" Click="BtnQuickTrans_Click">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" >
                         <MahApps:ProgressRing x:Name="MaprQuickTrans" Visibility="Collapsed" IsActive="True" Height="16" Width="16" Margin="4 0 4 0"/>
-                        <TextBlock x:Name="TbQuickTrans" FontSize="12px" Text="Translate" VerticalAlignment="Center" />
+						<TextBlock x:Name="TbQuickTrans" FontSize="12px" Text="{x:Static lang:Global.Str0Translate}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
 
                 <Button x:Name="BtnQuickClearAndPaste" VerticalAlignment="Center" Margin="3"
-                        Content="Clear and Paste"
+                        Content="{x:Static lang:Global.Str0ClearAndPaste}"
                         Click="BtnQuickClearAndPaste_Click"/>
             </StackPanel>
 
@@ -94,14 +95,14 @@
                 <!-- src 1: Cross Language translator -->
                 <CheckBox x:Name="CbQuickXLang" Grid.Column="0" Grid.Row="0" Margin="3" Content="CrossLanguage" IsChecked="true" />
                 <Button x:Name="BtnQuickXLangCopy" Grid.Column="1" Grid.Row="0" Margin="2"
-                    Content="Copy" ToolTip="Copy all text to clipboard" Click="BtnQuickXLangCopy_Click"  />
+                    Content="{x:Static lang:Global.Str0Copy}" ToolTip="{x:Static lang:Global.Str0CopyToolTip}" Click="BtnQuickXLangCopy_Click"  />
                 <RichTextBox x:Name="RtbQuickXLangOutput" Grid.Column="2" Grid.Row="0" Margin="2" Background="LightYellow"
 							 MahApps:TextBoxHelper.UseFloatingWatermark="False"
 							 MahApps:TextBoxHelper.WatermarkWrapping="WrapWithOverflow"
                              MahApps:TextBoxHelper.Watermark="{Binding DataErrorPlaceholder}">
                     <RichTextBox.ContextMenu>
                         <ContextMenu>
-                            <MenuItem x:Name="MiQuickXLangCopyAll" Header="Copy All"  />
+							<MenuItem x:Name="MiQuickXLangCopyAll" Header="{x:Static lang:Global.Str0CopyAll}"  />
                             <Separator />
                             <MenuItem Command="ApplicationCommands.Paste"/>
                             <MenuItem Command="ApplicationCommands.SelectAll" />
@@ -113,16 +114,16 @@
                 </RichTextBox>
 
                 <!-- src 2: Baidu translator -->
-                <CheckBox x:Name="CbQuickBaidu" Grid.Column="0" Grid.Row="1" Margin="3" Content="Baidu" IsChecked="true" />
+				<CheckBox x:Name="CbQuickBaidu" Grid.Column="0" Grid.Row="1" Margin="3" Content="{x:Static lang:WebXlator.Str0Baidu}" IsChecked="true" />
                 <Button x:Name="BtnQuickBaiduCopy" Grid.Column="1" Grid.Row="1" Margin="2"
-                    Content="Copy" ToolTip="Copy all text to clipboard" Click="BtnQuickBaiduCopy_Click"  />
+                    Content="{x:Static lang:Global.Str0Copy}" ToolTip="{x:Static lang:Global.Str0CopyToolTip}" Click="BtnQuickBaiduCopy_Click"  />
                 <RichTextBox x:Name="RtbQuickBaiduOutput" Grid.Column="2" Grid.Row="1" Margin="2" Background="LightYellow"
 							 MahApps:TextBoxHelper.UseFloatingWatermark="False"
 							 MahApps:TextBoxHelper.WatermarkWrapping="WrapWithOverflow"
                              MahApps:TextBoxHelper.Watermark="{Binding DataErrorPlaceholder}" >
                     <RichTextBox.ContextMenu>
                         <ContextMenu>
-                            <MenuItem x:Name="MiQuickBaiduCopyAll" Header="Copy All" Click="BtnQuickBaiduCopy_Click" />
+							<MenuItem x:Name="MiQuickBaiduCopyAll" Header="{x:Static lang:Global.Str0CopyAll}" Click="BtnQuickBaiduCopy_Click" />
                             <Separator />
                             <MenuItem Command="ApplicationCommands.Paste"/>
                             <MenuItem Command="ApplicationCommands.SelectAll" />
@@ -134,16 +135,16 @@
                 </RichTextBox>
 
                 <!-- src 3: Youdao translator -->
-                <CheckBox x:Name="CbQuickYoudao" Grid.Column="0" Grid.Row="2" Margin="3" Content="Youdao" IsChecked="True" />
+				<CheckBox x:Name="CbQuickYoudao" Grid.Column="0" Grid.Row="2" Margin="3" Content="{x:Static lang:WebXlator.Str0Youdao}" IsChecked="True" />
                 <Button x:Name="BtnQuickYoudaoCopy" Grid.Column="1" Grid.Row="2" Margin="2"
-                    Content="Copy" ToolTip="Copy all text to clipboard" Click="BtnQuickYoudaoCopy_Click" />
+                    Content="{x:Static lang:Global.Str0Copy}" ToolTip="{x:Static lang:Global.Str0CopyToolTip}" Click="BtnQuickYoudaoCopy_Click" />
                 <RichTextBox x:Name="RtbQuickYoudaoOutput" Grid.Column="2" Grid.Row="2" Margin="2" Background="LightYellow"
 							 MahApps:TextBoxHelper.UseFloatingWatermark="False"
 							 MahApps:TextBoxHelper.WatermarkWrapping="WrapWithOverflow"
                              MahApps:TextBoxHelper.Watermark="{Binding DataErrorPlaceholder}" >
                     <RichTextBox.ContextMenu>
                         <ContextMenu>
-                            <MenuItem x:Name="MiQuickYoudaoCopyAll" Header="Copy All" Click="BtnQuickYoudaoCopy_Click"/>
+							<MenuItem x:Name="MiQuickYoudaoCopyAll" Header="{x:Static lang:Global.Str0CopyAll}" Click="BtnQuickYoudaoCopy_Click"/>
                             <Separator />
                             <MenuItem Command="ApplicationCommands.Paste"/>
                             <MenuItem Command="ApplicationCommands.SelectAll" />
@@ -157,14 +158,14 @@
                 <!-- src 4: Google translator -->
                 <CheckBox x:Name="CbQuickGoogle" Grid.Column="0" Grid.Row="3" Margin="3" IsChecked="True" Content="Google" />
                 <Button x:Name="BtnQuickGoogleCopy" Grid.Column="1" Grid.Row="3" Margin="2"
-                    Content="Copy" ToolTip="Copy all text to clipboard" Click="BtnQuickGoogleCopy_Click" />
+                    Content="{x:Static lang:Global.Str0Copy}" ToolTip="{x:Static lang:Global.Str0CopyToolTip}" Click="BtnQuickGoogleCopy_Click" />
                 <RichTextBox x:Name="RtbQuickGoogleOutput" Grid.Column="2" Grid.Row="3" Margin="2" Background="LightYellow"
 							 MahApps:TextBoxHelper.UseFloatingWatermark="False"
 							 MahApps:TextBoxHelper.WatermarkWrapping="WrapWithOverflow"
                              MahApps:TextBoxHelper.Watermark="{Binding DataErrorPlaceholder}" >
                     <RichTextBox.ContextMenu>
                         <ContextMenu>
-                            <MenuItem x:Name="MiQuickGoogleCopyAll" Header="Copy All" Click="BtnQuickGoogleCopy_Click"/>
+							<MenuItem x:Name="MiQuickGoogleCopyAll" Header="{x:Static lang:Global.Str0CopyAll}" Click="BtnQuickGoogleCopy_Click"/>
                             <Separator />
                             <MenuItem Command="ApplicationCommands.Paste"/>
                             <MenuItem Command="ApplicationCommands.SelectAll" />
@@ -182,16 +183,16 @@
                         <ScaleTransform ScaleY="2" />
                     </Separator.RenderTransform>
                 </Separator>
-                <TextBlock Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" Margin="2" Text="Integrated Output:" />
+				<TextBlock Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" Margin="2" Text="{x:Static lang:WebXlator.Str0IntegratedOutput}" />
                 <Button x:Name="BtnQuickIntOutputCopy" Grid.Column="1" Grid.Row="4" Margin="3 3 3 5"
-                    Content="Copy" ToolTip="Copy all text to clipboard" Click="BtnQuickIntOutputCopy_Click" />
+                    Content="{x:Static lang:Global.Str0Copy}" ToolTip="{x:Static lang:Global.Str0CopyToolTip}" Click="BtnQuickIntOutputCopy_Click" />
             </Grid>
 
             <!-- Integrated output -->
             <RichTextBox x:Name="RtbQuickIntOutput" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Background="LightYellow">
                 <RichTextBox.ContextMenu>
                     <ContextMenu>
-                        <MenuItem x:Name="MiQuickIntOutputCopyAll" Header="Copy All" Click="BtnQuickIntOutputCopy_Click"/>
+						<MenuItem x:Name="MiQuickIntOutputCopyAll" Header="{x:Static lang:Global.Str0CopyAll}" Click="BtnQuickIntOutputCopy_Click"/>
                         <Separator />
                         <MenuItem Command="ApplicationCommands.Paste"/>
                         <MenuItem Command="ApplicationCommands.SelectAll" />

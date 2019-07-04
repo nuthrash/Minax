@@ -1,9 +1,10 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+			 xmlns:lang="clr-namespace:MinaxWebTranslator.Languages"
              mc:Ignorable="d" x:Class="MinaxWebTranslator.Views.MultipleInputsView"
              >
     <StackLayout Orientation="Vertical">
@@ -24,7 +25,7 @@
 
         <StackLayout Orientation="Horizontal">
             <input:CheckBox x:Name="CbTempSave" Type="Check" IsChecked="False" />
-            <Label Text="Temp. save secure value in this session"
+            <Label Text="{x:Static lang:Global.Str0TempSaveSecureValueSession}"
                    HorizontalTextAlignment="Start"
                    VerticalTextAlignment="Center"/>
         </StackLayout>

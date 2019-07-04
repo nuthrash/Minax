@@ -117,7 +117,264 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Str0ErrorMessage" xml:space="preserve">
+    <value> ErrorMessage:</value>
+  </data>
+  <data name="Str0FailedClearOldTextRetry" xml:space="preserve">
+    <value>Failed to clear old text, retried too manay times!</value>
+  </data>
+  <data name="Str0FailedLocation" xml:space="preserve">
+    <value>Failed localtion: {0}</value>
+  </data>
+  <data name="Str0FailedTranslatedRetry" xml:space="preserve">
+    <value>Failed to translated strings, retried too manay times!</value>
+  </data>
   <data name="Str0MsAvailableRegions" xml:space="preserve">
     <value>Available Regions</value>
+  </data>
+  <data name="Str0NavigateFailed" xml:space="preserve">
+    <value>Failed to navigate web translator location, retried too manay times!</value>
+  </data>
+  <data name="Str0PreparingTranslation" xml:space="preserve">
+    <value>Preparing Translation...</value>
+  </data>
+  <data name="Str1TranslateError" xml:space="preserve">
+    <value>Something wrong when translating, StatusCode: {0}</value>
+  </data>
+  <data name="Str1TranslatingError" xml:space="preserve">
+    <value>Translating error:  {0}</value>
+  </data>
+  <data name="Str2TranslatedFractions" xml:space="preserve">
+    <value>{0}/{1} Translated</value>
+  </data>
+  <data name="Str2TranslateErrorMessage" xml:space="preserve">
+    <value>Something wrong when translating, ErrorCode: {0}, Message: {1}</value>
+  </data>
+  <data name="Str2TranslatingErrorMessage" xml:space="preserve">
+    <value>Translating failed! ErrorCode: {0}, ErrorMessage: {1}</value>
+  </data>
+  <data name="Str2YoudaoNotSupportSrc2Tgt" xml:space="preserve">
+    <value>Youdao does not support translate from {0} to {1}</value>
+  </data>
+  <data name="Str0Converted2PngByMinaxProject" xml:space="preserve">
+    <value>Converted to .png by Minax project.</value>
+  </data>
+  <data name="Str0ShrinkedByMinaxProject" xml:space="preserve">
+    <value>Shrinked by Minax project.</value>
+  </data>
+  <data name="Str0LangChineseTraditional" xml:space="preserve">
+    <value>Chinese Traditional</value>
+  </data>
+  <data name="Str0LangEnglish" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Str0LangJapanese" xml:space="preserve">
+    <value>Japanese</value>
+  </data>
+  <data name="Str0NoticeSrcTgtPairMayNotSupport" xml:space="preserve">
+    <value>NOTICE: Some translator engines DO NOT support some Source Language and Target Language pair!</value>
+  </data>
+  <data name="Str0Baidu" xml:space="preserve">
+    <value>Baidu</value>
+  </data>
+  <data name="Str0Input" xml:space="preserve">
+    <value>Input:</value>
+  </data>
+  <data name="Str0IntegratedOutput" xml:space="preserve">
+    <value>Integrated Output:</value>
+  </data>
+  <data name="Str0PlzSelectXlator" xml:space="preserve">
+    <value>Please select at least one translator!</value>
+  </data>
+  <data name="Str0QuickXlation" xml:space="preserve">
+    <value>Quick Translation</value>
+  </data>
+  <data name="Str0QuickXlationPlzInputText" xml:space="preserve">
+    <value>Please fill some text in Quick Translation Input text box!</value>
+  </data>
+  <data name="Str0Youdao" xml:space="preserve">
+    <value>Youdao</value>
+  </data>
+  <data name="Str1QuiclXlationInputCountMax" xml:space="preserve">
+    <value>The Quick Translation Input text count is exceed {0}!</value>
+  </data>
+  <data name="Str2InputTextCountFractions" xml:space="preserve">
+    <value>Input some text to be translated, count: {0}/{1}</value>
+  </data>
+  <data name="Str0ApiKey" xml:space="preserve">
+    <value>API Key</value>
+  </data>
+  <data name="Str0ApiKeyField" xml:space="preserve">
+    <value>API Key: </value>
+  </data>
+  <data name="Str0ApiKeyToolTip" xml:space="preserve">
+    <value>API Key string for your subscription to Translation API</value>
+  </data>
+  <data name="Str0AppIdField" xml:space="preserve">
+    <value>APP ID: </value>
+  </data>
+  <data name="Str0AppIdToolTip" xml:space="preserve">
+    <value>APP ID string for your subscription to Translation API</value>
+  </data>
+  <data name="Str0AppKey" xml:space="preserve">
+    <value>APP Key(APP ID)</value>
+  </data>
+  <data name="Str0AppKeyField" xml:space="preserve">
+    <value>APP Key(APP ID): </value>
+  </data>
+  <data name="Str0AppKeyToolTip" xml:space="preserve">
+    <value>APP Key (App ID) string for your subscription to Translation API</value>
+  </data>
+  <data name="Str0AppSecret" xml:space="preserve">
+    <value>APP Secret</value>
+  </data>
+  <data name="Str0AppSecretField" xml:space="preserve">
+    <value>APP Secret: </value>
+  </data>
+  <data name="Str0AppSecretToolTip" xml:space="preserve">
+    <value>APP Secret string for your subscription to Translation API</value>
+  </data>
+  <data name="Str0BaiduXlationChargedChina" xml:space="preserve">
+    <value>Baidu Translation charged APIs from China</value>
+  </data>
+  <data name="Str0BaiduXlationChina" xml:space="preserve">
+    <value>Baidu Translation from China</value>
+  </data>
+  <data name="Str0BaiduXlatorChina" xml:space="preserve">
+    <value>Baidu Translator from China</value>
+  </data>
+  <data name="Str0CurrentXlatorField" xml:space="preserve">
+    <value>Current Translator:</value>
+  </data>
+  <data name="Str0ExciteXlatorJapan" xml:space="preserve">
+    <value>Excite Translator from Japan</value>
+  </data>
+  <data name="Str0FillGoogleApiChargedV2Settings" xml:space="preserve">
+    <value>Fill Google Translation API V2 (Charged) Settings</value>
+  </data>
+  <data name="Str0FillMicrosoftApiChargedV3Settings" xml:space="preserve">
+    <value>Fill Microsoft Translation API V3 (Charged) Settings</value>
+  </data>
+  <data name="Str0GoogleXlationAmerica" xml:space="preserve">
+    <value>Google Translation from America</value>
+  </data>
+  <data name="Str0GoogleXlationChargedAmerica" xml:space="preserve">
+    <value>Google Translation charged APIs from America</value>
+  </data>
+  <data name="Str0GoogleXlatorAmerica" xml:space="preserve">
+    <value>Google Translator from America</value>
+  </data>
+  <data name="Str0HowCreateApikey" xml:space="preserve">
+    <value>How to create API key</value>
+  </data>
+  <data name="Str0HowSignUp" xml:space="preserve">
+    <value>How to sign-up</value>
+  </data>
+  <data name="Str0MicrosoftXlationAmerica" xml:space="preserve">
+    <value>Microsoft Translation from America</value>
+  </data>
+  <data name="Str0MicrosoftXlationChargedAmerica" xml:space="preserve">
+    <value>Microsoft Translation charged APIs from America</value>
+  </data>
+  <data name="Str0MicrosoftXlatorAmerica" xml:space="preserve">
+    <value>Microsoft/Bing Transltor from America</value>
+  </data>
+  <data name="Str0NoteSecureStore" xml:space="preserve">
+    <value>NOTE: Above field(s) content would be saved to private App location. If you think that is not safe, you shall not key in anything!!</value>
+  </data>
+  <data name="Str0PlzInputSourceBox" xml:space="preserve">
+    <value>Please input some useful text to Source box!</value>
+  </data>
+  <data name="Str0SecretKey" xml:space="preserve">
+    <value>Secret Key</value>
+  </data>
+  <data name="Str0SecretKeyField" xml:space="preserve">
+    <value>Secret Key: </value>
+  </data>
+  <data name="Str0SecretKeyToolTip" xml:space="preserve">
+    <value>Secret Key string for your subscription to Translation API</value>
+  </data>
+  <data name="Str0ServerRegionField" xml:space="preserve">
+    <value>Server Region: </value>
+  </data>
+  <data name="Str0SubKeyToolTip" xml:space="preserve">
+    <value>Subscription Key for your subscription to Translator Text API</value>
+  </data>
+  <data name="Str0SubMultiServiceRegion" xml:space="preserve">
+    <value>The region of the multi-service subscription</value>
+  </data>
+  <data name="Str0SubscriptionKey" xml:space="preserve">
+    <value>Subscription Key</value>
+  </data>
+  <data name="Str0SubscriptionKeyField" xml:space="preserve">
+    <value>Subscription Key:</value>
+  </data>
+  <data name="Str0WeblioXlatorJapan" xml:space="preserve">
+    <value>Weblio Translator from Japan</value>
+  </data>
+  <data name="Str0WhereRequestAppIdAndSecretKey" xml:space="preserve">
+    <value>Where to request APP ID and Secret Key</value>
+  </data>
+  <data name="Str0WhereRequestAppKeyAndAppSecret" xml:space="preserve">
+    <value>Where to request App Key (App ID) and App Secret</value>
+  </data>
+  <data name="Str0XlatingCancelled" xml:space="preserve">
+    <value>Translating Cancelled</value>
+  </data>
+  <data name="Str0XlatingFailed" xml:space="preserve">
+    <value>Translating Failed</value>
+  </data>
+  <data name="Str0XlatingFailedFieldMissing" xml:space="preserve">
+    <value>Translation failed!
+Maybe some necessary field(s) is/are missing or mis-typed when using Translation API (Charged)?</value>
+  </data>
+  <data name="Str0XlatingFailedNetRetry" xml:space="preserve">
+    <value>Translating failed!
+Please retry latter! Maybe the network is disconnected, or remote web site is busy.</value>
+  </data>
+  <data name="Str0XlatingResult" xml:space="preserve">
+    <value>Translating Result</value>
+  </data>
+  <data name="Str0XlatingSucceed" xml:space="preserve">
+    <value>Translating succeed!</value>
+  </data>
+  <data name="Str0XTranserXlationJapan" xml:space="preserve">
+    <value>CROSS-Transer Translation from Japan</value>
+  </data>
+  <data name="Str0XTranserXlatorJapan" xml:space="preserve">
+    <value>CROSS-Transer Translator from Japan</value>
+  </data>
+  <data name="Str0YoudaoXlationChargedChina" xml:space="preserve">
+    <value>Youdao Translation charged APIs from China</value>
+  </data>
+  <data name="Str0YoudaoXlationChina" xml:space="preserve">
+    <value>Youdao Translation from China</value>
+  </data>
+  <data name="Str0YoudaoXlatorChina" xml:space="preserve">
+    <value>Youdao Translator from China</value>
+  </data>
+  <data name="Str1FillXlationApiChargedSettings" xml:space="preserve">
+    <value>Fill {0} Translation API (Charged) Settings</value>
+  </data>
+  <data name="Str1XlatingAbortedException" xml:space="preserve">
+    <value>Translating aborted! Exception: {0}</value>
+  </data>
+  <data name="Str1XlatingFailedException" xml:space="preserve">
+    <value>Translating failed! Exception: {0}</value>
+  </data>
+  <data name="Str1XlationApiCharged" xml:space="preserve">
+    <value>{0} Translation API (Charged)</value>
+  </data>
+  <data name="Str1XlationApiFree" xml:space="preserve">
+    <value>{0} API (Free)</value>
+  </data>
+  <data name="Str1FieldForApiToolTip" xml:space="preserve">
+    <value>{0} string for your subscription to Translation API</value>
+  </data>
+  <data name="Str0InputOrPasteSourceTextToXlated" xml:space="preserve">
+    <value>Input or paste source text to be translated...</value>
+  </data>
+  <data name="Str0AppId" xml:space="preserve">
+    <value>APP ID</value>
   </data>
 </root>

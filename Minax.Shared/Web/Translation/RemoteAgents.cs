@@ -105,7 +105,7 @@ namespace Minax.Web.Translation
 			if( clientXLang.DefaultRequestHeaders.UserAgent.Count <= 0 )
 				clientXLang.DefaultRequestHeaders.Add( "User-Agent", "curl/7.47.0" );
 
-			Report( progress, 1, "Preparing Translation", null );
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			// prepare form values
 			var values = new Dictionary<string, string> {
@@ -131,7 +131,7 @@ namespace Minax.Web.Translation
 					response = clientXLang.PostAsync( defLoc, content, cancelToken ).Result;
 				}
 				catch( Exception ex ) {
-					Report( progress, -1, "Got Exception: " + ex.Message, ex );
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message), ex );
 					yield break;
 				}
 
@@ -162,7 +162,7 @@ namespace Minax.Web.Translation
 						continue;
 
 					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
-					Report( progress, percent, $"{xlatedSectionCnt}/{sections.Count} Translated", section );
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
 
 					yield return new YieldResult {
 						PercentOrErrorCode = percent,
@@ -171,7 +171,7 @@ namespace Minax.Web.Translation
 					};
 				}
 				else {
-					Report( progress, -1, $"Something wrong when translating, StatusCode: {response.StatusCode}", response );
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode), response );
 					yield break;
 				}
 			}
@@ -268,7 +268,7 @@ namespace Minax.Web.Translation
 			}
 
 
-			Report( progress, 1, "Preparing Translation", null );
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			// prepare form values
 			var values = new Dictionary<string, string> {
@@ -304,7 +304,7 @@ namespace Minax.Web.Translation
 
 				}
 				catch( Exception ex ) {
-					Report( progress, -1, "Got Exception: " + ex.Message, ex );
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
 					yield break;
 				}
 
@@ -361,7 +361,7 @@ namespace Minax.Web.Translation
 
 
 					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
-					Report( progress, percent, $"{xlatedSectionCnt}/{sections.Count} Translated", section );
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
 
 					yield return new YieldResult {
 						OriginalSection = section,
@@ -379,11 +379,11 @@ namespace Minax.Web.Translation
 					}
 
 					if( translatedData != null && string.IsNullOrWhiteSpace( translatedData.Message ) == false ) {
-						Report( progress, -1, $"Something wrong when translating, ErrorCode: {translatedData.Error}, Message: {translatedData.Message}",
-							translatedData );
+						Report( progress, -1, string.Format(Languages.WebXlator.Str2TranslateErrorMessage, translatedData.Error, translatedData.Message ),
+								translatedData );
 					}
 					else {
-						Report( progress, -1, $"Something wrong when translating, StatusCode: {response.StatusCode}", section );
+						Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
 					}
 					yield break;
 				}
@@ -403,7 +403,7 @@ namespace Minax.Web.Translation
 					//tgtLang = "en"; // Not Support!!
 					//break;
 					progress?.Report( new ProgressInfo { PercentOrErrorCode = -1,
-						Message = $"Youdao does not support translate from {sourceLanguage.ToL10nString()} to {targetLanguage.ToL10nString()}" } );
+						Message = string.Format(Languages.WebXlator.Str2YoudaoNotSupportSrc2Tgt, sourceLanguage.ToL10nString(), targetLanguage.ToL10nString() ) } );
 					yield break;
 			}
 
@@ -431,7 +431,7 @@ namespace Minax.Web.Translation
 			if( clientYoudao.DefaultRequestHeaders.UserAgent.Count <= 0 )
 				clientYoudao.DefaultRequestHeaders.Add( "User-Agent", "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0" );
 
-			Report( progress, 1, "Preparing Translation", null );
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			// prepare form values, https://ai.youdao.com/docs/doc-trans-api.s#p04
 			var values = new Dictionary<string, string> {
@@ -460,7 +460,7 @@ namespace Minax.Web.Translation
 					response = clientYoudao.PostAsync( defLoc, content, cancelToken ).Result;
 				}
 				catch( Exception ex ) {
-					Report( progress, -1, "Got Exception: " + ex.Message, ex );
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
 					yield break;
 				}
 
@@ -494,7 +494,7 @@ namespace Minax.Web.Translation
 						continue;
 
 					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
-					Report( progress, percent, $"{xlatedSectionCnt}/{sections.Count} Translated", section );
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
 
 					yield return new YieldResult {
 						OriginalSection = section,
@@ -503,7 +503,7 @@ namespace Minax.Web.Translation
 					};
 				}
 				else {
-					Report( progress, -1, $"Something wrong when translating, StatusCode: {response.StatusCode}", response );
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
 					yield break;
 				}
 			}
@@ -567,7 +567,7 @@ namespace Minax.Web.Translation
 				clientGoogle.DefaultRequestHeaders.Add( "User-Agent",
 						 "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0" );
 
-			Report( progress, 1, "Preparing Translation", null );
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			// prepare form values
 			var values = new Dictionary<string, string> {
@@ -597,7 +597,7 @@ namespace Minax.Web.Translation
 					response = clientGoogle.PostAsync( defLoc, content, cancelToken ).Result;
 				}
 				catch( Exception ex ) {
-					Report( progress, -1, "Got Exception: " + ex.Message, ex );
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
 					yield break;
 				}
 
@@ -632,7 +632,7 @@ namespace Minax.Web.Translation
 						continue;
 
 					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
-					Report( progress, percent, $"{xlatedSectionCnt}/{sections.Count} Translated", section );
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
 
 					yield return new YieldResult {
 						OriginalSection = section,
@@ -641,7 +641,7 @@ namespace Minax.Web.Translation
 					};
 				}
 				else {
-					Report( progress, -1, $"Something wrong when translating, StatusCode: {response.StatusCode}", section );
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
 					yield break;
 				}
 			}
@@ -786,7 +786,7 @@ namespace Minax.Web.Translation
 			if( clientBaidu.DefaultRequestHeaders.UserAgent.Count <= 0 )
 				clientBaidu.DefaultRequestHeaders.Add( "User-Agent", "curl/7.47.7" );
 
-			Report( progress, 1, "Preparing Translation", null );
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			// prepare Query and location values
 			var salt = "1435660288";
@@ -819,7 +819,7 @@ namespace Minax.Web.Translation
 					response = clientBaidu.PostAsync( defLoc, new FormUrlEncodedContent( values ), cancelToken ).Result;
 				}
 				catch( Exception ex ) {
-					Report( progress, -1, "Got Exception: " + ex.Message, ex );
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
 					yield break;
 				}
 
@@ -874,7 +874,7 @@ namespace Minax.Web.Translation
 						continue;
 
 					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
-					Report( progress, percent, $"{xlatedSectionCnt}/{sections.Count} Translated", section );
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
 
 					yield return new YieldResult {
 						OriginalSection = section,
@@ -883,7 +883,7 @@ namespace Minax.Web.Translation
 					};
 				}
 				else {
-					Report( progress, -1, $"Something wrong when translating, StatusCode: {response.StatusCode}", section );
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
 					yield break;
 				}
 			}
@@ -956,7 +956,7 @@ namespace Minax.Web.Translation
 			if( clientYoudao.DefaultRequestHeaders.UserAgent.Count <= 0 )
 				clientYoudao.DefaultRequestHeaders.Add( "User-Agent", "curl/7.47.7" );
 
-			Report( progress, 1, "Preparing Translation", null );
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			// prepare Query and location values
 			var salt = "1526368137702";
@@ -1001,7 +1001,7 @@ namespace Minax.Web.Translation
 					response = clientYoudao.PostAsync( defLoc, new FormUrlEncodedContent( values ), cancelToken ).Result;
 				}
 				catch( Exception ex ) {
-					Report( progress, -1, "Got Exception: " + ex.Message, ex );
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
 					yield break;
 				}
 
@@ -1066,7 +1066,7 @@ namespace Minax.Web.Translation
 						continue;
 
 					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
-					Report( progress, percent, $"{xlatedSectionCnt}/{sections.Count} Translated", section );
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
 
 					yield return new YieldResult {
 						OriginalSection = section,
@@ -1075,7 +1075,7 @@ namespace Minax.Web.Translation
 					};
 				}
 				else {
-					Report( progress, -1, $"Something wrong when translating, StatusCode: {response.StatusCode}", section );
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
 					yield break;
 				}
 			}
@@ -1150,7 +1150,7 @@ namespace Minax.Web.Translation
 			if( clientGoogle.DefaultRequestHeaders.UserAgent.Count <= 0 )
 				clientGoogle.DefaultRequestHeaders.Add( "User-Agent", "curl/7.47.7" );
 
-			Report( progress, 1, "Preparing Translation", null );
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			// prepare Query and location values, with HTML text and escape translation class
 			// https://translation.googleapis.com/language/translate/v2?key={YOUR_API_KEY}
@@ -1182,7 +1182,7 @@ namespace Minax.Web.Translation
 					response = clientGoogle.PostAsync( loc, contentPost, cancelToken ).Result;
 				}
 				catch( Exception ex ) {
-					Report( progress, -1, "Got Exception: " + ex.Message, ex );
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
 					yield break;
 				}
 
@@ -1216,7 +1216,7 @@ namespace Minax.Web.Translation
 						continue;
 
 					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
-					Report( progress, percent, $"{xlatedSectionCnt}/{sections.Count} Translated", section );
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
 
 					yield return new YieldResult {
 						OriginalSection = section,
@@ -1225,7 +1225,7 @@ namespace Minax.Web.Translation
 					};
 				}
 				else {
-					Report( progress, -1, $"Something wrong when translating, StatusCode: {response.StatusCode}", section );
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
 					yield break;
 				}
 			}
@@ -1294,7 +1294,6 @@ namespace Minax.Web.Translation
 
 			var text = sourceText;
 			var sb = new StringBuilder();
-			//var tmpList = ReplaceBeforeXlation( text, sourceLanguage, "WWW.ZKS{0}.ORG", null, ref sb );
 			var tmpList = ReplaceBeforeXlation( text, sourceLanguage, "<p class=\"notranslate\">ZKS{0}</p>", null, ref sb );
 			if( tmpList == null || sb.Length <= 0 )
 				yield break;
@@ -1317,7 +1316,7 @@ namespace Minax.Web.Translation
 			if( clientBing.DefaultRequestHeaders.UserAgent.Count <= 0 )
 				clientBing.DefaultRequestHeaders.Add( "User-Agent", "curl/7.47.7" );
 
-			Report( progress, 1, "Preparing Translation", null );
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			// prepare Query and location values, with HTML text and escape translation class
 			sb.Append( defLoc + $"&profanityAction=noAction&includeAlignment=true&includeSentenceLength=true&textType=html&to={tgtLang}" );
@@ -1347,7 +1346,7 @@ namespace Minax.Web.Translation
 					response = clientBing.PostAsync( loc, contentPost, cancelToken ).Result;
 				}
 				catch( Exception ex ) {
-					Report( progress, -1, "Got Exception: " + ex.Message, ex );
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
 					yield break;
 				}
 
@@ -1405,7 +1404,7 @@ namespace Minax.Web.Translation
 						continue;
 
 					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
-					Report( progress, percent, $"{xlatedSectionCnt}/{sections.Count} Translated", section );
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
 
 					yield return new YieldResult {
 						OriginalSection = section,
@@ -1414,7 +1413,7 @@ namespace Minax.Web.Translation
 					};
 				}
 				else {
-					Report( progress, -1, $"Something wrong when translating, StatusCode: {response.StatusCode}", section );
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
 					yield break;
 				}
 			}
@@ -1486,7 +1485,7 @@ namespace Minax.Web.Translation
 			if( cancelToken.IsCancellationRequested )
 				yield break;
 
-			Report( progress, 1, "Preparing Translation", null );
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			// prepare form values
 			var values = new Dictionary<string, string> {
@@ -1512,7 +1511,7 @@ namespace Minax.Web.Translation
 					response = client.PostAsync( defLoc, new FormUrlEncodedContent( values ), cancelToken ).Result;
 				}
 				catch( Exception ex ) {
-					Report( progress, -1, "Got Exception: " + ex.Message, ex );
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
 					yield break;
 				}
 				string responseString = response.Content.ReadAsStringAsync().Result;
@@ -1539,7 +1538,7 @@ namespace Minax.Web.Translation
 
 
 					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
-					Report( progress, percent, $"{xlatedSectionCnt}/{sections.Count} Translated", section );
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
 
 					yield return new YieldResult {
 						OriginalSection = section,
@@ -1548,7 +1547,7 @@ namespace Minax.Web.Translation
 					};
 				}
 				else {
-					Report( progress, -1, $"Something wrong when translating, StatusCode: {response.StatusCode}", section );
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
 					yield break;
 				}
 			}
@@ -1574,7 +1573,7 @@ namespace Minax.Web.Translation
 					break;
 
 				//case SupportedSourceLanguage.English:
-				//if( TargetLanguage == SupportedTargetLanguage.Japanese)
+				//if( TargetLanguage == SupportedTargetLanguage.Japanese) // only support English2Japanese
 				//srcLang2TgtLang = "EJ";
 				//break;
 				//case SupportedSourceLanguage.ChineseSimplified:
@@ -1605,7 +1604,7 @@ namespace Minax.Web.Translation
 			if( cancelToken.IsCancellationRequested )
 				yield break;
 
-			Report( progress, 1, "Preparing Translation", null );
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			// prepare form values
 			// https://translate.weblio.jp/chinese/?lp=JC&originalText=%E3%81%8A%E3%81%A3%E3%81%95%E3%82%93
@@ -1630,7 +1629,7 @@ namespace Minax.Web.Translation
 					response = client.PostAsync( defLoc, new FormUrlEncodedContent( values ), cancelToken ).Result;
 				}
 				catch( Exception ex ) {
-					Report( progress, -1, "Got Exception: " + ex.Message, ex );
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
 					yield break;
 				}
 				string responseString = response.Content.ReadAsStringAsync().Result;
@@ -1658,7 +1657,7 @@ namespace Minax.Web.Translation
 						continue;
 
 					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
-					Report( progress, percent, $"{xlatedSectionCnt}/{sections.Count} Translated", section );
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
 
 					yield return new YieldResult {
 						OriginalSection = section,
@@ -1669,7 +1668,7 @@ namespace Minax.Web.Translation
 				}
 
 				if( sb.Length <= 0 ) {
-					Report( progress, -1, $"Something wrong when translating, StatusCode: {response.StatusCode}", section );
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
 					yield break;
 				}
 			}

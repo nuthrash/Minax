@@ -1,20 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lang="clr-namespace:MinaxWebTranslator.Languages"
              mc:Ignorable="d" NavigationPage.HasNavigationBar="False"
              x:Class="MinaxWebTranslator.Views.MappingAllSubPage">
     <StackLayout VerticalOptions="FillAndExpand">
 
-        <Label Text="NO DATA" HorizontalOptions="CenterAndExpand"  VerticalOptions="CenterAndExpand"
+		<Label Text="{x:Static lang:Global.Str0NoData}" HorizontalOptions="CenterAndExpand"  VerticalOptions="CenterAndExpand"
                TextColor="DarkOrange" FontSize="Large" FontAttributes="Bold" 
                IsVisible="{Binding IsDataEmpty}"/>
 
         <ListView x:Name="LvMappingAll" IsGroupingEnabled="True"
                   GroupDisplayBinding="{Binding GroupedLongName}"
-                  HasUnevenRows="True" HorizontalOptions="FillAndExpand"
-                  AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+                  HasUnevenRows="True" HorizontalOptions="FillAndExpand" >
             <x:Arguments>
                 <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
             </x:Arguments>

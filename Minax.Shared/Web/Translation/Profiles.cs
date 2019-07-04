@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -15,21 +15,21 @@ namespace Minax.Web.Translation
 			[RemoteType.Baidu] = "Baidu",
 			[RemoteType.Youdao] = "Youdao",
 			[RemoteType.Google] = "Google",
-			[RemoteType.Microsoft] = "Bing",
+			[RemoteType.Microsoft] = "Microsoft",
 
 			[RemoteType.KodenshaFree] = "Excite",
 			[RemoteType.CrossLanguageFree] = "CrossLanguage",
 			[RemoteType.BaiduFree] = "Baidu",
 			[RemoteType.YoudaoFree] = "Youdao",
 			[RemoteType.GoogleFree] = "Google",
-			[RemoteType.MicrosoftFree] = "Bing",
+			[RemoteType.MicrosoftFree] = "Microsoft",
 
 			[RemoteType.KodenshaCharged] = "Excite",
 			[RemoteType.CrossLanguageCharged] = "CrossLanguage",
 			[RemoteType.BaiduCharged] = "Baidu",
 			[RemoteType.YoudaoCharged] = "Youdao",
 			[RemoteType.GoogleCharged] = "Google",
-			[RemoteType.MicrosoftCharged] = "Bing",
+			[RemoteType.MicrosoftCharged] = "Microsoft",
 
 		} );
 

@@ -1,21 +1,15 @@
-﻿using Minax.Collections;
+using Minax.Collections;
 using Minax.Web.Translation;
 using MinaxWebTranslator.Desktop.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MinaxWebTranslator.Desktop.Views
 {
@@ -148,30 +142,38 @@ namespace MinaxWebTranslator.Desktop.Views
 			var srcMicrosoft = conv.ConvertFromString( "pack://application:,,,/Resources/Microsoft.png" ) as ImageSource;
 
 			var list = new ObservableList<TranslatorSelector>() {
-					new TranslatorSelector { RemoteType = RemoteType.Excite, Header = "Excite", Checked = true, Icon = srcExcite, Description = "Excite Translator from Japan" },
-					new TranslatorSelector { RemoteType = RemoteType.CrossLanguage, Header = "CrossLanguage", Checked = false, Icon = srcCrossLang, Description = "CROSS-Transer Transltor from Japan" },
-					new TranslatorSelector { RemoteType = RemoteType.Weblio, Header = "Weblio", Checked = false, Icon = srcWeblio, Description = "Weblio Transltor from Japan"},
-					new TranslatorSelector { RemoteType = RemoteType.Baidu, Header = "Baidu", Checked = false, Icon = srcBaidu, Description = "Baidu Transltor from China" },
-					new TranslatorSelector { RemoteType = RemoteType.Youdao, Header = "Youdao", Checked = false, Icon = srcYoudao, Description = "Youdao Transltor from China" },
-					new TranslatorSelector { RemoteType = RemoteType.Google, Header = "Google", Checked = false, Icon = srcGoogle, Description = "Google Transltor from America" },
-					new TranslatorSelector { RemoteType = RemoteType.Microsoft, Header = "Microsoft", Checked = false, Icon = srcMicrosoft, Description = "Microsoft/Bing Transltor from America" },
+					new TranslatorSelector { RemoteType = RemoteType.Excite, Header = "Excite", Checked = true, Icon = srcExcite, Description = Languages.WebXlator.Str0ExciteXlatorJapan },
+					new TranslatorSelector { RemoteType = RemoteType.CrossLanguage, Header = "CrossLanguage", Checked = false, Icon = srcCrossLang, Description = Languages.WebXlator.Str0XTranserXlatorJapan },
+					new TranslatorSelector { RemoteType = RemoteType.Weblio, Header = "Weblio", Checked = false, Icon = srcWeblio, Description = Languages.WebXlator.Str0WeblioXlatorJapan },
+					new TranslatorSelector { RemoteType = RemoteType.Baidu, Header = Languages.WebXlator.Str0Baidu, Checked = false, Icon = srcBaidu, Description = Languages.WebXlator.Str0BaiduXlatorChina },
+					new TranslatorSelector { RemoteType = RemoteType.Youdao, Header = Languages.WebXlator.Str0Youdao, Checked = false, Icon = srcYoudao, Description = Languages.WebXlator.Str0YoudaoXlatorChina },
+					new TranslatorSelector { RemoteType = RemoteType.Google, Header = "Google", Checked = false, Icon = srcGoogle, Description = Languages.WebXlator.Str0GoogleXlatorAmerica },
+					new TranslatorSelector { RemoteType = RemoteType.Microsoft, Header = "Microsoft", Checked = false, Icon = srcMicrosoft, Description = Languages.WebXlator.Str0MicrosoftXlatorAmerica },
 
 					//new TranslatorSelector { SeparatorVisibility = Visibility.Visible, Header = "Free Web APIs" },
 					new TranslatorSelector { SeparatorVisibility = Visibility.Visible, },
-
-					new TranslatorSelector { RemoteType = RemoteType.CrossLanguageFree, Header = "CrossLanguage API (Free)", Checked = false, Icon = srcCrossLang, Description = "CROSS-Transer Translation from Japan" },
-					new TranslatorSelector { RemoteType = RemoteType.BaiduFree, Header = "Baidu API (Free)", Checked = false, Icon = srcBaidu, Description = "Baidu Translation from China" },
-					new TranslatorSelector { RemoteType = RemoteType.YoudaoFree, Header = "Youdao API (Free)", Checked = false, Icon = srcYoudao, Description = "Youdao Translation from China" },
-					new TranslatorSelector { RemoteType = RemoteType.GoogleFree, Header = "Google API (Free)", Checked = false, Icon = srcGoogle, Description = "Google Translation from America" },
-					//new TranslatorSelector { RemoteType = RemoteType.MicrosoftFree, Header = "Microsoft API (Free)", Checked = false, Icon = srcMicrosoft, Description = "Microsoft Translation  from America" },
+					
+					new TranslatorSelector { RemoteType = RemoteType.CrossLanguageFree, Header = string.Format( Languages.WebXlator.Str1XlationApiFree, "CrossLanguage" ), Checked = false,
+							Icon = srcCrossLang, Description = Languages.WebXlator.Str0XTranserXlationJapan },
+					new TranslatorSelector { RemoteType = RemoteType.BaiduFree, Header = string.Format( Languages.WebXlator.Str1XlationApiFree, Languages.WebXlator.Str0Baidu ), Checked = false,
+							Icon = srcBaidu, Description = Languages.WebXlator.Str0BaiduXlationChina },
+					new TranslatorSelector { RemoteType = RemoteType.YoudaoFree, Header = string.Format( Languages.WebXlator.Str1XlationApiFree, Languages.WebXlator.Str0Youdao ), Checked = false,
+							Icon = srcYoudao, Description = Languages.WebXlator.Str0YoudaoXlationChina },
+					new TranslatorSelector { RemoteType = RemoteType.GoogleFree, Header = string.Format( Languages.WebXlator.Str1XlationApiFree, "Google" ), Checked = false,
+							Icon = srcGoogle, Description = Languages.WebXlator.Str0GoogleXlationAmerica },
+					//new TranslatorSelector { RemoteType = RemoteType.MicrosoftFree, Header = "Microsoft API (Free)", Checked = false, Icon = srcMicrosoft, Description = Languages.WebXlator.Str0MicrosoftXlationAmerica },
 
 					//new TranslatorSelector { SeparatorVisibility = Visibility.Visible, Header = "Charged Web APIs" },
 					new TranslatorSelector { SeparatorVisibility = Visibility.Visible, },
 
-					new TranslatorSelector { RemoteType = RemoteType.BaiduCharged, Header="Baidu Translation API (Charged)", Checked = false, Icon = srcBaidu, Description = "Baidu Translation charged APIs from China" },
-					new TranslatorSelector { RemoteType = RemoteType.YoudaoCharged, Header="Youdao Translation API (Charged)", Checked = false, Icon = srcYoudao, Description = "Youdao Translation charged APIs from China" },
-					new TranslatorSelector { RemoteType = RemoteType.GoogleCharged, Header="Google Translation API (Charged)", Checked = false, Icon = srcGoogle, Description = "Google Translation charged APIs from America" },
-					new TranslatorSelector { RemoteType = RemoteType.MicrosoftCharged, Header="Microsoft Translation API (Charged)", Checked = false, Icon = srcMicrosoft, Description = "Microsoft Translation charged APIs from America" },
+					new TranslatorSelector { RemoteType = RemoteType.BaiduCharged, Header=string.Format( Languages.WebXlator.Str1XlationApiCharged, Languages.WebXlator.Str0Baidu ), Checked = false,
+							Icon = srcBaidu, Description = Languages.WebXlator.Str0BaiduXlationChargedChina },
+					new TranslatorSelector { RemoteType = RemoteType.YoudaoCharged, Header=string.Format( Languages.WebXlator.Str1XlationApiCharged, Languages.WebXlator.Str0Youdao ), Checked = false,
+							Icon = srcYoudao, Description = Languages.WebXlator.Str0YoudaoXlationChargedChina },
+					new TranslatorSelector { RemoteType = RemoteType.GoogleCharged, Header=string.Format( Languages.WebXlator.Str1XlationApiCharged, "Google" ), Checked = false,
+							Icon = srcGoogle, Description = Languages.WebXlator.Str0GoogleXlationChargedAmerica },
+					new TranslatorSelector { RemoteType = RemoteType.MicrosoftCharged, Header=string.Format( Languages.WebXlator.Str1XlationApiCharged, "Microsoft" ), Checked = false,
+							Icon = srcMicrosoft, Description = Languages.WebXlator.Str0MicrosoftXlationChargedAmerica },
 				};
 
 			sSelectorList = list;
@@ -257,7 +259,7 @@ namespace MinaxWebTranslator.Desktop.Views
 						LblWarningCharged.Visibility = Visibility.Visible;
 					}
 
-					await Task.Delay( 200 );
+					await Task.Delay( 100 );
 					_CalculateListViewMaxHeight();
 					LvXlatorSelector.ScrollIntoView( mSelectedTranslator );
 
@@ -266,7 +268,7 @@ namespace MinaxWebTranslator.Desktop.Views
 						mDeferredWorker.Dispose();
 					mDeferredWorker = null;
 				} );
-			}, null, 100, Timeout.Infinite);
+			}, null, 350, Timeout.Infinite);
 		}
 
 		private void TbXlatorBaiduAppId_TextChanged( object sender, TextChangedEventArgs e )

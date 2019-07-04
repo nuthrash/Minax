@@ -1,24 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="clr-namespace:MinaxWebTranslator.Views"
+			 xmlns:lang="clr-namespace:MinaxWebTranslator.Languages"
              mc:Ignorable="d" x:Class="MinaxWebTranslator.Views.DetailOthersPage"
              NavigationPage.HasNavigationBar="False"
-             Title="Others about Minax Web Translator">
+             Title="{x:Static lang:Global.Str0OthersAbout}">
     <TabbedPage.Children>
-        <NavigationPage x:Name="PgAbout" Title="About">
+		<NavigationPage x:Name="PgAbout" Title="{x:Static lang:Global.Str0About}">
             <x:Arguments>
                 <views:AboutSubPage/>
             </x:Arguments>
         </NavigationPage>
-        <NavigationPage x:Name="PgCredits" Title="Credits">
+		<NavigationPage x:Name="PgCredits" Title="{x:Static lang:Global.Str0Credits}">
             <x:Arguments>
                 <views:CreditsSubPage/>
             </x:Arguments>
         </NavigationPage>
-        <NavigationPage x:Name="PgOnlineTools" Title="Online Tools">
+		<NavigationPage x:Name="PgOnlineTools" Title="{x:Static lang:Global.Str0OnlineTools}">
             <x:Arguments>
                 <views:OnlineToolsSubPage/>
             </x:Arguments>

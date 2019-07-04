@@ -1,4 +1,4 @@
-﻿using Minax;
+using Minax;
 using Minax.Collections;
 using Minax.Domain.Translation;
 using Minax.Web.Translation;
@@ -103,13 +103,16 @@ namespace MinaxWebTranslator
 
 				// update CurrentUsedModels
 				CurrentUsedModels.Clear();
-				//foreach( var model in RemoteAgents.CurrentUsedModels ) {
-				//	CurrentUsedModels.Add( model );
-				//}
 				CurrentUsedModels.AddRange( RemoteAgents.CurrentUsedModels );
 			}
-			catch {
+			catch( Exception ex ) {
+				_Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslatingError, ex.Message ), ex );
 				return false;
+			}
+
+			// finally, scroll to top
+			if( AutoScrollToTop && text.Length > 0 ) {
+				wv.Eval( "window.scrollTo(0, 0)" );
 			}
 
 			return result;
@@ -127,7 +130,6 @@ namespace MinaxWebTranslator
 
 				et.Text = null;
 
-				//var dispatcher = MainThread;
 				IEnumerable<YieldResult> xlatorResults = null;
 
 				switch( remoteType ) {
@@ -174,12 +176,10 @@ namespace MinaxWebTranslator
 
 				// update CurrentUsedModels
 				CurrentUsedModels.Clear();
-				//foreach( var model in RemoteAgents.CurrentUsedModels ) {
-				//	CurrentUsedModels.Add( model );
-				//}
 				CurrentUsedModels.AddRange( RemoteAgents.CurrentUsedModels );
 			}
-			catch {
+			catch( Exception ex ) {
+				_Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslatingError, ex.Message ), ex );
 				return false;
 			}
 
@@ -253,13 +253,16 @@ namespace MinaxWebTranslator
 
 				// update CurrentUsedModels
 				CurrentUsedModels.Clear();
-				//foreach( var model in RemoteAgents.CurrentUsedModels ) {
-				//	CurrentUsedModels.Add( model );
-				//}
 				CurrentUsedModels.AddRange( RemoteAgents.CurrentUsedModels );
 			}
-			catch {
+			catch( Exception ex ) {
+				_Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslatingError, ex.Message ), ex );
 				return false;
+			}
+
+			// finally, scroll to top
+			if( AutoScrollToTop && text.Length > 0 ) {
+				wv.Eval( "window.scrollTo(0, 0)" );
 			}
 
 			return result;
@@ -299,13 +302,10 @@ namespace MinaxWebTranslator
 
 				// update CurrentUsedModels
 				CurrentUsedModels.Clear();
-				//foreach( var model in RemoteAgents.CurrentUsedModels ) {
-				//	CurrentUsedModels.Add( model );
-				//}
 				CurrentUsedModels.AddRange( RemoteAgents.CurrentUsedModels );
 			}
 			catch( Exception ex ) {
-				_Report( progress, -1, "Tanslating error: " + ex.Message, ex );
+				_Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslatingError, ex.Message ), ex );
 				return false;
 			}
 
@@ -346,13 +346,10 @@ namespace MinaxWebTranslator
 
 				// update CurrentUsedModels
 				CurrentUsedModels.Clear();
-				//foreach( var model in RemoteAgents.CurrentUsedModels ) {
-				//	CurrentUsedModels.Add( model );
-				//}
 				CurrentUsedModels.AddRange( RemoteAgents.CurrentUsedModels );
 			}
 			catch( Exception ex ) {
-				_Report( progress, -1, "Tanslating error: " + ex.Message, ex );
+				_Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslatingError, ex.Message ), ex );
 				return false;
 			}
 

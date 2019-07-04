@@ -70,11 +70,29 @@ namespace Minax.Languages {
         }
         
         /// <summary>
+        ///   查詢類似 All glossary files fetched. 的當地語系化字串。
+        /// </summary>
+        internal static string Str0AllGlossaryFileFetched {
+            get {
+                return ResourceManager.GetString("Str0AllGlossaryFileFetched", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Auto Detect 的當地語系化字串。
         /// </summary>
         internal static string Str0AutoDetect {
             get {
                 return ResourceManager.GetString("Str0AutoDetect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Cannot fetch remote glossary list file. 的當地語系化字串。
+        /// </summary>
+        internal static string Str0CantFetchRemoteGlossaryFileList {
+            get {
+                return ResourceManager.GetString("Str0CantFetchRemoteGlossaryFileList", resourceCulture);
             }
         }
         
@@ -142,20 +160,11 @@ namespace Minax.Languages {
         }
         
         /// <summary>
-        ///   查詢類似 Japan 的當地語系化字串。
+        ///   查詢類似 Japanese 的當地語系化字串。
         /// </summary>
-        internal static string Str0LangJapan {
+        internal static string Str0LangJapanese {
             get {
-                return ResourceManager.GetString("Str0LangJapan", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類似 Language changed... Please restart this program to take effect! 的當地語系化字串。
-        /// </summary>
-        internal static string Str0LanguageChanged {
-            get {
-                return ResourceManager.GetString("Str0LanguageChanged", resourceCulture);
+                return ResourceManager.GetString("Str0LangJapanese", resourceCulture);
             }
         }
         
@@ -192,6 +201,15 @@ namespace Minax.Languages {
         internal static string Str0NoData {
             get {
                 return ResourceManager.GetString("Str0NoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 No glossary file can fetch. 的當地語系化字串。
+        /// </summary>
+        internal static string Str0NoGlossaryFileCanFetch {
+            get {
+                return ResourceManager.GetString("Str0NoGlossaryFileCanFetch", resourceCulture);
             }
         }
         
@@ -331,11 +349,20 @@ namespace Minax.Languages {
         }
         
         /// <summary>
-        ///   查詢類似 {0:yyMMdd_HHmmss} 的當地語系化字串。
+        ///   查詢類似 Glossary File &quot;{0}&quot; created. 的當地語系化字串。
         /// </summary>
-        internal static string Str1DateTimeFileNameFormat {
+        internal static string Str1GlossaryFileCreated {
             get {
-                return ResourceManager.GetString("Str1DateTimeFileNameFormat", resourceCulture);
+                return ResourceManager.GetString("Str1GlossaryFileCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Got Exception: {0} 的當地語系化字串。
+        /// </summary>
+        internal static string Str1GotException {
+            get {
+                return ResourceManager.GetString("Str1GotException", resourceCulture);
             }
         }
         
@@ -345,6 +372,15 @@ namespace Minax.Languages {
         internal static string Str1SomethingWrongMSG {
             get {
                 return ResourceManager.GetString("Str1SomethingWrongMSG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Fetched {0}/{1} files. 的當地語系化字串。
+        /// </summary>
+        internal static string Str2FetchFilesFractions {
+            get {
+                return ResourceManager.GetString("Str2FetchFilesFractions", resourceCulture);
             }
         }
     }

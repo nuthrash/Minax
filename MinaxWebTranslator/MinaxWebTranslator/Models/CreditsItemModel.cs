@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace MinaxWebTranslator.Models
@@ -22,5 +23,7 @@ namespace MinaxWebTranslator.Models
 		public string License { get; set; }
 		
 		public string Note { get; set; }
+
+		public ICommand OpenWebCommand => Commands.AppCommands.OpenWebCmd;
 	}
 }

@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Str0ApiKey" xml:space="preserve">
+    <value>API 金鑰(API Key)</value>
+  </data>
+  <data name="Str0ApiKeyField" xml:space="preserve">
+    <value>API 金鑰(API Key)：</value>
+  </data>
+  <data name="Str0ApiKeyToolTip" xml:space="preserve">
+    <value>來自你訂閱的翻譯服務 API 的 API 金鑰(API Key) 字串</value>
+  </data>
+  <data name="Str0AppIdField" xml:space="preserve">
+    <value>APP ID：</value>
+  </data>
+  <data name="Str0AppIdToolTip" xml:space="preserve">
+    <value>來自你訂閱的翻譯服務 API 的 APP ID 字串</value>
+  </data>
+  <data name="Str0AppKey" xml:space="preserve">
+    <value>應用ID(appKey)</value>
+  </data>
+  <data name="Str0AppKeyField" xml:space="preserve">
+    <value>應用ID(appKey):</value>
+  </data>
+  <data name="Str0AppKeyToolTip" xml:space="preserve">
+    <value>來自你訂閱的翻譯服務 API 的 應用ID(appKey) 字串</value>
+  </data>
+  <data name="Str0AppSecret" xml:space="preserve">
+    <value>應用密鑰(APP Secret)</value>
+  </data>
+  <data name="Str0AppSecretField" xml:space="preserve">
+    <value>應用密鑰(APP Secret)：</value>
+  </data>
+  <data name="Str0AppSecretToolTip" xml:space="preserve">
+    <value>來自你訂閱的翻譯服務 API 的 應用密鑰(APP Secret) 字串</value>
+  </data>
+  <data name="Str0Baidu" xml:space="preserve">
+    <value>百度(Baidu)</value>
+  </data>
+  <data name="Str0BaiduXlationChargedChina" xml:space="preserve">
+    <value>來自中國的百度(Baidu)收費翻譯服務</value>
+  </data>
+  <data name="Str0BaiduXlationChina" xml:space="preserve">
+    <value>來自中國的百度(Baidu)翻譯服務</value>
+  </data>
+  <data name="Str0BaiduXlatorChina" xml:space="preserve">
+    <value>來自中國的百度(Baidu)翻譯器</value>
+  </data>
+  <data name="Str0Converted2PngByMinaxProject" xml:space="preserve">
+    <value>經由 Minax 專案轉換為 .png</value>
+  </data>
+  <data name="Str0CurrentXlatorField" xml:space="preserve">
+    <value>目前翻譯器：</value>
+  </data>
+  <data name="Str0ErrorMessage" xml:space="preserve">
+    <value> 錯誤訊息：</value>
+  </data>
+  <data name="Str0ExciteXlatorJapan" xml:space="preserve">
+    <value>來自日本的 Excite 翻譯器</value>
+  </data>
+  <data name="Str0FailedClearOldTextRetry" xml:space="preserve">
+    <value>無法清除舊文，超出重試次數！</value>
+  </data>
+  <data name="Str0FailedLocation" xml:space="preserve">
+    <value>失敗位址：{0}</value>
+  </data>
+  <data name="Str0FailedTranslatedRetry" xml:space="preserve">
+    <value>翻譯文字失敗，超出重試次數！</value>
+  </data>
+  <data name="Str0FillGoogleApiChargedV2Settings" xml:space="preserve">
+    <value>填入 Google 收費翻譯 API V2 設定</value>
+  </data>
+  <data name="Str0FillMicrosoftApiChargedV3Settings" xml:space="preserve">
+    <value>填入 Microsoft 收費翻譯 API V3 設定</value>
+  </data>
+  <data name="Str0GoogleXlationAmerica" xml:space="preserve">
+    <value>來自美國的 Google 翻譯服務</value>
+  </data>
+  <data name="Str0GoogleXlationChargedAmerica" xml:space="preserve">
+    <value>來自美國的 Google 收費翻譯服務</value>
+  </data>
+  <data name="Str0GoogleXlatorAmerica" xml:space="preserve">
+    <value>來自美國的 Google 翻譯器</value>
+  </data>
+  <data name="Str0HowCreateApikey" xml:space="preserve">
+    <value>如何創建 API 金鑰(API Key)</value>
+  </data>
+  <data name="Str0HowSignUp" xml:space="preserve">
+    <value>如何註冊</value>
+  </data>
+  <data name="Str0InputField" xml:space="preserve">
+    <value>輸入：</value>
+  </data>
+  <data name="Str0IntegratedOutput" xml:space="preserve">
+    <value>整合輸出：</value>
+  </data>
+  <data name="Str0LangChineseTraditional" xml:space="preserve">
+    <value>繁體中文</value>
+  </data>
+  <data name="Str0LangEnglish" xml:space="preserve">
+    <value>英文</value>
+  </data>
+  <data name="Str0LangJapanese" xml:space="preserve">
+    <value>日文</value>
+  </data>
+  <data name="Str0MicrosoftXlationAmerica" xml:space="preserve">
+    <value>來自美國的 Microsoft 翻譯服務</value>
+  </data>
+  <data name="Str0MicrosoftXlationChargedAmerica" xml:space="preserve">
+    <value>來自美國的 Microsoft 收費翻譯服務</value>
+  </data>
+  <data name="Str0MicrosoftXlatorAmerica" xml:space="preserve">
+    <value>來自美國的 Microsoft/Bing 翻譯器</value>
+  </data>
+  <data name="Str0NavigateFailed" xml:space="preserve">
+    <value>導航到網路翻譯器位址失敗，超出重試次數！</value>
+  </data>
+  <data name="Str0NoteSecureStore" xml:space="preserve">
+    <value>注意：上方欄位內容會被保存在私有的 App 目錄中。如果你覺得這樣不安全，你不應該輸入任何內容！！</value>
+  </data>
+  <data name="Str0NoticeSrcTgtPairMayNotSupport" xml:space="preserve">
+    <value>注意：某些翻譯器引擎並不支援某些來源語言與目標語言的配對！</value>
+  </data>
+  <data name="Str0PlzInputSourceBox" xml:space="preserve">
+    <value>請在來源輸入框填入一些有意義的文字！</value>
+  </data>
+  <data name="Str0PlzSelectXlator" xml:space="preserve">
+    <value>請至少選擇一個翻譯器！</value>
+  </data>
+  <data name="Str0PreparingTranslation" xml:space="preserve">
+    <value>準備翻譯中…</value>
+  </data>
+  <data name="Str0QuickXlation" xml:space="preserve">
+    <value>快速翻譯</value>
+  </data>
+  <data name="Str0QuickXlationPlzInputText" xml:space="preserve">
+    <value>請在快速翻譯的輸入框輸入一些文字！</value>
+  </data>
+  <data name="Str0SecretKey" xml:space="preserve">
+    <value>密鑰(Secret Key)</value>
+  </data>
+  <data name="Str0SecretKeyField" xml:space="preserve">
+    <value>密鑰(Secret Key)：</value>
+  </data>
+  <data name="Str0SecretKeyToolTip" xml:space="preserve">
+    <value>來自你訂閱的翻譯服務 API 的 密鑰(Secret Key) 字串</value>
+  </data>
+  <data name="Str0ServerRegionField" xml:space="preserve">
+    <value>伺服器區域：</value>
+  </data>
+  <data name="Str0ShrinkedByMinaxProject" xml:space="preserve">
+    <value>經由 Minax 專案裁剪</value>
+  </data>
+  <data name="Str0SubKeyToolTip" xml:space="preserve">
+    <value>來自你訂閱的 Translator Text API 的 訂閱金鑰(Subscription Key) 字串</value>
+  </data>
+  <data name="Str0SubMultiServiceRegion" xml:space="preserve">
+    <value>多重服務訂閱(multi-service subscription)的區域</value>
+  </data>
+  <data name="Str0SubscriptionKey" xml:space="preserve">
+    <value>訂閱金鑰(Subscription Key)</value>
+  </data>
+  <data name="Str0SubscriptionKeyField" xml:space="preserve">
+    <value>訂閱金鑰(Subscription Key)：</value>
+  </data>
+  <data name="Str0WeblioXlatorJapan" xml:space="preserve">
+    <value>來自日本的 Weblio 翻譯器</value>
+  </data>
+  <data name="Str0WhereRequestAppIdAndSecretKey" xml:space="preserve">
+    <value>上哪兒索取 APP ID 和密鑰(Secret Key)</value>
+  </data>
+  <data name="Str0WhereRequestAppKeyAndAppSecret" xml:space="preserve">
+    <value>上哪兒索取 應用ID(appKey) 和 應用密鑰(APP Secret)</value>
+  </data>
+  <data name="Str0XlatingCancelled" xml:space="preserve">
+    <value>翻譯取消</value>
+  </data>
+  <data name="Str0XlatingFailed" xml:space="preserve">
+    <value>翻譯失敗！！</value>
+  </data>
+  <data name="Str0XlatingFailedFieldMissing" xml:space="preserve">
+    <value>翻譯失敗！！
+當使用翻譯收費 API 時，也許有些必要欄位未填寫，或是打錯字？</value>
+  </data>
+  <data name="Str0XlatingFailedNetRetry" xml:space="preserve">
+    <value>翻譯失敗！！
+請稍後重試！也許網路已斷線，或是遠端網站忙碌中…</value>
+  </data>
+  <data name="Str0XlatingResult" xml:space="preserve">
+    <value>翻譯結果</value>
+  </data>
+  <data name="Str0XlatingSucceed" xml:space="preserve">
+    <value>翻譯成功！</value>
+  </data>
+  <data name="Str0XTranserXlationJapan" xml:space="preserve">
+    <value>來自日本的 CROSS-Transer 翻譯服務</value>
+  </data>
+  <data name="Str0XTranserXlatorJapan" xml:space="preserve">
+    <value>來自日本的 CROSS-Transer 翻譯器</value>
+  </data>
+  <data name="Str0Youdao" xml:space="preserve">
+    <value>有道(Youdao)</value>
+  </data>
+  <data name="Str0YoudaoXlationChargedChina" xml:space="preserve">
+    <value>來自中國的有道(Youdao)收費翻譯服務</value>
+  </data>
+  <data name="Str0YoudaoXlationChina" xml:space="preserve">
+    <value>來自中國的有道(Youdao)翻譯服務</value>
+  </data>
+  <data name="Str0YoudaoXlatorChina" xml:space="preserve">
+    <value>來自中國的有道(Youdao)翻譯器</value>
+  </data>
+  <data name="Str1FillXlationApiChargedSettings" xml:space="preserve">
+    <value>填入{0}收費翻譯 API 設定</value>
+  </data>
+  <data name="Str1QuiclXlationInputCountMax" xml:space="preserve">
+    <value>快速翻譯輸入文字長度超過 {0}！</value>
+  </data>
+  <data name="Str1TranslateError" xml:space="preserve">
+    <value>翻譯時發生錯誤，狀態碼：{0}</value>
+  </data>
+  <data name="Str1TranslatingError" xml:space="preserve">
+    <value>翻譯時出錯：{0}</value>
+  </data>
+  <data name="Str1XlatingAbortedException" xml:space="preserve">
+    <value>翻譯取消！！例外： {0}</value>
+  </data>
+  <data name="Str1XlatingFailedException" xml:space="preserve">
+    <value>翻譯失敗！！例外： {0}</value>
+  </data>
+  <data name="Str1XlationApiCharged" xml:space="preserve">
+    <value>{0} 收費翻譯 API</value>
+  </data>
+  <data name="Str1XlationApiFree" xml:space="preserve">
+    <value>{0} 免費翻譯 API</value>
+  </data>
+  <data name="Str2InputTextCountFractions" xml:space="preserve">
+    <value>輸入要翻譯的文字，字元數目：{0}/{1}</value>
+  </data>
+  <data name="Str2TranslatedFractions" xml:space="preserve">
+    <value>已翻譯 {0}/{1}</value>
+  </data>
+  <data name="Str2TranslateErrorMessage" xml:space="preserve">
+    <value>翻譯時發生錯誤，狀態碼：{0}，訊息：{1}</value>
+  </data>
+  <data name="Str2TranslatingErrorMessage" xml:space="preserve">
+    <value>無法翻譯，錯誤碼：{0}，錯誤訊息：{1}</value>
+  </data>
+  <data name="Str2YoudaoNotSupportSrc2Tgt" xml:space="preserve">
+    <value>有道翻譯不支援從 {0} 翻譯到 {1}</value>
+  </data>
+  <data name="Str0XlationApi" xml:space="preserve">
+    <value>翻譯 API</value>
+  </data>
+  <data name="Str1FieldForApiToolTip" xml:space="preserve">
+    <value>來自你訂閱的翻譯服務 API 的 {0} 字串</value>
+  </data>
+  <data name="Str0AppId" xml:space="preserve">
+    <value>APP ID</value>
+  </data>
+  <data name="Str0InputOrPasteSourceTextToXlated" xml:space="preserve">
+    <value>輸入或貼上要翻譯的來源文字…</value>
+  </data>
+  <data name="Str0XlatorSelector" xml:space="preserve">
+    <value>選擇翻譯器</value>
+  </data>
+  <data name="Str0MsAvailableRegions" xml:space="preserve">
+    <value>可用區域</value>
+  </data>
+</root>

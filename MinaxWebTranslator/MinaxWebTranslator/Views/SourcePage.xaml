@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lang="clr-namespace:MinaxWebTranslator.Languages"
              mc:Ignorable="d" x:Class="MinaxWebTranslator.Views.SourcePage"
              Title="Source Paragraphs"
              NavigationPage.HasNavigationBar="False"
@@ -11,15 +12,15 @@
         <ScrollView Orientation="Horizontal">
             <StackLayout Grid.Column="0" Grid.Row="0" HorizontalOptions="FillAndExpand" Spacing="3"
                          VerticalOptions="StartAndExpand" Orientation="Horizontal">
-                <Button x:Name="BtnClearAndPaste" Text="Clear and Paste" Clicked="BtnClearAndPaste_Clicked" />
-                <Button x:Name="BtnClear" Text="Clear" Clicked="BtnClear_Clicked" />
-                <Button x:Name="BtnAppend" Text="Append" Clicked="BtnAppend_Clicked" />
+                <Button x:Name="BtnClearAndPaste" Text="{x:Static lang:Global.Str0ClearAndPaste}" Clicked="BtnClearAndPaste_Clicked" />
+				<Button x:Name="BtnClear" Text="{x:Static lang:Global.Str0Clear}" Clicked="BtnClear_Clicked" />
+				<Button x:Name="BtnAppend" Text="{x:Static lang:Global.Str0Append}" Clicked="BtnAppend_Clicked" />
             </StackLayout>
         </ScrollView>
 
         <Editor x:Name="EdMain" WidthRequest="150" HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand"
                 IsEnabled="True" IsSpellCheckEnabled="false"
-                Placeholder="Input or paste original text to be translated...">
+                Placeholder="{x:Static lang:WebXlator.Str0InputOrPasteSourceTextToXlated}">
         </Editor>
     </StackLayout>
 </ContentPage>

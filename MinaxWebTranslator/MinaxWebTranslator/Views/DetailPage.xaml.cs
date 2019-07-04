@@ -1,4 +1,4 @@
-﻿using MinaxWebTranslator.Models;
+using MinaxWebTranslator.Models;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -43,7 +43,7 @@ namespace MinaxWebTranslator.Views
 					this.Title = "Minax Web Translator";
 					break;
 				case MessageType.ProjectChanged:
-					if( data is ProjectModel projModel ) {
+					if( data is ProjectModel ) {
 						this.Title = $"{CurrentProject.ProjectName}* - Minax Web Translator";
 					}
 					break;

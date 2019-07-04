@@ -66,10 +66,30 @@ namespace MinaxWebTranslator.Views
 
 			InitializeComponent();
 
+			PkSourceLang.Items.Clear();
+			PkTargetLang.Items.Clear();
+			CbGlossaryOverwritePolicy.Items.Clear();
 			CbGlossarySyncFile.Items.Clear();
+
+
+			PkSourceLang.ItemsSource = new List<string> {
+				Languages.WebXlator.Str0LangJapanese,
+				Languages.WebXlator.Str0LangEnglish,
+			};
+			PkTargetLang.ItemsSource = new List<string> {
+				Languages.WebXlator.Str0LangChineseTraditional,
+				Languages.WebXlator.Str0LangEnglish,
+			};
+			CbGlossaryOverwritePolicy.ItemsSource = new List<string> {
+				Languages.ProjectGlossary.Str0Skip,
+				Languages.ProjectGlossary.Str0ForceOverwriteWithoutAsking,
+				Languages.ProjectGlossary.Str0AlwaysAsking,
+				Languages.ProjectGlossary.Str0BiggerFileSize,
+			};
+
 			CbGlossaryOverwritePolicy.SelectedIndex = 0;
 
-			mNetProgrss.ProgressChanged += async ( s1, e1 ) => {
+			mNetProgress.ProgressChanged += async ( s1, e1 ) => {
 				if( e1.PercentOrErrorCode >= 0 && e1.PercentOrErrorCode <= 100 ) {
 					MainThread.BeginInvokeOnMainThread( async () => {
 						// show download progress message...
@@ -79,7 +99,7 @@ namespace MinaxWebTranslator.Views
 						}
 
 						if( mNetWaitView != null )
-							mNetWaitView.Message = $"Please wait for operation finished...{e1.PercentOrErrorCode}%";
+							mNetWaitView.Message = string.Format(Languages.ProjectGlossary.Str1PlzWaitOperationFinished, e1.PercentOrErrorCode );
 					} );
 				}
 				await MessageHub.SendMessageAsync( this, MessageType.NetProgress, e1 );
@@ -89,7 +109,7 @@ namespace MinaxWebTranslator.Views
 		private MainPage mMainPage;
 		private ProjectModel mProject;
 		private CancellationTokenSource mCancelTokenSrource = new CancellationTokenSource();
-		private readonly Progress<Minax.ProgressInfo> mNetProgrss = new Progress<Minax.ProgressInfo>();
+		private readonly Progress<Minax.ProgressInfo> mNetProgress = new Progress<Minax.ProgressInfo>();
 		private AlertDialogPage mNetWaitDlg;
 		private Views.WaitingView mNetWaitView;
 
@@ -119,7 +139,7 @@ namespace MinaxWebTranslator.Views
 
 		private void PkSourceLang_SelectedIndexChanged( object sender, EventArgs e )
 		{
-			if( mProject == null || mProject.Project == null )
+			if( mProject == null || mProject.Project == null || PkSourceLang.ItemsSource == null )
 				return;
 
 			var newLang = SupportedSourceLanguage.Japanese;
@@ -133,7 +153,7 @@ namespace MinaxWebTranslator.Views
 
 		private void PkTargetLang_SelectedIndexChanged( object sender, EventArgs e )
 		{
-			if( mProject == null || mProject.Project == null )
+			if( mProject == null || mProject.Project == null || PkTargetLang.ItemsSource == null )
 				return;
 
 			var newLang = SupportedTargetLanguage.ChineseTraditional;
@@ -148,7 +168,7 @@ namespace MinaxWebTranslator.Views
 		private void BtnGlossaryCreateEmptyFolders_Clicked( object sender, EventArgs e )
 		{
 			var result = ProjectManager.Instance.CreateProjectFolders( ProjectManager.Instance.MappingMonitor.BaseProjectPath );
-			CrossToastPopUp.Current.ShowToastMessage( "Create Glossary sub-folders succeed!" );
+			CrossToastPopUp.Current.ShowToastMessage( Languages.ProjectGlossary.Str0CreateGlossaryFolderSucceed );
 			// NO NEED to reloading Mapping tables!
 			//NeedReloading = false;
 		}
@@ -173,12 +193,12 @@ namespace MinaxWebTranslator.Views
 
 			// show waiting dialog...
 			if( mNetWaitView == null )
-				mNetWaitView = new WaitingView { Message = "Please wait for operation finished...0%" };
+				mNetWaitView = new WaitingView { Message = string.Format( Languages.ProjectGlossary.Str1PlzWaitOperationFinished, 0 ) };
 
 			if( mNetWaitDlg != null ) {
 				await mNetWaitDlg.Dismiss();
 			} else {
-				mNetWaitView.Message = "Please wait for operation finished...0%";
+				mNetWaitView.Message = string.Format( Languages.ProjectGlossary.Str1PlzWaitOperationFinished, 0 );
 				mNetWaitDlg = new AlertDialogBuilder()
 					.SetView( mNetWaitView )
 					.SetPositiveButton( Languages.Global.Str0Cancel, async () => {
@@ -194,10 +214,10 @@ namespace MinaxWebTranslator.Views
 			var rst = await ProjectManager.Instance.FetchFilesByFileListLink(
 					CbGlossarySyncFile.SelectedItem.ToString(),
 					ProjectManager.Instance.MappingMonitor.BaseProjectPath, policy,
-					mCancelTokenSrource, mNetProgrss, this );
+					mCancelTokenSrource, mNetProgress, this );
 
 			if( rst == false ) {
-				await DisplayAlert( "Operation Failed", "Download remote Glossary file(s) by file link failed!", "OK" );
+				await DisplayAlert( Languages.Global.Str0OperationFailed, Languages.ProjectGlossary.Str0DownloadRemoteGlossaryFilesByLinkFailed, Languages.Global.Str0Ok );
 				ProjectManager.Instance.MappingMonitor?.Start();
 				return;
 			}
@@ -206,10 +226,10 @@ namespace MinaxWebTranslator.Views
 			ProjectManager.Instance.MappingMonitor?.ReloadFileList();
 			NeedReloading = true;
 			if( rst ) {
-				CrossToastPopUp.Current.ShowToastMessage( "Download and merge remote Glossary file(s) succeed!" );
+				CrossToastPopUp.Current.ShowToastMessage( Languages.ProjectGlossary.Str0DownloadAndMergeRemoteGlossaryFilesSucceed );
 			}
 			else {
-				await DisplayAlert( "Opertion Finished", "Merge remote Glossary file(s) failed!", "OK" );
+				await DisplayAlert( Languages.Global.Str0OperationFinished, Languages.ProjectGlossary.Str0MergeGlossaryFilesFailed, Languages.Global.Str0Ok );
 			}
 		}
 
@@ -217,7 +237,7 @@ namespace MinaxWebTranslator.Views
 		{
 			RemoteSyncFileListSettingsPage page = new RemoteSyncFileListSettingsPage( mMainPage );
 
-			await (mMainPage.Detail as NavigationPage)?.PushAsync( new NavigationPage( page ) { Title = "Remote Sync. File List Settings" } );
+			await (mMainPage.Detail as NavigationPage)?.PushAsync( new NavigationPage( page ) { Title = Languages.ProjectGlossary.Str0RemoteSyncFileListSettings } );
 		}
 
 		private void SwMonitorAutoMergeWhenFileChanged_Toggled( object sender, ToggledEventArgs e )

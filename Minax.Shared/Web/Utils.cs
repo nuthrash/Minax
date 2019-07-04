@@ -38,7 +38,7 @@ namespace Minax.Web
 					if( response == null || response.IsSuccessStatusCode == false ) {
 						progress?.Report( new ProgressInfo {
 							PercentOrErrorCode = -1,
-							Message = $"Cannot fetch remote glossary list file.",
+							Message = Languages.Global.Str0CantFetchRemoteGlossaryFileList,
 							InfoObject = response,
 						} );
 						return false;
@@ -48,7 +48,7 @@ namespace Minax.Web
 					if( string.IsNullOrWhiteSpace( responseString ) ) {
 						progress?.Report( new ProgressInfo {
 							PercentOrErrorCode = 100,
-							Message = $"No glossary file can fetch.",
+							Message = Languages.Global.Str0NoGlossaryFileCanFetch,
 						} );
 						return true;
 					}
@@ -57,7 +57,7 @@ namespace Minax.Web
 					if( remoteRelFiles == null || remoteRelFiles.Length <= 0 ) {
 						progress?.Report( new ProgressInfo {
 							PercentOrErrorCode = 100,
-							Message = $"No glossary file can fetch.",
+							Message = Languages.Global.Str0NoGlossaryFileCanFetch,
 						} );
 						return true;
 					}
@@ -101,8 +101,8 @@ namespace Minax.Web
 
 						exit1:
 							progress?.Report( new ProgressInfo {
-								PercentOrErrorCode = (i + 1) / remoteRelFiles.Length,
-								Message = $"Fetched {i + 1}/{remoteRelFiles.Length} files.",
+								PercentOrErrorCode = (i + 1) * 100 / remoteRelFiles.Length,
+								Message = string.Format( Languages.Global.Str2FetchFilesFractions, i + 1, remoteRelFiles.Length ),
 							} );
 						}
 						catch { }
@@ -120,7 +120,7 @@ namespace Minax.Web
 
 			progress?.Report( new ProgressInfo {
 				PercentOrErrorCode = 100,
-				Message = $"All glossary files fetched.",
+				Message = Languages.Global.Str0AllGlossaryFileFetched,
 			} );
 
 			return true;
@@ -150,7 +150,7 @@ namespace Minax.Web
 					response.StatusCode != FtpStatusCode.CommandOK ) {
 					progress?.Report( new ProgressInfo {
 						PercentOrErrorCode = 100,
-						Message = $"Cannot fetch remote glossary list file.",
+						Message = Languages.Global.Str0CantFetchRemoteGlossaryFileList,
 						InfoObject = response,
 					} );
 					return false;
@@ -166,7 +166,7 @@ namespace Minax.Web
 				if( string.IsNullOrWhiteSpace( responseString ) ) {
 					progress?.Report( new ProgressInfo {
 						PercentOrErrorCode = 100,
-						Message = $"No glossary file can fetch.",
+						Message = Languages.Global.Str0NoGlossaryFileCanFetch,
 					} );
 					return false;
 				}
@@ -175,7 +175,7 @@ namespace Minax.Web
 				if( remoteRelFiles == null || remoteRelFiles.Length <= 0 ) {
 					progress?.Report( new ProgressInfo {
 						PercentOrErrorCode = 100,
-						Message = $"No glossary file can fetch.",
+						Message = Languages.Global.Str0NoGlossaryFileCanFetch,
 					} );
 					return true;
 				}
@@ -229,8 +229,8 @@ namespace Minax.Web
 						}
 
 						progress?.Report( new ProgressInfo {
-							PercentOrErrorCode = (i + 1) / remoteRelFiles.Length,
-							Message = $"Fetched {i + 1}/{remoteRelFiles.Length} files.",
+							PercentOrErrorCode = (i + 1) * 100 / remoteRelFiles.Length,
+							Message = string.Format( Languages.Global.Str2FetchFilesFractions, i + 1, remoteRelFiles.Length ),
 						} );
 					}
 					catch { }
@@ -247,7 +247,7 @@ namespace Minax.Web
 
 			progress?.Report( new ProgressInfo {
 				PercentOrErrorCode = 100,
-				Message = $"All glossary files fetched.",
+				Message = Languages.Global.Str0AllGlossaryFileFetched,
 			} );
 
 			return true;

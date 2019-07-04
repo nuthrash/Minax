@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MinaxWebTranslator.Desktop.Models;
 using System;
@@ -178,7 +178,7 @@ namespace MinaxWebTranslator.Desktop.Views
 
 					MatsTempSave.Visibility = Visibility.Visible;
 					if( field.Value is SecureString ss ) {
-						TextBoxHelper.SetWatermark( pb, $"Current secure string length is {ss.Length}" );
+						TextBoxHelper.SetWatermark( pb, string.Format( Languages.Global.Str1CurrentSecureStringLength, ss.Length) );
 						TextBoxHelper.SetUseFloatingWatermark( pb, true );
 						pb.Password = ss.ConvertToString();
 					}

@@ -1,4 +1,4 @@
-﻿using Minax.Collections;
+using Minax.Collections;
 using MinaxWebTranslator.Models;
 using System;
 using System.Collections.Generic;
@@ -137,8 +137,9 @@ namespace MinaxWebTranslator.Views
 
 		private async void BtnRecentProjClearAll_Clicked( object sender, EventArgs e )
 		{
-			var rst = await DisplayAlert( "Delete Confirm", "Are you sure want to delete all Recent Project list?",
-								"Yes", "No" );
+			var rst = await DisplayAlert( Languages.Global.Str0DeleteConfirm,
+								Languages.ProjectGlossary.Str0ClearExistedRecentProjectListAsk,
+								Languages.Global.Str0Yes, Languages.Global.Str0No );
 			if( rst == true )
 				ProjectManager.Instance.ClearRecentProjects();
 		}
