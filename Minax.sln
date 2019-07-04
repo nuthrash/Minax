@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{73D23905-CB76-4BF7-B7BD-DE3704C42DDE}"
 	ProjectSection(SolutionItems) = preProject
 		Readme.md = Readme.md
+		Readme.zh-Hant.md = Readme.zh-Hant.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{762B31B6-CC49-4FC0-B7B2-D0CEC948E2AE}"
@@ -13,17 +14,21 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{64146C1A-71AC-42D1-A7BD-4DEEF24ACA68}"
 	ProjectSection(SolutionItems) = preProject
 		Assets\Images\Readme.md = Assets\Images\Readme.md
+		Assets\Images\Readme.zh-Hant.md = Assets\Images\Readme.zh-Hant.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MinaxWebTranslator", "MinaxWebTranslator", "{F4B0E700-AC95-44AD-93D8-5D896B5C6209}"
 	ProjectSection(SolutionItems) = preProject
 		MinaxWebTranslator\Concepts.md = MinaxWebTranslator\Concepts.md
+		MinaxWebTranslator\Concepts.zh-Hant.md = MinaxWebTranslator\Concepts.zh-Hant.md
 		MinaxWebTranslator\Readme.md = MinaxWebTranslator\Readme.md
+		MinaxWebTranslator\Readme.zh-Hant.md = MinaxWebTranslator\Readme.zh-Hant.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TranslationProjects", "TranslationProjects", "{192E2ED9-5378-4D28-ACAB-22E9E06D5AA6}"
 	ProjectSection(SolutionItems) = preProject
 		MinaxWebTranslator\TranslationProjects\Readme.md = MinaxWebTranslator\TranslationProjects\Readme.md
+		MinaxWebTranslator\TranslationProjects\Readme.zh-Hant.md = MinaxWebTranslator\TranslationProjects\Readme.zh-Hant.md
 	EndProjectSection
 EndProject
 Global

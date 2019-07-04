@@ -2,17 +2,19 @@
 
 # Overview
 **Minax Web Translator** app is **not** a translator. It just an **agent and text mapping-replacer** for remote web translator/translation result.
-It works with some online web sites and APIs, such as Excite, CROSS-transer, Weblio, Baidu, Youdao, Google, Microsoft/Bing etc..
+It works with some online web sites and APIs, such as **Excite, CROSS-transer, Weblio, Baidu, Youdao, Google, Microsoft/Bing** etc..
 
 - Wiki: [https://github.com/nuthrash/Minax/wiki](https://github.com/nuthrash/Minax/wiki)
 - Sample Projects: [https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects](https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects)
+
+[Readme - 繁體中文版](./Readme.zh-Hant.md)
 
 <br />
 
 ---
 
 # Concepts and Translation API information
-See [Conepts.md](./Concepts.md)
+See [Conepts.md](./Concepts.md)  ([Concepts - 繁體中文版](./Concepts.zh-Hant.md))
 <br />
 <br />
 
@@ -30,6 +32,8 @@ See [Conepts.md](./Concepts.md)
 
 - Startup
 <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main1.jpg" title="MWT Desktop Main - Startup">
+
+<br />
 
 - Draggable and Dockable Panels
 <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main2-Dockable.jpg" title="MWT Desktop Main - Drag and Dockable">
@@ -80,7 +84,7 @@ therefore the Input box is restricted to max 500 words.
 ![MWT-WinDesktop-QuickTranslation2](../Assets/Images/ScreenShots/MWT-WinDesktop-QuickTranslation2.jpg "Quick Translation Panel")
 
 The basic usage is same with main translating feature, besides you can select multiple Translators to translate short text simultaneously.
-And the "Integrated Output" box would integrate all selected Translators' output text to a single section.  
+And the "Integrated Output" box would integrate all selected Translators' output text to a single section.
 
 ---
 
@@ -97,19 +101,23 @@ And the "Integrated Output" box would integrate all selected Translators' output
   1. Operating System: Android 5.0 (API Level 21 - Lollipop) and above
   2. Target API Version: Android 9.0 (API Level 28 - Pie)
   3. Privilege Access: local storage, network, cache, diagnostic, account, external store, write settings, write secure settings
+- Not Support
+  1. Auto restore original content after App sleep
+  2. File Changed Monitor
+
+<br />
 
 #### Main Page
 - Startup
 
 <img src="../Assets/Images/ScreenShots/MWT-Droid-Main.png" width="256 " title="MWT Droid Main - Startup">
 
-
 #### Menu
-- No project opened  
+- No project opened
 
 <img src="../Assets/Images/ScreenShots/MWT-Droid-Menu1.png" width="256 " title="MWT Droid Menu - No project opened">
 
-- Project opened (some menu items would show after project opened)  
+- Project opened (some menu items would show after project opened)
 
 <img src="../Assets/Images/ScreenShots/MWT-Droid-Menu2.png" width="256 " title="MWT Droid Menu - Project opened">
 
@@ -150,8 +158,7 @@ Therefore, when you encounter some problems in translating, first thing is to ch
 Sometimes, it just caused by network latency.
 Maybe after you retry the operation, it would work again.  
 
-In addition to the network problem, there are other situations which may cause the operation failed.  
+In addition to the network problem, there are other situations which cause the operation failed.  
 One of them is the service providers changed their HTML codes. Another situation maybe they blocked out-of-quota requests.  
 The latter might be resolved by retrying later in hours.  
 The former shall call the programmer to see what happened.
-

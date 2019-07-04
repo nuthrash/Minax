@@ -21,7 +21,7 @@
 <ul>
 <li>In fact, many translating engines would replace text to strange format, like &quot;1.23&quot; to &quot;1,23&quot;. It seems caused by localization culture number format.</li>
 <li>Therefore, we shall find the non-replaceable string format rules for each engine.</li>
-<li>Some translating engine, like <strong>Microsoft Translator Text API V3</strong>, directly support this feature by inserting some pre-defined HTML element class name</li>
+<li>Some translating engine, like <strong>Microsoft Translator Text API V3</strong>, directly support this feature by inserting some pre-defined HTML element <code>class</code> name</li>
 </ul>
 <br />
 <h3 id="translator-or-translation">Translator or Translation</h3>
@@ -37,8 +37,8 @@
 <li><code>Description</code>: The text describe this <code>MappingEntry</code>'s meanings or comments.</li>
 <li><code>Comment</code>: The extra text to comment this <code>MappingEntry</code> about something.</li>
 </ol>
-<p>The screenshot:
-<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-MappingProject.jpg" alt="MWT-WinDesktop-MappingProject" title="MWT MappingProject of Desktop version" /></p>
+<p>The screenshot:</p>
+<p><img src="../Assets/Images/ScreenShots/MWT-WinDesktop-MappingProject.jpg" alt="MWT-WinDesktop-MappingProject" title="MWT MappingProject of Desktop version" /></p>
 <br />
 <p>MappingEntry entries are located in</p>
 <ol>
@@ -74,7 +74,7 @@ It might be a simple two columns text file, table-based text file, Excel file, T
 <li>Columns
 <ul>
 <li>First row may be Column Name, or row data</li>
-<li>Like <code>MappingEntry</code>, when a glossary file has first row with Column Name, their sequence is prefer <code>OriginalText</code>, <code>MappingText</code>, <code>Category</code>, <code>Description</code>, and <code>Comment</code>.</li>
+<li>Like <code>MappingEntry</code>, when a glossary file has first row with Column Name, their sequence shall be <code>OriginalText</code>, <code>MappingText</code>, <code>Category</code>, <code>Description</code>, and <code>Comment</code>.</li>
 <li>Otherwise, first-two column names shall be <code>OriginalText</code> and <code>MappingText</code>. Other fields are optional.</li>
 <li>That means, <strong>each glossary file shall has at least two columns</strong> for <code>OriginalText</code> and <code>MappingText</code> (like <a href="https://translate.google.com/toolkit">Google Translation toolkit</a> ), and the Column Name row is not necessary.</li>
 </ul>
@@ -135,7 +135,7 @@ Just a Project configuration file (.conf) is enough to use this App, and the Glo
 </ul>
 <br />
 <hr />
-<h1 id="translation-api-services">Translation API Services</h1>
+<h1 id="translation-services-api">Translation Services API</h1>
 <h2 id="microsoft-translator-text-api-v3.0">Microsoft Translator Text API v3.0</h2>
 <ul>
 <li>Documents: <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-reference">https://docs.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-reference</a></li>
@@ -147,7 +147,7 @@ Just a Project configuration file (.conf) is enough to use this App, and the Glo
 <li>How to create API key: <a href="https://cloud.google.com/docs/authentication/api-keys">https://cloud.google.com/docs/authentication/api-keys</a></li>
 <li>Cloud Translation API v3 (beta): <a href="https://cloud.google.com/translate/docs/intro-to-v3">https://cloud.google.com/translate/docs/intro-to-v3</a>
 <ul>
-<li>In this version, it seems has free quota (200000? words)!!</li>
+<li>In this version, it seems has free quota (500000? words)!!</li>
 </ul>
 </li>
 </ul>

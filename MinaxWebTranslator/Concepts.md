@@ -15,7 +15,7 @@ That's all.
 This term means the string would be keeped after translating, like "ABC123".
 - In fact, many translating engines would replace text to strange format, like "1.23" to "1,23". It seems caused by localization culture number format.
 - Therefore, we shall find the non-replaceable string format rules for each engine.
-- Some translating engine, like **Microsoft Translator Text API V3**, directly support this feature by inserting some pre-defined HTML element class name
+- Some translating engine, like **Microsoft Translator Text API V3**, directly support this feature by inserting some pre-defined HTML element `class` name
 
 <br />
 
@@ -33,6 +33,7 @@ This class contains five fields:
 5. `Comment`: The extra text to comment this `MappingEntry` about something.
 
 The screenshot:
+
 ![MWT-WinDesktop-MappingProject](../Assets/Images/ScreenShots/MWT-WinDesktop-MappingProject.jpg "MWT MappingProject of Desktop version")
 
 <br />
@@ -65,7 +66,7 @@ It might be a simple two columns text file, table-based text file, Excel file, T
 - **Each file shall be UTF-8 encoded with BOM** .
 - Columns
   - First row may be Column Name, or row data
-  - Like `MappingEntry`, when a glossary file has first row with Column Name, their sequence is prefer `OriginalText`, `MappingText`, `Category`, `Description`, and `Comment`.
+  - Like `MappingEntry`, when a glossary file has first row with Column Name, their sequence shall be `OriginalText`, `MappingText`, `Category`, `Description`, and `Comment`.
   - Otherwise, first-two column names shall be `OriginalText` and `MappingText`. Other fields are optional.
   - That means, **each glossary file shall has at least two columns** for `OriginalText` and `MappingText` (like [Google Translation toolkit](https://translate.google.com/toolkit) ), and the Column Name row is not necessary.
 
@@ -112,7 +113,7 @@ Only <u>MWT Windows Desktop version</u> has this feature!
 
 ---
 
-# Translation API Services
+# Translation Services API 
 
 ## Microsoft Translator Text API v3.0
 
@@ -124,7 +125,7 @@ Only <u>MWT Windows Desktop version</u> has this feature!
 - Documents: https://cloud.google.com/translate/docs
 - How to create API key: https://cloud.google.com/docs/authentication/api-keys
 - Cloud Translation API v3 (beta): https://cloud.google.com/translate/docs/intro-to-v3
-  - In this version, it seems has free quota (200000? words)!!
+  - In this version, it seems has free quota (500000? words)!!
 
 ## Baidu Translation API (百度翻译开放平台)
 

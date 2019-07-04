@@ -8,15 +8,16 @@
     <img src="../Assets/Images/Translator.png" width="64" title="Translator App Icon">
 <h1 id="overview">Overview</h1>
 <p><strong>Minax Web Translator</strong> app is <strong>not</strong> a translator. It just an <strong>agent and text mapping-replacer</strong> for remote web translator/translation result.
-It works with some online web sites and APIs, such as Excite, CROSS-transer, Weblio, Baidu, Youdao, Google, Microsoft/Bing etc..</p>
+It works with some online web sites and APIs, such as <strong>Excite, CROSS-transer, Weblio, Baidu, Youdao, Google, Microsoft/Bing</strong> etc..</p>
 <ul>
 <li>Wiki: <a href="https://github.com/nuthrash/Minax/wiki">https://github.com/nuthrash/Minax/wiki</a></li>
 <li>Sample Projects: <a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects">https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects</a></li>
 </ul>
+<p><a href="./Readme.zh-Hant.md">Readme - 繁體中文版</a></p>
 <br />
 <hr />
 <h1 id="concepts-and-translation-api-information">Concepts and Translation API information</h1>
-<p>See <a href="./Concepts.md">Conepts.md</a>
+<p>See <a href="./Concepts.md">Conepts.md</a>  (<a href="./Concepts.zh-Hant.md">Concepts - 繁體中文版</a>)
 <br />
 <br /></p>
 <hr />
@@ -34,9 +35,11 @@ It works with some online web sites and APIs, such as Excite, CROSS-transer, Web
 </ul>
 <h3 id="main-window">Main Window</h3>
 <ul>
-<li><p>Startup
-<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main1.jpg" title="MWT Desktop Main - Startup"></p>
-</li>
+<li>Startup
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main1.jpg" title="MWT Desktop Main - Startup"></li>
+</ul>
+<br />
+<ul>
 <li><p>Draggable and Dockable Panels
 <img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main2-Dockable.jpg" title="MWT Desktop Main - Drag and Dockable"></p>
 <ul>
@@ -126,7 +129,14 @@ And the &quot;Integrated Output&quot; box would integrate all selected Translato
 <li>Privilege Access: local storage, network, cache, diagnostic, account, external store, write settings, write secure settings</li>
 </ol>
 </li>
+<li>Not Support
+<ol>
+<li>Auto restore original content after App sleep</li>
+<li>File Changed Monitor</li>
+</ol>
+</li>
 </ul>
+<br />
 <h4 id="main-page">Main Page</h4>
 <ul>
 <li>Startup</li>
@@ -183,7 +193,7 @@ No App can ensure remote services always online or usable, because the network a
 <p>Therefore, when you encounter some problems in translating, first thing is to check your environment, then retry again.
 Sometimes, it just caused by network latency.
 Maybe after you retry the operation, it would work again.</p>
-<p>In addition to the network problem, there are other situations which may cause the operation failed.<br />
+<p>In addition to the network problem, there are other situations which cause the operation failed.<br />
 One of them is the service providers changed their HTML codes. Another situation maybe they blocked out-of-quota requests.<br />
 The latter might be resolved by retrying later in hours.<br />
 The former shall call the programmer to see what happened.</p>

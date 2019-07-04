@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>概觀</title>
+</head>
+<body>
+
+    <img src="../Assets/Images/Translator.png" width="64" title="Translator App Icon">
+<h1 id="section">概觀</h1>
+<p><strong>Minax Web Translator</strong> 程式<strong>並非</strong>翻譯器。僅是個遠端翻譯器或翻譯服務的<strong>代理者與對應文字替換器</strong>罷了。
+其工作運作原理是依靠一些線上網站與 APIs，比如說<strong>Excite、CROSS-transer、Weblio、Baidu、Youdao、Google、Microsoft/Bing</strong>等等。</p>
+<ul>
+<li>維基： <a href="https://github.com/nuthrash/Minax/wiki">https://github.com/nuthrash/Minax/wiki</a></li>
+<li>翻譯專案範例： <a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects">https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/TranslationProjects</a></li>
+</ul>
+<br />
+<hr />
+<h1 id="api">概念與翻譯服務 API 資訊</h1>
+<p>參見 <a href="./Concepts.zh-Hant.md">Conepts.zh-Hant.md</a>
+<br />
+<br /></p>
+<hr />
+<h1 id="section-1">用法與需求</h1>
+<h2 id="windows">Windows 桌面版</h2>
+<ul>
+<li>專案目錄： <a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/MinaxWebTranslator.Desktop">MinaxWebTranslator.Desktop</a></li>
+<li>系統需求：
+<ol>
+<li>作業系統： Windows 7 Service Pack 1 (SP1) 含以上</li>
+<li>.Net Framework： <a href="https://dotnet.microsoft.com/download/dotnet-framework/net47">4.7</a> 含以上</li>
+<li>存取權限： 本地端儲存、網路</li>
+</ol>
+</li>
+</ul>
+<h3 id="section-2">主視窗</h3>
+<ul>
+<li>剛啟動
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main1.zh-Hant.jpg" title="MWT Desktop Main - 剛啟動"></li>
+</ul>
+<br />
+<ul>
+<li><p>可拖拉與停駐的面板
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main2-Dockable.jpg" title="MWT 桌面主畫面 - 可拖拉並停駐"></p>
+<ul>
+<li>可以拖拉並到處停駐每個面板 <br /></li>
+<li>並且恢復到原始面板停駐佈局，經由 選單 → 面板佈局 → 恢復原始佈局<br />
+<br />
+<br /></li>
+</ul>
+</li>
+<li><p>可隱藏面板
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Main3-Hideable.jpg" title="MWT 桌面主畫面 - 可隱藏"></p>
+<ul>
+<li>可以隱藏某些面板以聚焦在目標（Target）面板上</li>
+</ul>
+</li>
+</ul>
+<h3 id="section-3">選單</h3>
+<ul>
+<li><p>專案新建、開啟、儲存、關閉和最近使用專案
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Menu1-RecentProjectWithTooltip.zh-Hant.jpg" title="MWT桌面選單1 - 最近使用專案提示"></p>
+<ul>
+<li>建立新專案： 選單 → 專案 → 新建 <br /></li>
+<li>開啟現存專案： 選單 → 專案 → 開啟 <br /></li>
+<li>儲存已開啟專案： 選單 → 專案 → 儲存 <br /></li>
+<li>關閉已開啟專案： 選單 → 專案 → 關閉 <br /></li>
+<li>開啟一個最近專案： 選單 → 專案 → 最近使用專案 → 點擊某個想開啟的專案 <br />
+<ul>
+<li>當滑鼠停駐在某個最近使用專案項目上時，會蹦現出關於該專案的提示表格<br />
+<br /></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>翻譯器</p>
+<ul>
+<li>選擇某個翻譯器並填寫必要欄位： 選單 → 翻譯器
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Translator1.zh-Hant.jpg" title="MWT 桌面翻譯器1"> <br /></li>
+<li>當選擇一個<strong>收費</strong>翻譯服務 API時，你可能需要填入一些必要內容或是先留空直到點擊翻譯鍵時才詢問內容
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Translator2.zh-Hant.jpg" title="MWT 桌面翻譯器2"></li>
+</ul>
+</li>
+</ul>
+<br />
+<h3 id="section-4">翻譯</h3>
+<p>此為本程式的主要功能，主要是用來翻譯較長的文章</p>
+<ul>
+<li><p>第一步： 開啟或建立一個翻譯專案</p>
+</li>
+<li><p>第二步： 選擇想採用的翻譯器（選單 → 翻譯器）</p>
+</li>
+<li><p>第三步： 建立或調整位於 Mapping 面板的某些 Mapping 條目</p>
+</li>
+<li><p>第四步： 在來源面板的輸入框填入一些文字</p>
+</li>
+<li><p>第五步： 點擊目標面板的翻譯鍵
+<img src="../Assets/Images/ScreenShots/MWT-WinDesktop-Target3-note.zh-Hant.jpg" title="MWT Desktop Translator1"></p>
+<ul>
+<li>翻譯完成的文字會顯示在目標面板的目標輸入框中 <br /></li>
+<li>對應到的文字會以<strong>粗體字</strong>標記</li>
+</ul>
+<br />
+</li>
+</ul>
+<h3 id="section-5">快速翻譯</h3>
+<p>這是個簡化的快速翻譯功能，主要是用來翻譯一小段文字，
+因此輸入框可輸入文字長度被限制最長500個字。</p>
+<p><img src="../Assets/Images/ScreenShots/MWT-WinDesktop-QuickTranslation2.zh-Hant.jpg" alt="MWT-WinDesktop-QuickTranslation2" title="快速翻譯面板" /></p>
+<p>基本用法類似主要的翻譯功能，除此之外還可以選擇多個翻譯器來同時翻譯一小段文字。
+而「整合輸出」框則是將所有勾選的翻譯器輸出整合在一起。</p>
+<br />
+<hr />
+<h2 id="xamarin.forms">Xamarin.Forms</h2>
+<ul>
+<li>基礎專案目錄： <a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/MinaxWebTranslator">MinaxWebTranslator</a></li>
+<li>系統需求：
+<ol>
+<li>作業系統： 依據每個子專案的平台而不同</li>
+<li>存取權限： 本地端儲存、網路</li>
+</ol>
+</li>
+</ul>
+<h3 id="android">Android</h3>
+<ul>
+<li>專案目錄： <a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/MinaxWebTranslator.Android">MinaxWebTranslator.Android</a></li>
+<li>系統需求
+<ol>
+<li>作業系統： Android 5.0 (API Level 21 - Lollipop) 含以上</li>
+<li>目標 API 版本： Android 9.0 (API Level 28 - Pie)</li>
+<li>存取權限： 本地端儲存、網路、快取、診斷、帳戶、外部儲存、設定寫入、安全性設定寫入</li>
+</ol>
+</li>
+<li>不支援功能
+<ol>
+<li>App 休眠後自動載入原來狀態</li>
+<li>檔案變動監視</li>
+</ol>
+</li>
+</ul>
+<br />
+<h4 id="section-6">主頁面</h4>
+<ul>
+<li>剛啟動</li>
+</ul>
+<img src="../Assets/Images/ScreenShots/MWT-Droid-Main.zh-Hant.png" width="256 " title="MWT Droid 主畫面 - 剛啟動">
+<br />
+<br />
+<h4 id="section-7">選單</h4>
+<ul>
+<li>尚未開啟專案</li>
+</ul>
+<img src="../Assets/Images/ScreenShots/MWT-Droid-Menu1.zh-Hant.png" width="256 " title="MWT Droid 選單 - 尚未開啟專案">
+<ul>
+<li>已開啟專案（某些選單項目會在開啟專案後顯示出來）</li>
+</ul>
+<img src="../Assets/Images/ScreenShots/MWT-Droid-Menu2.zh-Hant.png" width="256 " title="MWT Droid 選單 - 已開啟專案">
+<br />
+<br />
+<hr />
+<h2 id="section-8">翻譯器選擇</h2>
+<p>本程式有許多不同的翻譯器或是翻譯服務可供選擇。
+但是，Android 版則是由於作業系統的限制僅能提供較少選擇。</p>
+<p>除此之外，並非所有翻譯引擎可以支援任何來源語言和目標語言的翻譯。
+因此，我只有在 App 選項中放上2個來源語言和2個目標語言，這是因為我比較熟習這些語言。</p>
+<p>選擇翻譯器的規則很簡單：</p>
+<ol>
+<li>選擇較熟悉來源語言的引擎
+<ul>
+<li>來自美國的 Google Translate，比較熟悉英文</li>
+<li>來自日本的 Excite Translator，比較熟悉日文</li>
+<li>來自中國的百度翻譯器，比較熟悉中文</li>
+</ul>
+</li>
+<li>選擇較熟習目標語言的引擎
+<ul>
+<li>根據 1.，可以了解並選擇了較熟悉來源語言的引擎</li>
+<li>所選引擎有可能不熟悉目標語言
+<ul>
+<li>比如說，中文是一種語素文字（Logogram），而英文則是一種拼音文字（Phonogram），這兩種文字的文法和排列差別很大。</li>
+<li>當選用 Google Translate 來翻譯從英文到日文的內容時，你會發現翻譯結果是還可接受的。但是反方向則並不一定如此。</li>
+<li>當選用百度翻譯器來互譯中文和日文，其翻譯結果在兩個方向都是可接受的，這是因為這兩種語文都是語素文字。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>按下（翻譯鍵）並祈禱
+<ul>
+<li>不管怎樣，這些翻譯引擎都是機器翻譯（Machine Translation），實在不應該期待它們會翻的完美無缺！！</li>
+</ul>
+</li>
+</ol>
+<p>如果你看不懂我在說些什麼，你可以多方嘗試每個引擎來找出最適合你用的引擎。</p>
+<br />
+<h3 id="section-9">服務可用性</h3>
+<p>本程式基本上非常依賴遠端網路翻譯服務，不管是經由網頁或是網路 API。
+沒有任何程式可以保證遠端服務永遠在線或是一直可用，這是因為網路和服務可用性是非常依靠使用者環境的。</p>
+<p>因此，當你在翻譯時遇到某些問題時，第一件事就是檢查你的環境並重試。
+有時候，那只是因為網路延遲所造成的。
+也許在重試操作後，就可以重新運作了。</p>
+<p>除了網路問題之外，仍有許多狀況會造成操作失敗。<br />
+其中之一就是服務提供者改變了他們的 HTML 程式。另一個則是他們擋掉了超出流量的翻譯要求。<br />
+後者也許可以在幾個小時後重試來解決。<br />
+前者則需由程式設計師來看看發生了啥事。</p>
+
+
+</body>
+</html>
