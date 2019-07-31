@@ -54,7 +54,6 @@ namespace MinaxWebTranslator.Desktop.Views
 		private ProjectModel mProject;
 		private bool mProjChanged = false;
 
-
 		private TranslatorSelector mCurrentXlator = null;
 		private RemoteType mCurrentRemoteTranslator = RemoteType.Excite;
 
@@ -473,13 +472,17 @@ namespace MinaxWebTranslator.Desktop.Views
 				return;
 			}
 
-			// add new mapping entry to collection
+			// add new Mapping entry to collection
 			var model = new MappingMonitor.MappingModel { OriginalText = newOrig, ProjectBasedFileName = mProject.FileName };
 			model.PropertyChanged += MappingModel_PropertyChanged;
 			mProject?.Project?.MappingTable?.Add( model );
 			list.Add( model );
 			_SetProjChanged();
 
+			// scroll to new Mapping entry
+			DgMappingProjConf.SelectedItem = model;
+			DgMappingProjConf.UpdateLayout();
+			DgMappingProjConf.ScrollIntoView( model );
 		}
 
 		private void BtnMappingProjConfDeleteEntry_Click( object sender, RoutedEventArgs e )
@@ -530,16 +533,10 @@ namespace MinaxWebTranslator.Desktop.Views
 
 		private void DgMappingProjConf_SelectionChanged( object sender, SelectionChangedEventArgs e )
 		{
-			if( DgMappingProjConf.SelectedItem == null ) {
-				BtnMappingProjConfDeleteEntry.IsEnabled = false;
-				BtnMappingProjConfMoveUp.IsEnabled = false;
-				BtnMappingProjConfMoveDown.IsEnabled = false;
-			}
-			else {
-				BtnMappingProjConfDeleteEntry.IsEnabled = true;
-				BtnMappingProjConfMoveUp.IsEnabled = true;
-				BtnMappingProjConfMoveDown.IsEnabled = true;
-			}
+			var en = DgMappingProjConf.SelectedItem != null;
+			BtnMappingProjConfDeleteEntry.IsEnabled = en;
+			BtnMappingProjConfMoveUp.IsEnabled = en;
+			BtnMappingProjConfMoveDown.IsEnabled = en;
 		}
 	}
 }

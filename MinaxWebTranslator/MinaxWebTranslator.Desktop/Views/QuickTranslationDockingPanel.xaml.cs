@@ -4,7 +4,7 @@ using Minax.Web.Translation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -237,6 +237,7 @@ namespace MinaxWebTranslator.Desktop.Views
 			this.IsTranslating = true;
 			TbQuickTrans.Text = Languages.Global.Str0Cancel;
 			MaprQuickTrans.Visibility = Visibility.Visible;
+			BtnQuickClearAndPaste.IsEnabled = false;
 			foreach( var rtb in mRtbs ) {
 				rtb.IsEnabled = false;
 			}
@@ -271,18 +272,21 @@ namespace MinaxWebTranslator.Desktop.Views
 			mCancelTokenSrource = new CancellationTokenSource();
 
 			if( CbQuickXLang.IsChecked == true ) {
-				RtbQuickIntOutput.AppendText( RtbQuickXLangOutput.GetAllText() );
+				RtbQuickIntOutput.AppendBlocks( RtbQuickXLangOutput );
 			}
 			if( CbQuickBaidu.IsChecked == true ) {
-				RtbQuickIntOutput.AppendText( RtbQuickBaiduOutput.GetAllText() );
+				RtbQuickIntOutput.AppendBlocks( RtbQuickBaiduOutput );
 			}
 			if( CbQuickYoudao.IsChecked == true ) {
-				RtbQuickIntOutput.AppendText( RtbQuickYoudaoOutput.GetAllText() );
+				RtbQuickIntOutput.CheckAndAppendFirstLineWhitespaces( sourceText );
+				RtbQuickIntOutput.AppendBlocks( RtbQuickYoudaoOutput );
 			}
 			if( CbQuickGoogle.IsChecked == true ) {
-				RtbQuickIntOutput.AppendText( RtbQuickGoogleOutput.GetAllText() );
+				RtbQuickIntOutput.CheckAndAppendFirstLineWhitespaces( sourceText );
+				RtbQuickIntOutput.AppendBlocks( RtbQuickGoogleOutput );
 			}
 
+			BtnQuickClearAndPaste.IsEnabled = true;
 			MaprQuickTrans.Visibility = Visibility.Collapsed;
 			TbQuickTrans.Text = Languages.Global.Str0Translate;
 			foreach( var rtb in mRtbs ) {

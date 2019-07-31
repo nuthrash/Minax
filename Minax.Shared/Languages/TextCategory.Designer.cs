@@ -466,6 +466,15 @@ namespace Minax.Languages {
         }
         
         /// <summary>
+        ///   查詢類似 Plant 的當地語系化字串。
+        /// </summary>
+        public static string Str0Plant {
+            get {
+                return ResourceManager.GetString("Str0Plant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Preposition 的當地語系化字串。
         /// </summary>
         public static string Str0Preposition {
@@ -552,6 +561,15 @@ namespace Minax.Languages {
         public static string Str0Species {
             get {
                 return ResourceManager.GetString("Str0Species", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Tool 的當地語系化字串。
+        /// </summary>
+        public static string Str0Tool {
+            get {
+                return ResourceManager.GetString("Str0Tool", resourceCulture);
             }
         }
         

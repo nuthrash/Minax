@@ -169,8 +169,8 @@
   <data name="Str0CopyAll" xml:space="preserve">
     <value>複製所有</value>
   </data>
-  <data name="Str0CopyAndXlateSelection" xml:space="preserve">
-    <value>複製並翻譯選擇範圍</value>
+  <data name="Str0CopyAndQuickXlateSelection" xml:space="preserve">
+    <value>複製並快速翻譯選擇範圍</value>
   </data>
   <data name="Str0CopyToolTip" xml:space="preserve">
     <value>複製所有文字到剪貼簿</value>

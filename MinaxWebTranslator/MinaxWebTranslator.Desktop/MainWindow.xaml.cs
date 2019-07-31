@@ -798,9 +798,11 @@ namespace MinaxWebTranslator.Desktop
 
 		private void RtbSrcTgt_ScrollChanged( object sender, ScrollChangedEventArgs e )
 		{
-			if( mIsScrolling || mTgtPanel.SyncTargetScroll != true )
+			if( mIsScrolling || mTgtPanel.SyncTargetScroll != true ||
+				(e.VerticalChange == 0 && e.HorizontalChange == 0) ) {
+				e.Handled = true;
 				return;
-			if( e.VerticalChange == 0 && e.HorizontalChange == 0 ) { return; }
+			}
 
 			mIsScrolling = true;
 
@@ -815,9 +817,9 @@ namespace MinaxWebTranslator.Desktop
 					if( rtbSender.VerticalOffset <= 1.0 ) {
 						rtbToSync.ScrollToVerticalOffset( 0 );
 					}
-					else if( rtbToSync.ViewportHeight >= rtbSender.VerticalOffset ) {
-						rtbToSync.ScrollToVerticalOffset( rtbSender.VerticalOffset );
-					}
+					//else if( rtbToSync.ViewportHeight >= rtbSender.VerticalOffset ) {
+					//	rtbToSync.ScrollToVerticalOffset( rtbSender.VerticalOffset );
+					//}
 					else if( rtbSender.VerticalOffset + rtbSender.ViewportHeight >= rtbSender.ExtentHeight ) {
 						rtbToSync.ScrollToEnd();
 					}
@@ -838,13 +840,13 @@ namespace MinaxWebTranslator.Desktop
 					mScrollDeferredSyncer = null;
 
 					rtbToSync.InvalidateVisual();
+					Task.Delay( 100 ).Wait();
 					mIsScrolling = false;
 				} );				
 
-			}, null, 200, Timeout.Infinite );
+			}, null, 100, Timeout.Infinite );
 
 		}
-
 
 
 		#endregion

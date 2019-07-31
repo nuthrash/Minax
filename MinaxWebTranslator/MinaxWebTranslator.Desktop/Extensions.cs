@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -101,6 +102,62 @@ namespace MinaxWebTranslator.Desktop
 		public static string GetAllText( this RichTextBox rtb )
 		{
 			return new TextRange( rtb.Document.ContentStart, rtb.Document.ContentEnd ).Text;
+		}
+
+		/// <summary>
+		/// Append Document.Blocks from one RichTextBox to another with creating new Block(s) 
+		/// </summary>
+		/// <param name="rtbTo">To RichTextBox</param>
+		/// <param name="rtbFrom">From RichTextBox</param>
+		public static void AppendBlocks( this RichTextBox rtbTo, RichTextBox rtbFrom )
+		{
+			if( rtbFrom == null || rtbFrom.Document == null || rtbFrom.Document.Blocks.Count <= 0 )
+				return;
+
+			var trFrom = new TextRange( rtbFrom.Document.ContentStart, rtbFrom.Document.ContentEnd );
+			using( var ms = new MemoryStream() ) {
+				trFrom.Save( ms, DataFormats.Xaml );
+
+				ms.Flush();
+				ms.Position = 0;
+
+				var trTo = new TextRange( rtbTo.Document.ContentEnd, rtbTo.Document.ContentEnd );
+				trTo.Load( ms, DataFormats.Xaml );
+			}
+		}
+
+		public static void CheckAndAppendFirstLineWhitespaces( this RichTextBox rtb, string originalText )
+		{
+			if( string.IsNullOrEmpty(originalText) )
+				return;
+
+			int whitespaceCnt = 0;
+			foreach( var ch in originalText ) {
+				if( Char.IsWhiteSpace( ch ) || ch == '　' )
+					whitespaceCnt++;
+				else
+					break;
+			}
+			if( whitespaceCnt > 0 )
+				rtb.AppendText( originalText.Substring( 0, whitespaceCnt ) );
+		}
+
+		public static void CheckAndPushFirstLineWhitespaces( this RichTextBox rtb, string originalText )
+		{
+			if( string.IsNullOrEmpty( originalText ) )
+				return;
+
+			int whitespaceCnt = 0;
+			foreach( var ch in originalText ) {
+				if( Char.IsWhiteSpace( ch ) || ch == '　' )
+					whitespaceCnt++;
+				else
+					break;
+			}
+			if( whitespaceCnt > 0 ) {
+				var par = new Paragraph( new Run( originalText.Substring( 0, whitespaceCnt ) ) );
+				rtb.Document.Blocks.InsertBefore( rtb.Document.Blocks.FirstBlock, par );
+			}
 		}
 
 		/// <summary>

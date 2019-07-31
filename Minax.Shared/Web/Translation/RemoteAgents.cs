@@ -204,7 +204,6 @@ namespace Minax.Web.Translation
 			}
 			switch( targetLanguage ) {
 				case SupportedTargetLanguage.English:
-					//defLoc = sLocExciteEn;
 					tgtLang = "en";
 					break;
 			}
@@ -235,7 +234,8 @@ namespace Minax.Web.Translation
 					continue;
 
 				var k1 = string.Format( "θabcdeλ{0}◎", num++ );
-				var k2 = $"{{{k1}}}";
+				//var k2 = $"{{{k1}}}";
+				var k2 = $"}}{k1}}}";
 				tmpList.Add( (mm.OriginalText, k2, mm.MappingText) );
 				sb.Replace( mm.OriginalText, k2 );
 
@@ -267,7 +267,7 @@ namespace Minax.Web.Translation
 				RefreshBaiduData( cancelToken );
 			}
 
-
+			//clientBaidu.Timeout = TimeSpan.FromSeconds( 30 ); // set timeout to 30 seconds
 			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			// prepare form values
@@ -299,12 +299,44 @@ namespace Minax.Web.Translation
 
 				var content = new FormUrlEncodedContent( values );
 				HttpResponseMessage response = null;
-				try {
-					response = clientBaidu.PostAsync( defLoc, content, cancelToken ).Result;
+				Exception netEx = null;
+				int r2 = 5;
+				for( ; r2 > 0; r2-- ) {
+					try {
+						response = clientBaidu.PostAsync( defLoc, new FormUrlEncodedContent( values ), cancelToken ).Result;
+					}
+					catch( AggregateException ae ) {
+						if( ae.InnerException is System.Net.Http.HttpRequestException hre ) {
+							if( hre.InnerException is WebException we ) {
+								netEx = we;
+								Thread.Sleep( 200 );
+							}
+							else {
+								netEx = hre;
+								Thread.Sleep( 200 );
+							}
+						}
+						else {
+							netEx = ae;
+							Thread.Sleep( 200 );
+							RefreshBaiduData( cancelToken );
+						}
+					}
+					catch( Exception ex ) {
+						netEx = ex;
+						Thread.Sleep( 200 );
+					}
 
+					if( cancelToken.IsCancellationRequested ) {
+						r2 = 0;
+						break;
+					}
+					if( response != null && response.IsSuccessStatusCode )
+						break;
 				}
-				catch( Exception ex ) {
-					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
+
+				if( r2 <= 0 && netEx != null ) {
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, netEx.Message ), netEx );
 					yield break;
 				}
 
@@ -350,13 +382,16 @@ namespace Minax.Web.Translation
 							break;
 						}
 					}
+					//remove extra line
+					sb.Remove( sb.Length - Environment.NewLine.Length, Environment.NewLine.Length );
 
 					List<IReadOnlyList<(string From, string To)>> afterTgtLangs = new List<IReadOnlyList<(string From, string To)>>();
 					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional )
 						afterTgtLangs.Add( Profiles.BaiduXlationAfter2Cht );
 
 					if( false == ReplaceAfterXlation( sb, tmpList, afterTgtLangs,
-										@"[{]?θabcdeλ(?<SeqNum>[0-9]+)◎[}]?", "{θabcdeλ${SeqNum}◎}" ) )
+										// @"[{]?θabcdeλ(?<SeqNum>[0-9]+)◎[}]?", "{θabcdeλ${SeqNum}◎}" ) )
+										@"[}]?θabcdeλ(?<SeqNum>[0-9]+)◎[}]?", "}θabcdeλ${SeqNum}◎}" ) )
 						continue; // {θabcdeλ<SeqNum>◎}
 
 
@@ -476,13 +511,19 @@ namespace Minax.Web.Translation
 				if( translatedData != null && translatedData.ErrorCode == 0 &&
 						translatedData.TranslateResult.Count > 0 ) {
 					sb.Clear();
+
 					foreach( var paragraphs in translatedData.TranslateResult ) {
 						foreach( var dataSection in paragraphs ) {
 							var pair = dataSection;
-							sb.Append( ChineseConverter.Convert( pair.Target, ChineseConversionDirection.SimplifiedToTraditional ) );
+							if( targetLanguage == SupportedTargetLanguage.ChineseTraditional )
+								sb.Append( ChineseConverter.Convert( pair.Target, ChineseConversionDirection.SimplifiedToTraditional ) );
+							else
+								sb.Append( pair.Target );
 						}
 						sb.AppendLine();
 					}
+					//remove extra line
+					sb.Remove( sb.Length - Environment.NewLine.Length, Environment.NewLine.Length );
 
 					List<IReadOnlyList<(string From, string To)>> afterTgtLangs = new List<IReadOnlyList<(string From, string To)>>();
 					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional ) {
@@ -1529,11 +1570,11 @@ namespace Minax.Web.Translation
 
 					if( MarkMappedTextWithHtmlBoldTag ) {
 						foreach( var tuple3 in tmpList )
-							sb.Replace( tuple3.TmpText, $"<b>{tuple3.XlatedText}</b>" );
+							sb.Replace( tuple3.TmpText, $"<b>{tuple3.MappingText}</b>" );
 					}
 					else {
 						foreach( var tuple3 in tmpList )
-							sb.Replace( tuple3.TmpText, tuple3.XlatedText );
+							sb.Replace( tuple3.TmpText, tuple3.MappingText );
 					}
 
 
@@ -1641,7 +1682,6 @@ namespace Minax.Web.Translation
 				var inputXlatedText = mHtmlDoc.GetElementbyId( "translatedText" );
 				var translatedText = inputXlatedText.GetAttributeValue( "value", string.Empty );
 				if( translatedText != null && string.IsNullOrWhiteSpace( translatedText ) == false ) {
-					// filter out usless html code
 					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional )
 						sb.AppendLine( ChineseConverter.Convert( translatedText,
 										ChineseConversionDirection.SimplifiedToTraditional ) );
@@ -1813,14 +1853,15 @@ namespace Minax.Web.Translation
 
 		private static readonly Random rnd = new Random();
 
-		private static readonly string sLocExciteCht = "https://www.excite.co.jp/world/fantizi/";
+		//private static readonly string sLocExciteCht = "https://www.excite.co.jp/world/fantizi/";
+		private static readonly string sLocExciteCht = "https://www.excite.co.jp/world/chinese/";
 		private static readonly string sLocExciteEn = "https://www.excite.co.jp/world/english/";
 		private static readonly string sLocWeblioCht = "https://translate.weblio.jp/chinese/";
 		private static readonly string sLocWeblioEn = "https://translate.weblio.jp/";
 		private static readonly string sLocCrossLang = "http://cross.transer.com/";
 		private static readonly HtmlAgilityPack.HtmlDocument mHtmlDoc = new HtmlAgilityPack.HtmlDocument();
 
-		private static readonly HttpClient client = new HttpClient(), clientXLang = new HttpClient(), clientBaidu = new HttpClient( handlerBaidu ), clientYoudao = new HttpClient();
+		private static readonly HttpClient client = new HttpClient(), clientXLang = new HttpClient(), clientBaidu = new HttpClient( handlerBaidu ) { Timeout = TimeSpan.FromSeconds( 30 ) }, clientYoudao = new HttpClient();
 		private static readonly HttpClient clientGoogle = new HttpClient(), clientBing = new HttpClient();
 
 		private static readonly string sLocCrossLangFree = "http://cross.transer.com/text/exec_tran";
@@ -1895,7 +1936,7 @@ var token = function( r, _gtk ) {
 
 		}
 
-		private static List<(string OrigText, string TmpText, string XlatedText)>
+		private static List<(string OrigText, string TmpText, string MappingText)>
 			ReplaceBeforeXlation( string text, SupportedSourceLanguage srcLang,
 									string patternWithNum1, double? extraNum,
 									ref StringBuilder replacedSb )
@@ -1906,17 +1947,17 @@ var token = function( r, _gtk ) {
 			replacedSb.Append( text );
 
 			// replace some text to avoid collision
-			if( srcLang == SupportedSourceLanguage.Japanese ) {
-				foreach( var (From, To) in Profiles.JapaneseEscapeHtmlText ) {
-					replacedSb.Replace( From, To );
-				}
-			}
+			//if( srcLang == SupportedSourceLanguage.Japanese ) {
+			//	foreach( var (From, To) in Profiles.JapaneseEscapeHtmlText ) {
+			//		replacedSb.Replace( From, To );
+			//	}
+			//}
 
 			CurrentUsedModels.Clear();
 			if( DescendedModels == null )
 				DescendedModels = new ObservableList<MappingMonitor.MappingModel>();
 
-			// Tulpe3 => <Original text, tmp. text, Translated text>
+			// Tulpe3 => <Original text, tmp. text, Mapping text>
 			var tmpList = new List<(string OrigText, string TmpText, string XlatedText)>();
 			int num = rnd.Next( 10, 30 );
 			foreach( var mm in DescendedModels ) {

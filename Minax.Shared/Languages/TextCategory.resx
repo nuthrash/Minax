@@ -252,6 +252,9 @@
   <data name="Str0Phenomenon" xml:space="preserve">
     <value>Phenomenon</value>
   </data>
+  <data name="Str0Plant" xml:space="preserve">
+    <value>Plant</value>
+  </data>
   <data name="Str0Preposition" xml:space="preserve">
     <value>Preposition</value>
   </data>
@@ -281,6 +284,9 @@
   </data>
   <data name="Str0Species" xml:space="preserve">
     <value>Species</value>
+  </data>
+  <data name="Str0Tool" xml:space="preserve">
+    <value>Tool</value>
   </data>
   <data name="Str0Translator" xml:space="preserve">
     <value>Translator</value>

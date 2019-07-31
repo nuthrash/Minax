@@ -162,3 +162,19 @@ In addition to the network problem, there are other situations which cause the o
 One of them is the service providers changed their HTML codes. Another situation maybe they blocked out-of-quota requests.  
 The latter might be resolved by retrying later in hours.  
 The former shall call the programmer to see what happened.
+
+### Means of Mapping
+The main function of this App is replacing from a segment of text to another in translating, this is the Mapping.
+
+Main usages of Mapping:
+1. Keep original text
+   - Maybe a segment text will be replaced to a strange segment text in translating, but it shall not be replaced in the Project.
+   - You can put same text in "Original Text" and "Mapping Text" fields to ensure it would not be mis-translated in translating.
+2. Clear some text
+   - Sometimes the layout of translated text is so bad, that you shall fix it line by line.
+   - It would be used when inserting or deleting whitespace text.
+3. Manually translate
+   - This is the common case of Mapping. The vocabulary databases of translation engines are neither at the cutting-edges, nor understand any self-defined term. Therefore, you should add some new Mappings for them manually.
+   - Fill "Original Text" with original text, and fill "Mapping Text" with preferred text.
+   - When translating, this App would automatically replace the text of <u>Target input box</u> where contains "Original Text" string to non-replaced string. Then invoke remote translation, and replace translated text with "Mapping Text" after translation. 
+

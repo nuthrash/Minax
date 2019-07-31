@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +13,18 @@ namespace MinaxWebTranslator.Desktop
 	/// </summary>
 	public partial class App : Application
 	{
+		public App()
+		{
+			AppDomain.CurrentDomain.UnhandledException += ( s1, e1 ) => {
+				System.Diagnostics.Trace.WriteLine( $"{DateTime.Now.ToString( "yyyy/MM/dd HH:mm:ss.fff" )} caught unhanlded exception {e1.ExceptionObject}." );
+			};
+
+			TaskScheduler.UnobservedTaskException += ( s1, e1 ) => {
+				e1.SetObserved();
+
+				System.Diagnostics.Trace.WriteLine( $"{DateTime.Now.ToString( "yyyy/MM/dd HH:mm:ss.fff" )} caught unobserveded task exception {e1.Exception}." );
+			};
+		}
+
 	}
 }

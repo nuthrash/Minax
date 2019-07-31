@@ -109,10 +109,12 @@ namespace Minax.Web.Translation
 		};
 
 		public static readonly IReadOnlyList<(string From, string To)> BaiduXlationAfter2Cht = new List<(string From, string To)> {
-			( "“", "「"), ( "”", "」"), ( "‘", "《"), ( "’", "》"),
-			( "异", "異"), ( "潜", "潛"), ( "欧", "歐"), ( "畧", "略"),
-			( "猪", "豬"), ( "弃", "棄"), ( "囙", "因"), ( "猫", "貓"),
-			( "荧", "螢"),
+			( "“", "「" ), ( "”", "」" ), ( "‘", "《" ), ( "’", "》" ),
+			( "异", "異" ), ( "潜", "潛" ), ( "欧", "歐" ), ( "畧", "略" ),
+			( "猪", "豬" ), ( "弃", "棄" ), ( "囙", "因" ), ( "猫", "貓" ),
+			( "荧", "螢" ), ( "锁", "鎖" ), ( "灾", "災" ), ( "亯", "享" ),
+			( "寘", "置" ), ( "攷", "考" ), 
+			( "好象", "好像" ), ( "溪穀", "溪谷" ), 
 		};
 
 		public static readonly IReadOnlyList<(string From, string To)> YoudaoXlationAfter2Cht = new List<(string From, string To)> {

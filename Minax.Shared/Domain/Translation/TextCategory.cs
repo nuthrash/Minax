@@ -38,6 +38,7 @@ namespace Minax.Domain.Translation
 		/// </summary>
 		Ship,
 		Car,
+		Tool,
 
 		/// <summary>
 		/// Organization like PowerRanger, government, xxx empire
@@ -53,6 +54,7 @@ namespace Minax.Domain.Translation
 		//Race,
 		Animal,
 		Monster,
+		Plant,
 
 		Material,
 		Inventory,
@@ -175,6 +177,8 @@ namespace Minax.Domain.Translation
 					return Languages.TextCategory.Str0Ship;
 				case TextCategory.Car:
 					return Languages.TextCategory.Str0Car;
+				case TextCategory.Tool:
+					return Languages.TextCategory.Str0Tool;
 
 				case TextCategory.Organization:
 					return Languages.TextCategory.Str0Organization;
@@ -191,6 +195,8 @@ namespace Minax.Domain.Translation
 					return Languages.TextCategory.Str0Animal;
 				case TextCategory.Monster:
 					return Languages.TextCategory.Str0Monster;
+				case TextCategory.Plant:
+					return Languages.TextCategory.Str0Plant;
 
 				case TextCategory.Material:
 					return Languages.TextCategory.Str0Material;

@@ -45,8 +45,8 @@
             <RichTextBox.ContextMenu>
                 <ContextMenu>
 					<MenuItem x:Name="MiSourceClearAndPaste" Header="{x:Static lang:Global.Str0ClearAndPaste}" Click="BtnSourceClearAndPaste_Click" />
-					<MenuItem x:Name="MiSourceCopyAndTranslateSelection" Header="{x:Static lang:Global.Str0CopyAndXlateSelection}"
-                              Click="MiSourceCopyAndTranslateSelection_Click" />
+					<MenuItem x:Name="MiSourceCopyAndQuickXlateSelection" Header="{x:Static lang:Global.Str0CopyAndQuickXlateSelection}"
+                              Click="MiSourceCopyAndQuickXlateSelection_Click" />
                     <Separator />
                     <MenuItem Command="ApplicationCommands.Paste"/>
                     <MenuItem Command="ApplicationCommands.SelectAll" />

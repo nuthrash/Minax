@@ -69,11 +69,12 @@ namespace MinaxWebTranslator.Desktop.Views
 			}
 		}
 
-		private async void MiSourceCopyAndTranslateSelection_Click( object sender, RoutedEventArgs e )
+		private async void MiSourceCopyAndQuickXlateSelection_Click( object sender, RoutedEventArgs e )
 		{
 			if( RtbSource.Selection.IsEmpty )
 				return;
 
+			Clipboard.SetText( RtbSource.Selection.Text );
 			await MessageHub.SendMessageAsync( this, MessageType.XlatingQuickWithText,
 												RtbSource.Selection.Text );
 		}

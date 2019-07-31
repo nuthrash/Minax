@@ -281,6 +281,11 @@ namespace MinaxWebTranslator.Desktop.Views
 					}
 					break;
 
+				case MessageType.XlatingQuick:
+					if( data is bool onOffQuick ) {
+						GdTarget.IsEnabled = !onOffQuick;
+					}
+					break;
 				//case MessageType.XlatingPercentOrErrorCode:
 				//	// update Percent string
 				//	if( data is int percentOrErrorCode ) {

@@ -28,9 +28,9 @@
                 </Style>
 
                 <!-- Remove extra NewLine margin for RichTextBox's Paragraph -->
-                <Style TargetType="{x:Type Paragraph}">
+                <!--<Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0" />
-                </Style>
+                </Style>-->
 
                 <ObjectDataProvider x:Key="TextCategoryEnumValues" 
                                 MethodName="GetValues" 
@@ -139,7 +139,8 @@
                           GridLinesVisibility="Vertical" HorizontalGridLinesBrush="{DynamicResource AccentColorBrush4}"
                           VerticalGridLinesBrush="{DynamicResource AccentColorBrush4}"
                           AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="True"
-                          IsTextSearchEnabled="True" SelectionChanged="DgMappingProjConf_SelectionChanged" >
+						  VirtualizingPanel.IsVirtualizing="False"
+                          IsTextSearchEnabled="False" SelectionChanged="DgMappingProjConf_SelectionChanged" >
                     <DataGrid.Resources>
                         <Style TargetType="DataGridCell" BasedOn="{StaticResource MetroDataGridCell}">
                             <Style.Triggers>
@@ -167,7 +168,7 @@
                                             Header="{x:Static lang:ProjectGlossary.Str0MappingText}" Binding="{Binding MappingText, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                         <DataGridComboBoxColumn x:Name="ColMappingProjConfCategory" Width="Auto" IsReadOnly="False" CanUserSort="False"
                                                 Header="{x:Static lang:ProjectGlossary.Str0Category}" SelectedValueBinding="{Binding Path=Category, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TcL10nItemsConverter}}"
-                                                ItemsSource="{Binding Source={StaticResource TextCategoryEnumValues}, Converter={StaticResource TcL10nItemsConverter}}" />
+                                                ItemsSource="{Binding Source={StaticResource TextCategoryEnumValues}, Converter={StaticResource TcL10nItemsConverter} }" />
                         <DataGridTextColumn x:Name="ColMappingProjConfDescription" Width="Auto" IsReadOnly="False" CanUserSort="False"
                                             Header="{x:Static lang:Global.Str0Description}" Binding="{Binding Description, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
                         <DataGridTextColumn x:Name="ColMappingProjConfComment" Width="Auto" IsReadOnly="False" CanUserSort="False"

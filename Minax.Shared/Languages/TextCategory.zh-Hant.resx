@@ -297,4 +297,10 @@
   <data name="Str0Ship" xml:space="preserve">
     <value>船艦(Ship)</value>
   </data>
+  <data name="Str0Tool" xml:space="preserve">
+    <value>工具(Tool)</value>
+  </data>
+  <data name="Str0Plant" xml:space="preserve">
+    <value>植物(Plant)</value>
+  </data>
 </root>

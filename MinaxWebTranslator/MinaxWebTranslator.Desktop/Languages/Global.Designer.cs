@@ -229,11 +229,11 @@ namespace MinaxWebTranslator.Desktop.Languages {
         }
         
         /// <summary>
-        ///   查詢類似 Copy and Translate Selection 的當地語系化字串。
+        ///   查詢類似 Copy and Quick Translate Selection 的當地語系化字串。
         /// </summary>
-        public static string Str0CopyAndXlateSelection {
+        public static string Str0CopyAndQuickXlateSelection {
             get {
-                return ResourceManager.GetString("Str0CopyAndXlateSelection", resourceCulture);
+                return ResourceManager.GetString("Str0CopyAndQuickXlateSelection", resourceCulture);
             }
         }
         

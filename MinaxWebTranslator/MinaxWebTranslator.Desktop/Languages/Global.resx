@@ -169,8 +169,8 @@
   <data name="Str0CopyAll" xml:space="preserve">
     <value>Copy All</value>
   </data>
-  <data name="Str0CopyAndXlateSelection" xml:space="preserve">
-    <value>Copy and Translate Selection</value>
+  <data name="Str0CopyAndQuickXlateSelection" xml:space="preserve">
+    <value>Copy and Quick Translate Selection</value>
   </data>
   <data name="Str0CopyToolTip" xml:space="preserve">
     <value>Copy all text to clipboard</value>

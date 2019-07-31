@@ -28,7 +28,7 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 <br />
 
 ## 編譯環境
-- 微軟 Visual Studio 2019 16.1.4
+- 微軟 Visual Studio 2019 16.2.0
 - .Net Framework 4.7 SDK
 - .Net Core 3.0 preview6 (僅作測試用)
 - Android SDK Platform 28 (Android 9.0 - Pie)

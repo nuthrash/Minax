@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <LangVersion>7.3</LangVersion>
-    <Version>0.0.2</Version>
+    <Version>0.0.3</Version>
     <Authors>nuthrash</Authors>
     <Company>Minax</Company>
     <Copyright>Copyright © 2019 nuthrash</Copyright>
@@ -51,12 +51,12 @@
   <ItemGroup>
     <PackageReference Include="Plugin.Toast" Version="2.1.2" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
-    <PackageReference Include="Xamarin.Forms" Version="4.1.0.555618" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />  
+    <PackageReference Include="Xamarin.Forms" Version="4.1.0.618606" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />  
     <PackageReference Include="Xamarin.Forms.AlertDialogModal" Version="2.5.0.280555" />  
     <PackageReference Include="Xamarin.Forms.DataGrid" Version="3.1.0" />  
     <PackageReference Include="Xamarin.Forms.DialogKit" Version="1.5.0" />  
-    <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.0.135" />
+    <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.1.18" />
   </ItemGroup>
 
   <ItemGroup>
