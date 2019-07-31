@@ -33,7 +33,6 @@ This class contains five fields:
 5. `Comment`: The extra text to comment this `MappingEntry` about something.
 
 The screenshot:
-
 ![MWT-WinDesktop-MappingProject](../Assets/Images/ScreenShots/MWT-WinDesktop-MappingProject.jpg "MWT MappingProject of Desktop version")
 
 <br />

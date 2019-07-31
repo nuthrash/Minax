@@ -34,7 +34,6 @@
 5. `Comment`： 此 `MappingEntry` 額外的註解文字
 
 截圖：
-
 ![MWT-WinDesktop-MappingProject](../Assets/Images/ScreenShots/MWT-WinDesktop-MappingProject.jpg "MWT 桌面版的Mapping專案頁面")
 
 <br />

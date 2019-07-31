@@ -197,6 +197,30 @@ Maybe after you retry the operation, it would work again.</p>
 One of them is the service providers changed their HTML codes. Another situation maybe they blocked out-of-quota requests.<br />
 The latter might be resolved by retrying later in hours.<br />
 The former shall call the programmer to see what happened.</p>
+<h3 id="means-of-mapping">Means of Mapping</h3>
+<p>The main function of this App is replacing from a segment of text to another in translating, this is the Mapping.</p>
+<p>Main usages of Mapping:</p>
+<ol>
+<li>Keep original text
+<ul>
+<li>Maybe a segment text will be replaced to a strange segment text in translating, but it shall not be replaced in the Project.</li>
+<li>You can put same text in &quot;Original Text&quot; and &quot;Mapping Text&quot; fields to ensure it would not be mis-translated in translating.</li>
+</ul>
+</li>
+<li>Clear some text
+<ul>
+<li>Sometimes the layout of translated text is so bad, that you shall fix it line by line.</li>
+<li>It would be used when inserting or deleting whitespace text.</li>
+</ul>
+</li>
+<li>Manually translate
+<ul>
+<li>This is the common case of Mapping. The vocabulary databases of translation engines are neither at the cutting-edges, nor understand any self-defined term. Therefore, you should add some new Mappings for them manually.</li>
+<li>Fill &quot;Original Text&quot; with original text, and fill &quot;Mapping Text&quot; with preferred text.</li>
+<li>When translating, this App would automatically replace the text of <u>Target input box</u> where contains &quot;Original Text&quot; string to non-replaced string. Then invoke remote translation, and replace translated text with &quot;Mapping Text&quot; after translation.</li>
+</ul>
+</li>
+</ol>
 
 
 </body>
