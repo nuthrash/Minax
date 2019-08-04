@@ -63,6 +63,7 @@
     <AndroidLinkTool>r8</AndroidLinkTool>
     <MandroidI18n>CJK</MandroidI18n>
     <LangVersion>7.3</LangVersion>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />

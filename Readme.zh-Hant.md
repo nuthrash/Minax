@@ -30,7 +30,7 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 ## 編譯環境
 - 微軟 Visual Studio 2019 16.2.0
 - .Net Framework 4.7 SDK
-- .Net Core 3.0 preview6 (僅作測試用)
+- .Net Core 3.0 preview7 (僅作測試用)
 - Android SDK Platform 28 (Android 9.0 - Pie)
 
 
@@ -39,6 +39,11 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 ## 更新紀錄
 
 ### Minax Web Translator
+
+#### v0.0.3
+1. 於 MinaxWebTranslator 的讀我檔中加入「Mapping 概念」段落。
+2. 於 MinaxWebTranslator.Desktop 的 MiCopyAndQuickXlateSelection MenuItem 的來源面板修改說明文字並修正未正確加入的複製文字動作。
+3. 於 MinaxWebTranslator.Desktop 的 MainWindow.cs 修改 RtbSrcTgt_ScrollChanged() 演算法。
 
 #### v0.0.2
 1. 加入 zh-Hant (繁體中文) 語系和文件
@@ -51,6 +56,11 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 <br />
 
 ### Minax.Shared
+
+#### v0.0.3
+1. 於 Profiles.cs 中加入一些百度翻譯用的取代字。
+2. 修改 RemoteAgents.cs 中 Excite 翻譯器的位址。
+
 
 #### v0.0.2
 1. 加入 zh-Hant (繁體中文) 語系和文件

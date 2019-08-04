@@ -24,13 +24,8 @@
                 </Style>
                 <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" 
                    TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="MahApps:ControlsHelper.ContentCharacterCasing" Value="Normal"/>
+                   <Setter Property="MahApps:ControlsHelper.ContentCharacterCasing" Value="Normal"/>
                 </Style>
-
-                <!-- Remove extra NewLine margin for RichTextBox's Paragraph -->
-                <!--<Style TargetType="{x:Type Paragraph}">
-                    <Setter Property="Margin" Value="0" />
-                </Style>-->
 
                 <ObjectDataProvider x:Key="TextCategoryEnumValues" 
                                 MethodName="GetValues" 
@@ -139,7 +134,7 @@
                           GridLinesVisibility="Vertical" HorizontalGridLinesBrush="{DynamicResource AccentColorBrush4}"
                           VerticalGridLinesBrush="{DynamicResource AccentColorBrush4}"
                           AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="True"
-						  VirtualizingPanel.IsVirtualizing="False"
+						  VirtualizingPanel.IsVirtualizing="True"
                           IsTextSearchEnabled="False" SelectionChanged="DgMappingProjConf_SelectionChanged" >
                     <DataGrid.Resources>
                         <Style TargetType="DataGridCell" BasedOn="{StaticResource MetroDataGridCell}">
