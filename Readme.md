@@ -32,7 +32,7 @@ See [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebT
 ## Build Environment
 - Microsoft Visual Studio 2019 16.2.0
 - .Net Framework 4.7 SDK
-- .Net Core 3.0 preview6 (just for testing)
+- .Net Core 3.0 preview7 (just for testing)
 - Android SDK Platform 28 (Android 9.0 - Pie)
 
 
@@ -41,6 +41,11 @@ See [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebT
 ## Change Logs
 
 ### Minax Web Translator
+
+#### v0.0.3
+1. Add "The meaning of Mapping" section of MinaxWebTranslator's readme.
+2. Change text and missing copy action for MiCopyAndQuickXlateSelection MenuItem of MinaxWebTranslator.Desktop's Source panel
+3. Change RtbSrcTgt_ScrollChanged() algorithm of MainWindow.cs of MinaxWebTranslator.Desktop.
 
 #### v0.0.2
 1. Add zh-Hant (繁體中文) locale and documents.
@@ -53,6 +58,10 @@ Initial release
 <br />
 
 ### Minax.Shared
+
+#### v0.0.3
+1. Add some replacing text for Baidu translator of Profiles.cs.
+2. Change Excite translator location of RemoteAgents.cs.
 
 #### v0.0.2
 1. Add zh-Hant (繁體中文) locale and documents.
