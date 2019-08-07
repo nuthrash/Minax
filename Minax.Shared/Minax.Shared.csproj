@@ -4,16 +4,16 @@
     <TargetFrameworks>netstandard2.0;netcoreapp3.0;net47</TargetFrameworks>
     <Company>Minax</Company>
     <Authors>nuthrash</Authors>
-    <AssemblyVersion>0.0.3.0</AssemblyVersion>
-    <FileVersion>0.0.3.0</FileVersion>
-    <Version>0.0.3</Version>
+    <AssemblyVersion>0.0.4.0</AssemblyVersion>
+    <FileVersion>0.0.4.0</FileVersion>
+    <Version>0.0.4</Version>
     <RootNamespace>Minax</RootNamespace>
     <Description>A multi-targets common shared library for Minax series projects among .Net Core, .Net Standard and full-function .Net Framework</Description>
     <Copyright>Copyright © 2019 nuthrash</Copyright>
     <RepositoryUrl>https://github.com/nuthrash/Minax.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Minax.Shared</PackageTags>
-    <PackageReleaseNotes>Initial base project</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <PackageIconUrl></PackageIconUrl>
     <PackageProjectUrl>https://nuthrash.github.io/Minax/</PackageProjectUrl>
     <NeutralLanguage></NeutralLanguage>
@@ -24,6 +24,10 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net47'">
