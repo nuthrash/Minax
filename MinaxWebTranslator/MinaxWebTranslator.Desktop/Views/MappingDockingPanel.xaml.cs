@@ -236,7 +236,10 @@ namespace MinaxWebTranslator.Desktop.Views
 					}
 					else {
 						glossaries = cvNew.SourceCollection as ObservableList<MappingMonitor.MappingModel>;
-						glossaries.AddRange( collNew );
+						//glossaries.AddRange( collNew );
+						foreach( var ni in collNew ) {
+							glossaries.Add( ni );
+						}
 					}
 
 					break;

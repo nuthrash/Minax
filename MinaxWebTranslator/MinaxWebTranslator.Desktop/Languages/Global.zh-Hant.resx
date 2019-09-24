@@ -264,7 +264,7 @@
     <value>移到文末</value>
   </data>
   <data name="Str0MoveToDocStart" xml:space="preserve">
-    <value>移到文頭</value>
+    <value>移到文首</value>
   </data>
   <data name="Str0MoveUp" xml:space="preserve">
     <value>上移</value>

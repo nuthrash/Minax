@@ -148,7 +148,7 @@
     <value>無法取得遠端 Glossary 檔案列表</value>
   </data>
   <data name="Str0Category" xml:space="preserve">
-    <value>文字分類</value>
+    <value>文句分類</value>
   </data>
   <data name="Str0ClearExistedRecentProjectListAsk" xml:space="preserve">
     <value>你確認要清除現有的最近使用專案列表？</value>

@@ -233,7 +233,8 @@ namespace Minax.Web.Translation
 				if( text.Contains( mm.OriginalText ) == false )
 					continue;
 
-				var k1 = string.Format( "θabcdeλ{0}◎", num++ );
+				//var k1 = string.Format( "θabcdeλ{0}◎", num++ );
+				var k1 = string.Format( "θabcdeλ{0}", num++ );
 				//var k2 = $"{{{k1}}}";
 				var k2 = $"}}{k1}}}";
 				tmpList.Add( (mm.OriginalText, k2, mm.MappingText) );
@@ -344,7 +345,7 @@ namespace Minax.Web.Translation
 					continue;
 
 				string responseString = response.Content.ReadAsStringAsync().Result;
-				if( string.IsNullOrWhiteSpace( responseString ) )
+				if( string.IsNullOrWhiteSpace( responseString ) || responseString.StartsWith("<") )
 					continue;
 
 				var translatedData = JsonConvert.DeserializeObject<BaiduTranslatorFormat2>( responseString );
@@ -391,7 +392,8 @@ namespace Minax.Web.Translation
 
 					if( false == ReplaceAfterXlation( sb, tmpList, afterTgtLangs,
 										// @"[{]?θabcdeλ(?<SeqNum>[0-9]+)◎[}]?", "{θabcdeλ${SeqNum}◎}" ) )
-										@"[}]?θabcdeλ(?<SeqNum>[0-9]+)◎[}]?", "}θabcdeλ${SeqNum}◎}" ) )
+										//@"[}]?θabcdeλ(?<SeqNum>[0-9]+)◎[}]?", "}θabcdeλ${SeqNum}◎}" ) )
+										@"[}]?θabcdeλ(?<SeqNum>[0-9]+)[}]?", "}θabcdeλ${SeqNum}}" ) )
 						continue; // {θabcdeλ<SeqNum>◎}
 
 
@@ -412,6 +414,9 @@ namespace Minax.Web.Translation
 						RefreshBaiduData( cancelToken );
 						goto reloaded;
 					}
+
+					if( --retry >= 0 )
+						goto reloaded;
 
 					if( translatedData != null && string.IsNullOrWhiteSpace( translatedData.Message ) == false ) {
 						Report( progress, -1, string.Format(Languages.WebXlator.Str2TranslateErrorMessage, translatedData.Error, translatedData.Message ),

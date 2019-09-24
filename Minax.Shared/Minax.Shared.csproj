@@ -50,7 +50,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="FileHelpers" Version="3.4.0" />
+    <PackageReference Include="FileHelpers" Version="3.4.1" />
 	<PackageReference Include="HtmlAgilityPack" Version="1.11.12" />
 	<PackageReference Include="Jurassic.Unofficial" Version="2019.6.5" />
 	<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
