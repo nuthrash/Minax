@@ -343,6 +343,9 @@
   <data name="Str0SaveConfirm" xml:space="preserve">
     <value>Save Confirm</value>
   </data>
+  <data name="Str0Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <data name="Str0SelectFileNameToSave" xml:space="preserve">
     <value>Select File Name to Save</value>
   </data>

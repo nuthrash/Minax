@@ -388,15 +388,15 @@ namespace Minax.Domain.Translation
 		private FileSystemWatcher mWatcher = null;
 		private volatile bool mDisposed = false, mDisposing = false;
 		private ObservableList<string> mFileList = null;
-		private ReadOnlyObservableList<string> mFileColl;
+		//private ReadOnlyObservableList<string> mFileColl;
 		private readonly ObservableList<string> mMonFileList = new ObservableList<string>();
-		private ReadOnlyObservableList<string> mMonitoringFileList;
+		//private ReadOnlyObservableList<string> mMonitoringFileList;
 		private readonly Dictionary<string, ObservableList<MappingModel>> mMonFileDict = new Dictionary<string, ObservableList<MappingModel>>();
 
-		private ReadOnlyObservableList<string> mDesOriginalText = null;
+		//private ReadOnlyObservableList<string> mDesOriginalText = null;
 		private readonly ObservableList<string> mDesOriginalTextColl = new ObservableList<string>();
 		private readonly ObservableList<MappingModel> mDesModelsColl = new ObservableList<MappingModel>();
-		private ReadOnlyObservableList<MappingModel> mDesModels = null;
+		//private ReadOnlyObservableList<MappingModel> mDesModels = null;
 		private readonly Dictionary<string, List<MappingModel>> mMappingDict = new Dictionary<string, List<MappingModel>>();
 
 		private readonly object mSyncObj = new object(), mSyncEvent = new object();

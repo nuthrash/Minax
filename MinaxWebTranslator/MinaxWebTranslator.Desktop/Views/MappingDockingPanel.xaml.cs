@@ -1,7 +1,9 @@
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Minax.Collections;
 using Minax.Domain.Translation;
 using Minax.Web.Translation;
+using MinaxWebTranslator.Desktop.Commands;
 using MinaxWebTranslator.Desktop.Models;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -11,6 +13,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace MinaxWebTranslator.Desktop.Views
@@ -20,6 +24,10 @@ namespace MinaxWebTranslator.Desktop.Views
 	/// </summary>
 	public partial class MappingDockingPanel : LayoutAnchorable
 	{
+		public ICommand ProjConfSearchCmd => new SimpleCommand(	o => true, x => _SearchText( x as string, DgMappingProjConf ) );
+		public ICommand GlossariesSearchCmd => new SimpleCommand( o => true, x => _SearchText( x as string, DgMappingGlossaries ) );
+		public ICommand AllSearchCmd => new SimpleCommand( o => true, x => _SearchText( x as string, DgMappingAll ) );
+
 		internal bool IsProjectChanged => mProjChanged;
 
 		public MappingDockingPanel() : this( Application.Current.MainWindow as MainWindow )
@@ -39,6 +47,11 @@ namespace MinaxWebTranslator.Desktop.Views
 			DgMappingGlossaries.ItemsSource = null;
 			DgMappingProjConf.ItemsSource = null;
 
+			// acceess ICommand instances via DataContext
+			TbMappingAllSearch.DataContext = this;
+			TbMappingProjConfSearch.DataContext = this;
+			TbMappingGlossariesToolSearch.DataContext = this;
+
 			MessageHub.MessageReceived -= MsgHub_MessageRecevied;
 			MessageHub.MessageReceived += MsgHub_MessageRecevied;
 		}
@@ -57,6 +70,55 @@ namespace MinaxWebTranslator.Desktop.Views
 		private TranslatorSelector mCurrentXlator = null;
 		private RemoteType mCurrentRemoteTranslator = RemoteType.Excite;
 
+		private System.Predicate<object> _BuildTextFilter( string text )
+		{
+			return new System.Predicate<object>( item => {
+				var model = item as MappingMonitor.MappingModel;
+				if( model == null || model.OriginalText == null )
+					return false;
+
+				if( model.OriginalText != null && model.OriginalText.ToLowerInvariant().Contains( text ) )
+					return true;
+				if( model.MappingText != null && model.MappingText.ToLowerInvariant().Contains( text ) )
+					return true;
+				if( model.Description != null && model.Description.ToLowerInvariant().Contains( text ) )
+					return true;
+				if( model.Comment != null && model.Comment.ToLowerInvariant().Contains( text ) )
+					return true;
+
+				if( model.Category != null ) {
+					if( model.Category.ToString().ToLowerInvariant().Contains( text ) )
+						return true;
+					if( ((TextCategory)model.Category).ToL10nString().Contains( text ) )
+						return true;
+				}
+				return false;
+			} );
+		}
+
+		private void _SearchText( string text, DataGrid dg )
+		{
+			if( dg == null )
+				return;
+
+			ICollectionView cv = CollectionViewSource.GetDefaultView( dg.ItemsSource );
+			if( cv == null )
+				return;
+
+			if( string.IsNullOrWhiteSpace( text ) ) {
+				// when text is empty or button clicked, clear search results!!
+				if( cv.Filter != null ) {
+					dg.CancelEdit( DataGridEditingUnit.Row );
+					cv.Filter = null;
+					dg.InvalidateVisual();
+				}
+				return;
+			}
+
+			dg.CancelEdit( DataGridEditingUnit.Row );
+			cv.Filter = _BuildTextFilter( text.ToLowerInvariant() );
+			dg.InvalidateVisual();
+		}
 
 		private async void _SetProjChanged()
 		{
@@ -149,7 +211,7 @@ namespace MinaxWebTranslator.Desktop.Views
 		{
 			var cv = dg.ItemsSource as ICollectionView;
 			var cvs = new CollectionViewSource();
-
+			
 			dg.ItemsSource = null;
 			if( newColl != null ) {
 				cvs.Source = newColl;
@@ -435,6 +497,31 @@ namespace MinaxWebTranslator.Desktop.Views
 			// no need update ListCollectionView in ItemsSource
 		}
 
+		private void TextBoxSearch_TextChanged( object sender, TextChangedEventArgs e )
+		{
+			var tb = sender as TextBox;
+			if( string.IsNullOrWhiteSpace( tb.Text ) == false )
+				return;
+
+			DataGrid dg = null;
+			if( sender == TbMappingProjConfSearch ) {
+				dg = DgMappingProjConf;
+			} else if( sender == TbMappingGlossariesToolSearch ) {
+				dg = DgMappingGlossaries;
+			} else if( sender == TbMappingAllSearch ) {
+				dg = DgMappingAll;
+			}
+
+			if( dg == null || dg.ItemsSource == null )
+				return;
+
+			ICollectionView cv = CollectionViewSource.GetDefaultView( dg.ItemsSource );
+			if( cv != null && cv.Filter != null ) {
+				dg.CancelEdit( DataGridEditingUnit.Row );
+				cv.Filter = null;
+			}
+		}
+
 		private void BtnMappingAllToolClearSorting_Click( object sender, RoutedEventArgs e )
 		{
 			DgMappingAll.ClearSort();
@@ -532,6 +619,21 @@ namespace MinaxWebTranslator.Desktop.Views
 		private void BtnMappingGlossariesToolClearSorting_Click( object sender, RoutedEventArgs e )
 		{
 			DgMappingGlossaries.ClearSort();
+		}
+
+		private void BtnMappingProjConfSearch_Click( object sender, RoutedEventArgs e )
+		{
+			_SearchText( TbMappingProjConfSearch.Text, DgMappingProjConf );
+		}
+
+		private void BtnMappingAllSearch_Click( object sender, RoutedEventArgs e )
+		{
+			_SearchText( TbMappingAllSearch.Text, DgMappingAll );
+		}
+
+		private void BtnMappingGlossariesToolSearch_Click( object sender, RoutedEventArgs e )
+		{
+			_SearchText( TbMappingGlossariesToolSearch.Text, DgMappingGlossaries );
 		}
 
 		private void DgMappingProjConf_SelectionChanged( object sender, SelectionChangedEventArgs e )

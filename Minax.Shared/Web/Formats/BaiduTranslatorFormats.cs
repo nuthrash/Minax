@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
@@ -62,7 +62,7 @@ namespace Minax.Web.Formats
 		public List<object> DictResult { get; set; }
 
 		[JsonProperty( PropertyName = "liju_result" )]
-		public List<object> LijuResult { get; set; }
+		public object LijuResult { get; set; }
 
 		public class TransResultData
 		{
@@ -101,7 +101,6 @@ namespace Minax.Web.Formats
 
 			[JsonProperty( PropertyName = "result" )]
 			public List<List<object>> Result { get; set; }
-			//public string Result { get; set; }
 		}
 	}
 

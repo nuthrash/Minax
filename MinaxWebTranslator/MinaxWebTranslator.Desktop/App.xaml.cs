@@ -26,5 +26,16 @@ namespace MinaxWebTranslator.Desktop
 			};
 		}
 
+		protected override void OnStartup( StartupEventArgs e )
+		{
+			base.OnStartup( e );
+
+			// make all DataGrids in this app have a single click to edit 
+			EventManager.RegisterClassHandler( typeof( System.Windows.Controls.DataGrid ),
+				System.Windows.Controls.DataGrid.PreviewMouseLeftButtonDownEvent,
+				new RoutedEventHandler( EventHelper.DataGridPreviewMouseLeftButtonDownEvent ) );
+
+		}
+
 	}
 }

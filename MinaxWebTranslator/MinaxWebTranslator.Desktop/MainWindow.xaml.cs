@@ -242,6 +242,7 @@ namespace MinaxWebTranslator.Desktop
 			mSrcPanel.RtbSource.FontFamily = ffSrc;
 			mTgtPanel.RtbTarget.FontFamily = ffDst;
 
+			MatsMonitorAutoMergeWhenFileChanged.IsChecked = Properties.Settings.Default.MonitorAutoMergeWhenFileChanged == true;
 			if( Properties.Settings.Default.RemeberRecentProjects == true ) {
 				MatsRemeberRecentProjects.IsChecked = true;
 				MiProjRecent.Visibility = Visibility.Visible;
@@ -268,6 +269,7 @@ namespace MinaxWebTranslator.Desktop
 		private void _SaveAppSettings()
 		{
 			Properties.Settings.Default.RemeberRecentProjects = MatsRemeberRecentProjects.IsChecked == true;
+			Properties.Settings.Default.MonitorAutoMergeWhenFileChanged = MatsMonitorAutoMergeWhenFileChanged.IsChecked == true;
 			Properties.Settings.Default.RecentProjectCountMax = (int)ManudRecentProjectMax.Value.GetValueOrDefault();
 
 			_SaveDockingLayout();

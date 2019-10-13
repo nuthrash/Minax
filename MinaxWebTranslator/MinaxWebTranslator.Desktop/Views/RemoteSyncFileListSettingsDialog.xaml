@@ -52,7 +52,7 @@
                        Content="{x:Static lang:Global.Str0Custom}" FontWeight="Bold"/>
             <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
                 <StackPanel.Resources>
-                    <Style x:Key="LvCustomHasItemStyle" TargetType="Button" BasedOn="{StaticResource MetroFlatButton}">
+                    <Style x:Key="LvCustomHasItemStyle" TargetType="Button">
                         <Setter Property="IsEnabled" Value="True" />
                         <Setter Property="Margin" Value="3" />
                         <Setter Property="Padding" Value="3" />
@@ -65,7 +65,7 @@
                     </Style>
                 </StackPanel.Resources>
 				<Button x:Name="BtnCustomAdd" Content="{x:Static lang:Global.Str0Add}" Click="BtnCustomAdd_Click" FontSize="12px" Margin="3" Padding="3"
-                        ToolTip="{x:Static lang:ProjectGlossary.Str0AddRemoteGlossaryFileListTextFile}" Style="{StaticResource MetroFlatButton}" />
+                        ToolTip="{x:Static lang:ProjectGlossary.Str0AddRemoteGlossaryFileListTextFile}"  />
 				<Button x:Name="BtnCustomDelete" Content="{x:Static lang:Global.Str0Delete}" Click="BtnCustomDelete_Click"
                         ToolTip="{x:Static lang:ProjectGlossary.Str0DeleteSelectedFileList}" Style="{DynamicResource LvCustomHasItemStyle}" />
                 <Button x:Name="BtnCustomMoveUp" Content="↑" FontWeight="Black" Click="BtnCustomMoveUp_Click"

@@ -271,7 +271,7 @@ namespace MinaxWebTranslator.Desktop
 			// DO NOT Remove ProjectModel from sProjects!!
 			//sProjects.Remove( projModel );
 			projModel.IsCurrent = false;
-			projModel.Project.MappingTable?.Clear();
+			projModel.Project?.MappingTable?.Clear();
 			projModel.Project = null;
 
 			if( mMonitor != null ) {

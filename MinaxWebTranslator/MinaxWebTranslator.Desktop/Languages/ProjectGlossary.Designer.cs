@@ -124,7 +124,7 @@ namespace MinaxWebTranslator.Desktop.Languages {
         }
         
         /// <summary>
-        ///   查詢類似 Auto merge Glossary Mapping entries when file added, deleted, changed 的當地語系化字串。
+        ///   查詢類似 Auto merge Glossary Mapping entries without asking, when file added, deleted, changed 的當地語系化字串。
         /// </summary>
         public static string Str0AutoMergeGlossaryMappingEntriesWhenFileChanged {
             get {

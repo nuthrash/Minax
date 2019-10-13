@@ -22,7 +22,7 @@
                    TargetType="{x:Type Button}">
                     <Setter Property="MahApps:ControlsHelper.ContentCharacterCasing" Value="Normal"/>
                 </Style>
-                <Style BasedOn="{StaticResource MetroDataGridColumnHeader}" 
+                <Style BasedOn="{StaticResource MahApps.Styles.DataGridColumnHeader}" 
                    TargetType="{x:Type DataGridColumnHeader}">
                    <Setter Property="MahApps:ControlsHelper.ContentCharacterCasing" Value="Normal"/>
                 </Style>
@@ -53,12 +53,28 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <ToolBar x:Name="TbMappingAllTool" Grid.Column="0" Grid.Row="0" ToolBarTray.IsLocked="True">
+                <ToolBar x:Name="TbMappingAllTool" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" ToolBarTray.IsLocked="True">
 					<Button x:Name="BtnMappingAllToolClearSorting" ToolTip="{x:Static lang:Global.Str0ClearSorting}"
                             Click="BtnMappingAllToolClearSorting_Click">
                         <IconPacks:Modern Width="16" Height="16" Kind="Clean" />
                     </Button>
-                </ToolBar>
+					
+					<Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+					<TextBox x:Name="TbMappingAllSearch" MahApps:TextBoxHelper.ClearTextButton="True"
+									 MahApps:TextBoxHelper.Watermark="{x:Static lang:Global.Str0Search}"
+									 MahApps:TextBoxHelper.UseFloatingWatermark="False"
+									 TextChanged="TextBoxSearch_TextChanged">
+						<TextBox.InputBindings>
+							<KeyBinding Key="Return"
+										Command="{Binding AllSearchCmd, Mode=OneWay}"
+										CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=TextBox}, Path=Text, Mode=OneWay}" />
+						</TextBox.InputBindings>
+					</TextBox>
+					<Button x:Name="BtnMappingAllSearch"  ToolTip="{x:Static lang:Global.Str0Search}"
+									Click="BtnMappingAllSearch_Click">
+						<IconPacks:Material Width="16" Height="16" Kind="Magnify" />
+					</Button>
+				</ToolBar>
 
                 <DataGrid x:Name="DgMappingAll" Grid.Column="0" Grid.Row="1" GridLinesVisibility="Vertical" 
                           AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
@@ -109,8 +125,8 @@
                     <Grid.RowDefinitions>
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <ToolBarTray x:Name="TbtMappingProjConfTool" Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
-                        <ToolBar ToolBarTray.IsLocked="True">
+                    <ToolBarTray x:Name="TbtMappingProjConfTool" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+						<ToolBar ToolBarTray.IsLocked="True">
 							<Button x:Name="BtnMappingProjConfNew" ToolTip="{x:Static lang:Global.Str0Add}" Click="BtnMappingProjConfNew_Click">
                                 <IconPacks:Material Width="16" Height="16" Kind="Plus" />
                             </Button>
@@ -126,32 +142,38 @@
                                     Click="BtnMappingProjConfMoveDown_Click">
                                 <IconPacks:Material Width="16" Height="16" Kind="ArrowDownThick" />
                             </Button>
-                        </ToolBar>
+							
+							<Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+							<TextBox x:Name="TbMappingProjConfSearch" MahApps:TextBoxHelper.ClearTextButton="True"
+									 MahApps:TextBoxHelper.Watermark="{x:Static lang:Global.Str0Search}"
+									 MahApps:TextBoxHelper.UseFloatingWatermark="False"
+									 TextChanged="TextBoxSearch_TextChanged">
+								<TextBox.InputBindings>
+									<KeyBinding Key="Return"
+										Command="{Binding ProjConfSearchCmd, Mode=OneWay}"
+										CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=TextBox}, Path=Text, Mode=OneWay}" />
+								</TextBox.InputBindings>
+							</TextBox>
+							<Button x:Name="BtnMappingProjConfSearch"  ToolTip="{x:Static lang:Global.Str0Search}"
+									Click="BtnMappingProjConfSearch_Click">
+								<IconPacks:Material Width="16" Height="16" Kind="Magnify" />
+							</Button>
+						</ToolBar>
                     </ToolBarTray>
                 </Grid>
 
                 <DataGrid x:Name="DgMappingProjConf" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding}" 
-                          GridLinesVisibility="Vertical" HorizontalGridLinesBrush="{DynamicResource AccentColorBrush4}"
-                          VerticalGridLinesBrush="{DynamicResource AccentColorBrush4}"
+                          GridLinesVisibility="Vertical" HorizontalGridLinesBrush="{DynamicResource MahApps.Brushes.Accent4}"
+                          VerticalGridLinesBrush="{DynamicResource MahApps.Brushes.Accent4}"
                           AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="True"
 						  VirtualizingPanel.IsVirtualizing="True"
                           IsTextSearchEnabled="False" SelectionChanged="DgMappingProjConf_SelectionChanged" >
                     <DataGrid.Resources>
-                        <Style TargetType="DataGridCell" BasedOn="{StaticResource MetroDataGridCell}">
-                            <Style.Triggers>
-                                <!-- Single-click editing -->
-                                <MultiTrigger>
-                                    <MultiTrigger.Conditions>
-                                        <Condition Property="IsReadOnly" Value="False" />
-                                        <Condition Property="IsEnabled" Value="True" />
-                                        <Condition Property="IsMouseOver" Value="True" />
-                                    </MultiTrigger.Conditions>
-                                    <Setter Property="IsEditing" Value="True"/>
-                                </MultiTrigger>
-                                
-                                <Trigger Property="IsReadOnly" Value="False">
-                                    <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}" />
-                                    <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush4}" />
+                        <Style TargetType="DataGridCell" BasedOn="{StaticResource MahApps.Styles.DataGridCell}">
+							<Style.Triggers>
+								<Trigger Property="IsReadOnly" Value="False">
+									<Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent4}" />
+									<Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent4}" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -215,12 +237,28 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <ToolBar x:Name="TbMappingGlossariesTool" Grid.Column="0" Grid.Row="0" ToolBarTray.IsLocked="True">
+                <ToolBar x:Name="TbMappingGlossariesTool" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" ToolBarTray.IsLocked="True">
 					<Button x:Name="BtnMappingGlossariesToolClearSorting" ToolTip="{x:Static lang:Global.Str0ClearSorting}"
                             Click="BtnMappingGlossariesToolClearSorting_Click">
                         <IconPacks:Modern Width="16" Height="16" Kind="Clean" />
                     </Button>
-                </ToolBar>
+
+					<Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+					<TextBox x:Name="TbMappingGlossariesToolSearch" MahApps:TextBoxHelper.ClearTextButton="True"
+									 MahApps:TextBoxHelper.Watermark="{x:Static lang:Global.Str0Search}"
+									 MahApps:TextBoxHelper.UseFloatingWatermark="False"
+									 TextChanged="TextBoxSearch_TextChanged">
+						<TextBox.InputBindings>
+							<KeyBinding Key="Return"
+										Command="{Binding GlossariesSearchCmd, Mode=OneWay}"
+										CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=TextBox}, Path=Text, Mode=OneWay}" />
+						</TextBox.InputBindings>
+					</TextBox>
+					<Button x:Name="BtnMappingGlossariesToolSearch"  ToolTip="{x:Static lang:Global.Str0Search}"
+									Click="BtnMappingGlossariesToolSearch_Click">
+						<IconPacks:Material Width="16" Height="16" Kind="Magnify" />
+					</Button>
+				</ToolBar>
 
                 <DataGrid x:Name="DgMappingGlossaries" Grid.Column="0" Grid.Row="1"
                           GridLinesVisibility="Vertical" ItemsSource="{Binding}"

@@ -76,7 +76,7 @@
               Margin="0 0 24 0" Visibility="Collapsed">
             <MahApps:ProgressRing x:Name="MaprTargetTranslate" Width="48" Height="48" Visibility="Visible" IsActive="False" />
             <TextBlock x:Name="TbTargetPercent" HorizontalAlignment="Center"  VerticalAlignment="Center"
-                                                   Text="0%" Foreground="{DynamicResource AccentColorBrush}" />
+                                                   Text="0%" Foreground="{DynamicResource MahApps.Brushes.Accent}" />
         </Grid>
     </Grid>
 </avalonDock:LayoutAnchorable>

@@ -548,7 +548,7 @@ namespace MinaxWebTranslator.Desktop
 			}
 
 			// step 0: load default location, Host is "fanyi.baidu.com"
-			bool rst = await _WaitBrowserLoaded( browser, defLoc, RemoteType.Baidu, 3 );
+			bool rst = await _WaitBrowserLoaded( browser, defLoc, RemoteType.Baidu, 10 );
 			if( rst == false ) {
 				_Report( progress, -1, Languages.WebXlator.Str0NavigateFailed, string.Format( Languages.WebXlator.Str0FailedLocation, defLoc ) );
 				return false;
@@ -1198,14 +1198,24 @@ namespace MinaxWebTranslator.Desktop
 
 				try {
 					// clear old text!!
-					browser.InvokeScript( "eval", new[] {
-						@"document.getElementById('t_edc').click();",
-					} );
+					//browser.InvokeScript( "eval", new[] {
+					//	@"document.getElementById('t_edc').click();",
+					//} );
 
-					await Task.Delay( 500 );
+					//await Task.Delay( 500 );
 
 					dynamic docObj = browser.Document;
-					var textArea = docObj.getElementById( "t_sv" );
+					//var textArea = docObj.getElementById( "t_sv" );
+					var textArea = docObj.getElementById( "tta_input" );
+
+					// clear old text!!
+					textArea.value = "";
+					var evt1 = docObj.createEvent( "HTMLEvents" );
+					evt1.initEvent( "keyup", true, true );
+					textArea.dispatchEvent( evt1 );
+					cancelToken.ThrowIfCancellationRequested();
+					await Task.Delay( 500 );
+
 					// assign original text to t_sv, tta_input
 					textArea.value = section;
 					// trigger 'keyup' event of t_sv to refresh t_tv, tta_output
@@ -1216,19 +1226,22 @@ namespace MinaxWebTranslator.Desktop
 					await Task.Delay( 2000 );
 
 					// check output option bar is appear
-					var jsQueryOutOptBarCnt = new string[] { @"document.querySelectorAll('div#t_outoption.t_outputoptions.b_hide').length;" };
+					//var jsQueryOutOptBarCnt = new string[] { @"document.querySelectorAll('div#t_outoption.t_outputoptions.b_hide').length;" };
+					var jsQueryOutOptBarCnt = new string[] { @"document.querySelectorAll('div#tta_outctrl.t_secOptions.b_hide').length;" };
 					int outOptBarCnt = (int)browser.InvokeScript( "eval", jsQueryOutOptBarCnt ), checkRetry = 50;
 					while( outOptBarCnt > 0 ) {
 						// Failed to translated strings, retried too manay times
 						if( checkRetry-- <= 0 ) {
 							// extract Web Translator's error string DIV
 							outOptBarCnt = (int)browser.InvokeScript( "eval", new[] {
-								@"document.querySelectorAll('div#t_err.b_hide').length;"
+								//@"document.querySelectorAll('div#t_err.b_hide').length;"
+								@"document.querySelectorAll('div#tta_err.b_hide').length;"
 							} );
 
 							var errStr = Languages.WebXlator.Str0FailedTranslatedRetry;
-							if( outOptBarCnt <= 0 )
-								errStr += Languages.WebXlator.Str0ErrorMessage + docObj.getElementById( "t_err" ).textContent + " ";
+							if( outOptBarCnt <= 0 ) // the ERROR string is not hide
+								errStr += Languages.WebXlator.Str0ErrorMessage + docObj.getElementById( "tta_err" ).textContent + " ";
+								//errStr += Languages.WebXlator.Str0ErrorMessage + docObj.getElementById( "t_err" ).textContent + " ";
 
 							_Report( progress, -1, errStr, section );
 							return false;
@@ -1238,7 +1251,8 @@ namespace MinaxWebTranslator.Desktop
 					}
 
 					var tstr = (string)browser.InvokeScript( "eval", new string[] {
-									@"document.querySelector('textarea#t_tv').textContent;",
+									//@"document.querySelector('textarea#t_tv').textContent;",
+									@"document.querySelector('textarea#tta_output').textContent;",
 								} );
 
 					if( string.IsNullOrWhiteSpace( tstr ) ) {
@@ -1444,7 +1458,7 @@ namespace MinaxWebTranslator.Desktop
 		private static readonly string sLocYoudaoCht = "http://fanyi.youdao.com/";
 		private static readonly string sLocGoogleChtPrefix = "https://translate.google.com/?op=translate&sl=ja&tl=zh-TW&text=";
 		private static readonly string sLocGoogleEnPrefix = "https://translate.google.com/?op=translate&sl=ja&tl=en&text=";
-		private static readonly string sLocBingCht = "https://www.bing.com/translator?to=zh-CHT&text=Change";
+		private static readonly string sLocBingCht = "https://www.bing.com/translator?to=zh-Hant&text=Change";
 		private static readonly string sLocBingEn = "https://www.bing.com/translator?to=en&text=しかも";
 
 

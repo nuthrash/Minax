@@ -133,7 +133,7 @@
     <value>App Settings</value>
   </data>
   <data name="Str0AutoMergeGlossaryMappingEntriesWhenFileChanged" xml:space="preserve">
-    <value>Auto merge Glossary Mapping entries when file added, deleted, changed</value>
+    <value>Auto merge Glossary Mapping entries without asking, when file added, deleted, changed</value>
   </data>
   <data name="Str0AutoMergeGlossaryMappingEntriesWhenFileChangedToolTip" xml:space="preserve">
     <value>This option does not contain Project file itself, system would always ask user for prompting!</value>

@@ -133,7 +133,7 @@
     <value>App 設定</value>
   </data>
   <data name="Str0AutoMergeGlossaryMappingEntriesWhenFileChanged" xml:space="preserve">
-    <value>當檔案加入、刪除或是變動時，自動整併 Glossary Mapping 條目</value>
+    <value>當檔案加入、刪除或是變動時，自動整併 Glossary Mapping 條目而不一一詢問</value>
   </data>
   <data name="Str0AutoMergeGlossaryMappingEntriesWhenFileChangedToolTip" xml:space="preserve">
     <value>此選項並不包含專案檔本身，系統仍會詢問使用者意願！</value>

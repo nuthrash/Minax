@@ -401,4 +401,7 @@
   <data name="Str0OperationCancelled" xml:space="preserve">
     <value>操作取消</value>
   </data>
+  <data name="Str0Search" xml:space="preserve">
+    <value>搜尋</value>
+  </data>
 </root>

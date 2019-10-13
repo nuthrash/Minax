@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.Resources>
-            <Style TargetType="MahApps:ToggleSwitch" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}">
+            <Style TargetType="MahApps:ToggleSwitch" BasedOn="{StaticResource MahApps.Styles.ToggleSwitch.Win10}">
                 <Setter Property="Margin"  Value="3" />
                 <Setter Property="OnLabel" Value="{x:Static lang:Global.Str0Enabled}" />
 				<Setter Property="OffLabel" Value="{x:Static lang:Global.Str0Disabled}" />

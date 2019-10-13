@@ -98,8 +98,8 @@ namespace MinaxWebTranslator.Desktop.Views
 
 		private async void BtnSourcePaste_Click( object sender, RoutedEventArgs e )
 		{
-			mSourceText = Clipboard.GetText();
 			RtbSource.Paste();
+			mSourceText = new TextRange( RtbSource.Document.ContentStart, RtbSource.Document.ContentEnd ).Text;
 			SourceTextChanged?.Invoke( this, null );
 			await MessageHub.SendMessageAsync( this, MessageType.SourceTextChanged, mSourceText );
 		}

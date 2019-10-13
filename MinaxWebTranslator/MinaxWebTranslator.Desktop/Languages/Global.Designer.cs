@@ -751,6 +751,15 @@ namespace MinaxWebTranslator.Desktop.Languages {
         }
         
         /// <summary>
+        ///   查詢類似 Search 的當地語系化字串。
+        /// </summary>
+        public static string Str0Search {
+            get {
+                return ResourceManager.GetString("Str0Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Select File Name to Save 的當地語系化字串。
         /// </summary>
         public static string Str0SelectFileNameToSave {

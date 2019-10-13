@@ -348,7 +348,14 @@ namespace Minax.Web.Translation
 				if( string.IsNullOrWhiteSpace( responseString ) || responseString.StartsWith("<") )
 					continue;
 
-				var translatedData = JsonConvert.DeserializeObject<BaiduTranslatorFormat2>( responseString );
+				BaiduTranslatorFormat2 translatedData = null;
+				try {
+					translatedData = JsonConvert.DeserializeObject<BaiduTranslatorFormat2>( responseString );
+				}
+				catch( Exception ex ) {
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
+					yield break;
+				}
 
 				if( translatedData != null && translatedData.TransResult != null &&
 					translatedData.TransResult.Status == 0 &&

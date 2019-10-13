@@ -16,7 +16,11 @@
     <Grid>
         <Grid.Resources>
             <conv:TextCategoryL10nItemsConverter x:Key="TcL10nItemsConverter" />
-        </Grid.Resources>
+			<Style BasedOn="{StaticResource MahApps.Styles.DataGridColumnHeader}" 
+                   TargetType="{x:Type DataGridColumnHeader}">
+				<Setter Property="MahApps:ControlsHelper.ContentCharacterCasing" Value="Normal"/>
+			</Style>
+		</Grid.Resources>
         
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
