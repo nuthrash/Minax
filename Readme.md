@@ -42,6 +42,18 @@ See [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebT
 
 ### Minax Web Translator
 
+#### v0.0.4
+1. Update .Net Core 3 final version related facilities.
+2. Update MahApps.Metro nuget version to v2.0.0-alpha0490 and update all its related facilities.
+3. Add text search boxes of Mapping panel of MinaxWebTranslator.Desktop.
+4. Change some zh-Hant locale's words of MinaxWebTranslator.Desktop.
+5. Remove section of "system.diagnostics" in the app.config of MinaxWebTranslator.Desktop to fit .Net Core 3.
+6. Change DataGridCell's single-click editing code and flow of MinaxWebTranslator.Desktop.
+7. Fix add items range error of _ModifyBindingWhenFileChanged() in MappingDockingPanel.xaml.cs of MinaxWebTranslator.Desktop.
+8. Fix un-usable Bing Translator selector of MinaxWebTranslator.Desktop to reflect changed official Bing Translator web page code.
+9. Fix missing App setting about "Monitor Auto Merge When File Changed" option and its text to "Auto merge Glossary Mapping entries without asking, when file added, deleted, changed" of MinaxWebTranslator.Desktop.
+10. Fix error of getting source text of Source Panel in SourceDockingPanel.cs of MinaxWebTranslator.Desktop.
+
 #### v0.0.3
 1. Add "The meaning of Mapping" section of MinaxWebTranslator's readme.
 2. Change text and missing copy action for MiCopyAndQuickXlateSelection MenuItem of MinaxWebTranslator.Desktop's Source panel
@@ -58,6 +70,9 @@ Initial release
 <br />
 
 ### Minax.Shared
+
+#### v0.0.4
+1. Change replacing pattern, retry logic, replacing words and BaiduTranslatorFormat2 format of Baidu API.
 
 #### v0.0.3
 1. Add some replacing text for Baidu translator of Profiles.cs.
