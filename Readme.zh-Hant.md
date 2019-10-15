@@ -40,6 +40,18 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 
 ### Minax Web Translator
 
+#### v0.0.4
+1. 升級 .Net Core 3.0 正式發行版的相關程式碼。
+2. 升級 MahApps.Metro nuget 版本為 v2.0.0-alpha0490 並更新相關程式碼。
+3. 加入 MinaxWebTranslator.Desktop 中 Mapping 面板的文句搜索框。
+4. 變更 MinaxWebTranslator.Desktop 中某些繁體中文（zh-Hant）的翻譯文句。
+5. 移除 MinaxWebTranslator.Desktop 中 app.config 的 "system.diagnostics" 區段以符合 .Net Core 3 限制。
+6. 變更 MinaxWebTranslator.Desktop 中 DataGridCell 的單擊編輯程式碼與邏輯。
+7. 修正 MinaxWebTranslator.Desktop 中 MappingDockingPanel.xaml.cs 的加入項目範圍錯誤。
+8. 修正 MinaxWebTranslator.Desktop 中無法使用 Bing Translator 選擇器的程式碼以反映官方變更過的 Bing Translator 網頁程式碼。
+9. 修正 MinaxWebTranslator.Desktop 中關於「當檔案變更時自動整合 Monitor 內容」應用程式設定選項的缺失並變更其敘述為「當檔案加入、刪除或是變動時，自動整併 Glossary Mapping 條目而不一一詢問」。
+10. 修正 MinaxWebTranslator.Desktop 中 SourceDockingPanel.cs 來源面板中未正確擷取來源文字的錯誤。
+
 #### v0.0.3
 1. 於 MinaxWebTranslator 的讀我檔中加入「Mapping 概念」段落。
 2. 於 MinaxWebTranslator.Desktop 的 MiCopyAndQuickXlateSelection MenuItem 的來源面板修改說明文字並修正未正確加入的複製文字動作。
@@ -57,10 +69,12 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 
 ### Minax.Shared
 
+#### v0.0.4
+1. 變更百度 API 的文句替換模式、重試邏輯、替換字句與 BaiduTranslatorFormat2 格式。
+
 #### v0.0.3
 1. 於 Profiles.cs 中加入一些百度翻譯用的取代字。
 2. 修改 RemoteAgents.cs 中 Excite 翻譯器的位址。
-
 
 #### v0.0.2
 1. 加入 zh-Hant (繁體中文) 語系和文件

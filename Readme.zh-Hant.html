@@ -41,6 +41,19 @@
 <br />
 <h2 id="section-2">更新紀錄</h2>
 <h3 id="minax-web-translator-1">Minax Web Translator</h3>
+<h4 id="v0.0.4">v0.0.4</h4>
+<ol>
+<li>升級 .Net Core 3.0 正式發行版的相關程式碼。</li>
+<li>升級 MahApps.Metro nuget 版本為 v2.0.0-alpha0490 並更新相關程式碼。</li>
+<li>加入 MinaxWebTranslator.Desktop 中 Mapping 面板的文句搜索框。</li>
+<li>變更 MinaxWebTranslator.Desktop 中某些繁體中文（zh-Hant）的翻譯文句。</li>
+<li>移除 MinaxWebTranslator.Desktop 中 app.config 的 &quot;system.diagnostics&quot; 區段以符合 .Net Core 3 限制。</li>
+<li>變更 MinaxWebTranslator.Desktop 中 DataGridCell 的單擊編輯程式碼與邏輯。</li>
+<li>修正 MinaxWebTranslator.Desktop 中 MappingDockingPanel.xaml.cs 的加入項目範圍錯誤。</li>
+<li>修正 MinaxWebTranslator.Desktop 中無法使用 Bing Translator 選擇器的程式碼以反映官方變更過的 Bing Translator 網頁程式碼。</li>
+<li>修正 MinaxWebTranslator.Desktop 中關於「當檔案變更時自動整合 Monitor 內容」應用程式設定選項的缺失並變更其敘述為「當檔案加入、刪除或是變動時，自動整併 Glossary Mapping 條目而不一一詢問」。</li>
+<li>修正 MinaxWebTranslator.Desktop 中 SourceDockingPanel.cs 來源面板中未正確擷取來源文字的錯誤。</li>
+</ol>
 <h4 id="v0.0.3">v0.0.3</h4>
 <ol>
 <li>於 MinaxWebTranslator 的讀我檔中加入「Mapping 概念」段落。</li>
@@ -57,6 +70,10 @@
 <p>初始發行</p>
 <br />
 <h3 id="minax.shared-1">Minax.Shared</h3>
+<h4 id="v0.0.4-1">v0.0.4</h4>
+<ol>
+<li>變更百度 API 的文句替換模式、重試邏輯、替換字句與 BaiduTranslatorFormat2 格式。</li>
+</ol>
 <h4 id="v0.0.3-1">v0.0.3</h4>
 <ol>
 <li>於 Profiles.cs 中加入一些百度翻譯用的取代字。</li>
