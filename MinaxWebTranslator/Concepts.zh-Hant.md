@@ -124,8 +124,9 @@ Glossary 檔案是用於儲存一些 Mapping 文字或術語的檔案。
 
 - 文件： https://cloud.google.com/translate/docs
 - 如何創建 API 金鑰： https://cloud.google.com/docs/authentication/api-keys
-- Cloud Translation API v3 （公開測試版）： https://cloud.google.com/translate/docs/intro-to-v3
-  - 這個版本似乎開始提供了免費的翻譯配額（500000? 個字）！！
+- Cloud Translation API v3： https://cloud.google.com/translate/docs/intro-to-v3
+  - <s>這個版本似乎開始提供了免費的翻譯配額（500000 個字）！！</s>
+  - 從 2019/11/01 開始，不再針對此版本（Advanced版）提供免費的翻譯配額！！
 
 ## Baidu Translation API (百度翻译开放平台)
 
