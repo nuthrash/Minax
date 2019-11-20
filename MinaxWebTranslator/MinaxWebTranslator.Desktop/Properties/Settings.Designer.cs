@@ -228,7 +228,7 @@ namespace MinaxWebTranslator.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool MonitorAutoMergeWhenFileChanged {
             get {
                 return ((bool)(this["MonitorAutoMergeWhenFileChanged"]));

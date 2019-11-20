@@ -381,16 +381,19 @@ namespace MinaxWebTranslator.Desktop
 			if( mProject == null )
 				return;
 
-			mProjChanged = changed;
 			if( changed ) {
-				this.Title = $"{mProject.ProjectName}* - Minax Web Translator";
-			} else {
+				if( mProjChanged )
+					return;
+				this.Title = $"*{mProject.ProjectName} - Minax Web Translator";
+			}
+			else {
+				if( !mProjChanged )
+					return;
 				this.Title = $"{mProject.ProjectName} - Minax Web Translator";
 			}
 
-			// only when changed == true than send Message, other situations would latter send other Message (ProjectClosed...)
-			if( changed )
-				await MessageHub.SendMessageAsync( this, MessageType.ProjectChanged, mProject );
+			mProjChanged = changed;
+			await MessageHub.SendMessageAsync( this, MessageType.ProjectChanged, mProject );
 		}
 
 		private void _DumpProj2ModelMappingTable( ProjectModel model )

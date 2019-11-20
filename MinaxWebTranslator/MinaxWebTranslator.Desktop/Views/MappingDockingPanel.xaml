@@ -166,6 +166,7 @@
                           GridLinesVisibility="Vertical" HorizontalGridLinesBrush="{DynamicResource MahApps.Brushes.Accent4}"
                           VerticalGridLinesBrush="{DynamicResource MahApps.Brushes.Accent4}"
                           AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="True"
+						  MahApps:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True"
 						  VirtualizingPanel.IsVirtualizing="True"
                           IsTextSearchEnabled="False" SelectionChanged="DgMappingProjConf_SelectionChanged" >
                     <DataGrid.Resources>

@@ -123,8 +123,9 @@ Only <u>MWT Windows Desktop version</u> has this feature!
 
 - Documents: https://cloud.google.com/translate/docs
 - How to create API key: https://cloud.google.com/docs/authentication/api-keys
-- Cloud Translation API v3 (beta): https://cloud.google.com/translate/docs/intro-to-v3
-  - In this version, it seems has free quota (500000? words)!!
+- Cloud Translation API v3: https://cloud.google.com/translate/docs/intro-to-v3
+  - <s>In this version, it seems has free quota (500000 words)!!</s>
+  - After 2019/11/01, there is no free quota for this version (Advanced edition)!!
 
 ## Baidu Translation API (百度翻译开放平台)
 

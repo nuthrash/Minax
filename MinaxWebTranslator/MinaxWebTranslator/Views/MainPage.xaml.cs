@@ -512,7 +512,7 @@ namespace MinaxWebTranslator.Views
 			NeedSave = changed;
 
 			if( changed ) {
-				this.Title = $"{mProject.ProjectName}* - Minax Web Translator";
+				this.Title = $"*{mProject.ProjectName} - Minax Web Translator";
 			}
 			else {
 				this.Title = $"{mProject.ProjectName} - Minax Web Translator";
