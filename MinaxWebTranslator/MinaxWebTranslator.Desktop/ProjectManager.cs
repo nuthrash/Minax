@@ -393,7 +393,7 @@ namespace MinaxWebTranslator.Desktop
 			if( mMonitor == null ) {
 				mMonitor = new MappingMonitor( baseProjectPath );
 			}
-#if NETCOREAPP3_0
+#if NETCOREAPP
 			return await GlossaryUtils.OpenAndMonitorGlossaryFiles( projModel.FullPathFileName, projModel.Project.MappingTable,
 									mMonitor, engineFolderName, srcLang, tgtLang );
 #else
@@ -512,7 +512,7 @@ namespace MinaxWebTranslator.Desktop
 			if( File.Exists( fullPathFileName ) == false )
 				return null;
 
-#if NETCOREAPP3_0
+#if NETCOREAPP
 			return GlossaryUtils.TryParseAndExtractMappingEntries( fullPathFileName );
 #else
 			// NET47

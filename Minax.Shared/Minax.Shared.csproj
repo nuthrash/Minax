@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.0;net47</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netcoreapp3.1;net47</TargetFrameworks>
     <Company>Minax</Company>
     <Authors>nuthrash</Authors>
     <AssemblyVersion>0.0.5.0</AssemblyVersion>
@@ -14,7 +14,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>Minax.Shared</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
-    <PackageIconUrl></PackageIconUrl>
+    <PackageIcon></PackageIcon>
     <PackageProjectUrl>https://nuthrash.github.io/Minax/</PackageProjectUrl>
     <NeutralLanguage></NeutralLanguage>
     <LangVersion>7.3</LangVersion>
@@ -37,7 +37,7 @@
 	<PackageReference Include="ChineseConverter" Version="1.0.0" />  
   </ItemGroup>
   
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0' ">
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' ">
     <PackageReference Include="CHTCHSConv" Version="1.0.0" />  
   </ItemGroup>
   
@@ -51,7 +51,7 @@
   
   <ItemGroup>
     <PackageReference Include="FileHelpers" Version="3.4.1" />
-	<PackageReference Include="HtmlAgilityPack" Version="1.11.16" />
+	<PackageReference Include="HtmlAgilityPack" Version="1.11.17" />
 	<PackageReference Include="Jurassic.Unofficial" Version="2019.10.2" />
 	<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
