@@ -28,9 +28,9 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 <br />
 
 ## 編譯環境
-- 微軟 Visual Studio 2019 16.3.x
+- 微軟 Visual Studio 2019 16.7.x
 - .Net Framework 4.7 SDK
-- .Net Core 3.0 final
+- .Net Core 3.1 final
 - Android SDK Platform 28 (Android 9.0 - Pie)
 
 
@@ -39,6 +39,12 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 ## 更新紀錄
 
 ### Minax Web Translator
+
+#### v0.0.5
+1. 升級 .Net Core 3.1 正式發行版的相關程式碼。
+2. 升級 MahApps.Metro nuget 版本為 v2.2.0 並更新相關程式碼。
+3. 升級 Dirkster.AvalonDock nuget 版本為 v4.3.0 並更新相關程式碼。
+4. 修正 MinaxWebTranslator.Desktop 中的 MainWindow.xaml.cs 未正確儲存與讀取某些專案檔案欄位的錯誤。
 
 #### v0.0.4
 1. 升級 .Net Core 3.0 正式發行版的相關程式碼。

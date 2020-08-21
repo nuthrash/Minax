@@ -25,7 +25,7 @@ See [Conepts.md](./Concepts.md)  ([Concepts - 繁體中文版](./Concepts.zh-Han
 - Project Folder: [MinaxWebTranslator.Desktop](https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/MinaxWebTranslator.Desktop)
 - System Requirement
   1. Operating System: Windows 7 Service Pack 1 (SP1) and above
-  2. .Net Framework: [4.7](https://dotnet.microsoft.com/download/dotnet-framework/net47) and above
+  2. .Net Framework [4.7](https://dotnet.microsoft.com/download/dotnet-framework/net47) and above, or .Net Core [3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
   3. Privileged Access: local storage, network
 
 ### Main Window
