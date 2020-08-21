@@ -12,7 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using Xceed.Wpf.AvalonDock;
+using AvalonDock;
 
 namespace MinaxWebTranslator.Desktop
 {
@@ -194,7 +194,7 @@ namespace MinaxWebTranslator.Desktop
 		{
 			StringBuilder sb = new StringBuilder();
 			StringWriter sw = new StringWriter( sb );
-			var serializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer( dockManager );
+			var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer( dockManager );
 			serializer.Serialize( sw );
 			return sb.ToString();
 		}
@@ -207,7 +207,7 @@ namespace MinaxWebTranslator.Desktop
 		public static void LayoutFromString( this DockingManager dockManager, string layoutXml )
 		{
 			StringReader sr = new StringReader( layoutXml );
-			var serializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer( dockManager );
+			var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer( dockManager );
 			serializer.Deserialize( sr );
 		}
 	}

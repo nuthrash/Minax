@@ -25,7 +25,7 @@ namespace MinaxWebTranslator.Desktop.Views
 		/// <summary>
 		/// Temporary save SecureString for this session
 		/// </summary>
-		internal bool TempSaveSecureData => MatsTempSave.IsChecked == true;
+		internal bool TempSaveSecureData => MatsTempSave.IsOn == true;
 
 		/// <summary>
 		/// Input fields models
@@ -75,7 +75,7 @@ namespace MinaxWebTranslator.Desktop.Views
 				Grid.SetRow( lbl, i );
 
 
-				// Column 1: Coresponding Type Control
+				// Column 1: Corresponding Type Control
 				UIElement col2Element = null;
 				if( field.TypeInfo.IsEnum ) {
 					ComboBox cb = new ComboBox();

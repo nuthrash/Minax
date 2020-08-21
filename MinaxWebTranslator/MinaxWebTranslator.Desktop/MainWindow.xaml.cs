@@ -1,3 +1,4 @@
+using AvalonDock.Layout;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Minax.Collections;
@@ -19,7 +20,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
-using Xceed.Wpf.AvalonDock.Layout;
 
 namespace MinaxWebTranslator.Desktop
 {
@@ -37,7 +37,7 @@ namespace MinaxWebTranslator.Desktop
 				mCurrentXlator = value;
 				mCurrentRemoteType = mCurrentXlator.RemoteType;
 				// update MenuItem's Icon to current xlator's icon
-				MiTranslatorSelector.Icon = new Image() { Source = mCurrentXlator.Icon, Height=24, Width=24 };
+				MiTranslatorSelector.Icon = new Image() { Source = mCurrentXlator.Icon, Height = 24, Width = 24 };
 
 				// tell other pages/panels the xlator has been changed
 				_ = MessageHub.SendMessageAsync( this, MessageType.XlatorSelected, mCurrentXlator );
@@ -64,8 +64,8 @@ namespace MinaxWebTranslator.Desktop
 			RoutedCommand saveProjectCmd = new RoutedCommand(), openProjectCmd = new RoutedCommand();
 			saveProjectCmd.InputGestures.Add( new KeyGesture( Key.S, ModifierKeys.Control ) );
 			CommandBindings.Add( new CommandBinding( saveProjectCmd, MiProjectSave_Click ) );
-			openProjectCmd.InputGestures.Add( new KeyGesture(Key.O, ModifierKeys.Control) );
-			CommandBindings.Add( new CommandBinding( openProjectCmd, MiProjectOpen_Click) );
+			openProjectCmd.InputGestures.Add( new KeyGesture( Key.O, ModifierKeys.Control ) );
+			CommandBindings.Add( new CommandBinding( openProjectCmd, MiProjectOpen_Click ) );
 
 			this.DataContext = new MainWindowViewModel();
 		}
@@ -217,7 +217,7 @@ namespace MinaxWebTranslator.Desktop
 				Properties.Settings.Default.Save();
 				Properties.Settings.Default.Save();
 			}
-			
+
 			TranslatorHelpers.SourceLanguage = SupportedSourceLanguage.Japanese;
 			TranslatorHelpers.TargetLanguage = SupportedTargetLanguage.ChineseTraditional;
 			TranslatorHelpers.AutoScrollToTop = false;
@@ -242,14 +242,14 @@ namespace MinaxWebTranslator.Desktop
 			mSrcPanel.RtbSource.FontFamily = ffSrc;
 			mTgtPanel.RtbTarget.FontFamily = ffDst;
 
-			MatsMonitorAutoMergeWhenFileChanged.IsChecked = Properties.Settings.Default.MonitorAutoMergeWhenFileChanged == true;
+			MatsMonitorAutoMergeWhenFileChanged.IsOn = Properties.Settings.Default.MonitorAutoMergeWhenFileChanged == true;
 			if( Properties.Settings.Default.RemeberRecentProjects == true ) {
-				MatsRemeberRecentProjects.IsChecked = true;
+				MatsRemeberRecentProjects.IsOn = true;
 				MiProjRecent.Visibility = Visibility.Visible;
 				MiProjClearRecent.Visibility = Visibility.Visible;
 			}
 			else {
-				MatsRemeberRecentProjects.IsChecked = false;
+				MatsRemeberRecentProjects.IsOn = false;
 				MiProjRecent.Visibility = Visibility.Collapsed;
 				MiProjClearRecent.Visibility = Visibility.Collapsed;
 			}
@@ -260,16 +260,16 @@ namespace MinaxWebTranslator.Desktop
 			else
 				ManudRecentProjectMax.Value = max;
 
-			MatsRemeberRecentProjects.Checked -= MatsRemeberRecentProjects_CheckedChanged;
-			MatsRemeberRecentProjects.Checked += MatsRemeberRecentProjects_CheckedChanged;
-			MatsRemeberRecentProjects.Unchecked -= MatsRemeberRecentProjects_CheckedChanged;
-			MatsRemeberRecentProjects.Unchecked += MatsRemeberRecentProjects_CheckedChanged;
+			MatsRemeberRecentProjects.Toggled -= MatsRemeberRecentProjects_CheckedChanged;
+			MatsRemeberRecentProjects.Toggled += MatsRemeberRecentProjects_CheckedChanged;
+			//MatsRemeberRecentProjects.Unchecked -= MatsRemeberRecentProjects_CheckedChanged;
+			//MatsRemeberRecentProjects.Unchecked += MatsRemeberRecentProjects_CheckedChanged;
 		}
 
 		private void _SaveAppSettings()
 		{
-			Properties.Settings.Default.RemeberRecentProjects = MatsRemeberRecentProjects.IsChecked == true;
-			Properties.Settings.Default.MonitorAutoMergeWhenFileChanged = MatsMonitorAutoMergeWhenFileChanged.IsChecked == true;
+			Properties.Settings.Default.RemeberRecentProjects = MatsRemeberRecentProjects.IsOn == true;
+			Properties.Settings.Default.MonitorAutoMergeWhenFileChanged = MatsMonitorAutoMergeWhenFileChanged.IsOn == true;
 			Properties.Settings.Default.RecentProjectCountMax = (int)ManudRecentProjectMax.Value.GetValueOrDefault();
 
 			_SaveDockingLayout();
@@ -277,7 +277,7 @@ namespace MinaxWebTranslator.Desktop
 
 		private void _SaveDockingLayout()
 		{
-			var serializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer( dockManager );
+			var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer( dockManager );
 
 			// Serialize to Settings
 			var base64 = string.Empty;
@@ -292,7 +292,7 @@ namespace MinaxWebTranslator.Desktop
 		}
 		private void _RestoreDockingLayout()
 		{
-			var serializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer( dockManager );
+			var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer( dockManager );
 			if( string.IsNullOrWhiteSpace( Properties.Settings.Default.AvalonDockLayout ) ) {
 				// Deserialize from Default docking layout file in Resources
 				_RestoreDefaultDockingLayout();
@@ -345,7 +345,7 @@ namespace MinaxWebTranslator.Desktop
 			xmlStream.Flush();
 			xmlStream.Position = 0;
 
-			var serializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer( dockManager );
+			var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer( dockManager );
 			serializer.Deserialize( xmlStream );
 		}
 
@@ -522,7 +522,7 @@ namespace MinaxWebTranslator.Desktop
 						}
 						else {
 							if( string.IsNullOrWhiteSpace( pi.Message ) == false ) {
-								_UpdateStatus( string.Format(Languages.WebXlator.Str2TranslatingErrorMessage, value, pi.Message ) );
+								_UpdateStatus( string.Format( Languages.WebXlator.Str2TranslatingErrorMessage, value, pi.Message ) );
 							}
 						}
 					}
@@ -615,7 +615,7 @@ namespace MinaxWebTranslator.Desktop
 								}
 								else {
 									rst = await this.ShowMessageAsync( Languages.ProjectGlossary.Str0UpdateMappingConfirm,
-											string.Format( Languages.ProjectGlossary.Str1UpdateProjectFileMappingAsk, args.FullPath),
+											string.Format( Languages.ProjectGlossary.Str1UpdateProjectFileMappingAsk, args.FullPath ),
 											MessageDialogStyle.AffirmativeAndNegative,
 											sMetroDlgYesNoSettings );
 									if( rst != MessageDialogResult.Affirmative )
@@ -673,7 +673,7 @@ namespace MinaxWebTranslator.Desktop
 							var rst = MessageDialogResult.Affirmative;
 							if( mAutoMergeWhenFileChanged == false ) {
 								rst = await this.ShowMessageAsync( Languages.ProjectGlossary.Str0AddMappingConfirm,
-										string.Format( Languages.ProjectGlossary.Str1AddGlossaryFileMappingAsk, args.FullPath),
+										string.Format( Languages.ProjectGlossary.Str1AddGlossaryFileMappingAsk, args.FullPath ),
 										MessageDialogStyle.AffirmativeAndNegative,
 										sMetroDlgYesNoSettings );
 							}
@@ -685,7 +685,7 @@ namespace MinaxWebTranslator.Desktop
 
 							await MessageHub.SendMessageAsync( this, MessageType.GlossaryNew, args );
 
-							_UpdateStatus( string.Format( Languages.ProjectGlossary.Str1GlossaryFileAddedAndMerged, args.FullPath) );
+							_UpdateStatus( string.Format( Languages.ProjectGlossary.Str1GlossaryFileAddedAndMerged, args.FullPath ) );
 						}
 
 					} );
@@ -764,7 +764,8 @@ namespace MinaxWebTranslator.Desktop
 			if( false == await _CheckAndAskProjSaving() ) { // cancel action
 
 				return;
-			} else {
+			}
+			else {
 				if( mProject != null && mProject.Project != null ) {
 					// restore changed ProjectName to original Project.Name
 					mProject.ProjectName = mProject.Project.Name;
@@ -783,7 +784,7 @@ namespace MinaxWebTranslator.Desktop
 
 		private async void MatsRemeberRecentProjects_CheckedChanged( object sender, RoutedEventArgs e )
 		{
-			if( MatsRemeberRecentProjects.IsChecked == true ) {
+			if( MatsRemeberRecentProjects.IsOn == true ) {
 				MiProjRecent.Visibility = Visibility.Visible;
 				MiProjClearRecent.Visibility = Visibility.Visible;
 			}
@@ -817,7 +818,7 @@ namespace MinaxWebTranslator.Desktop
 
 			if( mScrollDeferredSyncer != null )
 				mScrollDeferredSyncer.Dispose();
-			mScrollDeferredSyncer = new Timer( (sub) => {
+			mScrollDeferredSyncer = new Timer( ( sub ) => {
 				Dispatcher.BeginInvoke( (Action)delegate {
 					if( rtbSender.VerticalOffset <= 1.0 ) {
 						rtbToSync.ScrollToVerticalOffset( 0 );
@@ -847,7 +848,7 @@ namespace MinaxWebTranslator.Desktop
 					rtbToSync.InvalidateVisual();
 					Task.Delay( 100 ).Wait();
 					mIsScrolling = false;
-				} );				
+				} );
 
 			}, null, 100, Timeout.Infinite );
 
@@ -894,7 +895,7 @@ namespace MinaxWebTranslator.Desktop
 			else
 				await this.ShowMessageAsync( Languages.Global.Str0OperationFailed, string.Format( Languages.ProjectGlossary.Str1OpenProjectFailed, dlg.FileName ) );
 		}
-		
+
 		private async Task<bool> _LoadProj( string fullPathFileName )
 		{
 			// close previous project
@@ -923,6 +924,8 @@ namespace MinaxWebTranslator.Desktop
 			GbOptionProject.IsEnabled = true;
 			TbProjectName.Text = mProject.ProjectName;
 			TbGlossaryPath.Text = ProjectManager.Instance.MappingMonitor.GlossaryPath;
+			TbProjectDesc.Text = mProject.Project.Description;
+			TbProjectRemoteSite.Text = mProject.Project.RemoteSite;
 
 			for( int i = 0; i < CbSourceLang.Items.Count; ++i ) {
 				SupportedSourceLanguage srcLang = (SupportedSourceLanguage)((CbSourceLang.Items[i] as ComboBoxItem).Tag);
@@ -947,7 +950,7 @@ namespace MinaxWebTranslator.Desktop
 			}
 
 			// all done
-			if( MatsRemeberRecentProjects.IsChecked == true )
+			if( MatsRemeberRecentProjects.IsOn == true )
 				ProjectManager.Instance.SaveListToSettings();
 			mProjChanged = false;
 			GdMain.IsEnabled = true;
@@ -991,12 +994,15 @@ namespace MinaxWebTranslator.Desktop
 
 			_DumpProj2ModelMappingTable( mProject );
 
+			mProject.Project.Description = TbProjectDesc.Text;
+			mProject.Project.RemoteSite = TbProjectRemoteSite.Text;
+
 			if( ProjectManager.Instance.SaveProject( mProject, mProject.FullPathFileName ) == false ) {
 				await this.ShowMessageAsync( Languages.Global.Str0OperationFailed, Languages.ProjectGlossary.Str0SaveCurrentProjectFailed );
 				return;
 			}
 
-			if( MatsRemeberRecentProjects.IsChecked == true )
+			if( MatsRemeberRecentProjects.IsOn == true )
 				ProjectManager.Instance.SaveListToSettings();
 
 			_SetProjChanged( false );
@@ -1005,7 +1011,6 @@ namespace MinaxWebTranslator.Desktop
 			this.ShowAutoCloseMessage( Languages.Global.Str0OperationSuccessful, Languages.ProjectGlossary.Str0CurrentProjectSaved );
 			await MessageHub.SendMessageAsync( this, MessageType.ProjectSaved, mProject );
 		}
-		
 
 		private async Task<bool> _CheckAndAskProjSaving( bool forceSaving = false, bool appExit = false )
 		{
@@ -1053,6 +1058,8 @@ namespace MinaxWebTranslator.Desktop
 				mProject.Project.Name = mProject.ProjectName;
 				mProject.Project.SourceLanguage = (SupportedSourceLanguage)((CbSourceLang.SelectedItem as ComboBoxItem).Tag);
 				mProject.Project.TargetLanguage = (SupportedTargetLanguage)((CbTargetLang.SelectedItem as ComboBoxItem).Tag);
+				mProject.Project.Description = TbProjectDesc.Text;
+				mProject.Project.RemoteSite = TbProjectRemoteSite.Text;
 
 				if( ProjectManager.Instance.SaveProject( mProject, mProjFileName ) == false ) {
 					this.ShowAutoCloseMessage( Languages.Global.Str0OperationFailed, Languages.ProjectGlossary.Str0SaveProjectFailed );
@@ -1062,7 +1069,7 @@ namespace MinaxWebTranslator.Desktop
 				await Task.Delay( 100 ); // useless delay, just for delaying App shutdown event
 			}
 
-			if( MatsRemeberRecentProjects.IsChecked == true )
+			if( MatsRemeberRecentProjects.IsOn == true )
 				ProjectManager.Instance.SaveListToSettings();
 			_SaveAppSettings();
 			_SetProjChanged( false );
@@ -1096,9 +1103,9 @@ namespace MinaxWebTranslator.Desktop
 				case 3:
 					policy = Minax.IO.OverwritePolicy.FileSizeLarger;
 					break;
-				//case 4: // NOT SUPPORT!!
-				//	policy = Minax.IO.OverwritePolicy.FileDateNew;
-				//	break;
+					//case 4: // NOT SUPPORT!!
+					//	policy = Minax.IO.OverwritePolicy.FileDateNew;
+					//	break;
 			}
 
 			FoOptions.IsOpen = false;
@@ -1157,9 +1164,9 @@ namespace MinaxWebTranslator.Desktop
 			CbGlossarySyncFile.SelectedIndex = 0;
 		}
 
-		private void MatsMonitorAutoMergeWhenFileChanged_IsCheckedChanged( object sender, EventArgs e )
+		private void MatsMonitorAutoMergeWhenFileChanged_Toggled( object sender, EventArgs e )
 		{
-			mAutoMergeWhenFileChanged = MatsMonitorAutoMergeWhenFileChanged.IsChecked == true;
+			mAutoMergeWhenFileChanged = MatsMonitorAutoMergeWhenFileChanged.IsOn == true;
 			ProjectManager.Instance.AutoRemoveMonitoringWhenFileChanged = mAutoMergeWhenFileChanged;
 		}
 
@@ -1220,7 +1227,8 @@ namespace MinaxWebTranslator.Desktop
 
 				_SetProjChanged();
 				await _RefreshProjectAndGlossaryMappings();
-			} else if( changed ) {
+			}
+			else if( changed ) {
 				_SetProjChanged();
 			}
 
@@ -1249,7 +1257,7 @@ namespace MinaxWebTranslator.Desktop
 			if( dlg.ShowDialog() != true )
 				return;
 
-			var serializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer( dockManager );
+			var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer( dockManager );
 			serializer.Serialize( dlg.FileName );
 		}
 
@@ -1263,7 +1271,7 @@ namespace MinaxWebTranslator.Desktop
 			dlg.Filter = "AvalonDocking Conf. File(*.adconf)|*.adconf";
 			dlg.CheckFileExists = true;
 			if( dlg.ShowDialog() == true ) {
-				var serializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer( dockManager );
+				var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer( dockManager );
 				serializer.Deserialize( dlg.FileName );
 				return;
 			}
@@ -1337,7 +1345,8 @@ namespace MinaxWebTranslator.Desktop
 		{
 			if( FoTranslator.IsOpen ) {
 				FoTranslator.IsOpen = false;
-			} else {
+			}
+			else {
 				mXlatorSelectorPanel.ReloadSettings();
 				FoTranslator.IsOpen = true;
 			}

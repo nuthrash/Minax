@@ -1,4 +1,4 @@
-<avalonDock:LayoutAnchorable x:Class="MinaxWebTranslator.Desktop.Views.MappingDockingPanel"
+<AvalonDockLayout:LayoutAnchorable x:Class="MinaxWebTranslator.Desktop.Views.MappingDockingPanel"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:MinaxWebTranslator.Desktop.Views"
       xmlns:lang="clr-namespace:MinaxWebTranslator.Desktop.Languages"
       xmlns:conv="clr-namespace:MinaxWebTranslator.Desktop.Converters"
-      xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+      xmlns:AvalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
+      xmlns:AvalonDockLayout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
       xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
       xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -42,8 +43,8 @@
 
         <!-- Tab 1: Mapping All DataGrid -->
         <TabItem x:Name="TiMappingAll" Header="All"
-                 MahApps:ControlsHelper.HeaderFontSize="16" 
-                 MahApps:ControlsHelper.HeaderFontWeight="Bold">
+				 MahApps:HeaderedControlHelper.HeaderFontSize="16"
+				 MahApps:HeaderedControlHelper.HeaderFontWeight="Bold" >
             <Grid x:Name="GdMappingAll">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -107,7 +108,7 @@
 
         <!-- Tab 2: Project iteself MappingTable from <Project>.conf -->
         <TabItem x:Name="TiMappingProjConf" Header="&lt;Project&gt;.conf"
-                  MahApps:ControlsHelper.HeaderFontSize="14" >
+                  MahApps:HeaderedControlHelper.HeaderFontSize="14" >
             <Grid x:Name="GdMappingProjConf">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -198,7 +199,7 @@
 
         <!-- Tab 3: TabItem template autogenerted by code-behind for each Glossary table -->
         <TabItem x:Name="TiMappingTemplate" Visibility="Collapsed"
-                 MahApps:ControlsHelper.HeaderFontSize="14"
+                 MahApps:HeaderedControlHelper.HeaderFontSize="14"
                  Header="Glossary/Excite/Japanese2ChineseTraditional/Monster1.csv">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -228,7 +229,7 @@
 
         <!-- Tab 4: All glossary tables grouping DataGrid -->
         <TabItem x:Name="TiMappingGlossaries" Visibility="Collapsed" Header="Glossary"
-                 MahApps:ControlsHelper.HeaderFontSize="14">
+                 MahApps:HeaderedControlHelper.HeaderFontSize="14">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -290,4 +291,4 @@
             </Grid>
         </TabItem>
     </TabControl>
-</avalonDock:LayoutAnchorable>
+</AvalonDockLayout:LayoutAnchorable>

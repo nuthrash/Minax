@@ -22,10 +22,10 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.Resources>
-            <Style TargetType="MahApps:ToggleSwitch" BasedOn="{StaticResource MahApps.Styles.ToggleSwitch.Win10}">
-                <Setter Property="Margin"  Value="3" />
-                <Setter Property="OnLabel" Value="{x:Static lang:Global.Str0Enabled}" />
-				<Setter Property="OffLabel" Value="{x:Static lang:Global.Str0Disabled}" />
+            <Style TargetType="MahApps:ToggleSwitch" >
+                <Setter Property="Margin" Value="3" />
+                <Setter Property="OnContent" Value="{x:Static lang:Global.Str0Enabled}" />
+				<Setter Property="OffContent" Value="{x:Static lang:Global.Str0Disabled}" />
             </Style>
         </Grid.Resources>
 
@@ -58,7 +58,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <MahApps:ToggleSwitch x:Name="MatsTempSave" Grid.Column="0" Grid.Row="0" IsChecked="False"
+            <MahApps:ToggleSwitch x:Name="MatsTempSave" Grid.Column="0" Grid.Row="0" IsOn="False"
                                   Content="{x:Static lang:Global.Str0TempSaveSecureValueSession}" />
             <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" FlowDirection="RightToLeft">
                 <Button Content="OK" Margin="3" Click="BtnOk_Click"  />

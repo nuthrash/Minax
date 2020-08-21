@@ -9,7 +9,10 @@
         xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:AvalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
+        xmlns:AvalonDockLayout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
+        xmlns:AvalonDockThemes="clr-namespace:AvalonDock.Themes;assembly=AvalonDock"
+        xmlns:AvalonDockThemeVS2013="clr-namespace:AvalonDock.Themes;assembly=AvalonDock.Themes.VS2013"
         mc:Ignorable="d" 
         Dialog:DialogParticipation.Register="{Binding}"
         Title="Minax Web Translator" Height="800" Width="1280"
@@ -76,9 +79,9 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <MahApps:MetroWindow.WindowButtonCommands>
+    <!--<MahApps:MetroWindow.WindowButtonCommands>
 		<MahApps:WindowButtonCommands Style="{DynamicResource MahApps.Styles.WindowButtonCommands.Win10}" />
-    </MahApps:MetroWindow.WindowButtonCommands>
+    </MahApps:MetroWindow.WindowButtonCommands>-->
 
     <MahApps:MetroWindow.LeftWindowCommands>
         <MahApps:WindowCommands ShowLastSeparator="False" HorizontalContentAlignment="Stretch"
@@ -184,10 +187,14 @@
                                 <Setter Property="VerticalAlignment" Value="Center" />
                                 <Setter Property="Margin" Value="3" />
                             </Style>
-                            <Style TargetType="MahApps:ToggleSwitch" BasedOn="{StaticResource MahApps.Styles.ToggleSwitch.Win10}">
-                                <Setter Property="Margin"  Value="3" />
-                                <Setter Property="OnLabel" Value="{x:Static lang:Global.Str0Enabled}" />
-                                <Setter Property="OffLabel" Value="{x:Static lang:Global.Str0Disabled}" />
+							<Style TargetType="Label">
+								<Setter Property="VerticalAlignment" Value="Center" />
+								<Setter Property="VerticalContentAlignment" Value="Center" />
+							</Style>
+                            <Style TargetType="MahApps:ToggleSwitch" >
+                                <Setter Property="Margin" Value="2" />
+                                <Setter Property="OnContent" Value="{x:Static lang:Global.Str0Enabled}" />
+								<Setter Property="OffContent" Value="{x:Static lang:Global.Str0Disabled}" />
                             </Style>
 
                         </StackPanel.Resources>
@@ -305,7 +312,7 @@
                                           Header="{x:Static lang:ProjectGlossary.Str0FileChangedMonitor}" Margin="3">
                                     <Grid >
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
+											<ColumnDefinition Width="60" />
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="*" />
@@ -316,11 +323,11 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
 
-                                        <MahApps:ToggleSwitch Grid.Column="0" Grid.Row="0" IsChecked="True" IsEnabled="False" OnLabel="" OffLabel="" />
+										<MahApps:ToggleSwitch Grid.Column="0" Grid.Row="0" IsOn="True" IsEnabled="False" OnContent="" OffContent="" />
 										<Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Content="{x:Static lang:ProjectGlossary.Str0AutoModifyMappingContentWhenFileRenamed}" />
 
-                                        <MahApps:ToggleSwitch x:Name="MatsMonitorAutoMergeWhenFileChanged" IsCheckedChanged="MatsMonitorAutoMergeWhenFileChanged_IsCheckedChanged"
-                                                              Grid.Column="0" Grid.Row="1" IsChecked="False" OnLabel="" OffLabel="" />
+										<MahApps:ToggleSwitch x:Name="MatsMonitorAutoMergeWhenFileChanged" Toggled="MatsMonitorAutoMergeWhenFileChanged_Toggled"
+                                                              Grid.Column="0" Grid.Row="1" IsOn="False" OnContent="" OffContent="" Margin="0" Padding="0" />
 										<Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Content="{x:Static lang:ProjectGlossary.Str0AutoMergeGlossaryMappingEntriesWhenFileChanged}"
                                                ToolTip="{x:Static lang:ProjectGlossary.Str0AutoMergeGlossaryMappingEntriesWhenFileChangedToolTip}" />
                                     </Grid>
@@ -345,15 +352,15 @@
 
 								<TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static lang:ProjectGlossary.Str0KeepRecentProjectList}" HorizontalAlignment="Right" />
                                 <MahApps:ToggleSwitch x:Name="MatsRemeberRecentProjects" Grid.Column="1" Grid.Row="0"
-                                                      IsChecked="True" />
+                                                      IsOn="True" />
 
 								<TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static lang:ProjectGlossary.Str0RecentProjectListMaximum}" HorizontalAlignment="Right" />
                                 <MahApps:NumericUpDown x:Name="ManudRecentProjectMax" Grid.Column="1" Grid.Row="1" Minimum="10" Maximum="200" Value="20" Margin="3"
-                                                   IsEnabled="{Binding ElementName=MatsRemeberRecentProjects, Path=IsChecked}" />
+                                                   IsEnabled="{Binding ElementName=MatsRemeberRecentProjects, Path=IsOn}" />
 
                                 <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="3" 
                                         Content="{x:Static lang:ProjectGlossary.Str0ClearRecentProjectList}" Click="MiProjClearRecent_Click"
-                                        IsEnabled="{Binding ElementName=MatsRemeberRecentProjects, Path=IsChecked}" />
+                                        IsEnabled="{Binding ElementName=MatsRemeberRecentProjects, Path=IsOn}" />
 
                                 <GridSplitter Height="2" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3"
                                               Background="Transparent"
@@ -423,35 +430,35 @@
         
         
         <!-- Main AvalonDock DockingManager -->
-        <avalonDock:DockingManager Grid.Column="0" Grid.Row="0" x:Name="dockManager" Margin="0" Padding="0"
+		<AvalonDock:DockingManager Grid.Column="0" Grid.Row="0" x:Name="dockManager" Margin="0" Padding="0"
                                    AllowMixedOrientation="True" Panel.ZIndex="0" >
-            <avalonDock:DockingManager.Theme>
-                <avalonDock:Vs2013LightTheme/>
-            </avalonDock:DockingManager.Theme>
-            
-            <avalonDock:LayoutRoot >
-                <avalonDock:LayoutPanel Orientation="Horizontal" >
-                    <avalonDock:LayoutAnchorablePaneGroup x:Name="AdlapgMain">
+			<AvalonDock:DockingManager.Theme>
+				<AvalonDockThemeVS2013:Vs2013LightTheme/>
+            </AvalonDock:DockingManager.Theme>
+
+			<AvalonDockLayout:LayoutRoot >
+				<AvalonDockLayout:LayoutPanel Orientation="Horizontal" >
+					<AvalonDockLayout:LayoutAnchorablePaneGroup x:Name="AdlapgMain">
                         <!-- manually add SourceDockingPanel and TargetDockingPanel programmtically -->
-                    </avalonDock:LayoutAnchorablePaneGroup>
-                </avalonDock:LayoutPanel>
+                    </AvalonDockLayout:LayoutAnchorablePaneGroup>
+                </AvalonDockLayout:LayoutPanel>
 
-                <avalonDock:LayoutRoot.LeftSide>
-                    <avalonDock:LayoutAnchorSide>
-                        <avalonDock:LayoutAnchorGroup>
-                        </avalonDock:LayoutAnchorGroup>
-                    </avalonDock:LayoutAnchorSide>
-                </avalonDock:LayoutRoot.LeftSide>
+				<AvalonDockLayout:LayoutRoot.LeftSide>
+					<AvalonDockLayout:LayoutAnchorSide>
+						<AvalonDockLayout:LayoutAnchorGroup>
+                        </AvalonDockLayout:LayoutAnchorGroup>
+                    </AvalonDockLayout:LayoutAnchorSide>
+                </AvalonDockLayout:LayoutRoot.LeftSide>
 
-                <avalonDock:LayoutRoot.RightSide>
-                    <avalonDock:LayoutAnchorSide>
+				<AvalonDockLayout:LayoutRoot.RightSide>
+					<AvalonDockLayout:LayoutAnchorSide>
                         <!-- manually add MappingDockingPanel, SummaryDockingPanel and QuickTranslationDockingPanel programmtically -->
-                        <avalonDock:LayoutAnchorGroup x:Name="AdlapgRight">
-                        </avalonDock:LayoutAnchorGroup>
-                    </avalonDock:LayoutAnchorSide>
-                </avalonDock:LayoutRoot.RightSide>
-            </avalonDock:LayoutRoot>
-        </avalonDock:DockingManager>
+						<AvalonDockLayout:LayoutAnchorGroup x:Name="AdlapgRight">
+                        </AvalonDockLayout:LayoutAnchorGroup>
+                    </AvalonDockLayout:LayoutAnchorSide>
+                </AvalonDockLayout:LayoutRoot.RightSide>
+            </AvalonDockLayout:LayoutRoot>
+        </AvalonDock:DockingManager>
 
         
         

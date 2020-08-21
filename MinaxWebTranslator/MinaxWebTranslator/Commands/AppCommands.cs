@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -80,7 +80,8 @@ namespace MinaxWebTranslator.Commands
 			execute: (param) => {
 				try {
 					var uri = new Uri( param as string );
-					Device.OpenUri( uri );
+					//Device.OpenUri( uri );
+					Launcher.OpenAsync( uri );
 				}
 				catch { }
 			} );

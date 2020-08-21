@@ -1,18 +1,19 @@
-<avalonDock:LayoutAnchorable x:Class="MinaxWebTranslator.Desktop.Views.TargetDockingPanel"
+<AvalonDockLayout:LayoutAnchorable x:Class="MinaxWebTranslator.Desktop.Views.TargetDockingPanel"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MinaxWebTranslator.Desktop.Views"
       xmlns:lang="clr-namespace:MinaxWebTranslator.Desktop.Languages"
-      xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
-      xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:AvalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
+      xmlns:AvalonDockLayout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
+	  xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
       mc:Ignorable="d" ContentId="targetWindow" x:Name="AdlaTarget" Title="{x:Static lang:Global.Str0Target}"
       CanClose="False" CanHide="False" >
 
-    <Grid x:Name="GdTarget">
-        <Grid.ColumnDefinitions>
+	<Grid x:Name="GdTarget">
+		<Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -44,6 +45,7 @@
 			<CheckBox x:Name="CbTargetAutoTop" Grid.Column="1" Grid.Row="0" Margin="2" Content="{x:Static lang:Global.Str0AutoTop}" IsChecked="False" Click="CbTargetAutoTop_Click" />
 			<CheckBox x:Name="CbTargetSyncScroll" Grid.Column="2" Grid.Row="0" Margin="2" Content="{x:Static lang:Global.Str0SyncWithSource}" IsChecked="True"  />
 
+			<!-- Hidden WebView to browse AJAX style web translators -->
             <WebBrowser x:Name="WbMain" Grid.Column="3" Grid.Row="0" Height="205" Width="205" Visibility="Collapsed" />
         </Grid>
 
@@ -51,18 +53,19 @@
         <RichTextBox x:Name="RtbTarget" Grid.Column="0" Grid.Row="1" Background="LightYellow"
                     VerticalScrollBarVisibility="Auto" TextOptions.TextFormattingMode="Display"
                     FontSize="14px" MahApps:TextBoxHelper.ClearTextButton="False"
-                    MahApps:TextBoxHelper.WatermarkAlignment="Justify">
+                    MahApps:TextBoxHelper.WatermarkAlignment="Justify"
+					Style="{DynamicResource MahApps:MahApps.Styles.ContextMenu}">
             <RichTextBox.ContextMenu>
-                <ContextMenu>
+				<ContextMenu Style="{DynamicResource MahApps:MahApps.Styles.ContextMenu}">
                     <MenuItem x:Name="MiTargetCopyAll" Header="{x:Static lang:Global.Str0CopyAll}" />
                     <MenuItem Command="ApplicationCommands.SelectAll" />
                     <MenuItem Command="ApplicationCommands.Copy"/>
-                    <Separator />
+					<Separator Style="{DynamicResource MahApps:MahApps.Styles.Separator}" />
 					<MenuItem Command="EditingCommands.MoveDownByPage" Header="{x:Static lang:Global.Str0MoveDownByPage}" />
 					<MenuItem Command="EditingCommands.MoveUpByPage" Header="{x:Static lang:Global.Str0MoveUpByPage}"/>
 					<MenuItem Command="EditingCommands.MoveToDocumentEnd" Header="{x:Static lang:Global.Str0MoveToDocEnd}"/>
 					<MenuItem Command="EditingCommands.MoveToDocumentStart" Header="{x:Static lang:Global.Str0MoveToDocStart}"/>
-                    <Separator />
+					<Separator Style="{DynamicResource MahApps:MahApps.Styles.Separator}" />
 					<MenuItem Command="EditingCommands.IncreaseFontSize" Header="{x:Static lang:Global.Str0IncreaseFontSize}"/>
 					<MenuItem Command="EditingCommands.DecreaseFontSize" Header="{x:Static lang:Global.Str0DecreaseFontSize}"/>
                 </ContextMenu>
@@ -79,4 +82,4 @@
                                                    Text="0%" Foreground="{DynamicResource MahApps.Brushes.Accent}" />
         </Grid>
     </Grid>
-</avalonDock:LayoutAnchorable>
+</AvalonDockLayout:LayoutAnchorable>

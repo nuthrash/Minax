@@ -7,7 +7,7 @@ using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using Xceed.Wpf.AvalonDock.Layout;
+using AvalonDock.Layout;
 
 namespace MinaxWebTranslator.Desktop.Views
 {

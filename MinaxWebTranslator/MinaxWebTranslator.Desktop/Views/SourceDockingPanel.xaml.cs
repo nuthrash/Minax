@@ -1,7 +1,9 @@
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
-using Xceed.Wpf.AvalonDock.Layout;
+using AvalonDock.Layout;
+using MahApps.Metro.Controls;
 
 namespace MinaxWebTranslator.Desktop.Views
 {
@@ -84,6 +86,7 @@ namespace MinaxWebTranslator.Desktop.Views
 			mSourceText = Clipboard.GetText();
 			RtbSource.Document.Blocks.Clear();
 			RtbSource.Paste();
+			//RtbSource.AppendText( mSourceText );
 			SourceTextChanged?.Invoke( this, null );
 			await MessageHub.SendMessageAsync( this, MessageType.SourceTextChanged, mSourceText );
 		}

@@ -9,13 +9,13 @@
     <Version>0.0.5</Version>
     <Company>Minax</Company>
     <Authors>nuthrash</Authors>
-    <Copyright>Copyright © 2019 nuthrash</Copyright>
+    <Copyright>Copyright © 2020 nuthrash</Copyright>
     <PackageProjectUrl>https://nuthrash.github.io/Minax/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nuthrash/Minax.git</RepositoryUrl>
     <PackageIcon>https://github.com/nuthrash/Minax/raw/master/Assets/Images/Translator.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
     <PackageTags>WebTranslator</PackageTags>
-    <Description>Minax Web Translator Desktop WPF app on .Net Framework 4.7 and .Net Core 3.0.</Description>
+    <Description>Minax Web Translator Desktop WPF app on .Net Framework 4.7 and .Net Core 3.1.</Description>
     <ApplicationIcon>Translator.ico</ApplicationIcon>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>MinaxWebTranslator.Desktop.snk</AssemblyOriginatorKeyFile>
@@ -71,15 +71,15 @@
   
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' ">
     <PackageReference Include="CHTCHSConv" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dirkster.AvalonDock" Version="3.6.2" />
-    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="3.6.2" />
+    <PackageReference Include="Dirkster.AvalonDock" Version="4.30.0" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.30.0" />
     <PackageReference Include="FileHelpers" Version="3.4.1" />
-    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0490" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0260" />
+    <PackageReference Include="MahApps.Metro" Version="2.2.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup>

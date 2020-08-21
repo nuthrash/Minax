@@ -284,7 +284,7 @@
                                     </Hyperlink>
                                 </TextBlock>
 
-                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="2" Kind="Json"/>
+                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="2" Kind="CodeJson"/>
                                 <TextBlock Grid.Column="1" Grid.Row="2" >
                                     <Hyperlink
                                         NavigateUri="https://www.newtonsoft.com/json">Json.NET
@@ -347,7 +347,7 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
 
-                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="0" Kind="Visualstudio" />
+                                <IconPacks:PackIconMaterial Grid.Column="0" Grid.Row="0" Kind="MicrosoftVisualStudio" />
                                 <TextBlock Grid.Column="1" Grid.Row="0">
                                 <Hyperlink
                                     NavigateUri="https://visualstudio.microsoft.com/">Visual Studio

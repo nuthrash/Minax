@@ -9,7 +9,7 @@
     <Version>0.0.5</Version>
     <RootNamespace>Minax</RootNamespace>
     <Description>A multi-targets common shared library for Minax series projects among .Net Core, .Net Standard and full-function .Net Framework</Description>
-    <Copyright>Copyright © 2019 nuthrash</Copyright>
+    <Copyright>Copyright © 2020 nuthrash</Copyright>
     <RepositoryUrl>https://github.com/nuthrash/Minax.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Minax.Shared</PackageTags>
@@ -51,8 +51,8 @@
   
   <ItemGroup>
     <PackageReference Include="FileHelpers" Version="3.4.1" />
-	<PackageReference Include="HtmlAgilityPack" Version="1.11.17" />
-	<PackageReference Include="Jurassic.Unofficial" Version="2019.10.2" />
+	<PackageReference Include="HtmlAgilityPack" Version="1.11.24" />
+	<PackageReference Include="Jurassic.Unofficial" Version="2020.8.14" />
 	<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 

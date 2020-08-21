@@ -1,4 +1,4 @@
-<avalonDock:LayoutAnchorable x:Class="MinaxWebTranslator.Desktop.Views.SummaryDockingPanel"
+<AvalonDockLayout:LayoutAnchorable x:Class="MinaxWebTranslator.Desktop.Views.SummaryDockingPanel"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:MinaxWebTranslator.Desktop.Views"
       xmlns:lang="clr-namespace:MinaxWebTranslator.Desktop.Languages"
       xmlns:conv="clr-namespace:MinaxWebTranslator.Desktop.Converters"
-      xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+      xmlns:AvalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
+      xmlns:AvalonDockLayout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
       xmlns:MahApps="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       mc:Ignorable="d" 
@@ -69,4 +70,4 @@
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
-</avalonDock:LayoutAnchorable>
+</AvalonDockLayout:LayoutAnchorable>

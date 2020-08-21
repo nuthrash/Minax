@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using Xceed.Wpf.AvalonDock.Layout;
+using AvalonDock.Layout;
 
 
 namespace MinaxWebTranslator.Desktop.Views

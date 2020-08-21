@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,7 +21,8 @@ namespace MinaxWebTranslator.Views
 			WvDescription.Source = new HtmlWebViewSource { Html = aboutStr };
 			WvDescription.Navigating += ( s1, e1 ) => {
 				// navigate hyperlink by external web browser
-				Device.OpenUri( new Uri(e1.Url) );
+				//Device.OpenUri( new Uri(e1.Url) );
+				Launcher.OpenAsync( new Uri(e1.Url) );
 				e1.Cancel = true;
 			};
 		}
