@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks>net47;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net47;net5.0-windows;netcoreapp3.1</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <AssemblyName>MinaxWebTranslator</AssemblyName>
     <LangVersion>7.3</LangVersion>
@@ -71,15 +71,23 @@
   
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' ">
     <PackageReference Include="CHTCHSConv" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.0" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0-windows' ">
+    <PackageReference Include="CHTCHSConv" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.0" />
+	<!-- Use NLS instead of ICU to fix zh-Hant locale problem, otherwise shall create zh-TW/zh locale resource files! -->
+	<!-- ref: https://github.com/dotnet/runtime/issues/44502#issuecomment-725746302 it seems would be fixed in 5.0.1. -->
+	<RuntimeHostConfigurationOption Include="System.Globalization.UseNls" Value="true" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dirkster.AvalonDock" Version="4.30.0" />
-    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.30.0" />
+    <PackageReference Include="Dirkster.AvalonDock" Version="4.50.0" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.50.0" />
     <PackageReference Include="FileHelpers" Version="3.4.1" />
-    <PackageReference Include="MahApps.Metro" Version="2.2.0" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.4.0" />
+    <PackageReference Include="MahApps.Metro" Version="2.3.4" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
   </ItemGroup>
 
   <ItemGroup>

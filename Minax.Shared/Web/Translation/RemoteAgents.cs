@@ -233,18 +233,29 @@ namespace Minax.Web.Translation
 				if( text.Contains( mm.OriginalText ) == false )
 					continue;
 
+				/*
 				//var k1 = string.Format( "θabcdeλ{0}◎", num++ );
-				var k1 = string.Format( "θabcdeλ{0}", num++ );
-				//var k2 = $"{{{k1}}}";
-				var k2 = $"}}{k1}}}";
+				var k1 = string.Format( "θabcdeλ{0}λ", num++ );
+				var k2 = $"{{{k1}}}";
+				//var k2 = $"}}{k1}}}";
 				tmpList.Add( (mm.OriginalText, k2, mm.MappingText) );
 				sb.Replace( mm.OriginalText, k2 );
 
 				var tmpstr = sb.ToString();
 				if( tmpstr.Contains( $"…{k2}" ) || tmpstr.Contains( $"【{k2}】" ) ||
-					tmpstr.Contains( $"＋{k2}" ) ) {
-					tmpList.Add( (mm.OriginalText, k1, mm.MappingText) );
+					tmpstr.Contains( $"＋{k2}" ) || tmpstr.Contains( $"―{k2}" ) ||
+					tmpstr.Contains( $"※{k2}" ) ) {
+					//tmpList.Add( (mm.OriginalText, k1, mm.MappingText) );
+					tmpList.Add( (mm.OriginalText, $"abcdeλ{num - 1}λ", mm.MappingText) );
 				}
+				*/
+				var k1 = string.Format( "θabcdeλ{0}λ", num );
+				//var k2 = $"{{{k1}}}";
+				var k2 = $"}}{k1}}}";
+				tmpList.Add( (mm.OriginalText, k2, mm.MappingText) );
+				sb.Replace( mm.OriginalText, k2 );
+				tmpList.Add( (mm.OriginalText, $"abcdeλ{num}λ", mm.MappingText) );
+				num++;
 
 				CurrentUsedModels.Add( mm );
 			}
@@ -400,7 +411,9 @@ namespace Minax.Web.Translation
 					if( false == ReplaceAfterXlation( sb, tmpList, afterTgtLangs,
 										// @"[{]?θabcdeλ(?<SeqNum>[0-9]+)◎[}]?", "{θabcdeλ${SeqNum}◎}" ) )
 										//@"[}]?θabcdeλ(?<SeqNum>[0-9]+)◎[}]?", "}θabcdeλ${SeqNum}◎}" ) )
-										@"[}]?θabcdeλ(?<SeqNum>[0-9]+)[}]?", "}θabcdeλ${SeqNum}}" ) )
+										//@"[}]?θabcdeλ(?<SeqNum>[0-9]+)[}]?", "}θabcdeλ${SeqNum}}" ) )
+										//@"[{]?θabcdeλ(?<SeqNum>[0-9]+)λ[}]?", "{θabcdeλ${SeqNum}λ}" ) )
+										@"[}]?θabcdeλ(?<SeqNum>[0-9]+)λ[}]?", "}θabcdeλ${SeqNum}λ}" ) )
 						continue; // {θabcdeλ<SeqNum>◎}
 
 
