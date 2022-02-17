@@ -145,10 +145,10 @@ namespace MinaxWebTranslator.Desktop.Views
 					new TranslatorSelector { RemoteType = RemoteType.Excite, Header = "Excite", Checked = true, Icon = srcExcite, Description = Languages.WebXlator.Str0ExciteXlatorJapan },
 					new TranslatorSelector { RemoteType = RemoteType.CrossLanguage, Header = "CrossLanguage", Checked = false, Icon = srcCrossLang, Description = Languages.WebXlator.Str0XTranserXlatorJapan },
 					new TranslatorSelector { RemoteType = RemoteType.Weblio, Header = "Weblio", Checked = false, Icon = srcWeblio, Description = Languages.WebXlator.Str0WeblioXlatorJapan },
-					new TranslatorSelector { RemoteType = RemoteType.Baidu, Header = Languages.WebXlator.Str0Baidu, Checked = false, Icon = srcBaidu, Description = Languages.WebXlator.Str0BaiduXlatorChina },
+					// new TranslatorSelector { RemoteType = RemoteType.Baidu, Header = Languages.WebXlator.Str0Baidu, Checked = false, Icon = srcBaidu, Description = Languages.WebXlator.Str0BaiduXlatorChina },
 					new TranslatorSelector { RemoteType = RemoteType.Youdao, Header = Languages.WebXlator.Str0Youdao, Checked = false, Icon = srcYoudao, Description = Languages.WebXlator.Str0YoudaoXlatorChina },
-					new TranslatorSelector { RemoteType = RemoteType.Google, Header = "Google", Checked = false, Icon = srcGoogle, Description = Languages.WebXlator.Str0GoogleXlatorAmerica },
-					new TranslatorSelector { RemoteType = RemoteType.Microsoft, Header = "Microsoft", Checked = false, Icon = srcMicrosoft, Description = Languages.WebXlator.Str0MicrosoftXlatorAmerica },
+					// new TranslatorSelector { RemoteType = RemoteType.Google, Header = "Google", Checked = false, Icon = srcGoogle, Description = Languages.WebXlator.Str0GoogleXlatorAmerica },
+					// new TranslatorSelector { RemoteType = RemoteType.Microsoft, Header = "Microsoft", Checked = false, Icon = srcMicrosoft, Description = Languages.WebXlator.Str0MicrosoftXlatorAmerica },
 
 					//new TranslatorSelector { SeparatorVisibility = Visibility.Visible, Header = "Free Web APIs" },
 					new TranslatorSelector { SeparatorVisibility = Visibility.Visible, },

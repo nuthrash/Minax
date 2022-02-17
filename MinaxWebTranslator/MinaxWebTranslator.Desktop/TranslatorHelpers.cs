@@ -574,17 +574,9 @@ namespace MinaxWebTranslator.Desktop
 				if( text.Contains( mm.OriginalText ) == false )
 					continue;
 
-				var k1 = string.Format( "θabcde◎{0}λ", num++ );
-				var k2 = $"{{{k1}}}";
-				tmpList.Add( (mm.OriginalText, k2, mm.MappingText) );
-				sb.Replace( mm.OriginalText, k2 );
-
-				var tmpstr = sb.ToString();
-				if( tmpstr.Contains( $"…{k2}" ) || tmpstr.Contains( $"【{k2}" ) ||
-					tmpstr.Contains( $"{k2}】" ) || tmpstr.Contains( $"に{k2}" ) ||
-					tmpstr.Contains( $"は{k2}" ) ) {
-					tmpList.Add( (mm.OriginalText, k1, mm.MappingText) );
-				}
+				var k1 = string.Format( "http://tmp58.org/a{0}b", num );
+				tmpList.Add( (mm.OriginalText, k1, mm.MappingText) );
+				sb.Replace( mm.OriginalText, k1 );
 
 				CurrentUsedModels.Add( mm );
 			}

@@ -12,7 +12,7 @@ namespace MinaxWebTranslator.Desktop.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -235,6 +235,54 @@ namespace MinaxWebTranslator.Desktop.Properties {
             }
             set {
                 this["MonitorAutoMergeWhenFileChanged"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("14")]
+        public double SourceTextAreaFontSizeMin {
+            get {
+                return ((double)(this["SourceTextAreaFontSizeMin"]));
+            }
+            set {
+                this["SourceTextAreaFontSizeMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("14")]
+        public double TargetTextAreaFontSizeMin {
+            get {
+                return ((double)(this["TargetTextAreaFontSizeMin"]));
+            }
+            set {
+                this["TargetTextAreaFontSizeMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MS UI Gothic")]
+        public string SourceTextAreaFontFamily {
+            get {
+                return ((string)(this["SourceTextAreaFontFamily"]));
+            }
+            set {
+                this["SourceTextAreaFontFamily"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Microsoft JhengHei UI")]
+        public string TargetTextAreaFontFamily {
+            get {
+                return ((string)(this["TargetTextAreaFontFamily"]));
+            }
+            set {
+                this["TargetTextAreaFontFamily"] = value;
             }
         }
     }

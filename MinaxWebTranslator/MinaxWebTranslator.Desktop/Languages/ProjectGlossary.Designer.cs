@@ -772,11 +772,47 @@ namespace MinaxWebTranslator.Desktop.Languages {
         }
         
         /// <summary>
+        ///   查詢類似 Source Panel 的當地語系化字串。
+        /// </summary>
+        public static string Str0SourcePanel {
+            get {
+                return ResourceManager.GetString("Str0SourcePanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 ⚙  Sync. File: 的當地語系化字串。
         /// </summary>
         public static string Str0SyncFileSettings {
             get {
                 return ResourceManager.GetString("Str0SyncFileSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Target Panel 的當地語系化字串。
+        /// </summary>
+        public static string Str0TargetPanel {
+            get {
+                return ResourceManager.GetString("Str0TargetPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Text Area Font: 的當地語系化字串。
+        /// </summary>
+        public static string Str0TextAreaFont {
+            get {
+                return ResourceManager.GetString("Str0TextAreaFont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Text Area Minimum Font Size: 的當地語系化字串。
+        /// </summary>
+        public static string Str0TextAreaFontSizeMin {
+            get {
+                return ResourceManager.GetString("Str0TextAreaFontSizeMin", resourceCulture);
             }
         }
         

@@ -9,7 +9,7 @@
     <Version>0.0.6</Version>
     <RootNamespace>Minax</RootNamespace>
     <Description>A multi-targets common shared library for Minax series projects among .Net Core, .Net Standard and full-function .Net Framework</Description>
-    <Copyright>Copyright © 2020 nuthrash</Copyright>
+    <Copyright>Copyright © 2022 nuthrash</Copyright>
     <RepositoryUrl>https://github.com/nuthrash/Minax.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Minax.Shared</PackageTags>

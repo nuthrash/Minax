@@ -336,38 +336,117 @@
                             </Grid>
                         </GroupBox>
 
-						<GroupBox Header="{x:Static lang:ProjectGlossary.Str0AppSettings}" Margin="4">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
+						<GroupBox x:Name="GbOptionAppSettings" Header="{x:Static lang:ProjectGlossary.Str0AppSettings}" Margin="4">
+							<Grid x:Name="GdOptionAppSettings">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
 
-								<TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static lang:ProjectGlossary.Str0KeepRecentProjectList}" HorizontalAlignment="Right" />
-                                <MahApps:ToggleSwitch x:Name="MatsRemeberRecentProjects" Grid.Column="1" Grid.Row="0"
+								<!-- Recent Projects settings -->
+								<GroupBox Grid.Column="0" Grid.Row="0" Header="{x:Static lang:ProjectGlossary.Str0RecentProjects}" Margin="3">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition Width="*" />
+										</Grid.ColumnDefinitions>
+										<Grid.RowDefinitions>
+											<RowDefinition Height="Auto" />
+											<RowDefinition Height="Auto" />
+											<RowDefinition Height="Auto" />
+											<RowDefinition Height="Auto" />
+										</Grid.RowDefinitions>
+
+										<TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static lang:ProjectGlossary.Str0KeepRecentProjectList}" HorizontalAlignment="Right" />
+										<MahApps:ToggleSwitch x:Name="MatsRemeberRecentProjects" Grid.Column="1" Grid.Row="0"
                                                       IsOn="True" />
 
-								<TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static lang:ProjectGlossary.Str0RecentProjectListMaximum}" HorizontalAlignment="Right" />
-                                <MahApps:NumericUpDown x:Name="ManudRecentProjectMax" Grid.Column="1" Grid.Row="1" Minimum="10" Maximum="200" Value="20" Margin="3"
+										<TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static lang:ProjectGlossary.Str0RecentProjectListMaximum}" HorizontalAlignment="Right" />
+										<MahApps:NumericUpDown x:Name="ManudRecentProjectMax" Grid.Column="1" Grid.Row="1" Minimum="10" Maximum="200" Value="20" Margin="3"
                                                    IsEnabled="{Binding ElementName=MatsRemeberRecentProjects, Path=IsOn}" />
 
-                                <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="3" 
+										<Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="3" 
                                         Content="{x:Static lang:ProjectGlossary.Str0ClearRecentProjectList}" Click="MiProjClearRecent_Click"
                                         IsEnabled="{Binding ElementName=MatsRemeberRecentProjects, Path=IsOn}" />
 
-                                <GridSplitter Height="2" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3"
+										<GridSplitter Height="2" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3"
                                               Background="Transparent"
                                               HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
 
-                            </Grid>
-                        </GroupBox>
+									</Grid>
+								</GroupBox>
+
+								<!-- Source panel settings -->
+								<GroupBox Grid.Column="0" Grid.Row="1" Header="{x:Static lang:ProjectGlossary.Str0SourcePanel}" Margin="3"
+										  MahApps:ControlsHelper.ContentCharacterCasing="Normal">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition Width="*" />
+										</Grid.ColumnDefinitions>
+										<Grid.RowDefinitions>
+											<RowDefinition Height="Auto" />
+											<RowDefinition Height="Auto" />
+										</Grid.RowDefinitions>
+
+										<TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right"
+											   Text="{x:Static lang:ProjectGlossary.Str0TextAreaFont}" />
+										<ComboBox x:Name="CbSourceTextAreaFont" Grid.Column="1" Grid.Row="0"
+												  MahApps:ComboBoxHelper.CharacterCasing="Normal"
+												  IsEditable="False" IsTextSearchEnabled="True" IsSynchronizedWithCurrentItem="True"
+												  VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+												  SelectedIndex="0" Margin="0 2 0 3">
+											<ComboBoxItem Content="Arial" />
+											<ComboBoxItem Content="Courier New" />
+										</ComboBox>
+
+										<TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right"
+											   Text="{x:Static lang:ProjectGlossary.Str0TextAreaFontSizeMin}" />
+										<MahApps:NumericUpDown x:Name="ManudSourceTextAreaFontSizeMin"
+												   Grid.Column="1" Grid.Row="1" Minimum="8" Maximum="200" Value="16" Margin="3" />
+									</Grid>
+								</GroupBox>
+								
+								<!-- Target panel settings -->
+								<GroupBox Grid.Column="0" Grid.Row="2" Header="{x:Static lang:ProjectGlossary.Str0TargetPanel}" Margin="3"
+										  MahApps:ControlsHelper.ContentCharacterCasing="Normal">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition Width="*" />
+										</Grid.ColumnDefinitions>
+										<Grid.RowDefinitions>
+											<RowDefinition Height="Auto" />
+											<RowDefinition Height="Auto" />
+										</Grid.RowDefinitions>
+
+										<TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right"
+											   Text="{x:Static lang:ProjectGlossary.Str0TextAreaFont}" />
+										<ComboBox x:Name="CbTargetTextAreaFont" Grid.Column="1" Grid.Row="0"
+												  MahApps:ComboBoxHelper.CharacterCasing="Normal"
+												  IsEditable="False" IsTextSearchEnabled="True" IsSynchronizedWithCurrentItem="True"
+												  VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+												  SelectedIndex="0" Margin="0 2 0 3">
+											<ComboBoxItem Content="Arial" />
+											<ComboBoxItem Content="Courier New" />
+										</ComboBox>
+
+										<TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right"
+											   Text="{x:Static lang:ProjectGlossary.Str0TextAreaFontSizeMin}" />
+										<MahApps:NumericUpDown x:Name="ManudTargetTextAreaFontSizeMin"
+												   Grid.Column="1" Grid.Row="1" Minimum="8" Maximum="200" Value="16" Margin="3" />
+									</Grid>
+								</GroupBox>
+
+							</Grid>
+						</GroupBox>
                     </StackPanel>
                 </ScrollViewer>
             </MahApps:Flyout>

@@ -82,7 +82,8 @@ namespace Minax.Web.Translation
 
 		// Japanese HTML replace characters
 		public static readonly IReadOnlyList<(string From, string To)> JapaneseEscapeHtmlText = new List<(string From, string To)> {
-			( "＜", "「" ), ( "＞", "」" ), ("〝", "「"), ("〟", "」"),
+			//( "＜", "「" ), ( "＞", "」" ), ("〝", "「"), ("〟", "」"),
+			("〝", "「"), ("〟", "」"),
 		};
 
 		// convert HTML code to text

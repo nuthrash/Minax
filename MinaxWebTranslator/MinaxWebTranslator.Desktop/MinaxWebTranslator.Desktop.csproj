@@ -9,13 +9,13 @@
     <Version>0.0.6</Version>
     <Company>Minax</Company>
     <Authors>nuthrash</Authors>
-    <Copyright>Copyright © 2020 nuthrash</Copyright>
+    <Copyright>Copyright © 2022 nuthrash</Copyright>
     <PackageProjectUrl>https://nuthrash.github.io/Minax/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nuthrash/Minax.git</RepositoryUrl>
     <PackageIcon>https://github.com/nuthrash/Minax/raw/master/Assets/Images/Translator.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
     <PackageTags>WebTranslator</PackageTags>
-    <Description>Minax Web Translator Desktop WPF app on .Net Framework 4.7 and .Net Core 3.1.</Description>
+    <Description>Minax Web Translator Desktop WPF app on .Net Framework 4.7, .Net Core 3.1 and .Net 5.0.</Description>
     <ApplicationIcon>Translator.ico</ApplicationIcon>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>MinaxWebTranslator.Desktop.snk</AssemblyOriginatorKeyFile>

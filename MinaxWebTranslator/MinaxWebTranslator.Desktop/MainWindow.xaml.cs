@@ -105,6 +105,7 @@ namespace MinaxWebTranslator.Desktop
 #endif
 
 			_PrepareWebBrowser();
+			_PrepareSysFonts();
 			_RestoreAppSettings();
 
 			CurrentXlator = mXlatorSelectorPanel.SelectedTranslator;
@@ -169,6 +170,7 @@ namespace MinaxWebTranslator.Desktop
 
 		//private int mStatusMsgCntMax = 1000; // for AppSettings
 		private readonly ObservableList<string> mStatusMessages = new ObservableList<string>() { ItemsCountMaximum = 1000 };
+		private readonly List<Control> mSysFontGlyphsSrc = new List<Control>(), mSysFontGlyphsTgt = new List<Control>();
 
 		private void _InitializeDockingPanels()
 		{
@@ -202,6 +204,43 @@ namespace MinaxWebTranslator.Desktop
 #endif
 		}
 
+		private void _PrepareSysFonts()
+		{
+			mSysFontGlyphsSrc.Clear();
+
+			// localization of font name for user friendly
+			var locLang= System.Windows.Markup.XmlLanguage.GetLanguage( System.Globalization.CultureInfo.CurrentUICulture.Name );
+			int locIdx = 0;
+			foreach ( var fn in Fonts.SystemFontFamilies ) {
+				var lbl = new Label();
+				lbl.FontFamily = fn;
+				lbl.FontSize = 14.0;
+
+				if( fn.FamilyNames.ContainsKey(locLang) ) {
+					// insert localized font name into front of list
+					lbl.Content = fn.FamilyNames[locLang];
+					mSysFontGlyphsSrc.Insert( locIdx++, lbl );
+				} else {
+					// use the first FamilyName from this FontFamily's supported locales
+					lbl.Content = fn.FamilyNames[fn.FamilyNames.Keys.First()];
+					//lbl.Content = fn.Source;
+					mSysFontGlyphsSrc.Add(lbl);
+				}
+			}
+
+			mSysFontGlyphsTgt.Clear();
+			mSysFontGlyphsTgt.AddRange( mSysFontGlyphsSrc.ToArray() );
+
+			// binding to ItemSource of CbSourceTextAreaFont and CbTargetTextAreaFont
+			CbSourceTextAreaFont.ItemsSource = null;
+			CbSourceTextAreaFont.Items.Clear();
+			CbSourceTextAreaFont.ItemsSource = mSysFontGlyphsSrc;
+			CbTargetTextAreaFont.ItemsSource = null;
+			CbTargetTextAreaFont.Items.Clear();
+			CbTargetTextAreaFont.ItemsSource = mSysFontGlyphsTgt;
+		}
+
+
 		private void _RestoreAppSettings()
 		{
 			_RestoreDockingLayout();
@@ -222,6 +261,7 @@ namespace MinaxWebTranslator.Desktop
 			TranslatorHelpers.TargetLanguage = SupportedTargetLanguage.ChineseTraditional;
 			TranslatorHelpers.AutoScrollToTop = false;
 
+			/*
 			FontFamily ffSrc, ffDst;
 			switch( TranslatorHelpers.SourceLanguage ) {
 				case SupportedSourceLanguage.ChineseTraditional:
@@ -241,6 +281,83 @@ namespace MinaxWebTranslator.Desktop
 			this.FontFamily = ffDst;
 			mSrcPanel.RtbSource.FontFamily = ffSrc;
 			mTgtPanel.RtbTarget.FontFamily = ffDst;
+			*/
+
+			// source/target panels min. font size
+			double srcFontMin = Properties.Settings.Default.SourceTextAreaFontSizeMin;
+			double tgtFontMin = Properties.Settings.Default.TargetTextAreaFontSizeMin;
+			if( ManudSourceTextAreaFontSizeMin.Minimum > srcFontMin ) {
+				// srcFontMin is too small than UI's value
+				ManudSourceTextAreaFontSizeMin.Value = ManudSourceTextAreaFontSizeMin.Minimum;
+				srcFontMin = ManudSourceTextAreaFontSizeMin.Minimum;
+				Properties.Settings.Default.SourceTextAreaFontSizeMin = srcFontMin;
+			} else {
+				ManudSourceTextAreaFontSizeMin.Value = srcFontMin;
+			}
+			if( ManudTargetTextAreaFontSizeMin.Minimum > tgtFontMin ) {
+				// tgtFontMin is too small than UI's value
+				ManudTargetTextAreaFontSizeMin.Value = ManudTargetTextAreaFontSizeMin.Minimum;
+				tgtFontMin = ManudTargetTextAreaFontSizeMin.Minimum;
+				Properties.Settings.Default.SourceTextAreaFontSizeMin = tgtFontMin;
+			}
+			else {
+				ManudTargetTextAreaFontSizeMin.Value = tgtFontMin;
+			}
+
+			if( mSrcPanel.RtbSource.FontSize < srcFontMin ) {
+				mSrcPanel.RtbSource.FontSize = srcFontMin;
+			}
+			if( mTgtPanel.RtbTarget.FontSize < tgtFontMin ) {
+				mTgtPanel.RtbTarget.FontSize = tgtFontMin;
+			}
+
+			for( int i = 0; i < mSysFontGlyphsSrc.Count; ++i ) {
+				if( mSysFontGlyphsSrc[i].FontFamily.Source == Properties.Settings.Default.SourceTextAreaFontFamily ) {
+					CbSourceTextAreaFont.SelectedIndex = i;
+					break;
+				}
+			}
+			if( CbSourceTextAreaFont.SelectedIndex < 0 ) {
+				var defSrcFontName = Languages.Global.Str0DefaultTextFontFamilyName;
+				for( int i = 0; i < mSysFontGlyphsTgt.Count; ++i ) {
+					if( mSysFontGlyphsTgt[i].FontFamily.Source == defSrcFontName ) {
+						CbSourceTextAreaFont.SelectedIndex = i;
+						Properties.Settings.Default.SourceTextAreaFontFamily = defSrcFontName;
+						break;
+					}
+				}
+			}
+			if( CbSourceTextAreaFont.SelectedIndex < 0) {
+				CbSourceTextAreaFont.SelectedIndex = 0;
+				Properties.Settings.Default.SourceTextAreaFontFamily = mSysFontGlyphsSrc[0].FontFamily.Source;
+			}
+			//mSrcPanel.RtbSource.FontFamily = mSysFontGlyphsSrc[CbSourceTextAreaFont.SelectedIndex].FontFamily;
+			mSrcPanel.RtbSource.FontFamily = (CbSourceTextAreaFont.SelectedItem as Control).FontFamily;
+
+
+			for ( int i = 0; i < mSysFontGlyphsTgt.Count; ++i ) {
+				if( mSysFontGlyphsTgt[i].FontFamily.Source == Properties.Settings.Default.TargetTextAreaFontFamily ) {
+					CbTargetTextAreaFont.SelectedIndex = i;
+					break;
+				}
+			}
+			if( CbTargetTextAreaFont.SelectedIndex < 0 ) {
+				var defTgtFontName = Languages.Global.Str0DefaultTextFontFamilyName;
+				for( int i = 0; i < mSysFontGlyphsTgt.Count; ++i ) {
+					if( mSysFontGlyphsTgt[i].FontFamily.Source == defTgtFontName ) {
+						CbTargetTextAreaFont.SelectedIndex = i;
+						Properties.Settings.Default.TargetTextAreaFontFamily = defTgtFontName;
+						break;
+					}
+				}
+			}
+			if (CbTargetTextAreaFont.SelectedIndex < 0) {
+				CbTargetTextAreaFont.SelectedIndex = 0;
+				Properties.Settings.Default.TargetTextAreaFontFamily = mSysFontGlyphsTgt[0].FontFamily.Source;
+			}
+			//mTgtPanel.RtbTarget.FontFamily = mSysFontGlyphsTgt[CbTargetTextAreaFont.SelectedIndex].FontFamily;
+			mTgtPanel.RtbTarget.FontFamily = (CbTargetTextAreaFont.SelectedItem as Control).FontFamily;
+
 
 			MatsMonitorAutoMergeWhenFileChanged.IsOn = Properties.Settings.Default.MonitorAutoMergeWhenFileChanged == true;
 			if( Properties.Settings.Default.RemeberRecentProjects == true ) {
@@ -271,6 +388,12 @@ namespace MinaxWebTranslator.Desktop
 			Properties.Settings.Default.RemeberRecentProjects = MatsRemeberRecentProjects.IsOn == true;
 			Properties.Settings.Default.MonitorAutoMergeWhenFileChanged = MatsMonitorAutoMergeWhenFileChanged.IsOn == true;
 			Properties.Settings.Default.RecentProjectCountMax = (int)ManudRecentProjectMax.Value.GetValueOrDefault();
+
+			// Source Panel and Target Panel
+			Properties.Settings.Default.SourceTextAreaFontFamily = mSysFontGlyphsSrc[CbSourceTextAreaFont.SelectedIndex].FontFamily.Source;
+			Properties.Settings.Default.TargetTextAreaFontFamily = mSysFontGlyphsTgt[CbTargetTextAreaFont.SelectedIndex].FontFamily.Source;
+			Properties.Settings.Default.SourceTextAreaFontSizeMin = ManudSourceTextAreaFontSizeMin.Value.GetValueOrDefault();
+			Properties.Settings.Default.TargetTextAreaFontSizeMin = ManudTargetTextAreaFontSizeMin.Value.GetValueOrDefault();
 
 			_SaveDockingLayout();
 		}
@@ -1230,6 +1353,15 @@ namespace MinaxWebTranslator.Desktop
 			}
 			else if( changed ) {
 				_SetProjChanged();
+			}
+
+			// update source/target panels font settings
+			if( Properties.Settings.Default.SourceTextAreaFontSizeMin != ManudSourceTextAreaFontSizeMin.Value.GetValueOrDefault() ||
+				Properties.Settings.Default.TargetTextAreaFontSizeMin != ManudTargetTextAreaFontSizeMin.Value.GetValueOrDefault() ||
+				Properties.Settings.Default.SourceTextAreaFontFamily != mSysFontGlyphsSrc[CbSourceTextAreaFont.SelectedIndex].FontFamily.Source ||
+				Properties.Settings.Default.TargetTextAreaFontFamily != mSysFontGlyphsTgt[CbTargetTextAreaFont.SelectedIndex].FontFamily.Source) {
+				_SaveAppSettings();
+				_RestoreAppSettings();
 			}
 
 		}

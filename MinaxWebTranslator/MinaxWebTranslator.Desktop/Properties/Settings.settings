@@ -56,5 +56,17 @@
     <Setting Name="MonitorAutoMergeWhenFileChanged" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="SourceTextAreaFontSizeMin" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">14</Value>
+    </Setting>
+    <Setting Name="TargetTextAreaFontSizeMin" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">14</Value>
+    </Setting>
+    <Setting Name="SourceTextAreaFontFamily" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MS UI Gothic</Value>
+    </Setting>
+    <Setting Name="TargetTextAreaFontFamily" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Microsoft JhengHei UI</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

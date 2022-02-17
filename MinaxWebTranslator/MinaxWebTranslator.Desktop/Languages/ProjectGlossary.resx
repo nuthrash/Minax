@@ -416,4 +416,16 @@ Do you want to update newer Mapping entries?</value>
   <data name="Str0RemoteSyncFileListSettings" xml:space="preserve">
     <value>Remote Sync. File List Settings</value>
   </data>
+  <data name="Str0SourcePanel" xml:space="preserve">
+    <value>Source Panel</value>
+  </data>
+  <data name="Str0TargetPanel" xml:space="preserve">
+    <value>Target Panel</value>
+  </data>
+  <data name="Str0TextAreaFont" xml:space="preserve">
+    <value>Text Area Font:</value>
+  </data>
+  <data name="Str0TextAreaFontSizeMin" xml:space="preserve">
+    <value>Text Area Minimum Font Size:</value>
+  </data>
 </root>
