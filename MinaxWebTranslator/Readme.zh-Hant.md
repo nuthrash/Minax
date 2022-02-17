@@ -23,7 +23,7 @@
 - 專案目錄： [MinaxWebTranslator.Desktop](https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/MinaxWebTranslator.Desktop)
 - 系統需求：
   1. 作業系統： Windows 7 Service Pack 1 (SP1) 含以上
-  2. .Net Framework [4.7](https://dotnet.microsoft.com/download/dotnet-framework/net47) 含以上，或是 .Net Core [3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+  2. .Net Framework [4.7](https://dotnet.microsoft.com/download/dotnet-framework/net47) 含以上、.Net Core [3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)，或是.Net [5.0](https://dotnet.microsoft.com/download/dotnet-core/5.0)
   3. 存取權限： 本地端儲存、網路
 
 ### 主視窗

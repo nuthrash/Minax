@@ -31,6 +31,7 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 - 微軟 Visual Studio 2019 16.7.x
 - .Net Framework 4.7 SDK
 - .Net Core 3.1 final
+- .Net 5.0
 - Android SDK Platform 28 (Android 9.0 - Pie)
 
 
@@ -39,6 +40,14 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 ## 更新紀錄
 
 ### Minax Web Translator
+
+#### v0.0.6
+1. 升級 .Net 5.0 相關程式碼。
+2. 升級 MahApps.Metro nuget 版本為 v2.3.4 並更新相關程式碼。
+3. 升級 Dirkster.AvalonDock nuget 版本為 v4.50.0 並更新相關程式碼。
+4. 加入 MinaxWebTranslator.Desktop 中來源與目標面板的「最小字型尺寸」設定。
+5. 變更 MinaxWebTranslator.Desktop 中關於百度翻譯器的取代模板與字串。
+6. 隱藏 MinaxWebTranslator.Desktop 中以瀏覽器為基礎的翻譯器。
 
 #### v0.0.5
 1. 升級 .Net Core 3.1 正式發行版的相關程式碼。
@@ -74,6 +83,13 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 <br />
 
 ### Minax.Shared
+
+#### v0.0.6
+1. 變更 RemoteAgents.cs 中關於百度翻譯器的取代模板與字串。
+2. 修正 Profiles.cs 中 JapaneseEscapeHtmlText 錯誤取代日文HTML字元的程式碼。
+
+#### v0.0.5
+1. 變更 TranslationProject.cs 中 TranslationProject 類別的預設值
 
 #### v0.0.4
 1. 變更百度 API 的文句替換模式、重試邏輯、替換字句與 BaiduTranslatorFormat2 格式。

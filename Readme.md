@@ -33,6 +33,7 @@ See [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebT
 - Microsoft Visual Studio 2019 16.7.x
 - .Net Framework 4.7 SDK
 - .Net Core 3.1 final
+- .Net 5.0
 - Android SDK Platform 28 (Android 9.0 - Pie)
 
 
@@ -41,6 +42,14 @@ See [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebT
 ## Change Logs
 
 ### Minax Web Translator
+
+#### v0.0.6
+1. Update .Net 5.0 related facilities.
+2. Update MahApps.Metro nuget version to v2.3.4 and update all its related facilities.
+3. Update Dirkster.AvalonDock nuget version to v4.50.0 and update all its related facilities.
+4. Add minimum font size settings of Source/Destination panel of MinaxWebTranslator.Desktop.
+5. Change replacing pattern, and replacing words of Baidu API in TranslaterHelpers.cs of MinaxWebTranslator.Desktop.
+6. Hide web-browser-based translators in TranslaterSelectorPanel.xaml.cs of MinaxWebTranslator.Desktop.
 
 #### v0.0.5
 1. Update .Net Core 3.1 related facilities.
@@ -76,6 +85,13 @@ Initial release
 <br />
 
 ### Minax.Shared
+
+#### v0.0.6
+1. Change replacing pattern, and replacing words of Baidu API in RemoteAgents.cs.
+2. Fix error of replacing Japanese HTML characters of JapaneseEscapeHtmlText in Profiles.cs.
+
+#### v0.0.5
+1. Change default values of TranslationProject class in TranslationProject.cs.
 
 #### v0.0.4
 1. Change replacing pattern, retry logic, replacing words and BaiduTranslatorFormat2 format of Baidu API.
