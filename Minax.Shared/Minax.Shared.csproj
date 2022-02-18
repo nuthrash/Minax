@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.1;net5.0;net47</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net6.0;net47</TargetFrameworks>
     <Company>Minax</Company>
     <Authors>nuthrash</Authors>
     <AssemblyVersion>0.0.7.0</AssemblyVersion>
@@ -37,13 +37,9 @@
 	<PackageReference Include="ChineseConverter" Version="1.0.0" />  
   </ItemGroup>
   
-  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0' ">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0' ">
     <PackageReference Include="CHTCHSConv" Version="1.0.0" />  
   </ItemGroup>  
-  
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' ">
-    <PackageReference Include="CHTCHSConv" Version="1.0.0" />  
-  </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="CHTCHSConv" Version="1.0.0" />  
@@ -54,10 +50,10 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="FileHelpers" Version="3.4.1" />
-	<PackageReference Include="HtmlAgilityPack" Version="1.11.28" />
-	<PackageReference Include="Jurassic.Unofficial" Version="2020.10.14" />
-	<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="FileHelpers" Version="3.5.1" />
+	<PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
+	<PackageReference Include="Jurassic.Unofficial" Version="2021.8.18" />
+	<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
