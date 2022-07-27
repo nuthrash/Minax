@@ -548,7 +548,7 @@ namespace MinaxWebTranslator.Desktop
 			}
 
 			// step 0: load default location, Host is "fanyi.baidu.com"
-			bool rst = await _WaitBrowserLoaded( browser, defLoc, RemoteType.Baidu, 10 );
+			bool rst = await _WaitBrowserLoaded( browser, defLoc, RemoteType.Baidu, 20 );
 			if( rst == false ) {
 				_Report( progress, -1, Languages.WebXlator.Str0NavigateFailed, string.Format( Languages.WebXlator.Str0FailedLocation, defLoc ) );
 				return false;
@@ -594,6 +594,19 @@ namespace MinaxWebTranslator.Desktop
 			cancelToken.ThrowIfCancellationRequested();
 			_Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
+			dynamic docObj = browser.Document;
+
+			// force to select target language
+			var langToSelector= docObj.querySelector("span.language-selected");
+			switch ( TargetLanguage ) {
+				case SupportedTargetLanguage.ChineseTraditional:
+					langToSelector.setAttribute( "data-lang", "cht" );
+					break;
+				case SupportedTargetLanguage.English:
+					langToSelector.setAttribute( "data-lang", "en" );
+					break;
+			}
+
 			rtbDst.Document.Blocks.Clear();
 
 			rst = await _WaitForSelector( browser, "a.textarea-clear-btn", defLoc );
@@ -606,11 +619,11 @@ namespace MinaxWebTranslator.Desktop
 			cancelToken.ThrowIfCancellationRequested();
 
 			// the a.textarea-clear-btn's style would null when first and un-finished loading...
-			rst = await _WaitForStyle( browser, "a.textarea-clear-btn", defLoc );
-			if( rst != true ) {
-				_Report( progress, -1, Languages.WebXlator.Str0NavigateFailed, string.Format( Languages.WebXlator.Str0FailedLocation, defLoc ) );
-				return false;
-			}
+			//rst = await _WaitForStyle( browser, "a.textarea-clear-btn", defLoc );
+			//if( rst != true ) {
+			//	_Report( progress, -1, Languages.WebXlator.Str0NavigateFailed, string.Format( Languages.WebXlator.Str0FailedLocation, defLoc ) );
+			//	return false;
+			//}
 
 			int xlatedSectionCnt = 0;
 			foreach( var section in sections ) {
@@ -627,7 +640,7 @@ namespace MinaxWebTranslator.Desktop
 					await Task.Delay( 300 );
 
 					// fill original text
-					dynamic docObj = browser.Document;
+					//dynamic docObj = browser.Document;
 
 					// wait clear button hidden
 					var clearBtn = docObj.querySelector( "a.textarea-clear-btn" );
@@ -647,6 +660,13 @@ namespace MinaxWebTranslator.Desktop
 					await Task.Delay( 2000 );
 
 					cancelToken.ThrowIfCancellationRequested();
+
+					// force to click translate button
+					browser.InvokeScript("eval", new string[] {
+						$"document.querySelector('#translate-button').click();",
+					});
+					await Task.Delay(300);
+
 					rst = await _WaitForSelector( browser, "p.ordinary-output.target-output.clearfix", defLoc, 200 );
 					if( rst == false ) {
 						// extract Web Translator's error string DIV
@@ -1444,10 +1464,10 @@ namespace MinaxWebTranslator.Desktop
 		//private static readonly string sLocExciteEn = "https://www.excite.co.jp/world/english/";
 		//private static readonly string sLocWeblioCht = "https://translate.weblio.jp/chinese/";
 		//private static readonly string sLocWeblioEn = "https://translate.weblio.jp/";
-		private static readonly string sLocCrossLang = "http://cross.transer.com/";
+		private static readonly string sLocCrossLang = "https://cross.transer.com/";
 		private static readonly string sLocBaiduCht = "https://fanyi.baidu.com/#jp/cht/しかも";
 		private static readonly string sLocBaiduEn = "https://fanyi.baidu.com/#jp/en/しかも";
-		private static readonly string sLocYoudaoCht = "http://fanyi.youdao.com/";
+		private static readonly string sLocYoudaoCht = "https://fanyi.youdao.com/";
 		private static readonly string sLocGoogleChtPrefix = "https://translate.google.com/?op=translate&sl=ja&tl=zh-TW&text=";
 		private static readonly string sLocGoogleEnPrefix = "https://translate.google.com/?op=translate&sl=ja&tl=en&text=";
 		private static readonly string sLocBingCht = "https://www.bing.com/translator?to=zh-Hant&text=Change";

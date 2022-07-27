@@ -390,7 +390,8 @@ namespace Minax.Web.Translation
 					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional )
 						afterTgtLangs.Add( Profiles.BaiduXlationAfter2Cht );
 
-					if( false == ReplaceAfterXlation( sb, tmpList, afterTgtLangs, null, null ) )
+					if( false == ReplaceAfterXlation( sb, tmpList, afterTgtLangs,
+														@"[\s]?http://tmp58.org/a(?<SeqNum>[0-9]+)b[\s]?", "http://tmp58.org/a${SeqNum}b"))
 						continue;
 
 
@@ -1504,7 +1505,8 @@ namespace Minax.Web.Translation
 
 			var text = sourceText;
 			var sb = new StringBuilder();
-			var tmpList = ReplaceBeforeXlation( text, sourceLanguage, "{0}", 5.61359, ref sb );
+			//var tmpList = ReplaceBeforeXlation( text, sourceLanguage, "{0}", 5.61359, ref sb );
+			var tmpList = ReplaceBeforeXlation( text, sourceLanguage, "{0}", 7.1, ref sb );
 			if( tmpList == null || sb.Length <= 0 )
 				yield break;
 
@@ -1528,7 +1530,10 @@ namespace Minax.Web.Translation
 						};
 
 			if( targetLanguage == SupportedTargetLanguage.ChineseTraditional )
-				values["big5"] = "yes"; // translated to Chinese Traditional
+				values["big5_lang"] = "yes"; // translated to Chinese Traditional
+
+			if (clientMobile.DefaultRequestHeaders.UserAgent.Count <= 0)
+				clientMobile.DefaultRequestHeaders.Add( "User-Agent", "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.71 Mobile Safari/537.36" );
 
 			int xlatedSectionCnt = 0;
 			foreach( var section in sections ) {
@@ -1543,7 +1548,7 @@ namespace Minax.Web.Translation
 
 				HttpResponseMessage response = null;
 				try {
-					response = client.PostAsync( defLoc, new FormUrlEncodedContent( values ), cancelToken ).Result;
+					response = clientMobile.PostAsync( defLoc, new FormUrlEncodedContent( values ), cancelToken ).Result;
 				}
 				catch( Exception ex ) {
 					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
@@ -1554,11 +1559,18 @@ namespace Minax.Web.Translation
 					continue;
 
 				mHtmlDoc.LoadHtml( responseString );
-				var afterTextArea = mHtmlDoc.GetElementbyId( "after" );
-				if( afterTextArea != null && string.IsNullOrWhiteSpace( afterTextArea.InnerText ) == false ) {
+				var afterTextBox = mHtmlDoc.GetElementbyId( "afterText" );
+				HtmlAgilityPack.HtmlNode afterText = null;
+				if( afterTextBox != null && afterTextBox.ChildNodes.Count >= 2 ) {
+					// get div#afterText.afterTextBox -> p.inputText node
+					//afterText = afterTextBox.ChildNodes[afterTextBox.ChildNodes.Count - 2];
+					afterText = afterTextBox.Descendants("p").FirstOrDefault(p => p.GetAttributeValue("class", "") == "inputText");
+				}
+
+				if( afterText != null ) {
 					sb.Clear();
 					// filter out usless html code
-					sb.Append( afterTextArea.InnerText.Replace( "&#010;", Environment.NewLine ) );
+					sb.Append( afterText.InnerText.Replace( "&#010;", Environment.NewLine ) );
 					foreach( var tuple2 in Profiles.HtmlCodeRecoveryText )
 						sb.Replace( tuple2.From, tuple2.To );
 
@@ -1857,6 +1869,7 @@ namespace Minax.Web.Translation
 
 		private static readonly HttpClient client = new HttpClient(), clientXLang = new HttpClient(), clientBaidu = new HttpClient( handlerBaidu ) { Timeout = TimeSpan.FromSeconds( 30 ) }, clientYoudao = new HttpClient();
 		private static readonly HttpClient clientGoogle = new HttpClient(), clientBing = new HttpClient();
+		private static readonly HttpClient clientMobile = new HttpClient();
 
 		private static readonly string sLocCrossLangFree = "http://cross.transer.com/text/exec_tran";
 		private static readonly string sLocBaiduFree = "https://fanyi.baidu.com/v2transapi";

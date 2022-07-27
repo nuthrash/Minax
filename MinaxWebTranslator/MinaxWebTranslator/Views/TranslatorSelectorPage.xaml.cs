@@ -111,7 +111,7 @@ namespace MinaxWebTranslator.Views
 
 			// prepare TranslatorSelector models
 			var srcExcite = ImageSource.FromResource( "MinaxWebTranslator.Resources.Excite.png" );
-			var srcCrossLang = ImageSource.FromResource( "MinaxWebTranslator.Resources.CrossLanguage.png" );
+			//var srcCrossLang = ImageSource.FromResource( "MinaxWebTranslator.Resources.CrossLanguage.png" );
 			var srcWeblio = ImageSource.FromResource( "MinaxWebTranslator.Resources.WeblioTranslator.png" );
 			var srcBaidu = ImageSource.FromResource( "MinaxWebTranslator.Resources.BaiduTranslator.png" );
 			var srcYoudao = ImageSource.FromResource( "MinaxWebTranslator.Resources.YoudaoTranslator.png" );
@@ -120,7 +120,7 @@ namespace MinaxWebTranslator.Views
 
 			var list = new ObservableList<TranslatorSelector> {
 				new TranslatorSelector { RemoteType = RemoteType.Excite, Header="Excite", Checked = true, Icon = srcExcite, Description = Languages.WebXlator.Str0ExciteXlatorJapan },
-				new TranslatorSelector { RemoteType = RemoteType.CrossLanguageFree, Header="CROSS-Transer", Checked = false, Icon = srcCrossLang, Description = Languages.WebXlator.Str0XTranserXlatorJapan },
+				//new TranslatorSelector { RemoteType = RemoteType.CrossLanguageFree, Header="CROSS-Transer", Checked = false, Icon = srcCrossLang, Description = Languages.WebXlator.Str0XTranserXlatorJapan },
 				new TranslatorSelector { RemoteType = RemoteType.Weblio, Header="Weblio", Checked = false, Icon = srcWeblio, Description = Languages.WebXlator.Str0WeblioXlatorJapan },
 				//new TranslatorSelector { RemoteType = RemoteType.BaiduFree, Header="Baidu", Checked = false, Icon = srcBaidu, Description = Languages.WebXlator.Str0BaiduXlatorChina },
 				new TranslatorSelector { RemoteType = RemoteType.YoudaoFree, Header=Languages.WebXlator.Str0Youdao, Checked = false, Icon = srcYoudao, Description = Languages.WebXlator.Str0YoudaoXlatorChina },

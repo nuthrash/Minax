@@ -9,7 +9,7 @@
     <Version>0.0.7</Version>
     <RootNamespace>Minax</RootNamespace>
     <Description>A multi-targets common shared library for Minax series projects among .Net, .Net Standard and full-function .Net Framework</Description>
-    <Copyright>Copyright © 2022 nuthrash</Copyright>
+    <Copyright>Copyright © 2019-$([System.DateTime]::Now.Year) nuthrash</Copyright>
     <RepositoryUrl>https://github.com/nuthrash/Minax.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Minax.Shared</PackageTags>
@@ -28,6 +28,14 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net47'">

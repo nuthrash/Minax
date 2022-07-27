@@ -94,7 +94,7 @@
                 </Grid.RowDefinitions>
 
                 <!-- src 1: Cross Language translator -->
-                <CheckBox x:Name="CbQuickXLang" Grid.Column="0" Grid.Row="0" Margin="3" Content="CrossLanguage" IsChecked="true" />
+                <!--<CheckBox x:Name="CbQuickXLang" Grid.Column="0" Grid.Row="0" Margin="3" Content="CrossLanguage" IsChecked="true" />
                 <Button x:Name="BtnQuickXLangCopy" Grid.Column="1" Grid.Row="0" Margin="2"
                     Content="{x:Static lang:Global.Str0Copy}" ToolTip="{x:Static lang:Global.Str0CopyToolTip}" Click="BtnQuickXLangCopy_Click"  />
                 <RichTextBox x:Name="RtbQuickXLangOutput" Grid.Column="2" Grid.Row="0" Margin="2" Background="LightYellow"
@@ -112,7 +112,7 @@
                             <MenuItem Command="ApplicationCommands.Copy"/>
                         </ContextMenu>
                     </RichTextBox.ContextMenu>
-                </RichTextBox>
+                </RichTextBox>-->
 
                 <!-- src 2: Baidu translator -->
 				<CheckBox x:Name="CbQuickBaidu" Grid.Column="0" Grid.Row="1" Margin="3" Content="{x:Static lang:WebXlator.Str0Baidu}" IsChecked="true" />

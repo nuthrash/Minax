@@ -7,7 +7,7 @@
     <Version>0.0.7</Version>
     <Authors>nuthrash</Authors>
     <Company>Minax</Company>
-    <Copyright>Copyright © 2022 nuthrash</Copyright>
+    <Copyright>Copyright © 2019-$([System.DateTime]::Now.Year) nuthrash</Copyright>
     <PackageProjectUrl>https://nuthrash.github.io/Minax/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nuthrash/Minax.git</RepositoryUrl>
     <PackageIcon>https://github.com/nuthrash/Minax/raw/master/Assets/Images/Translator.png</PackageIcon>

@@ -55,14 +55,14 @@ namespace MinaxWebTranslator.Desktop.Views
 				NonEmptyMaxPlaceholder = string.Format( Languages.WebXlator.Str2InputTextCountFractions, mCurrentInput.Length, TranslatingMaxWordCount ),
 			};
 
-			RtbQuickXLangOutput.DataContext = mXlangVM = new ViewModels.BaseViewModel();
+			//RtbQuickXLangOutput.DataContext = mXlangVM = new ViewModels.BaseViewModel();
 			RtbQuickBaiduOutput.DataContext = mBaiduVM = new ViewModels.BaseViewModel();
 			RtbQuickYoudaoOutput.DataContext = mYoudaoVM = new ViewModels.BaseViewModel();
 			RtbQuickGoogleOutput.DataContext = mGoogleVM = new ViewModels.BaseViewModel();
 
 			mRtbs = new List<RichTextBox> {
 				RtbQuickInput,
-				RtbQuickXLangOutput,
+				//RtbQuickXLangOutput,
 				RtbQuickBaiduOutput,
 				RtbQuickYoudaoOutput,
 				RtbQuickGoogleOutput,
@@ -228,7 +228,8 @@ namespace MinaxWebTranslator.Desktop.Views
 				return;
 			}
 
-			if( CbQuickXLang.IsChecked != true && CbQuickBaidu.IsChecked != true &&
+			//if( CbQuickXLang.IsChecked != true && CbQuickBaidu.IsChecked != true &&
+			if( CbQuickBaidu.IsChecked != true &&
 				CbQuickYoudao.IsChecked != true && CbQuickGoogle.IsChecked != true ) {
 				await mMainWindow.ShowMessageAsync( Languages.Global.Str0OperationWarning, Languages.WebXlator.Str0PlzSelectXlator );
 				return;
@@ -244,11 +245,11 @@ namespace MinaxWebTranslator.Desktop.Views
 
 			List<Task> tasks = new List<Task>();
 
-			if( CbQuickXLang.IsChecked == true ) {
-				mXlangVM.DataErrorPlaceholder = "";
-				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.CrossLanguageFree, sourceText, RtbQuickXLangOutput,
-												mCancelTokenSrource.Token, sProgressXlang ) );
-			}
+			//if( CbQuickXLang.IsChecked == true ) {
+			//	mXlangVM.DataErrorPlaceholder = "";
+			//	tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.CrossLanguageFree, sourceText, RtbQuickXLangOutput,
+			//									mCancelTokenSrource.Token, sProgressXlang ) );
+			//}
 			if( CbQuickBaidu.IsChecked == true ) {
 				mBaiduVM.DataErrorPlaceholder = "";
 				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.BaiduFree, sourceText, RtbQuickBaiduOutput,
@@ -271,9 +272,9 @@ namespace MinaxWebTranslator.Desktop.Views
 			RtbQuickIntOutput.Document.Blocks.Clear();
 			mCancelTokenSrource = new CancellationTokenSource();
 
-			if( CbQuickXLang.IsChecked == true ) {
-				RtbQuickIntOutput.AppendBlocks( RtbQuickXLangOutput );
-			}
+			//if( CbQuickXLang.IsChecked == true ) {
+			//	RtbQuickIntOutput.AppendBlocks( RtbQuickXLangOutput );
+			//}
 			if( CbQuickBaidu.IsChecked == true ) {
 				RtbQuickIntOutput.AppendBlocks( RtbQuickBaiduOutput );
 			}
@@ -303,8 +304,8 @@ namespace MinaxWebTranslator.Desktop.Views
 
 		private void BtnQuickXLangCopy_Click( object sender, RoutedEventArgs e )
 		{
-			RtbQuickXLangOutput.SelectAll();
-			RtbQuickXLangOutput.Copy();
+			//RtbQuickXLangOutput.SelectAll();
+			//RtbQuickXLangOutput.Copy();
 		}
 
 		private void BtnQuickBaiduCopy_Click( object sender, RoutedEventArgs e )

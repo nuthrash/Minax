@@ -143,7 +143,7 @@ namespace MinaxWebTranslator.Desktop.Views
 
 			var list = new ObservableList<TranslatorSelector>() {
 					new TranslatorSelector { RemoteType = RemoteType.Excite, Header = "Excite", Checked = true, Icon = srcExcite, Description = Languages.WebXlator.Str0ExciteXlatorJapan },
-					new TranslatorSelector { RemoteType = RemoteType.CrossLanguage, Header = "CrossLanguage", Checked = false, Icon = srcCrossLang, Description = Languages.WebXlator.Str0XTranserXlatorJapan },
+					// new TranslatorSelector { RemoteType = RemoteType.CrossLanguage, Header = "CrossLanguage", Checked = false, Icon = srcCrossLang, Description = Languages.WebXlator.Str0XTranserXlatorJapan },
 					new TranslatorSelector { RemoteType = RemoteType.Weblio, Header = "Weblio", Checked = false, Icon = srcWeblio, Description = Languages.WebXlator.Str0WeblioXlatorJapan },
 					// new TranslatorSelector { RemoteType = RemoteType.Baidu, Header = Languages.WebXlator.Str0Baidu, Checked = false, Icon = srcBaidu, Description = Languages.WebXlator.Str0BaiduXlatorChina },
 					new TranslatorSelector { RemoteType = RemoteType.Youdao, Header = Languages.WebXlator.Str0Youdao, Checked = false, Icon = srcYoudao, Description = Languages.WebXlator.Str0YoudaoXlatorChina },
@@ -153,8 +153,8 @@ namespace MinaxWebTranslator.Desktop.Views
 					//new TranslatorSelector { SeparatorVisibility = Visibility.Visible, Header = "Free Web APIs" },
 					new TranslatorSelector { SeparatorVisibility = Visibility.Visible, },
 					
-					new TranslatorSelector { RemoteType = RemoteType.CrossLanguageFree, Header = string.Format( Languages.WebXlator.Str1XlationApiFree, "CrossLanguage" ), Checked = false,
-							Icon = srcCrossLang, Description = Languages.WebXlator.Str0XTranserXlationJapan },
+					//new TranslatorSelector { RemoteType = RemoteType.CrossLanguageFree, Header = string.Format( Languages.WebXlator.Str1XlationApiFree, "CrossLanguage" ), Checked = false,
+					//		Icon = srcCrossLang, Description = Languages.WebXlator.Str0XTranserXlationJapan },
 					new TranslatorSelector { RemoteType = RemoteType.BaiduFree, Header = string.Format( Languages.WebXlator.Str1XlationApiFree, Languages.WebXlator.Str0Baidu ), Checked = false,
 							Icon = srcBaidu, Description = Languages.WebXlator.Str0BaiduXlationChina },
 					new TranslatorSelector { RemoteType = RemoteType.YoudaoFree, Header = string.Format( Languages.WebXlator.Str1XlationApiFree, Languages.WebXlator.Str0Youdao ), Checked = false,
