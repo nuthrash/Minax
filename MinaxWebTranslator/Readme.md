@@ -25,7 +25,7 @@ See [Conepts.md](./Concepts.md)  ([Concepts - 繁體中文版](./Concepts.zh-Han
 - Project Folder: [MinaxWebTranslator.Desktop](https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/MinaxWebTranslator.Desktop)
 - System Requirement
   1. Operating System: Windows 7 Service Pack 1 (SP1) and above
-  2. .Net Framework [4.7](https://dotnet.microsoft.com/download/dotnet-framework/net47) and above, .Net Core [3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1), or .Net [5.0](https://dotnet.microsoft.com/download/dotnet-core/5.0).
+  2. .Net Framework [4.7](https://dotnet.microsoft.com/download/dotnet-framework/net47) and above, .Net [6.0](https://dotnet.microsoft.com/download/dotnet/6.0).
   3. Privileged Access: local storage, network
 
 ### Main Window
@@ -99,7 +99,7 @@ And the "Integrated Output" box would integrate all selected Translators' output
 - Project Folder: [MinaxWebTranslator.Android](https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/MinaxWebTranslator.Android)
 - System Requirement
   1. Operating System: Android 5.0 (API Level 21 - Lollipop) and above
-  2. Target API Version: Android 9.0 (API Level 28 - Pie)
+  2. Target API Version: Android 11.0 (API Level 30)
   3. Privilege Access: local storage, network, cache, diagnostic, account, external store, write settings, write secure settings
 - Not Support
   1. Auto restore original content after App sleep

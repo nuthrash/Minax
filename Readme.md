@@ -30,11 +30,10 @@ See [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebT
 <br />
 
 ## Build Environment
-- Microsoft Visual Studio 2019 16.7.x
+- Microsoft Visual Studio 2022 17.2.x
 - .Net Framework 4.7 SDK
-- .Net Core 3.1 final
-- .Net 5.0
-- Android SDK Platform 28 (Android 9.0 - Pie)
+- .Net 6.0
+- Android SDK Platform 30 (Android 11.0)
 
 
 <br />
@@ -42,6 +41,13 @@ See [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebT
 ## Change Logs
 
 ### Minax Web Translator
+
+#### v0.0.7
+1. Update .Net 6.0 related facilities.
+2. Update nuget packages and add net6.0 to TargetFramework declaration to support .Net 6.0.
+3. Drop .Net Core 3.1 and .Net 5.0 support.
+4. Drop WebPage version of Baidu, Google and Microsoft/Bing web translators support of MinaxWebTranslator.Desktop because of Internet Explorer 11 being retired(that would cause AJAX processing flow misfunction).
+5. Suspend CrossLanguage web translator support until it upgraded.
 
 #### v0.0.6
 1. Update .Net 5.0 related facilities.
@@ -85,6 +91,11 @@ Initial release
 <br />
 
 ### Minax.Shared
+
+#### v0.0.7
+1. Update new flow of Excite web translator of MinaxWebTranslator.
+2. Change some arguments according the new version of Excite web translator.
+3. Change some arguments according the new version of Youdao web translator.
 
 #### v0.0.6
 1. Change replacing pattern, and replacing words of Baidu API in RemoteAgents.cs.

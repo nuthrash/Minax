@@ -34,15 +34,22 @@
 </ul>
 <h2 id="build-environment">Build Environment</h2>
 <ul>
-<li>Microsoft Visual Studio 2019 16.7.x</li>
+<li>Microsoft Visual Studio 2022 17.2.x</li>
 <li>.Net Framework 4.7 SDK</li>
-<li>.Net Core 3.1 final</li>
-<li>.Net 5.0</li>
-<li>Android SDK Platform 28 (Android 9.0 - Pie)</li>
+<li>.Net 6.0</li>
+<li>Android SDK Platform 30 (Android 11.0)</li>
 </ul>
 <br />
 <h2 id="change-logs">Change Logs</h2>
 <h3 id="minax-web-translator-1">Minax Web Translator</h3>
+<h4 id="v0.0.7">v0.0.7</h4>
+<ol>
+<li>Update .Net 6.0 related facilities.</li>
+<li>Update nuget packages and add net6.0 to TargetFramework declaration to support .Net 6.0.</li>
+<li>Drop .Net Core 3.1 and .Net 5.0 support.</li>
+<li>Drop WebPage version of Baidu, Google and Microsoft/Bing web translators support of MinaxWebTranslator.Desktop because of Internet Explorer 11 being retired(that would cause AJAX processing flow misfunction).</li>
+<li>Suspend CrossLanguage web translator support until it upgraded.</li>
+</ol>
 <h4 id="v0.0.6">v0.0.6</h4>
 <ol>
 <li>Update .Net 5.0 related facilities.</li>
@@ -88,6 +95,12 @@
 <p>Initial release</p>
 <br />
 <h3 id="minax.shared-1">Minax.Shared</h3>
+<h4 id="v0.0.7-1">v0.0.7</h4>
+<ol>
+<li>Update new flow of Excite web translator of MinaxWebTranslator.</li>
+<li>Change some arguments according the new version of Excite web translator.</li>
+<li>Change some arguments according the new version of Youdao web translator.</li>
+</ol>
 <h4 id="v0.0.6-1">v0.0.6</h4>
 <ol>
 <li>Change replacing pattern, and replacing words of Baidu API in RemoteAgents.cs.</li>
