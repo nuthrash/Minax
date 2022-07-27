@@ -28,11 +28,10 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 <br />
 
 ## 編譯環境
-- 微軟 Visual Studio 2019 16.7.x
+- 微軟 Visual Studio 2022 17.2.x
 - .Net Framework 4.7 SDK
-- .Net Core 3.1 final
-- .Net 5.0
-- Android SDK Platform 28 (Android 9.0 - Pie)
+- .Net 6.0
+- Android SDK Platform 30 (Android 11.0)
 
 
 <br />
@@ -40,6 +39,13 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 ## 更新紀錄
 
 ### Minax Web Translator
+
+#### v0.0.7
+1. 升級 .Net 6.0 相關程式碼。
+2. 升級 nuget 套件並將 net6.0 加到 TargetFramework 宣告以便支援 .Net 6.0。
+3. 丟棄 .Net Core 3.1 與 .Net 5.0 支援。
+4. 丟棄 Baidu、Google和 Microsoft/Bing 翻譯器對 MinaxWebTranslator.Desktop 的 WebPage 版本，這是因為 Internet Explorer 11 已終止支援（這將導致 AJAX 處理流程功能失常）。
+5. 暫停 CrossLanguage 翻譯器的支援直到它更新完成。
 
 #### v0.0.6
 1. 升級 .Net 5.0 相關程式碼。
@@ -83,6 +89,11 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 <br />
 
 ### Minax.Shared
+
+#### v0.0.7
+1. 更新 MinaxWebTranslator 相關的 Excite 翻譯器新通訊流程。
+2. 變更 MinaxWebTranslator 相關的 Excite 翻譯器一些新參數內容。
+3. 變更 MinaxWebTranslator 相關的有道翻譯器一些新參數內容。
 
 #### v0.0.6
 1. 變更 RemoteAgents.cs 中關於百度翻譯器的取代模板與字串。

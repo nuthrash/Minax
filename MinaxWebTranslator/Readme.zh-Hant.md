@@ -23,7 +23,7 @@
 - 專案目錄： [MinaxWebTranslator.Desktop](https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/MinaxWebTranslator.Desktop)
 - 系統需求：
   1. 作業系統： Windows 7 Service Pack 1 (SP1) 含以上
-  2. .Net Framework [4.7](https://dotnet.microsoft.com/download/dotnet-framework/net47) 含以上、.Net Core [3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)，或是.Net [5.0](https://dotnet.microsoft.com/download/dotnet-core/5.0)
+  2. .Net Framework [4.7](https://dotnet.microsoft.com/download/dotnet-framework/net47) 含以上，.Net [6.0](https://dotnet.microsoft.com/download/dotnet/6.0)
   3. 存取權限： 本地端儲存、網路
 
 ### 主視窗
@@ -101,7 +101,7 @@
 - 專案目錄： [MinaxWebTranslator.Android](https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/MinaxWebTranslator.Android)
 - 系統需求
   1. 作業系統： Android 5.0 (API Level 21 - Lollipop) 含以上
-  2. 目標 API 版本： Android 9.0 (API Level 28 - Pie)
+  2. 目標 API 版本： Android 11.0 (API Level 30)
   3. 存取權限： 本地端儲存、網路、快取、診斷、帳戶、外部儲存、設定寫入、安全性設定寫入
 - 不支援功能
   1. App 休眠後自動載入原來狀態
