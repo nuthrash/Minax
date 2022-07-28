@@ -4,19 +4,20 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <LangVersion>7.3</LangVersion>
-    <Version>0.0.7</Version>
+    <Version>0.0.8</Version>
     <Authors>nuthrash</Authors>
     <Company>Minax</Company>
     <Copyright>Copyright © 2019-$([System.DateTime]::Now.Year) nuthrash</Copyright>
     <PackageProjectUrl>https://nuthrash.github.io/Minax/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nuthrash/Minax.git</RepositoryUrl>
-    <PackageIcon>https://github.com/nuthrash/Minax/raw/master/Assets/Images/Translator.png</PackageIcon>
+    <PackageIcon>Translator.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
     <PackageTags>WebTranslator</PackageTags>
     <Description>Minax Web Translator apps common GUI library for Android systems.</Description>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>MinaxWebTranslator.snk</AssemblyOriginatorKeyFile>
-    <FileVersion>0.0.7.0</FileVersion>
+    <FileVersion>0.0.8.0</FileVersion>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -205,5 +206,16 @@
   <ItemGroup>
     <Folder Include="Commands\" />
     <Folder Include="Converters\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\Assets\Images\Translator.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\Readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 </Project>
