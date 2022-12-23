@@ -377,4 +377,34 @@ Please retry latter! Maybe the network is disconnected, or remote web site is bu
   <data name="Str0AppId" xml:space="preserve">
     <value>APP ID</value>
   </data>
+  <data name="Str0Mirai" xml:space="preserve">
+    <value>MiraiTranslate</value>
+  </data>
+  <data name="Str0MiraiXlationJapan" xml:space="preserve">
+    <value>MiraiTranslate from Japan</value>
+  </data>
+  <data name="Str0Papago" xml:space="preserve">
+    <value>Naver Papago</value>
+  </data>
+  <data name="Str0PapagoXlationKorea" xml:space="preserve">
+    <value>Naver Papago Translation from Korea</value>
+  </data>
+  <data name="Str0Tencent" xml:space="preserve">
+    <value>Tencent</value>
+  </data>
+  <data name="Str0TencentXlationChina" xml:space="preserve">
+    <value>Tencent Translation from China</value>
+  </data>
+  <data name="Str0Iciba" xml:space="preserve">
+    <value>iCIBA</value>
+  </data>
+  <data name="Str0IcibaXlationChina" xml:space="preserve">
+    <value>iCIBA Translation from China</value>
+  </data>
+  <data name="Str0LingoCloud" xml:space="preserve">
+    <value>LingoCloud</value>
+  </data>
+  <data name="Str0LingoCloudXlationChina" xml:space="preserve">
+    <value>LingoCloud Translation from China</value>
+  </data>
 </root>

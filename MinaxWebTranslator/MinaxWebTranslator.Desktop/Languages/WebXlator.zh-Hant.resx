@@ -377,4 +377,28 @@
   <data name="Str0MsAvailableRegions" xml:space="preserve">
     <value>可用區域</value>
   </data>
+  <data name="Str0MiraiXlationJapan" xml:space="preserve">
+    <value>來自日本的 MiraiTranslate 翻譯服務</value>
+  </data>
+  <data name="Str0PapagoXlationKorea" xml:space="preserve">
+    <value>來自韓國的 Naver Papago 翻譯服務</value>
+  </data>
+  <data name="Str0Tencent" xml:space="preserve">
+    <value>騰訊(Tencent)</value>
+  </data>
+  <data name="Str0TencentXlationChina" xml:space="preserve">
+    <value>來自中國的騰訊(Tencent)翻譯服務</value>
+  </data>
+  <data name="Str0Iciba" xml:space="preserve">
+    <value>愛詞霸(iCIBA)</value>
+  </data>
+  <data name="Str0IcibaXlationChina" xml:space="preserve">
+    <value>來自中國的愛詞霸(iCIBA)翻譯服務</value>
+  </data>
+  <data name="Str0LingoCloud" xml:space="preserve">
+    <value>彩雲小譯(LingoCloud)</value>
+  </data>
+  <data name="Str0LingoCloudXlationChina" xml:space="preserve">
+    <value>來自中國的彩雲小譯(LingoCloud)翻譯服務</value>
+  </data>
 </root>

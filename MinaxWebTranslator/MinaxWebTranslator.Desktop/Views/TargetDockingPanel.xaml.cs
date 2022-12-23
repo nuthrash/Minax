@@ -355,23 +355,32 @@ namespace MinaxWebTranslator.Desktop.Views
 						result = await TranslatorHelpers.XlateBaiduPage( WbMain, SourceText, RtbTarget,
 										mCancelTokenSrource.Token, sTransProgress );
 						break;
-					case RemoteType.Youdao:
-						result = await TranslatorHelpers.XlateYoudaoPage( WbMain, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, sTransProgress );
-						break;
+					//case RemoteType.Youdao:
+					//	result = await TranslatorHelpers.XlateYoudaoPage( WbMain, SourceText, RtbTarget,
+					//					mCancelTokenSrource.Token, sTransProgress );
+					//	break;
+					//case RemoteType.Google:
+					//	result = await TranslatorHelpers.XlateGooglePage( WbMain, SourceText, RtbTarget,
+					//					mCancelTokenSrource.Token, sTransProgress );
+					//	break;
+					//case RemoteType.Microsoft:
+					//	result = await TranslatorHelpers.XlateMicrosoftPage( WbMain, SourceText, RtbTarget,
+					//					mCancelTokenSrource.Token, sTransProgress );
+					//	break;
+
 					case RemoteType.Google:
-						result = await TranslatorHelpers.XlateGooglePage( WbMain, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, sTransProgress );
-						break;
-					case RemoteType.Microsoft:
-						result = await TranslatorHelpers.XlateMicrosoftPage( WbMain, SourceText, RtbTarget,
-										mCancelTokenSrource.Token, sTransProgress );
-						break;
+					case RemoteType.Youdao:
 
 					case RemoteType.CrossLanguageFree:
+					case RemoteType.MiraiTranslateFree:
 					case RemoteType.BaiduFree:
+					case RemoteType.IcibaFree:
+					case RemoteType.LingoCloudFree:
+					case RemoteType.TencentFree:
 					case RemoteType.YoudaoFree:
+					case RemoteType.PapagoFree:
 					case RemoteType.GoogleFree:
+					case RemoteType.MicrosoftFree:
 						result = await TranslatorHelpers.XlateApiFree( remoteType, SourceText, RtbTarget,
 										mCancelTokenSrource.Token, sTransProgress );
 						break;

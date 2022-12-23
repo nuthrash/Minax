@@ -33,8 +33,6 @@ namespace MinaxWebTranslator.Views
 				} else {
 					GdMain.IsEnabled = false;
 				}
-
-				
 			}
 		}
 

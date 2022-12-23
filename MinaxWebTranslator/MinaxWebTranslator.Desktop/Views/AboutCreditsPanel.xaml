@@ -221,18 +221,13 @@
 
                                 <Separator />
 
-                                <DataGrid x:Name="DgCreditsIcons" ItemsSource="{Binding}" CanUserAddRows="False"
+								<DataGrid x:Name="DgCreditsIcons" ItemsSource="{Binding}" CanUserAddRows="False"
                                           CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="False"
                                           AutoGenerateColumns="False" GridLinesVisibility="Vertical"
                                           HorizontalAlignment="Stretch"
                                           PreviewMouseWheel="SvCredits_PreviewMouseWheel">
-                                    <DataGrid.Resources>
-                                        <Style TargetType="Hyperlink">
-                                            <EventSetter Event="Click" Handler="DataGridHyperlink_Click"/>
-                                        </Style>
-                                    </DataGrid.Resources>
 
-                                    <DataGrid.Columns>
+									<DataGrid.Columns>
 										<DataGridTemplateColumn Header="{x:Static lang:Global.Str0Image}" Width="24" IsReadOnly="True">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
@@ -243,7 +238,13 @@
 										<DataGridTextColumn Header="{x:Static lang:Global.Str0Title}" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Title}" />
 										<DataGridTextColumn Header="{x:Static lang:Global.Str0Author}" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Author}" />
 										<DataGridTextColumn Header="{x:Static lang:Global.Str0License}" Width="Auto" IsReadOnly="True" Binding="{Binding Path=License}" />
-										<DataGridHyperlinkColumn Header="{x:Static lang:Global.Str0Hyperlink}" Width="*" IsReadOnly="True" Binding="{Binding Path=Hyperlink}" />
+										<DataGridHyperlinkColumn Header="{x:Static lang:Global.Str0Hyperlink}" Width="*" IsReadOnly="True" Binding="{Binding Path=Hyperlink}">
+											<DataGridHyperlinkColumn.ElementStyle>
+												<Style TargetType="TextBlock">
+													<!--<EventSetter Event="Hyperlink.Click" Handler="DataGridHyperlink_Click" />-->
+												</Style>
+											</DataGridHyperlinkColumn.ElementStyle>
+										</DataGridHyperlinkColumn>
 										<DataGridTextColumn Header="{x:Static lang:Global.Str0Note}" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Note}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>

@@ -104,6 +104,66 @@ namespace Minax.Web.Formats
 		}
 	}
 
+	public class BaiduTranslatorMobileResponse1
+	{
+
+		[JsonProperty( PropertyName = "errno" )]
+		public int Errno {
+			get; set;
+		}
+
+		[JsonProperty( PropertyName = "from" )]
+		public string From {
+			get; set;
+		}
+
+		[JsonProperty( PropertyName = "to" )]
+		public string To {
+			get; set;
+		}
+
+		[JsonProperty( PropertyName = "trans" )]
+		public List<TranData> Trans {
+			get; set;
+		}
+
+		[JsonProperty( PropertyName = "dict" )]
+		public List<object> Dict {
+			get; set;
+		}
+
+		[JsonProperty( PropertyName = "keywords" )]
+		public List<object> Keywords {
+			get; set;
+		}
+
+		public class TranData
+		{
+			// unicode string \u4e0d\u6703\u5427 不會吧
+			[JsonProperty( PropertyName = "dst" )]
+			public string Dst {
+				get; set;
+			}
+
+			[JsonProperty( PropertyName = "prefixWrap" )]
+			public int PrefixWrap {
+				get; set;
+			}
+
+			// [ 0, "不會吧", […], [], […], […] ]
+			[JsonProperty( PropertyName = "result" )]
+			public List<List<object>> Result {
+				get; set;
+			}
+
+			// unicode string \u307e\u3055\u304b まさか
+			[JsonProperty( PropertyName = "src" )]
+			public string Src {
+				get; set;
+			}
+		}
+	}
+
 	// http://api.fanyi.baidu.com/api/trans/product/apidoc#joinFile
 	public class BaiduTranslationRequestV1
 	{

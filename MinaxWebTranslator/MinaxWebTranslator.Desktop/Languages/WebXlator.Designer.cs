@@ -19,7 +19,7 @@ namespace MinaxWebTranslator.Desktop.Languages {
     // 類別透過 ResGen 或 Visual Studio 這類工具。
     // 若要加入或移除成員，請編輯您的 .ResX 檔，然後重新執行 ResGen
     // (利用 /str 選項)，或重建您的 VS 專案。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class WebXlator {
@@ -331,6 +331,24 @@ namespace MinaxWebTranslator.Desktop.Languages {
         }
         
         /// <summary>
+        ///   查詢類似 iCIBA 的當地語系化字串。
+        /// </summary>
+        public static string Str0Iciba {
+            get {
+                return ResourceManager.GetString("Str0Iciba", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 iCIBA Translation from China 的當地語系化字串。
+        /// </summary>
+        public static string Str0IcibaXlationChina {
+            get {
+                return ResourceManager.GetString("Str0IcibaXlationChina", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Input: 的當地語系化字串。
         /// </summary>
         public static string Str0Input {
@@ -385,6 +403,24 @@ namespace MinaxWebTranslator.Desktop.Languages {
         }
         
         /// <summary>
+        ///   查詢類似 LingoCloud 的當地語系化字串。
+        /// </summary>
+        public static string Str0LingoCloud {
+            get {
+                return ResourceManager.GetString("Str0LingoCloud", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 LingoCloud Translation from China 的當地語系化字串。
+        /// </summary>
+        public static string Str0LingoCloudXlationChina {
+            get {
+                return ResourceManager.GetString("Str0LingoCloudXlationChina", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Microsoft Translation from America 的當地語系化字串。
         /// </summary>
         public static string Str0MicrosoftXlationAmerica {
@@ -408,6 +444,24 @@ namespace MinaxWebTranslator.Desktop.Languages {
         public static string Str0MicrosoftXlatorAmerica {
             get {
                 return ResourceManager.GetString("Str0MicrosoftXlatorAmerica", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 MiraiTranslate 的當地語系化字串。
+        /// </summary>
+        public static string Str0Mirai {
+            get {
+                return ResourceManager.GetString("Str0Mirai", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 MiraiTranslate from Japan 的當地語系化字串。
+        /// </summary>
+        public static string Str0MiraiXlationJapan {
+            get {
+                return ResourceManager.GetString("Str0MiraiXlationJapan", resourceCulture);
             }
         }
         
@@ -444,6 +498,24 @@ namespace MinaxWebTranslator.Desktop.Languages {
         public static string Str0NoticeSrcTgtPairMayNotSupport {
             get {
                 return ResourceManager.GetString("Str0NoticeSrcTgtPairMayNotSupport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Naver Papago 的當地語系化字串。
+        /// </summary>
+        public static string Str0Papago {
+            get {
+                return ResourceManager.GetString("Str0Papago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Naver Papago Translation from Korea 的當地語系化字串。
+        /// </summary>
+        public static string Str0PapagoXlationKorea {
+            get {
+                return ResourceManager.GetString("Str0PapagoXlationKorea", resourceCulture);
             }
         }
         
@@ -570,6 +642,24 @@ namespace MinaxWebTranslator.Desktop.Languages {
         public static string Str0SubscriptionKeyField {
             get {
                 return ResourceManager.GetString("Str0SubscriptionKeyField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Tencent 的當地語系化字串。
+        /// </summary>
+        public static string Str0Tencent {
+            get {
+                return ResourceManager.GetString("Str0Tencent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Tencent Translation from China 的當地語系化字串。
+        /// </summary>
+        public static string Str0TencentXlationChina {
+            get {
+                return ResourceManager.GetString("Str0TencentXlationChina", resourceCulture);
             }
         }
         

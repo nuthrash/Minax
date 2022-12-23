@@ -67,20 +67,55 @@ namespace MinaxWebTranslator.Desktop
 						xlatorResults = RemoteAgents.TranslateByCrossLanguageFree( text, SourceLanguage,
 												TargetLanguage, cancelToken, progress );
 						break;
+					case RemoteType.MiraiTranslateFree:
+						xlatorResults = RemoteAgents.TranslateByMiraiTranslateFree( text, SourceLanguage,
+												TargetLanguage, cancelToken, progress );
+						break;
 					case RemoteType.BaiduFree:
 						xlatorResults = RemoteAgents.TranslateByBaiduFree( text, SourceLanguage,
+												TargetLanguage, cancelToken, progress );
+						break;
+					case RemoteType.IcibaFree:
+						xlatorResults = RemoteAgents.TranslateByIcibaFree( text, SourceLanguage,
+												TargetLanguage, cancelToken, progress );
+						break;
+					case RemoteType.LingoCloudFree:
+						xlatorResults = RemoteAgents.TranslateByLingoCloudFree( text, SourceLanguage,
+												TargetLanguage, cancelToken, progress );
+						break;
+					case RemoteType.TencentFree:
+						xlatorResults = RemoteAgents.TranslateByTencentFree( text, SourceLanguage,
 												TargetLanguage, cancelToken, progress );
 						break;
 					case RemoteType.YoudaoFree:
 						xlatorResults = RemoteAgents.TranslateByYoudaoFree( text, SourceLanguage,
 												TargetLanguage, cancelToken, progress );
+						//xlatorResults = RemoteAgents.TranslateByYoudaoMobile( text, SourceLanguage,
+						//						TargetLanguage, cancelToken, progress );
+						break;
+					case RemoteType.PapagoFree:
+						xlatorResults = RemoteAgents.TranslateByPapagoFree( text, SourceLanguage,
+												TargetLanguage, cancelToken, progress );
 						break;
 					case RemoteType.GoogleFree:
 						xlatorResults = RemoteAgents.TranslateByGoogleFree( text, SourceLanguage,
 												TargetLanguage, cancelToken, progress );
+						//xlatorResults = RemoteAgents.TranslateByGoogleMobile( text, SourceLanguage,
+						//						TargetLanguage, cancelToken, progress );
+						break;
+					case RemoteType.MicrosoftFree:
+						xlatorResults = RemoteAgents.TranslateByMicrosoftFree( text, SourceLanguage,
+												TargetLanguage, cancelToken, progress );
 						break;
 
-					case RemoteType.MicrosoftFree:
+					case RemoteType.Google:
+						xlatorResults = RemoteAgents.TranslateByGoogleMobile( text, SourceLanguage,
+												TargetLanguage, cancelToken, progress );
+						break;
+					case RemoteType.Youdao:
+						xlatorResults = RemoteAgents.TranslateByYoudaoMobile( text, SourceLanguage,
+												TargetLanguage, cancelToken, progress );
+						break;
 					default:
 						// NOT SUPPORTED
 						return false;
@@ -1467,7 +1502,8 @@ namespace MinaxWebTranslator.Desktop
 		private static readonly string sLocCrossLang = "https://cross.transer.com/";
 		private static readonly string sLocBaiduCht = "https://fanyi.baidu.com/#jp/cht/しかも";
 		private static readonly string sLocBaiduEn = "https://fanyi.baidu.com/#jp/en/しかも";
-		private static readonly string sLocYoudaoCht = "https://fanyi.youdao.com/";
+		//private static readonly string sLocYoudaoCht = "https://fanyi.youdao.com/";
+		private static readonly string sLocYoudaoCht = "https://fanyi.youdao.com/index.html#/";
 		private static readonly string sLocGoogleChtPrefix = "https://translate.google.com/?op=translate&sl=ja&tl=zh-TW&text=";
 		private static readonly string sLocGoogleEnPrefix = "https://translate.google.com/?op=translate&sl=ja&tl=en&text=";
 		private static readonly string sLocBingCht = "https://www.bing.com/translator?to=zh-Hant&text=Change";
@@ -1475,17 +1511,30 @@ namespace MinaxWebTranslator.Desktop
 
 
 		private static readonly string[] sNewLineSeparator = new string[] { "\r\n", "\r", "\n" };
+		private static readonly string sNewLineSeparatorHtml = "<br>";
 		private static readonly Random rnd = new Random();
 		private static readonly HtmlAgilityPack.HtmlDocument mHtmlDoc = new HtmlAgilityPack.HtmlDocument();
 		private static readonly HttpClient client = new HttpClient();
 
 		private static void _AddText( RichTextBox rtbDst, string text )
 		{
+			// remove tail newline to let RichTextBox add by itself
+			bool endWithNL = false;
+			foreach( var rstr in sNewLineSeparator )
+				if( text.EndsWith( rstr ) ) {
+					endWithNL = true;
+					break;
+				}
+
+
 			if( MarkMappedTextWithHtmlBoldTag ) {
 				StringBuilder sb = new StringBuilder( text );
 				foreach( var rstr in sNewLineSeparator ) {
-					sb.Replace( rstr, "<br>" );
+					sb.Replace( rstr, sNewLineSeparatorHtml );
 				}
+
+				if( endWithNL )
+					sb.Remove( sb.Length - sNewLineSeparatorHtml.Length, sNewLineSeparatorHtml.Length );
 
 				var paragraph = new Paragraph();
 				rtbDst.Document.Blocks.Add( paragraph );
@@ -1496,7 +1545,8 @@ namespace MinaxWebTranslator.Desktop
 			}
 			else {
 				var paragraph = new Paragraph();
-				paragraph.Inlines.Add( new Run( text ) );
+				paragraph.Inlines.Add( new Run( endWithNL ? text.Remove( text.Length - sNewLineSeparatorHtml.Length ) : text ) );
+
 				rtbDst.Document.Blocks.Add( paragraph );
 			}
 		}

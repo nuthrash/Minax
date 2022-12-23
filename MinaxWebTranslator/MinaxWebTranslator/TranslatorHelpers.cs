@@ -64,12 +64,28 @@ namespace MinaxWebTranslator
 						xlatorResults = RemoteAgents.TranslateByCrossLanguageFree( text, SourceLanguage,
 												TargetLanguage, cancelToken, progress );
 						break;
+					case RemoteType.MiraiTranslateFree:
+						xlatorResults = RemoteAgents.TranslateByMiraiTranslateFree( text, SourceLanguage,
+												TargetLanguage, cancelToken, progress );
+						break;
 					case RemoteType.BaiduFree:
 						xlatorResults = RemoteAgents.TranslateByBaiduFree( text, SourceLanguage,
 												TargetLanguage, cancelToken, progress );
 						break;
+					case RemoteType.IcibaFree:
+						xlatorResults = RemoteAgents.TranslateByIcibaFree( text, SourceLanguage,
+												TargetLanguage, cancelToken, progress );
+						break;
+					case RemoteType.LingoCloudFree:
+						xlatorResults = RemoteAgents.TranslateByLingoCloudFree( text, SourceLanguage,
+												TargetLanguage, cancelToken, progress );
+						break;
 					case RemoteType.YoudaoFree:
 						xlatorResults = RemoteAgents.TranslateByYoudaoFree( text, SourceLanguage,
+												TargetLanguage, cancelToken, progress );
+						break;
+					case RemoteType.PapagoFree:
+						xlatorResults = RemoteAgents.TranslateByPapagoFree( text, SourceLanguage,
 												TargetLanguage, cancelToken, progress );
 						break;
 					case RemoteType.GoogleFree:
@@ -78,6 +94,9 @@ namespace MinaxWebTranslator
 						break;
 
 					case RemoteType.MicrosoftFree:
+						xlatorResults = RemoteAgents.TranslateByMicrosoftFree( text, SourceLanguage,
+												TargetLanguage, cancelToken, progress );
+						break;
 					default:
 						// NOT SUPPORTED
 						return false;
@@ -135,6 +154,10 @@ namespace MinaxWebTranslator
 				switch( remoteType ) {
 					case RemoteType.CrossLanguageFree:
 						xlatorResults = RemoteAgents.TranslateByCrossLanguageFree( text, SourceLanguage,
+												TargetLanguage, cancelToken, progress );
+						break;
+					case RemoteType.Weblio:
+						xlatorResults = RemoteAgents.TranslateByWeblio( text, SourceLanguage,
 												TargetLanguage, cancelToken, progress );
 						break;
 					case RemoteType.BaiduFree:

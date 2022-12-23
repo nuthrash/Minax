@@ -35,11 +35,12 @@ namespace Minax.Web.Translation
 		/// <summary>
 		/// Youdao Translator (有道翻译)
 		/// </summary>
-		/// <remarks>http://fanyi.youdao.com</remarks>
+		/// <remarks>https://fanyi.youdao.com</remarks>
 		Youdao = 40,
 		/// <summary>
 		/// Google Translator
 		/// </summary>
+		/// <remarks>https://translate.google.com/</remarks>
 		Google = 50,
 		/// <summary>
 		/// Microsoft/Bing Translator
@@ -56,17 +57,42 @@ namespace Minax.Web.Translation
 		/// <remarks>https://www.kodensha.jp https://ja.wikipedia.org/wiki/%E9%AB%98%E9%9B%BB%E7%A4%BE ??</remarks>
 		KodenshaFree = 100,
 		/// <summary>
+		/// MiraiTranslate translation solution.
+		/// </summary>
+		MiraiTranslateFree = 105,
+		/// <summary>
 		/// CrossLanguage translation solution.
 		/// </summary>
-		CrossLanguageFree = 120,
+		CrossLanguageFree = 110,
 		/// <summary>
 		/// Baidu translation API (Free)
 		/// </summary>
-		BaiduFree = 130,
+		BaiduFree = 120,
+		/// <summary>
+		/// iCIBA translation API (Free)
+		/// </summary>
+		/// <remarks>http://www.iciba.com/fy https://ifanyi.iciba.com/index.php</remarks>
+		IcibaFree = 133,
+		/// <summary>
+		/// LingoCloud/CaiyunXiaoYi translation API (Free)
+		/// </summary>
+		/// <remarks>https://fanyi.caiyunapp.com/ http://api.interpreter.caiyunai.com/v1/translator</remarks>
+		LingoCloudFree = 135,
+		/// <summary>
+		/// Tencent translation API (Free)
+		/// </summary>
+		/// <remarks>https://fanyi.qq.com/</remarks>
+		TencentFree = 137,
 		/// <summary>
 		/// Youdao translation API (Free)
 		/// </summary>
+		/// <remarks>https://ai.youdao.com/product-fanyi-text.s</remarks>
 		YoudaoFree = 140,
+		/// <summary>
+		/// Naver Papago NMT translation solution.
+		/// </summary>
+		/// <remarks>https://papago.naver.com</remarks>
+		PapagoFree = 145,
 		/// <summary>
 		/// Google translation API (Free)
 		/// </summary>
@@ -77,7 +103,7 @@ namespace Minax.Web.Translation
 		MicrosoftFree = 160, // found some information, but seems not free
 
 		/// <summary>
-		/// Excite translation solution source. Kodensha(高電社) Co. Ltd.
+		/// Excite translation solution upstream source. Kodensha(高電社) Co. Ltd.
 		/// </summary>
 		/// <remarks>https://www.kodensha.jp https://ja.wikipedia.org/wiki/%E9%AB%98%E9%9B%BB%E7%A4%BE </remarks>
 		KodenshaCharged = 200,
@@ -96,6 +122,11 @@ namespace Minax.Web.Translation
 		/// </summary>
 		/// <remarks>https://ai.youdao.com/docs/doc-trans-api.s https://openapi.youdao.com/api </remarks>
 		YoudaoCharged = 240,
+		/// <summary>
+		/// Naver Papago Translation API (Charged)
+		/// </summary>
+		/// <remarks>https://www.ncloud.com/product/aiService/papagoTranslation https://guide.ncloud-docs.com/docs/en/papagotranslation-api https://api.ncloud-docs.com/docs/en/ai-naver-papagonmt-translation</remarks>
+		PapagoCharged = 245,
 		/// <summary>
 		/// Google Translation API (Charged) V2
 		/// </summary>

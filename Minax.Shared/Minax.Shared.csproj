@@ -58,10 +58,10 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="FileHelpers" Version="3.5.1" />
-	<PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
-	<PackageReference Include="Jurassic.Unofficial" Version="2022.4.30" />
-	<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="FileHelpers" Version="3.5.2" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+    <PackageReference Include="Jurassic.Unofficial" Version="2022.9.20" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -113,10 +113,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Web\Formats\" />
   </ItemGroup>
 
   <ItemGroup>

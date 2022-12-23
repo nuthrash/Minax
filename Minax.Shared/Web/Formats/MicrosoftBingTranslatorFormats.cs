@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -171,5 +171,100 @@ namespace Minax.Web.Formats
 		}
 	}
 
+	public class MicrosoftBingResponse3 {
+		[JsonProperty( PropertyName = "statusCode" )]
+		public int StatusCode {
+			get; set;
+		}
 
+		[JsonProperty( PropertyName = "errorMessage" )]
+		public string ErrorMessage {
+			get; set;
+		}
+
+		[JsonProperty( PropertyName = "detectedLanguage" )]
+		public DetectedLanguageData DetectedLanguage {
+			get; set;
+		}
+
+		[JsonProperty( PropertyName = "translations" )]
+		public List<TranslationData> Translations {
+			get; set;
+		}
+
+		public class TranslationData
+		{
+			[JsonProperty( PropertyName = "text" )]
+			public string Text {
+				get; set;
+			}
+
+			[JsonProperty( PropertyName = "transliteration" )]
+			public TransliterationData Transliteration {
+				get; set;
+			}
+
+			[JsonProperty( PropertyName = "to" )]
+			public string To {
+				get; set;
+			}
+
+			[JsonProperty( PropertyName = "sentLen" )]
+			public SentLength SentLen {
+				get; set;
+			}
+		}
+
+		public class TransliterationData
+		{
+			[JsonProperty( "text" )]
+			public string Text {
+				get; set;
+			}
+
+			[JsonProperty( "script" )]
+			public string Script {
+				get; set;
+			}
+		}
+
+		public class SentLength
+		{
+			[JsonProperty( PropertyName = "srcSentLen" )]
+			public List<int> SourceSentLength {
+				get; set;
+			}
+
+			[JsonProperty( "PropertyName = transSentLen" )]
+			public List<int> TranslationSentLength {
+				get; set;
+			}
+		}
+
+		public class DetectedLanguageData
+		{
+			[JsonProperty( PropertyName = "language" )]
+			public string Language {
+				get; set;
+			}
+
+			[JsonProperty( PropertyName = "score" )]
+			public double Score {
+				get; set;
+			}
+		}
+	}
+
+	public class MicrosoftBingResponse3Error
+	{
+		[JsonProperty( PropertyName = "statusCode" )]
+		public int StatusCode {
+			get; set;
+		}
+
+		[JsonProperty( PropertyName = "errorMessage" )]
+		public string ErrorMessage {
+			get; set;
+		}
+	}
 }

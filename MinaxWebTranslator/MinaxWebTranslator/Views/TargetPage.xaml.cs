@@ -353,8 +353,12 @@ namespace MinaxWebTranslator.Views
 						break;
 
 					case RemoteType.CrossLanguageFree:
+					case RemoteType.MiraiTranslateFree:
 					case RemoteType.BaiduFree:
+					case RemoteType.IcibaFree:
+					case RemoteType.LingoCloudFree:
 					case RemoteType.YoudaoFree:
+					case RemoteType.PapagoFree:
 					case RemoteType.GoogleFree:
 						result = await TranslatorHelpers.XlateApiFree( remoteType, SourceText, WvTarget,
 															mCancelTokenSrource.Token, sTransProgress );

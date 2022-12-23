@@ -32,7 +32,11 @@
     <None Remove="Resources\CrossLanguage.png" />
     <None Remove="Resources\Excite.png" />
     <None Remove="Resources\GoogleTranslator.png" />
+    <None Remove="Resources\IcibaTranslator.png" />
+    <None Remove="Resources\LingoCloud.png" />
     <None Remove="Resources\Microsoft.png" />
+    <None Remove="Resources\MiraiTranslate.png" />
+    <None Remove="Resources\NaverPapago.png" />
     <None Remove="Resources\Translator.png" />
     <None Remove="Resources\WeblioTranslator.png" />
     <None Remove="Resources\YoudaoTranslator.png" />
@@ -44,7 +48,11 @@
     <EmbeddedResource Include="Resources\CrossLanguage.png" />
     <EmbeddedResource Include="Resources\Excite.png" />
     <EmbeddedResource Include="Resources\GoogleTranslator.png" />
+    <EmbeddedResource Include="Resources\IcibaTranslator.png" />
+    <EmbeddedResource Include="Resources\LingoCloud.png" />
     <EmbeddedResource Include="Resources\Microsoft.png" />
+    <EmbeddedResource Include="Resources\MiraiTranslate.png" />
+    <EmbeddedResource Include="Resources\NaverPapago.png" />
     <EmbeddedResource Include="Resources\Translator.png" />
     <EmbeddedResource Include="Resources\WeblioTranslator.png" />
     <EmbeddedResource Include="Resources\YoudaoTranslator.png" />

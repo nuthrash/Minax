@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -43,6 +43,16 @@ namespace Minax.Web.Formats
 			public int Backend { get; set; }
 		}
 
+	}
+
+	// for https://translate.google.com/_/TranslateWebserverUi/data/batchexecute
+	// f.req   <== application/x-www-form-urlencoded
+	// ex: [[["MkEWBc","[[\"This is a book.\\nHello everybody.\\n …\\nHappy Coding\",\"auto\",\"zh-TW\",true],[null]]",null,"generic"]]]
+	public class GoogleTranslatorFReqJson
+	{
+		public string[][][] Property1 {
+			get; set;
+		}
 	}
 
 

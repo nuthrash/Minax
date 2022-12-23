@@ -35,13 +35,13 @@ namespace MinaxWebTranslator.Views
 				NonEmptyMaxPlaceholder = string.Format( Languages.WebXlator.Str2InputTextCountFractions, mCurrentInput.Length, TranslatingMaxWordCount ),
 			};
 
-			EtQuickXLangOutput.BindingContext = mXlangVM = new ViewModels.BaseViewModel();
+			EtQuickWeblioOutput.BindingContext = mXlangVM = new ViewModels.BaseViewModel();
 			EtQuickYoudaoOutput.BindingContext = mYoudaoVM = new ViewModels.BaseViewModel();
 			EtQuickGoogleOutput.BindingContext = mGoogleVM = new ViewModels.BaseViewModel();
 
 			mEntries = new List<Entry> {
 				EtQuickInput,
-				EtQuickXLangOutput,
+				EtQuickWeblioOutput,
 				EtQuickYoudaoOutput,
 				EtQuickGoogleOutput,
 			};
@@ -49,7 +49,7 @@ namespace MinaxWebTranslator.Views
 			MessageHub.MessageReceived -= MsgHub_MessageRecevied;
 			MessageHub.MessageReceived += MsgHub_MessageRecevied;
 
-			sProgressXlang.ProgressChanged += async ( s1, e1 ) => {
+			sProgressWeblio.ProgressChanged += async ( s1, e1 ) => {
 				if( e1.PercentOrErrorCode < 0 && string.IsNullOrWhiteSpace( e1.Message ) == false ) {
 					mXlangVM.DataErrorPlaceholder = e1.Message;
 				}
@@ -123,7 +123,7 @@ namespace MinaxWebTranslator.Views
 		private CancellationTokenSource mCancelTokenSrource = new CancellationTokenSource();
 		private Timer mDeferredWorker = null;
 
-		private static readonly Progress<Minax.ProgressInfo> sProgressXlang = new Progress<Minax.ProgressInfo>(),
+		private static readonly Progress<Minax.ProgressInfo> sProgressWeblio = new Progress<Minax.ProgressInfo>(),
 					sProgressYoudao = new Progress<Minax.ProgressInfo>(),
 					sProgressGoogle = new Progress<Minax.ProgressInfo>();
 
@@ -189,7 +189,7 @@ namespace MinaxWebTranslator.Views
 				return;
 			}
 
-			if( CbQuickXLang.IsChecked != true &&
+			if( CbQuickWeblio.IsChecked != true &&
 				CbQuickYoudao.IsChecked != true &&
 				CbQuickGoogle.IsChecked != true ) {
 				await DisplayAlert( Languages.Global.Str0OperationWarning,
@@ -208,11 +208,11 @@ namespace MinaxWebTranslator.Views
 			TranslatorHelpers.MarkMappedTextWithHtmlBoldTag = false;
 
 			double preferSize = EtQuickInput.Height;
-			if( CbQuickXLang.IsChecked == true ) {
-				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.CrossLanguageFree, sourceText,
-							EtQuickXLangOutput, mCancelTokenSrource.Token, sProgressXlang ) );
-				AiBusyCrossTranser.HeightRequest = AiBusyCrossTranser.WidthRequest = preferSize;
-				AiBusyCrossTranser.IsRunning = true;
+			if( CbQuickWeblio.IsChecked == true ) {
+				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.Weblio, sourceText,
+							EtQuickWeblioOutput, mCancelTokenSrource.Token, sProgressWeblio ) );
+				AiBusyWeblio.HeightRequest = AiBusyWeblio.WidthRequest = preferSize;
+				AiBusyWeblio.IsRunning = true;
 			}
 			if( CbQuickYoudao.IsChecked == true ) {
 				tasks.Add( TranslatorHelpers.XlateApiFree( RemoteType.YoudaoFree, sourceText,
@@ -233,8 +233,8 @@ namespace MinaxWebTranslator.Views
 			EdIntOutput.Text = null;
 			mCancelTokenSrource = new CancellationTokenSource();
 
-			if( CbQuickXLang.IsChecked == true ) {
-				EdIntOutput.Text += EtQuickXLangOutput.Text;
+			if( CbQuickWeblio.IsChecked == true ) {
+				EdIntOutput.Text += EtQuickWeblioOutput.Text;
 			}
 			if( CbQuickYoudao.IsChecked == true ) {
 				EdIntOutput.Text += EtQuickYoudaoOutput.Text;
@@ -243,7 +243,7 @@ namespace MinaxWebTranslator.Views
 				EdIntOutput.Text += EtQuickGoogleOutput.Text;
 			}
 
-			AiBusyCrossTranser.IsRunning = false;
+			AiBusyWeblio.IsRunning = false;
 			AiBusyYoudao.IsRunning = false;
 			AiBusyGoogle.IsRunning = false;
 

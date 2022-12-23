@@ -45,7 +45,12 @@
     <None Remove="Resources\CrossLanguage.png" />
     <None Remove="Resources\Excite.png" />
     <None Remove="Resources\GoogleTranslator.png" />
+    <None Remove="Resources\IcibaTranslator.png" />
+    <None Remove="Resources\LingoCloud.png" />
     <None Remove="Resources\Microsoft.png" />
+    <None Remove="Resources\MiraiTranslate.png" />
+    <None Remove="Resources\NaverPapago.png" />
+    <None Remove="Resources\TencentTranslator.png" />
     <None Remove="Resources\Translator.png" />
     <None Remove="Resources\WeblioTranslator.png" />
     <None Remove="Resources\YoudaoTranslator.png" />
@@ -87,9 +92,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dirkster.AvalonDock" Version="4.70.2" />
-    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.70.2" />
-    <PackageReference Include="FileHelpers" Version="3.5.1" />
+    <PackageReference Include="Dirkster.AvalonDock" Version="4.70.3" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.70.3" />
+    <PackageReference Include="FileHelpers" Version="3.5.2" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
   </ItemGroup>
@@ -110,7 +115,12 @@
     <Resource Include="Resources\CrossLanguage.png" />
     <Resource Include="Resources\Excite.png" />
     <Resource Include="Resources\GoogleTranslator.png" />
+    <Resource Include="Resources\IcibaTranslator.png" />
+    <Resource Include="Resources\LingoCloud.png" />
     <Resource Include="Resources\Microsoft.png" />
+    <Resource Include="Resources\MiraiTranslate.png" />
+    <Resource Include="Resources\NaverPapago.png" />
+    <Resource Include="Resources\TencentTranslator.png" />
     <Resource Include="Resources\Translator.png" />
     <Resource Include="Resources\WeblioTranslator.png" />
     <Resource Include="Resources\YoudaoTranslator.png" />

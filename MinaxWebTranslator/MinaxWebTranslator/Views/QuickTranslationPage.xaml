@@ -40,12 +40,12 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- CROSS-Transer -->
-                <input:CheckBox x:Name="CbQuickXLang" Grid.Column="0" Grid.Row="0" Type="Check" Text="CROSS-Transer" IsChecked="True" />
-				<Button Grid.Column="1" Grid.Row="0" Text="{x:Static lang:Global.Str0Copy}" Command="{Binding CopyAllCmd}" CommandParameter="{x:Reference EtQuickXLangOutput}" />
-                <Entry x:Name="EtQuickXLangOutput" Grid.Column="2" Grid.Row="0" BackgroundColor="LightYellow"
+				<!-- Weblio -->
+				<input:CheckBox x:Name="CbQuickWeblio" Grid.Column="0" Grid.Row="0" Type="Check" Text="Weblio" IsChecked="True" />
+				<Button Grid.Column="1" Grid.Row="0" Text="{x:Static lang:Global.Str0Copy}" Command="{Binding CopyAllCmd}" CommandParameter="{x:Reference EtQuickWeblioOutput}" />
+                <Entry x:Name="EtQuickWeblioOutput" Grid.Column="2" Grid.Row="0" BackgroundColor="LightYellow"
 					   Placeholder="{Binding Path=DataErrorPlaceholder}" />
-                <ActivityIndicator x:Name="AiBusyCrossTranser" Grid.Column="2" Grid.Row="0" HorizontalOptions="End" VerticalOptions="Start"
+                <ActivityIndicator x:Name="AiBusyWeblio" Grid.Column="2" Grid.Row="0" HorizontalOptions="End" VerticalOptions="Start"
                                HeightRequest="24" WidthRequest="24" IsRunning="False" />
 
                 <!-- Youdao -->

@@ -1,3 +1,4 @@
+using HtmlAgilityPack;
 using Jurassic;
 using Microsoft.International.Converters.TraditionalChineseToSimplifiedConverter;
 using Minax.Collections;
@@ -6,12 +7,14 @@ using Minax.Web.Formats;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -103,7 +106,7 @@ namespace Minax.Web.Translation
 			if( clientXLang.DefaultRequestHeaders.Accept.Count <= 0 )
 				clientXLang.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "*/*" ) );
 			if( clientXLang.DefaultRequestHeaders.UserAgent.Count <= 0 )
-				clientXLang.DefaultRequestHeaders.Add( "User-Agent", "curl/7.47.0" );
+				clientXLang.DefaultRequestHeaders.Add( sUserAgentCookieName, sUserAgentCurl1 );
 
 			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
@@ -122,7 +125,7 @@ namespace Minax.Web.Translation
 					yield break;
 
 				if( xlatedSectionCnt > 0 ) {
-					Thread.Sleep( rnd.Next( 500, 1000 ) );
+					Task.Delay( rnd.Next( 500, 1000 ), cancelToken ).Wait( cancelToken );
 				}
 
 				var content = new FormUrlEncodedContent( values );
@@ -177,6 +180,163 @@ namespace Minax.Web.Translation
 			}
 		}
 
+		public static IEnumerable<YieldResult> TranslateByMiraiTranslateFree( string sourceText,
+															SupportedSourceLanguage sourceLanguage,
+															SupportedTargetLanguage targetLanguage,
+															CancellationToken cancelToken,
+															IProgress<ProgressInfo> progress ) {
+			// prepare default location, source language, target language parameters for HttpClient
+			const string zhtLang = "zt";
+			string defLoc = sLocMiraiXlateFree, srcLang = "ja", tgtLang = zhtLang;
+			bool isSrcCjk = false;
+			switch( sourceLanguage ) {
+				case SupportedSourceLanguage.English:
+					srcLang = "en";
+					break;
+				case SupportedSourceLanguage.Japanese:
+					srcLang = "ja";
+					isSrcCjk = true;
+					break;
+				//case SupportedSourceLanguage.ChineseTraditional:
+				//case SupportedSourceLanguage.ChineseSimplified:
+				//	isSrcCjk = true;
+				default:
+					yield break;
+			}
+
+
+			var text = sourceText;
+			CurrentUsedModels.Clear();
+			var sb = new StringBuilder();
+			var tmpList = ReplaceBeforeXlation( text, sourceLanguage, "{0}", null, ref sb );
+			if( tmpList == null || sb.Length <= 0 )
+				yield break;
+
+			text = sb.ToString();
+			sb.Clear();
+
+			// slice to some sections
+			List<string> sections = null;
+			if( false == SliceSections( text, Profiles.MaxWords.MiraiTranslate, out sections ) ||
+				sections == null || sections.Count <= 0 )
+				yield break;
+
+			if( cancelToken.IsCancellationRequested )
+				yield break;
+
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
+
+			if( miraiTran == null ) {
+				RefreshMiraiData( cancelToken );
+			}
+
+			// prepare form values
+			var values = new Dictionary<string, object> {
+							{ "source", srcLang }, // from Source Language
+							{ "target", tgtLang }, // to Target Lanaguage
+							{ "filter_profile", "nmt" },
+							{ "profile", "inmt" },
+							{ "InmtTarget", "" },
+							{ "InmtTranslateType", "gisting" },
+							{ "usePrefix", false },
+							{ "tran", miraiTran },
+							//{ "tran", "EGQ6FXaPXpNg23e4SiJj95JkcKftUuiMAMx1pZqbcZPva3gB3wyShtplMYgcf0pf" },
+
+							// Glossary, need setup first and mapping lang. by other procedure!!
+							// "adaptPhrases":[{"source":"バジリスク","target":"Basilisk"}]
+						};
+
+			if( zhtLang == srcLang || zhtLang == tgtLang )
+				values[zhtLang] = true;
+
+			int xlatedSectionCnt = 0;
+			foreach( var section in sections ) {
+				values["input"] = section; // words to be translated
+
+				if( cancelToken.IsCancellationRequested )
+					yield break;
+
+				if( xlatedSectionCnt > 0 ) {
+					Task.Delay( rnd.Next( 500, 1000 ), cancelToken ).Wait( cancelToken );
+				}
+
+				var json = JsonConvert.SerializeObject( values );
+				var content = new StringContent( json, Encoding.UTF8, "application/json" );
+				HttpResponseMessage response = null;
+				try {
+					response = clientMiraiXlate.PostAsync( defLoc, content, cancelToken ).Result;
+				}
+				catch( Exception ex ) {
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
+					yield break;
+				}
+
+				if( response == null )
+					continue;
+
+				string responseString = response.Content.ReadAsStringAsync().Result;
+				if( string.IsNullOrWhiteSpace( responseString ) )
+					continue;
+
+				var translatedData = JsonConvert.DeserializeObject<MiraiTranslateFormat1>( responseString );
+
+				if( translatedData != null && translatedData.Status == MiraiTranslateFormat1.StatusSuccess &&
+					translatedData.Outputs != null && translatedData.Outputs.Count > 0 ) {
+					sb.Clear();
+
+					foreach( var output in translatedData.Outputs ) {
+						foreach( var result in output.Results ) {
+							if( isSrcCjk == false ) {
+								// directly append composited sentences
+								sb.Append( result.Translation );
+							}
+							else {
+								foreach( var sen in result.Sentences ) {
+									// put origin whitespace char.
+									foreach( char ch in sen.Original ) {
+										if( char.IsWhiteSpace( ch ) || '　' == ch )
+											sb.Append( ch );
+										else
+											break;
+									}
+									int xlationLen = sen.Translation.Length;
+									for( int i = 0; i < xlationLen; ++i ) {
+										if( char.IsWhiteSpace( sen.Translation[i] ) == false ) {
+											sb.Append( sen.Translation.Substring(i, xlationLen - i) );
+											if( sen.OriginalDelimiter != "" )
+												sb.Append( sen.OriginalDelimiter );
+											break;
+										}
+									}
+								}
+							}
+						}
+					}
+
+					List<IReadOnlyList<(string From, string To)>> afterTgtLangs = new List<IReadOnlyList<(string From, string To)>>();
+					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional )
+						afterTgtLangs.Add( Profiles.MiraiXlationAfter2Cht );
+
+					if( false == ReplaceAfterXlation( sb, tmpList, afterTgtLangs, null, null ) )
+						continue;
+
+					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
+
+					yield return new YieldResult {
+						PercentOrErrorCode = percent,
+						OriginalSection = section,
+						TranslatedSection = sb.ToString()
+					};
+				}
+				else {
+					// maybe the tran expired
+					miraiTran = null;
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
+					yield break;
+				}
+			}
+		}
 
 		public static IEnumerable<YieldResult> TranslateByBaiduFree( string sourceText,
 															SupportedSourceLanguage sourceLanguage,
@@ -261,7 +421,7 @@ namespace Minax.Web.Translation
 				RefreshBaiduData( cancelToken );
 			}
 
-			//clientBaidu.Timeout = TimeSpan.FromSeconds( 30 ); // set timeout to 30 seconds
+			//clientBaidu.Timeout = TimeSpan.FromSeconds( 30 ); // set connecting try-timeout to 30 seconds
 			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
 			// prepare form values
@@ -288,7 +448,7 @@ namespace Minax.Web.Translation
 					yield break;
 
 				if( xlatedSectionCnt > 0 ) {
-					Thread.Sleep( rnd.Next( 1500, 2500 ) );
+					Task.Delay( rnd.Next( 1500, 2500 ), cancelToken ).Wait( cancelToken );
 				}
 
 				var content = new FormUrlEncodedContent( values );
@@ -303,22 +463,22 @@ namespace Minax.Web.Translation
 						if( ae.InnerException is System.Net.Http.HttpRequestException hre ) {
 							if( hre.InnerException is WebException we ) {
 								netEx = we;
-								Thread.Sleep( 200 );
+								Task.Delay( 200, cancelToken ).Wait( cancelToken );
 							}
 							else {
 								netEx = hre;
-								Thread.Sleep( 200 );
+								Task.Delay( 200, cancelToken ).Wait( cancelToken );
 							}
 						}
 						else {
 							netEx = ae;
-							Thread.Sleep( 200 );
+							Task.Delay( 200, cancelToken ).Wait( cancelToken );
 							RefreshBaiduData( cancelToken );
 						}
 					}
 					catch( Exception ex ) {
 						netEx = ex;
-						Thread.Sleep( 200 );
+						Task.Delay( 200, cancelToken ).Wait( cancelToken );
 					}
 
 					if( cancelToken.IsCancellationRequested ) {
@@ -391,7 +551,7 @@ namespace Minax.Web.Translation
 						afterTgtLangs.Add( Profiles.BaiduXlationAfter2Cht );
 
 					if( false == ReplaceAfterXlation( sb, tmpList, afterTgtLangs,
-														@"[\s]?http://tmp58.org/a(?<SeqNum>[0-9]+)b[\s]?", "http://tmp58.org/a${SeqNum}b"))
+									@"[\s]?http://tmp58.org/a(?<SeqNum>[0-9]+)b[\s]?", "http://tmp58.org/a${SeqNum}b"))
 						continue;
 
 
@@ -428,6 +588,385 @@ namespace Minax.Web.Translation
 			}
 		}
 
+		public static IEnumerable<YieldResult> TranslateByIcibaFree( string sourceText,
+															SupportedSourceLanguage sourceLanguage,
+															SupportedTargetLanguage targetLanguage,
+															CancellationToken cancelToken,
+															IProgress<ProgressInfo> progress ) {
+			// prepare default location, source language, target language parameters for HttpClient
+			string defLoc = $"{sLocIcibaFree}?c=trans&m=fy&client=6&auth_user=key_web_fanyi", srcLang = "auto", tgtLang = "cht";
+			switch( sourceLanguage ) {
+				case SupportedSourceLanguage.ChineseSimplified:
+					srcLang = "zh";
+					break;
+				case SupportedSourceLanguage.ChineseTraditional:
+					srcLang = "cht";
+					break;
+				case SupportedSourceLanguage.English:
+					srcLang = "en";
+					break;
+				case SupportedSourceLanguage.Japanese:
+					srcLang = "ja";
+					break;
+				default:
+					yield break;
+			}
+			switch( targetLanguage ) {
+				case SupportedTargetLanguage.English:
+					tgtLang = "en";
+					break;
+			}
+
+			// same language is non-sense...
+			if( srcLang == tgtLang )
+				yield break;
+
+			var text = sourceText;
+			var sb = new StringBuilder( sourceText );
+
+			// replace some text to avoid collision
+			if( sourceLanguage == SupportedSourceLanguage.Japanese ) {
+				foreach( var (From, To) in Profiles.JapaneseEscapeHtmlText ) {
+					sb.Replace( From, To );
+				}
+			}
+
+			CurrentUsedModels.Clear();
+			if( DescendedModels == null )
+				DescendedModels = new ObservableList<MappingMonitor.MappingModel>();
+
+			// Tulpe3 => <Original text, tmp. text, Translated text>
+			var tmpList = new List<(string OrigText, string TmpText, string XlatedText)>();
+			int num = rnd.Next( 10, 30 );
+			foreach( var mm in DescendedModels ) {
+				if( text.Contains( mm.OriginalText ) == false )
+					continue;
+
+				var k1 = string.Format( "abc0{0}", num );
+				tmpList.Add( (mm.OriginalText, k1, mm.MappingText) );
+				sb.Replace( mm.OriginalText, k1 );
+
+				num++;
+
+				CurrentUsedModels.Add( mm );
+			}
+
+			if( cancelToken.IsCancellationRequested )
+				yield break;
+
+			text = sb.ToString();
+			sb.Clear();
+
+			// slice to some sections
+			List<string> sections = null;
+			if( false == SliceSections( text, Profiles.MaxWords.Iciba, out sections ) ||
+				sections == null || sections.Count <= 0 )
+				yield break;
+
+			if( cancelToken.IsCancellationRequested )
+				yield break;
+
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
+
+			// prepare form values
+			var values = new Dictionary<string, string> {
+							{ "from", srcLang }, // from Source Language
+							{ "to", tgtLang }, // to Target Language
+						};
+
+			MD5 md5Hash = MD5.Create();
+			Regex rx = new Regex( @"(^\s*)|(\s*$)", RegexOptions.ECMAScript ); // RegexOptions.MatchCRLFNewLine
+			int xlatedSectionCnt = 0;
+			foreach( var section in sections ) {
+				values["q"] = rx.Replace( section, "" ); // words to be translated, remove leading and tail spaces
+
+				// https://greasyfork.org/zh-TW/scripts/378277-%E7%BF%BB%E8%AF%91%E6%9C%BA/code
+				//var sign = CalculteMd5( md5Hash, "6key_web_fanyi" + "ifanyiweb8hc9s98e" + rx.Replace(section, "") ).Substring(0, 16);
+				var sign = CalculteMd5( md5Hash, "6key_web_fanyi" + "ifanyiweb8hc9s98e" + values["q"] ).Substring( 0, 16 );
+
+				if( cancelToken.IsCancellationRequested )
+					yield break;
+
+				if( xlatedSectionCnt > 0 ) {
+					Task.Delay( rnd.Next( 5500, 9500 ), cancelToken ).Wait( cancelToken );
+				}
+
+				var content = new FormUrlEncodedContent( values );
+				HttpResponseMessage response = null;
+				try {
+					response = client.PostAsync( $"{defLoc}&sign={sign}", content, cancelToken ).Result;
+				}
+				catch( Exception ex ) {
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
+					yield break;
+				}
+
+				if( response == null || response.IsSuccessStatusCode == false )
+					continue;
+
+				string responseString = response.Content.ReadAsStringAsync().Result;
+				if( string.IsNullOrWhiteSpace( responseString ) )
+					continue;
+
+				var translatedData = JsonConvert.DeserializeObject<IcibaTranslatorFormat1>( responseString );
+
+				if( translatedData != null && translatedData.Status == 1 &&
+					translatedData.ContentData != null ) {
+					sb.Clear();
+
+					sb.Append( translatedData.ContentData.Out ); // contains \n
+
+					if( false == ReplaceAfterXlation( sb, tmpList, null,
+										@"abc0(?<SeqNum>[0-9]+)", "abc0${SeqNum}" ) )
+						continue;
+
+
+					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
+
+					yield return new YieldResult {
+						OriginalSection = section,
+						TranslatedSection = sb.ToString(),
+						PercentOrErrorCode = percent,
+					};
+				}
+				else {
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
+					yield break;
+				}
+			}
+		}
+
+
+		private static string lingoCloudBrowserId = string.Empty, lingoCloudJwt = string.Empty;
+		public static IEnumerable<YieldResult> TranslateByLingoCloudFree( string sourceText,
+															SupportedSourceLanguage sourceLanguage,
+															SupportedTargetLanguage targetLanguage,
+															CancellationToken cancelToken,
+															IProgress<ProgressInfo> progress ) {
+			// prepare default location, source language, target language parameters for HttpClient
+			string defLoc = sLocLingoCloudFree, srcLang2TgtLang = "auto2zh";
+			switch( sourceLanguage ) {
+				//case SupportedSourceLanguage.ChineseSimplified:
+				//switch( targetLanguage ) {
+				//	//case SupportedTargetLanguage.English:
+				//	//	srcLang2TgtLang = "zh2en";
+				//	//case SupportedTargetLanguage.Korea:
+				//	//	srcLang2TgtLang = "zh2ko";
+				//	//case SupportedTargetLanguage.Japanese:
+				//	//	srcLang2TgtLang = "zh2ja";
+				//	case SupportedTargetLanguage.ChineseTraditional:
+				//	default:
+				//		yield break;
+				//}
+				//break;
+				//case SupportedSourceLanguage.English:
+				//	switch( targetLanguage ) {
+				//		//case SupportedTargetLanguage.Japanese:
+				//		//	srcLang2TgtLang = "en2ja";
+				//		case SupportedTargetLanguage.ChineseSimplified:
+				//			srcLang2TgtLang = "en2zh";
+				//			break;
+				//		case SupportedTargetLanguage.ChineseTraditional:
+				//		default:
+				//			yield break;
+				//	}
+				//	break;
+				case SupportedSourceLanguage.Japanese:
+					switch( targetLanguage ) {
+						//case SupportedTargetLanguage.English:
+						//	srcLang2TgtLang = "ja2en";
+						//	break;
+						//case SupportedTargetLanguage.ChineseSimplified:
+						case SupportedTargetLanguage.ChineseTraditional:
+							srcLang2TgtLang = "ja2zh"; // only support CHS
+							break;
+						default:
+							yield break;
+					}
+					break;
+				default:
+					yield break;
+			}
+
+
+			// prepare browser_id
+			if( lingoCloudBrowserId == string.Empty ) {
+				lingoCloudBrowserId = CalculteMd5( MD5.Create(), rnd.Next().ToString() );
+			}
+
+			var text = sourceText;
+			CurrentUsedModels.Clear();
+			var sb = new StringBuilder();
+			var tmpList = ReplaceBeforeXlation( text, sourceLanguage, "(abc73{0})", null, ref sb );
+			if( tmpList == null || sb.Length <= 0 )
+				yield break;
+
+			text = sb.ToString();
+			sb.Clear();
+
+			// slice to some sections
+			List<string> sections = null;
+			if( false == SliceSections( text, Profiles.MaxWords.LingoCloud, out sections ) ||
+				sections == null || sections.Count <= 0 )
+				yield break;
+
+			if( cancelToken.IsCancellationRequested )
+				yield break;
+
+			if( clientLingoCloud.DefaultRequestHeaders.Accept.Count <= 0 ) {
+				clientLingoCloud.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "application/json" ) );
+				clientLingoCloud.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "text/html" ) );
+				clientLingoCloud.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "*/*" ) );
+			}
+			if( clientLingoCloud.DefaultRequestHeaders.UserAgent.Count <= 0 )
+				clientLingoCloud.DefaultRequestHeaders.Add( sUserAgentCookieName, "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0" );
+
+			if( clientLingoCloud.DefaultRequestHeaders.TryGetValues( "X-Authorization", out _ ) == false )
+				clientLingoCloud.DefaultRequestHeaders.Add( "X-Authorization", "token:qgemv4jr1y38jyq6vhvi" );
+
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
+
+			// prepare JWT
+			if( lingoCloudJwt == string.Empty ) {
+				LingoCloudJwtRequest1 data1 = new LingoCloudJwtRequest1 { BrowserId = lingoCloudBrowserId };
+				string jwtReq = JsonConvert.SerializeObject( data1 );
+				var rsp = clientLingoCloud.PostAsync( sLocLingoCloudGen, new StringContent( jwtReq, Encoding.UTF8, "application/json" ), cancelToken ).Result;
+				if( rsp.IsSuccessStatusCode == false ) {
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, rsp.StatusCode ), rsp );
+					yield break;
+				}
+
+				var jwtRsp = JsonConvert.DeserializeObject<LingoCloudJwtResponse1>( rsp.Content.ReadAsStringAsync().Result );
+				lingoCloudJwt = jwtRsp.Jwt;
+			}
+
+			if( clientLingoCloud.DefaultRequestHeaders.TryGetValues( "T-Authorization", out _ ) )
+				clientLingoCloud.DefaultRequestHeaders.Remove( "T-Authorization" );
+
+			clientLingoCloud.DefaultRequestHeaders.Add( "T-Authorization", lingoCloudJwt );
+
+			// prepare form values};
+			var reqData = new LingoCloudXlateRequest1() {
+				TransType = srcLang2TgtLang,
+				Detect = true,
+				BrowserId = lingoCloudBrowserId,
+			};
+
+			int xlatedSectionCnt = 0;
+			foreach( var section in sections ) {
+				// words to be translated
+				reqData.Source = section.Split( sNewLineSeparator, StringSplitOptions.None ).ToList();
+
+				if( reqData.Source.Count < 1 )
+					continue;
+
+				bool dummy = false;
+				if( reqData.Source.Count == 1 ) {
+					// add dummy empty line to avoid translatedData.Target become a string
+					reqData.Source.Add( "" );
+					dummy = true;
+				}
+
+				if( cancelToken.IsCancellationRequested )
+					yield break;
+
+				if( xlatedSectionCnt > 0 ) {
+					Task.Delay( rnd.Next( 500, 1000 ), cancelToken ).Wait( cancelToken );
+				}
+
+				var content = new StringContent( JsonConvert.SerializeObject( reqData ), Encoding.UTF8, "application/json" );
+				HttpResponseMessage response = null;
+				try {
+					response = clientLingoCloud.PostAsync( defLoc, content, cancelToken ).Result;
+				}
+				catch( Exception ex ) {
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
+					yield break;
+				}
+
+				if( response == null )
+					continue;
+
+				string responseString = response.Content.ReadAsStringAsync().Result;
+				if( string.IsNullOrWhiteSpace( responseString ) )
+					continue;
+
+				var translatedData = JsonConvert.DeserializeObject<LingoCloudXlateResponse1>( responseString );
+
+				if( translatedData != null && translatedData.Target != null  ) {
+					sb.Clear();
+
+					// decode xlated data to string
+					var origLines = reqData.Source;
+					if( origLines.Count != translatedData.Target.Count ) {
+						foreach( var target in translatedData.Target ) {
+							if( string.IsNullOrWhiteSpace( target ) ) {
+								sb.AppendLine( target );
+								continue;
+							}
+
+							var result = DecodeLingoCloudXlatedData( target );
+							if( targetLanguage == SupportedTargetLanguage.ChineseTraditional ) {
+								sb.AppendLine( ChineseConverter.Convert( result, ChineseConversionDirection.SimplifiedToTraditional ) );
+							}
+							else {
+								sb.AppendLine( result );
+							}
+						}
+					} else {
+						// ignore dummy empty string
+						int cnt = dummy ? translatedData.Target.Count - 1 : translatedData.Target.Count;
+						for( int i = 0; i < cnt; ++i ) {
+							var target = translatedData.Target[i];
+							if( string.IsNullOrWhiteSpace( target ) ) {
+								sb.AppendLine( target );
+							}
+							else {
+								// check original string start with whitespace or Fullwidth form space
+								foreach( var ch in origLines[i] ) {
+									if( char.IsWhiteSpace( ch ) || '　' == ch )
+										sb.Append( ch );
+									else
+										break;
+								}
+
+								var result = DecodeLingoCloudXlatedData( target );
+								if( targetLanguage == SupportedTargetLanguage.ChineseTraditional ) {
+									sb.AppendLine( ChineseConverter.Convert( result, ChineseConversionDirection.SimplifiedToTraditional ) );
+								}
+								else {
+									sb.AppendLine( result );
+								}
+							}
+						}
+					}
+
+					List<IReadOnlyList<(string From, string To)>> afterTgtLangs = new List<IReadOnlyList<(string From, string To)>>();
+					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional ) {
+						afterTgtLangs.Add( Profiles.YoudaoXlationAfter2Cht );
+						afterTgtLangs.Add( Profiles.XlationAfterMsConvert2Cht );
+					}
+					if( false == ReplaceAfterXlation( sb, tmpList, afterTgtLangs,
+										@"[(]?abc73(?<SeqNum>[0-9]+)[)]?", "(abc73${SeqNum})" ) )
+						continue;
+
+					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
+
+					yield return new YieldResult {
+						PercentOrErrorCode = percent,
+						OriginalSection = section,
+						TranslatedSection = sb.ToString()
+					};
+				}
+				else {
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
+					yield break;
+				}
+			}
+		}
+
 		public static IEnumerable<YieldResult> TranslateByYoudaoFree( string sourceText,
 															SupportedSourceLanguage sourceLanguage,
 															SupportedTargetLanguage targetLanguage,
@@ -435,20 +974,16 @@ namespace Minax.Web.Translation
 															IProgress<ProgressInfo> progress )
 		{
 			// prepare default location, source language, target language parameters for HttpClient
-			string defLoc = sLocYoudaoFree, srcLang = "ja", tgtLang = "zh-CHS"; // from Japanese to ChineseSimplified
+			string defLoc = sLocYoudaoFree, srcLang = "ja", tgtLang = "zh-CHT"; // "zh-CHS" from Japanese to ChineseSimplified
 			switch( targetLanguage ) {
 				case SupportedTargetLanguage.English:
-					//tgtLang = "en"; // Not Support!!
-					//break;
-					progress?.Report( new ProgressInfo { PercentOrErrorCode = -1,
-						Message = string.Format(Languages.WebXlator.Str2YoudaoNotSupportSrc2Tgt, sourceLanguage.ToL10nString(), targetLanguage.ToL10nString() ) } );
-					yield break;
+					tgtLang = "en";
+					break;
 			}
-
 
 			var text = sourceText;
 			var sb = new StringBuilder();
-			var tmpList = ReplaceBeforeXlation( text, sourceLanguage, "(abc0{0})", null, ref sb );
+			var tmpList = ReplaceBeforeXlation( text, sourceLanguage, "(abc5{0})", null, ref sb );
 			if( tmpList == null || sb.Length <= 0 )
 				yield break;
 
@@ -464,32 +999,31 @@ namespace Minax.Web.Translation
 			if( cancelToken.IsCancellationRequested )
 				yield break;
 
-			if( clientYoudao.DefaultRequestHeaders.Accept.Count <= 0 )
+			if( clientYoudao.DefaultRequestHeaders.Accept.Count <= 0 ) {
 				clientYoudao.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "application/json" ) );
+				clientYoudao.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "text/html" ) );
+				clientYoudao.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "*/*" ) );
+			}
 			if( clientYoudao.DefaultRequestHeaders.UserAgent.Count <= 0 )
-				clientYoudao.DefaultRequestHeaders.Add( "User-Agent", "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0" );
+				clientYoudao.DefaultRequestHeaders.Add( sUserAgentCookieName, "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0" );
 
 			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
-			// prepare form values, https://ai.youdao.com/docs/doc-trans-api.s#p04
+			// prepare form values
 			var values = new Dictionary<string, string> {
-							{ "type", "AUTO" },
-							{ "doctype", "json" },
-							// https://ai.youdao.com/docs/doc-trans-api.s#p07
-							{ "from", "AUTO" },
-							//{ "from", srcLang}, // from Source Language
+							{ "from", srcLang}, // from Source Language
 							{ "to", tgtLang}, // to Target Language, useless, most are xlate to ChineseSimplified
 						};
 
 			int xlatedSectionCnt = 0;
 			foreach( var section in sections ) {
-				values["i"] = section; // words to be translated
+				values["q"] = section; // words to be translated
 
 				if( cancelToken.IsCancellationRequested )
 					yield break;
 
 				if( xlatedSectionCnt > 0 ) {
-					Thread.Sleep( rnd.Next( 500, 1000 ) );
+					Task.Delay( rnd.Next( 1500, 3000 ) , cancelToken ).Wait(cancelToken) ;
 				}
 
 				var content = new FormUrlEncodedContent( values );
@@ -502,39 +1036,53 @@ namespace Minax.Web.Translation
 					yield break;
 				}
 
-				if( response == null )
+				if( response == null || response.IsSuccessStatusCode == false )
 					continue;
 
 				string responseString = response.Content.ReadAsStringAsync().Result;
 				if( string.IsNullOrWhiteSpace( responseString ) )
 					continue;
 
-				var translatedData = JsonConvert.DeserializeObject<YoudaoTranslatorFormat1>( responseString );
+				var translatedData = JsonConvert.DeserializeObject<YoudaoTranslatorFormat3>( responseString );
 
-				if( translatedData != null && translatedData.ErrorCode == 0 &&
-						translatedData.TranslateResult.Count > 0 ) {
+				if( translatedData != null && translatedData.ErrorCode == "0" &&
+					translatedData.Translation != null ) {
 					sb.Clear();
 
-					foreach( var paragraphs in translatedData.TranslateResult ) {
-						foreach( var dataSection in paragraphs ) {
-							var pair = dataSection;
-							if( targetLanguage == SupportedTargetLanguage.ChineseTraditional )
-								sb.Append( ChineseConverter.Convert( pair.Target, ChineseConversionDirection.SimplifiedToTraditional ) );
-							else
-								sb.Append( pair.Target );
+					var origLines = translatedData.Query.Split( sNewLineSeparator, StringSplitOptions.None );
+					int origIndex = 0;
+
+					foreach( var ts in translatedData.Translation ) {
+						if( origIndex >= origLines.Length ) {
+							sb.Append( ts );
+							continue;
 						}
-						sb.AppendLine();
+
+						// insert leading whitespace char.
+						var xlateLines = ts.Split( sNewLineSeparator, StringSplitOptions.None );
+						foreach( var xline in xlateLines ) {
+							if( origIndex >= origLines.Length ) {
+								sb.AppendLine( xline );
+							} else {
+								var orig = origLines[origIndex++];
+								foreach( var ch in orig ) {
+									if( char.IsWhiteSpace( ch ) || '　'.Equals( ch ) )
+										sb.Append( ch );
+									else
+										break;
+								}
+								sb.AppendLine( xline.TrimStart() );
+							}
+						}
 					}
-					//remove extra line
-					sb.Remove( sb.Length - Environment.NewLine.Length, Environment.NewLine.Length );
 
 					List<IReadOnlyList<(string From, string To)>> afterTgtLangs = new List<IReadOnlyList<(string From, string To)>>();
 					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional ) {
 						afterTgtLangs.Add( Profiles.YoudaoXlationAfter2Cht );
-						afterTgtLangs.Add( Profiles.XlationAfterMsConvert2Cht );
+						//afterTgtLangs.Add( Profiles.XlationAfterMsConvert2Cht );
 					}
 					if( false == ReplaceAfterXlation( sb, tmpList, afterTgtLangs,
-										@"[(]?abc0(?<SeqNum>[0-9]+)[)]?", "(abc0${SeqNum})" ) )
+										@"[(]?abc5(?<SeqNum>[0-9]+)[)]?", "(abc5${SeqNum})" ) )
 						continue;
 
 					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
@@ -552,6 +1100,329 @@ namespace Minax.Web.Translation
 				}
 			}
 		}
+
+		public static IEnumerable<YieldResult> TranslateByTencentFree( string sourceText,
+															SupportedSourceLanguage sourceLanguage,
+															SupportedTargetLanguage targetLanguage,
+															CancellationToken cancelToken,
+															IProgress<ProgressInfo> progress ) {
+			// prepare default location, source language, target language parameters for HttpClient
+			string defLoc = sLocTencentFree, srcLang = "ja", tgtLang = "zh"; // from Japanese to ChineseSimplified
+			switch( targetLanguage ) {
+				case SupportedTargetLanguage.English:
+					//tgtLang = "en"; // Not Support!!
+					//break;
+					progress?.Report( new ProgressInfo {
+						PercentOrErrorCode = -1,
+						Message = string.Format( Languages.WebXlator.Str2YoudaoNotSupportSrc2Tgt, sourceLanguage.ToL10nString(), targetLanguage.ToL10nString() )
+					} );
+					yield break;
+			}
+
+			var text = sourceText;
+			var sb = new StringBuilder();
+			var tmpList = ReplaceBeforeXlation( text, sourceLanguage, "abc789{0}", null, ref sb );
+			if( tmpList == null || sb.Length <= 0 )
+				yield break;
+
+			text = sb.ToString();
+			sb.Clear();
+
+			// slice to some sections
+			List<string> sections = null;
+			if( false == SliceSections( text, Profiles.MaxWords.Tencent, out sections ) ||
+				sections == null || sections.Count <= 0 )
+				yield break;
+
+			if( cancelToken.IsCancellationRequested )
+				yield break;
+
+			if( clientTencent.DefaultRequestHeaders.Accept.Count <= 0 ) {
+				clientTencent.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "application/json" ) );
+				clientTencent.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "text/html" ) );
+				clientTencent.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "*/*" ) );
+			}
+			if( clientTencent.DefaultRequestHeaders.UserAgent.Count <= 0 )
+				clientTencent.DefaultRequestHeaders.Add( sUserAgentCookieName, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36" );
+
+			if( clientTencent.DefaultRequestHeaders.TryGetValues( "Origin", out _ ) == false )
+				clientTencent.DefaultRequestHeaders.Add( "Origin", "https://fanyi.qq.com" );
+
+			if( clientTencent.DefaultRequestHeaders.TryGetValues( "X-Requested-With", out _ ) == false )
+				clientTencent.DefaultRequestHeaders.Add( "X-Requested-With", "XMLHttpRequest" );
+
+			if( clientTencent.DefaultRequestHeaders.Referrer == null )
+				clientTencent.DefaultRequestHeaders.Referrer = new Uri( "https://fanyi.qq.com/" );
+
+			clientTencent.DefaultRequestHeaders.Host = "fanyi.qq.com";
+
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
+
+			if( tencentQtk == null || tencentQtv == null ) {
+				RefreshTencentData( cancelToken );
+			}
+
+			// prepare form values
+			var values = new Dictionary<string, string> {
+							{ "qtv", tencentQtv },
+							{ "qtk", tencentQtk },
+							{ "source", "auto" },
+							//{ "source", srcLang}, // from Source Language
+							{ "target", tgtLang}, // to Target Language, useless, most are xlate to ChineseSimplified
+						};
+
+			int xlatedSectionCnt = 0;
+			foreach( var section in sections ) {
+				values["sourceText"] = section; // words to be translated
+
+				int retry = 3;
+	retryStart:
+				if( cancelToken.IsCancellationRequested )
+					yield break;
+
+				if( xlatedSectionCnt > 0 ) {
+					Task.Delay( rnd.Next( 75000, 95000 ), cancelToken ).Wait( cancelToken );
+				}
+
+				RefreshTencentData( cancelToken );
+				values["qtv"] = tencentQtv;
+				values["qtk"] = tencentQtk;
+				values["sessionUuid"] = $"translate_uuid{DateTimeOffset.Now.ToUnixTimeMilliseconds()}";
+
+				var content = new FormUrlEncodedContent( values );
+				HttpResponseMessage response = null;
+				try {
+					response = clientTencent.PostAsync( defLoc, content, cancelToken ).Result;
+				}
+				catch( Exception ex ) {
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
+					yield break;
+				}
+
+				if( response == null )
+					continue;
+
+				if( response.IsSuccessStatusCode == false && retry-- > 0 ) {
+					if( tencentQtk == null || tencentQtv == null ) {
+						RefreshTencentData( cancelToken );
+						values["qtv"] = tencentQtv;
+						values["qtk"] = tencentQtk;
+					}
+					goto retryStart;
+				}
+				
+				string responseString = response.Content.ReadAsStringAsync().Result;
+				if( string.IsNullOrWhiteSpace( responseString ) )
+					continue;
+
+				var translatedData = JsonConvert.DeserializeObject<TencentTranslatorFormat1>( responseString );
+
+				if( translatedData != null && translatedData.ErrorCode == 0 && translatedData.TranslateData != null &&
+						translatedData.TranslateData.Records != null && translatedData.TranslateData.Records.Length > 0 ) {
+					sb.Clear();
+
+					foreach( var rec in translatedData.TranslateData.Records ) {
+						if( targetLanguage == SupportedTargetLanguage.ChineseTraditional )
+							sb.Append( ChineseConverter.Convert( rec.TargetText, ChineseConversionDirection.SimplifiedToTraditional ) );
+						else
+							sb.Append( rec.TargetText );
+					}
+
+					List<IReadOnlyList<(string From, string To)>> afterTgtLangs = new List<IReadOnlyList<(string From, string To)>>();
+					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional ) {
+						afterTgtLangs.Add( Profiles.YoudaoXlationAfter2Cht );
+						afterTgtLangs.Add( Profiles.XlationAfterMsConvert2Cht );
+					}
+					if( false == ReplaceAfterXlation( sb, tmpList, afterTgtLangs,
+										@"[aA]bc789(?<SeqNum>[0-9]+)", "abc789${SeqNum}" ) )
+						continue;
+
+					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
+
+					yield return new YieldResult {
+						OriginalSection = section,
+						TranslatedSection = sb.ToString(),
+						PercentOrErrorCode = percent,
+					};
+				}
+				else {
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
+					yield break;
+				}
+			}
+		}
+
+		private static string papagoAuthKey = string.Empty;
+		public static IEnumerable<YieldResult> TranslateByPapagoFree( string sourceText,
+															SupportedSourceLanguage sourceLanguage,
+															SupportedTargetLanguage targetLanguage,
+															CancellationToken cancelToken,
+															IProgress<ProgressInfo> progress ) {
+			// prepare default location, source language, target language parameters for HttpClient
+			string defLoc = sLocPapagoFree, srcLang = "ja", tgtLang = "zh-TW"; // from Japanese to ChineseTraditional
+
+			switch( sourceLanguage ) {
+				case SupportedSourceLanguage.English:
+					srcLang = "en";
+					break;
+			}
+			switch( targetLanguage ) {
+				case SupportedTargetLanguage.English:
+					tgtLang = "en";
+					break;
+			}
+
+
+			var text = sourceText;
+			var sb = new StringBuilder();
+			var tmpList = ReplaceBeforeXlation( text, sourceLanguage, "abc0{0}", null, ref sb );
+			if( tmpList == null || sb.Length <= 0 )
+				yield break;
+
+			text = sb.ToString();
+			sb.Clear();
+
+			// slice to some sections
+			List<string> sections = null;
+			if( false == SliceSections( text, Profiles.MaxWords.Papago, out sections ) ||
+				sections == null || sections.Count <= 0 )
+				yield break;
+
+			if( cancelToken.IsCancellationRequested )
+				yield break;
+
+			if( clientPapago.DefaultRequestHeaders.Accept.Count <= 0 ) {
+				clientPapago.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "application/json" ) );
+				clientPapago.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "text/html" ) );
+			}
+			if( clientPapago.DefaultRequestHeaders.UserAgent.Count <= 0 )
+				clientPapago.DefaultRequestHeaders.Add( sUserAgentCookieName, "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0" );
+
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
+
+			// get AUTH_KEY
+			if( papagoAuthKey == string.Empty ) {
+				var rsp = clientPapago.GetAsync( "https://papago.naver.com/" ).Result;
+				
+				if( rsp.IsSuccessStatusCode == false ) {
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, rsp.StatusCode ), rsp );
+					yield break;
+				}
+				Report( progress, 2, Languages.WebXlator.Str0PreparingTranslation, null );
+
+				string rspString = rsp.Content.ReadAsStringAsync().Result;
+				var match = Regex.Match( rspString, @"home.*.chunk.js", RegexOptions.IgnoreCase );
+				if( match.Success ) {
+					var chunkFileName = match.Groups[0].ToString();
+					rsp = clientPapago.GetAsync( $"https://papago.naver.com/{chunkFileName}" ).Result;
+					
+					if( rsp.IsSuccessStatusCode == false ) {
+						Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, rsp.StatusCode ), rsp );
+						yield break;
+					}
+					Report( progress, 3, Languages.WebXlator.Str0PreparingTranslation, null );
+
+					rspString = rsp.Content.ReadAsStringAsync().Result;
+					match = Regex.Match( rspString, @"AUTH_KEY:""(.*?)""", RegexOptions.IgnoreCase );
+					if( match.Success == false ) {
+						Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, rsp.StatusCode ), rsp );
+						yield break;
+					}
+
+					papagoAuthKey = match.Groups[1].ToString();
+				} else {
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, rsp.StatusCode ), rsp );
+					yield break;
+				}
+
+				clientPapago.DefaultRequestHeaders.Add( "x-apigw-partnerid", "papago" );
+				clientPapago.DefaultRequestHeaders.Add( "device-type", "pc" );
+			}
+
+			var time = DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString();
+			if( clientPapago.DefaultRequestHeaders.TryGetValues( "Timestamp", out _ ) )
+				clientPapago.DefaultRequestHeaders.Remove( "Timestamp" );
+
+			clientPapago.DefaultRequestHeaders.Add( "Timestamp", time );
+
+			// from https://greasyfork.org/zh-TW/scripts/378277-%E7%BF%BB%E8%AF%91%E6%9C%BA/code
+			// "authorization":'PPG '+time+':'+CryptoJS.HmacMD5(time+'\nhttps://papago.naver.com/apis/n2mt/translate\n'+time, sessionStorage.getItem('papago_key')).toString(CryptoJS.enc.Base64),
+			if( clientPapago.DefaultRequestHeaders.TryGetValues( "Authorization", out _ ) )
+				clientPapago.DefaultRequestHeaders.Remove( "Authorization" );
+
+			var hmac = new HMACMD5( Encoding.UTF8.GetBytes( papagoAuthKey) );
+			var hashBytes = hmac.ComputeHash( Encoding.UTF8.GetBytes( $"{time}\nhttps://papago.naver.com/apis/n2mt/translate\n{time}" ) );
+			var auth = $"PPG {time}:{Convert.ToBase64String( (hashBytes) )}";
+			clientPapago.DefaultRequestHeaders.Add( "Authorization", auth );
+
+			// prepare form values
+			var values = new Dictionary<string, string> {
+							{ "deviceId", time },
+							{ "source", srcLang}, // from Source Language
+							{ "target", tgtLang}, // to Target Language, useless, most are xlate to ChineseSimplified
+						};
+
+			int xlatedSectionCnt = 0;
+			foreach( var section in sections ) {
+				values["text"] = section; // words to be translated
+
+				if( cancelToken.IsCancellationRequested )
+					yield break;
+
+				if( xlatedSectionCnt > 0 ) {
+					Task.Delay( rnd.Next( 200, 1000 ), cancelToken ).Wait( cancelToken );
+				}
+
+				var content = new FormUrlEncodedContent( values );
+				HttpResponseMessage response = null;
+				try {
+					response = clientPapago.PostAsync( defLoc, content, cancelToken ).Result;
+				}
+				catch( Exception ex ) {
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
+					yield break;
+				}
+
+				if( response == null )
+					continue;
+
+				response.EnsureSuccessStatusCode();
+				
+				string responseString = response.Content.ReadAsStringAsync().Result;
+				if( string.IsNullOrWhiteSpace( responseString ) )
+					continue;
+
+				var translatedData = JsonConvert.DeserializeObject<PapagoFormat1>( responseString );
+
+				if( translatedData != null && string.IsNullOrEmpty(translatedData.ErrorCode) &&
+						translatedData.TranslatedText != null ) {
+					sb.Clear();
+					sb.Append( translatedData.TranslatedText );
+
+					if( false == ReplaceAfterXlation( sb, tmpList, null,
+										@"abc0(?<SeqNum>[0-9]+)", "abc0${SeqNum}" ) )
+						continue;
+
+					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
+
+					yield return new YieldResult {
+						OriginalSection = section,
+						TranslatedSection = sb.ToString(),
+						PercentOrErrorCode = percent,
+					};
+				}
+				else {
+					// maybe AUTH_KEY updated, so remove old value
+					papagoAuthKey = string.Empty;
+
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
+					yield break;
+				}
+			}
+		}
+
 
 		public static IEnumerable<YieldResult> TranslateByGoogleFree( string sourceText,
 															SupportedSourceLanguage sourceLanguage,
@@ -608,7 +1479,7 @@ namespace Minax.Web.Translation
 			if( clientGoogle.DefaultRequestHeaders.Accept.Count <= 0 )
 				clientGoogle.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "application/json" ) );
 			if( clientGoogle.DefaultRequestHeaders.UserAgent.Count <= 0 )
-				clientGoogle.DefaultRequestHeaders.Add( "User-Agent",
+				clientGoogle.DefaultRequestHeaders.Add( sUserAgentCookieName,
 						 "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0" );
 
 			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
@@ -632,7 +1503,7 @@ namespace Minax.Web.Translation
 					yield break;
 
 				if( xlatedSectionCnt > 0 ) {
-					Thread.Sleep( rnd.Next( 500, 1000 ) );
+					Task.Delay( rnd.Next( 500, 1000 ), cancelToken ).Wait( cancelToken );
 				}
 
 				var content = new FormUrlEncodedContent( values );
@@ -691,9 +1562,181 @@ namespace Minax.Web.Translation
 			}
 		}
 
+		public static IEnumerable<YieldResult> TranslateByMicrosoftFree( string sourceText,
+															SupportedSourceLanguage sourceLanguage,
+															SupportedTargetLanguage targetLanguage,
+															CancellationToken cancelToken,
+															IProgress<ProgressInfo> progress ) {
+			// prepare default location, source language, target language parameters for HttpClient
+			string defLoc = sLocBingFree, srcLang, tgtLang = "zh-Hant";
+			switch( sourceLanguage ) {
+				case SupportedSourceLanguage.ChineseSimplified:
+					srcLang = "zh-Hans";
+					break;
+				case SupportedSourceLanguage.ChineseTraditional:
+					srcLang = "zh-Hant";
+					break;
+				case SupportedSourceLanguage.English:
+					srcLang = "en";
+					break;
+				case SupportedSourceLanguage.Japanese:
+					srcLang = "ja";
+					break;
+				default:
+					// let translator auto detect
+					//break;
+					yield break;
+			}
+			switch( targetLanguage ) {
+				case SupportedTargetLanguage.English:
+					tgtLang = "en";
+					break;
+			}
+
+			// same language is non-sense...
+			if( srcLang == tgtLang )
+				yield break;
+
+			var text = sourceText;
+			var sb = new StringBuilder( sourceText );
+
+			// replace some text to avoid collision
+			if( sourceLanguage == SupportedSourceLanguage.Japanese ) {
+				foreach( var (From, To) in Profiles.JapaneseEscapeHtmlText ) {
+					sb.Replace( From, To );
+				}
+			}
+
+			CurrentUsedModels.Clear();
+			if( DescendedModels == null )
+				DescendedModels = new ObservableList<MappingMonitor.MappingModel>();
+
+			// Tulpe3 => <Original text, tmp. text, Translated text>
+			var tmpList = new List<(string OrigText, string TmpText, string XlatedText)>();
+			int num = rnd.Next( 10, 30 );
+			foreach( var mm in DescendedModels ) {
+				if( text.Contains( mm.OriginalText ) == false )
+					continue;
+
+				var k1 = string.Format( "abc31{0}", num );
+				tmpList.Add( (mm.OriginalText, k1, mm.MappingText) );
+				sb.Replace( mm.OriginalText, k1 );
+
+				num++;
+
+				CurrentUsedModels.Add( mm );
+			}
+
+			if( cancelToken.IsCancellationRequested )
+				yield break;
+
+			text = sb.ToString();
+			sb.Clear();
+
+			// slice to some sections
+			List<string> sections = null;
+			if( false == SliceSections( text, Profiles.MaxWords.Iciba, out sections ) ||
+				sections == null || sections.Count <= 0 )
+				yield break;
+
+			if( cancelToken.IsCancellationRequested )
+				yield break;
+
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
+
+			if( bingToken == null ) {
+				RefreshBingData( cancelToken );
+				Report( progress, 3, Languages.WebXlator.Str0PreparingTranslation, null );
+				Task.Delay( rnd.Next( 500, 1500 ), cancelToken ).Wait( cancelToken );
+			}
+
+			// prepare form values
+			var values = new Dictionary<string, string> {
+							{ "fromLang", srcLang }, // from Source Language
+							{ "to", tgtLang }, // to Target Language
+							{ "key", bingKey },
+							{ "token", bingToken },
+						};
+
+			int xlatedSectionCnt = 0;
+			foreach( var section in sections ) {
+				values["text"] = section; // words to be translated, remove leading and tail spaces
+
+				if( cancelToken.IsCancellationRequested )
+					yield break;
+
+				if( xlatedSectionCnt > 0 ) {
+					Task.Delay( rnd.Next( 3500, 6500 ), cancelToken ).Wait( cancelToken );
+				}
+
+				var content = new FormUrlEncodedContent( values );
+				HttpResponseMessage response = null;
+				try {
+					response = clientBing.PostAsync( $"{defLoc}&IG={bingIg}&IID={bingIid}", content, cancelToken ).Result;
+				}
+				catch( Exception ex ) {
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
+					yield break;
+				}
+
+				if( response == null || response.IsSuccessStatusCode == false )
+					continue;
+
+				string responseString = response.Content.ReadAsStringAsync().Result;
+				if( string.IsNullOrWhiteSpace( responseString ) )
+					continue;
+
+				List<MicrosoftBingResponse3> translatedData = null;
+				try {
+					translatedData = JsonConvert.DeserializeObject<List<MicrosoftBingResponse3>>( responseString );
+				} catch {
+					bingToken = null;
+					var error = JsonConvert.DeserializeObject<MicrosoftBingResponse3Error>( responseString );
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, error.StatusCode ), error );
+					yield break;
+				}
+
+				if( translatedData != null && translatedData.Count > 0 ) {
+					sb.Clear();
+
+					foreach( var data in translatedData ) {
+						if( data.Translations == null || data.Translations.Count <= 0 )
+							continue;
+
+						foreach( var trans in data.Translations ) {
+							sb.Append( trans.Text );
+						}
+					}
+
+					List<IReadOnlyList<(string From, string To)>> afterTgtLangs = new List<IReadOnlyList<(string From, string To)>>();
+					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional ) {
+						afterTgtLangs.Add( Profiles.MicrosoftXlationAfter2Cht );
+					}
+					if( false == ReplaceAfterXlation( sb, tmpList, afterTgtLangs,
+										@"abc31(?<SeqNum>[0-9]+)", "abc31${SeqNum}" ) )
+						continue;
+
+
+					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
+
+					yield return new YieldResult {
+						OriginalSection = section,
+						TranslatedSection = sb.ToString(),
+						PercentOrErrorCode = percent,
+					};
+				}
+				else {
+					bingToken = null;
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
+					yield break;
+				}
+			}
+		}
+
 
 		private static Jurassic.ScriptEngine jsEngine = new ScriptEngine();
-		private static HttpClientHandler handlerBaidu = new HttpClientHandler();
+		private static HttpClientHandler handlerBaidu = new HttpClientHandler() { UseCookies = true };
 		private static string baiduToken = null, baiduGtk = "320305.131321201", baiduCookie;
 		private const string baiduCookieName = "BAIDUID";
 		private static void RefreshBaiduData( CancellationToken cancelToken )
@@ -702,23 +1745,25 @@ namespace Minax.Web.Translation
 			if( clientBaidu.DefaultRequestHeaders.Accept.Count <= 0 )
 				clientBaidu.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "*/*" ) );
 			if( clientBaidu.DefaultRequestHeaders.UserAgent.Count <= 0 )
-				clientBaidu.DefaultRequestHeaders.Add( "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36" );
+				clientBaidu.DefaultRequestHeaders.Add( sUserAgentCookieName, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36" );
+
+			//if( clientBaidu.DefaultRequestHeaders.TryGetValues( "Referer", out _ ) == false )
+			//	clientBaidu.DefaultRequestHeaders.Add( "Referer", "https://fanyi.baidu.com" );
+
 
 			try {
-				var uri = new Uri( sLocBaidu );
+				var uri = new Uri( sLocBaiduXlator );
 
 				var rsp = clientBaidu.GetAsync( uri, cancelToken ).Result;
-				Task.Delay( 500 );
-				rsp = clientBaidu.GetAsync( uri, cancelToken ).Result;
-
 				var content = rsp.Content.ReadAsStringAsync().Result;
 
-				var tokenMatch = System.Text.RegularExpressions.Regex.Match( content, "token: '(.*?)'," );
-				var gtkMatch = System.Text.RegularExpressions.Regex.Match( content, "window.gtk = '(.*?)';" );
+				var tokenMatch = Regex.Match( content, @"token\s*:\s*['""](.*?)['""]" );
+				// for Desktop(window.gtk = "320305.131321201";) and Mobile(gtk: '320305.131321201')
+				var gtkMatch = Regex.Match( content, @"(?:window\.)?gtk\s*[\:\=]?\s*['""]?(.*?)['""]+" );
 				if( gtkMatch.Success && gtkMatch.Groups.Count > 1 )
-					baiduGtk = gtkMatch.Groups[1].Value;
+					baiduGtk = gtkMatch.Groups[1].ToString();
 				if( tokenMatch.Success && tokenMatch.Groups.Count > 1 )
-					baiduToken = tokenMatch.Groups[1].Value;
+					baiduToken = tokenMatch.Groups[1].ToString();
 
 				IEnumerable<Cookie> rspCookies = handlerBaidu.CookieContainer.GetCookies( uri ).Cast<Cookie>();
 				var rspCookie = rspCookies.FirstOrDefault( x => x.Name == baiduCookieName );
@@ -727,8 +1772,7 @@ namespace Minax.Web.Translation
 
 					// BAIDUID=99C3CE30DA0FE8FD336F4428DA0DFDFC:FG=1; BIDUPSID=99C3CE30DA0FE8FD336F4428DA0DFDFC; PSTM=1515055428; REALTIME_TRANS_SWITCH=1; FANYI_WORD_SWITCH=1; HISTORY_SWITCH=1; SOUND_SPD_SWITCH=1; SOUND_PREFER_SWITCH=1; locale=zh; PSINO=7; H_PS_PSSID=1443_25549_21127_22157; Hm_lvt_64ecd82404c51e03dc91cb9e8c025574=1514859052,1515028770,1515029153,1515114213; Hm_lpvt_64ecd82404c51e03dc91cb9e8c025574=1515134327; from_lang_often=%5B%7B%22value%22%3A%22zh%22%2C%22text%22%3A%22%u4E2D%u6587%22%7D%2C%7B%22value%22%3A%22en%22%2C%22text%22%3A%22%u82F1%u8BED%22%7D%5D; to_lang_often=%5B%7B%22value%22%3A%22en%22%2C%22text%22%3A%22%u82F1%u8BED%22%7D%2C%7B%22value%22%3A%22zh%22%2C%22text%22%3A%22%u4E2D%u6587%22%7D%5D
 					if( baiduCookie != null ) {
-						IEnumerable<string> tmpValues;
-						if( clientBaidu.DefaultRequestHeaders.TryGetValues( baiduCookieName, out tmpValues ) )
+						if( clientBaidu.DefaultRequestHeaders.TryGetValues( baiduCookieName, out _ ) )
 							clientBaidu.DefaultRequestHeaders.Remove( baiduCookieName );
 
 						clientBaidu.DefaultRequestHeaders.Add( baiduCookieName, baiduCookie );
@@ -738,6 +1782,158 @@ namespace Minax.Web.Translation
 			catch { }
 		}
 
+
+		private static Dictionary<char, char> lingoCloudMapData = null;
+		private static string DecodeLingoCloudXlatedData( string target ) {
+
+			// from https://greasyfork.org/zh-TW/scripts/378277-%E7%BF%BB%E8%AF%91%E6%9C%BA/code
+			// const source="NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+			// const dic=[..."ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"].reduce((dic,current,index)=>{dic[current]=source[index];return dic},{});
+			// const decoder = line => Base64.decode([...line].map(i=>dic[i]||i).join(""))
+			// return await BaseTranslate('彩雲小譯',raw,options,res=>JSON.parse(res).target.map(decoder).join('\n'))
+			// origin from https://fanyi.caiyunapp.com/assets/index.8784f25a.js
+			if( lingoCloudMapData == null ) {
+				lingoCloudMapData = new Dictionary<char, char>();
+				const string keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+				const string source = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+				for( int i = 0; i < keys.Length; ++i ) {
+					lingoCloudMapData.Add( keys[i], source[i] );
+				}
+			}
+
+			var x2 = from ch in target select lingoCloudMapData.ContainsKey( ch ) ? lingoCloudMapData[ch] : ch;
+			return Encoding.UTF8.GetString( Convert.FromBase64String( new string( x2.ToArray() ) ) );
+		}
+
+		private static string bingKey, bingToken = null, bingIg, bingIid;
+		private static void RefreshBingData( CancellationToken cancelToken ) {
+			if( clientBing.DefaultRequestHeaders.Accept.Count <= 0 )
+				clientBing.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "*/*" ) );
+			if( clientBing.DefaultRequestHeaders.UserAgent.Count <= 0 )
+				clientBing.DefaultRequestHeaders.Add( sUserAgentCookieName, sUserAgent1 );
+
+			try {
+				//var uri = new Uri( "https://www.bing.com/translator" );
+				var rsp = clientBing.GetAsync( "https://www.bing.com/translator", cancelToken ).Result;
+				if( rsp.IsSuccessStatusCode != true )
+					return;
+
+				string html = rsp.Content.ReadAsStringAsync().Result;
+				var matchIid = Regex.Match( html, @"<div id\s*=\s*""rich_tta"".*data-iid\s*=\s*""(.*?)""", RegexOptions.IgnoreCase );
+				if( matchIid.Success && matchIid.Groups.Count > 1 )
+					bingIid = matchIid.Groups[1].ToString() + ".1";
+
+				var matchIg = Regex.Match( html, @"""ig""\:""([a-zA-Z0-9]+)", RegexOptions.IgnoreCase );
+				if( matchIg.Success && matchIg.Groups.Count > 1 )
+					bingIg = matchIg.Groups[1].ToString();
+
+				var matchParams = Regex.Match( html, @"var params_RichTranslateHelper\s*=\s*\[([0-9]+)\s*,\s*""([a-zA-Z0-9_]*)""", RegexOptions.IgnoreCase );
+				if( matchParams.Success ) {
+					if( matchParams.Groups.Count > 1 ) {
+						bingKey = matchParams.Groups[1].ToString();
+					}
+					if( matchParams.Groups.Count > 2 ) {
+						bingToken = matchParams.Groups[2].ToString();
+					}
+				}
+			} catch { }
+		}
+
+		private static HttpClientHandler handlerMirai = new HttpClientHandler() {
+			AllowAutoRedirect = true, UseCookies = true,
+			AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate, };
+		private static string miraiCookie = null, miraiTran = null;
+		private static void RefreshMiraiData( CancellationToken cancelToken ) {
+
+			//if( clientMiraiXlate.BaseAddress == null )
+			//	clientMiraiXlate.BaseAddress = new Uri( "https://trial.miraitranslate.com" );
+
+			if( clientMiraiXlate.DefaultRequestHeaders.Accept.Count <= 0 ) {
+				clientMiraiXlate.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "*/*" ) );
+			}
+			if( clientMiraiXlate.DefaultRequestHeaders.UserAgent.Count <= 0 )
+				clientMiraiXlate.DefaultRequestHeaders.Add( sUserAgentCookieName, sUserAgent1 );
+
+			try {
+				var uri = new Uri( sLoclMiraiXlator );
+
+				var rsp = clientMiraiXlate.GetAsync( uri, cancelToken ).Result;
+				if( rsp.IsSuccessStatusCode != true )
+					return;
+
+				if( miraiTran == null ) {
+					// extract 'tran' variable and it would be changed with each session
+					string html = rsp.Content.ReadAsStringAsync().Result;
+					var match = Regex.Match( html, @"var tran\s*=\s*""(.*?)""", RegexOptions.IgnoreCase );
+					if( match.Success && match.Groups.Count > 1 ) {
+						miraiTran = match.Groups[1].ToString();
+					}
+				}
+
+				IEnumerable<Cookie> rspCookies = handlerMirai.CookieContainer.GetCookies( uri ).Cast<Cookie>();
+				miraiCookie = string.Join( "; ", from co in rspCookies select $"{co.Name}={co.Value}" );
+
+				rsp.Headers.TryGetValues( "set-cookie", out var cookies );
+				if( string.IsNullOrWhiteSpace( miraiCookie ) && cookies != null ) {
+					foreach( var cookie in cookies ) {
+						var match = Regex.Match( cookie, @"translate_session=[a-zA-Z0-9]+" );
+						if( match.Success && match.Groups.Count > 0 ) {
+							miraiCookie = match.Groups[0].ToString();
+							break;
+						}
+					}
+				}
+
+				if( clientMiraiXlate.DefaultRequestHeaders.TryGetValues( "Cache-Control", out _ ) == false )
+					clientMiraiXlate.DefaultRequestHeaders.Add( "Cache-Control", "no-cache" );
+				if( clientMiraiXlate.DefaultRequestHeaders.TryGetValues( "Connection", out _ ) == false )
+					clientMiraiXlate.DefaultRequestHeaders.Add( "Connection", "keep-alive" );
+				if( clientMiraiXlate.DefaultRequestHeaders.TryGetValues( "Accept-Encoding", out _ ) == false )
+					clientMiraiXlate.DefaultRequestHeaders.Add( "Accept-Encoding", "gzip, deflate" );
+			}
+			catch { }
+		}
+
+		private static readonly HttpClientHandler handlerTencent = new HttpClientHandler() {
+			AllowAutoRedirect = true, UseCookies = true,
+			AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
+		};
+		private static string tencentQtv = null, tencentQtk = null;
+		private static void RefreshTencentData( CancellationToken cancelToken ) {
+
+			if( clientTencent.DefaultRequestHeaders.Accept.Count <= 0 ) {
+				clientTencent.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "application/json" ) );
+				clientTencent.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "text/html" ) );
+				clientTencent.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "*/*" ) );
+			}
+			if( clientTencent.DefaultRequestHeaders.UserAgent.Count <= 0 )
+				clientTencent.DefaultRequestHeaders.Add( sUserAgentCookieName, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36" );
+
+			if( clientTencent.DefaultRequestHeaders.TryGetValues( "Accept-Encoding", out _ ) == false )
+				clientTencent.DefaultRequestHeaders.Add( "Accept-Encoding", "gzip, deflate" );
+
+			try {
+				var rsp = clientTencent.GetAsync( new Uri( "https://fanyi.qq.com" ), cancelToken ).Result;
+				if( rsp.IsSuccessStatusCode == false )
+					return;
+
+				var html = rsp.Content.ReadAsStringAsync().Result;
+				var match = Regex.Match( html, @"var reauthuri\s*=\s*""(.*?)""", RegexOptions.IgnoreCase );
+				if( match.Success == false )
+					return;
+
+				var reauthuri = match.Groups[1].ToString();
+				rsp = clientTencent.PostAsync( "https://fanyi.qq.com/api/" + reauthuri, null, cancelToken ).Result;
+				if( rsp.IsSuccessStatusCode == false )
+					return;
+
+				var jsonStr = rsp.Content.ReadAsStringAsync().Result;
+				var tokens = JsonConvert.DeserializeObject<TencentTranslatorTokens1>( jsonStr );
+				tencentQtv = tokens.Qtv;
+				tencentQtk= tokens.Qtk;
+			}
+			catch { }
+		}
 
 		#endregion
 
@@ -821,7 +2017,7 @@ namespace Minax.Web.Translation
 			if( clientBaidu.DefaultRequestHeaders.Accept.Count <= 0 )
 				clientBaidu.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "*/*" ) );
 			if( clientBaidu.DefaultRequestHeaders.UserAgent.Count <= 0 )
-				clientBaidu.DefaultRequestHeaders.Add( "User-Agent", "curl/7.47.7" );
+				clientBaidu.DefaultRequestHeaders.Add( sUserAgentCookieName, sUserAgentCurl1 );
 
 			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
@@ -848,7 +2044,7 @@ namespace Minax.Web.Translation
 					yield break;
 
 				if( xlatedSectionCnt > 0 ) {
-					Thread.Sleep( rnd.Next( 500, 1000 ) );
+					Task.Delay( rnd.Next( 500, 1000 ), cancelToken ).Wait( cancelToken );
 				}
 
 				HttpResponseMessage response = null;
@@ -900,7 +2096,6 @@ namespace Minax.Web.Translation
 							break;
 						}
 					}
-
 
 					List<IReadOnlyList<(string From, string To)>> afterTgtLangs = new List<IReadOnlyList<(string From, string To)>>();
 					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional ) {
@@ -990,7 +2185,7 @@ namespace Minax.Web.Translation
 			if( clientYoudao.DefaultRequestHeaders.Accept.Count <= 0 )
 				clientYoudao.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "*/*" ) );
 			if( clientYoudao.DefaultRequestHeaders.UserAgent.Count <= 0 )
-				clientYoudao.DefaultRequestHeaders.Add( "User-Agent", "curl/7.47.7" );
+				clientYoudao.DefaultRequestHeaders.Add( sUserAgentCookieName, sUserAgentCurl1 );
 
 			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
@@ -1029,7 +2224,7 @@ namespace Minax.Web.Translation
 					yield break;
 
 				if( xlatedSectionCnt > 0 ) {
-					Thread.Sleep( rnd.Next( 500, 1000 ) );
+					Task.Delay( rnd.Next( 500, 1000 ), cancelToken ).Wait( cancelToken );
 				}
 
 				HttpResponseMessage response = null;
@@ -1184,7 +2379,7 @@ namespace Minax.Web.Translation
 			if( clientGoogle.DefaultRequestHeaders.Accept.Count <= 0 )
 				clientGoogle.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "*/*" ) );
 			if( clientGoogle.DefaultRequestHeaders.UserAgent.Count <= 0 )
-				clientGoogle.DefaultRequestHeaders.Add( "User-Agent", "curl/7.47.7" );
+				clientGoogle.DefaultRequestHeaders.Add( sUserAgentCookieName, sUserAgentCurl1 );
 
 			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
@@ -1210,7 +2405,7 @@ namespace Minax.Web.Translation
 					yield break;
 
 				if( xlatedSectionCnt > 0 ) {
-					Thread.Sleep( rnd.Next( 500, 1000 ) );
+					Task.Delay( rnd.Next( 500, 1000 ), cancelToken ).Wait( cancelToken );
 				}
 
 				HttpResponseMessage response = null;
@@ -1339,7 +2534,6 @@ namespace Minax.Web.Translation
 
 			// slice to some sections
 			List<string> sections = null;
-			//if( false == SliceSections( text, Translator.MaxWords.Bing, out sections ) ||
 			if( false == SliceSectionsToHtml( text, 4800, out sections ) ||
 				sections == null || sections.Count <= 0 )
 				yield break;
@@ -1350,7 +2544,7 @@ namespace Minax.Web.Translation
 			if( clientBing.DefaultRequestHeaders.Accept.Count <= 0 )
 				clientBing.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "*/*" ) );
 			if( clientBing.DefaultRequestHeaders.UserAgent.Count <= 0 )
-				clientBing.DefaultRequestHeaders.Add( "User-Agent", "curl/7.47.7" );
+				clientBing.DefaultRequestHeaders.Add( sUserAgentCookieName, sUserAgentCurl1 );
 
 			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
 
@@ -1374,7 +2568,7 @@ namespace Minax.Web.Translation
 					yield break;
 
 				if( xlatedSectionCnt > 0 ) {
-					Thread.Sleep( rnd.Next( 500, 1000 ) );
+					Task.Delay( rnd.Next( 500, 1000 ), cancelToken ).Wait( cancelToken );
 				}
 
 				HttpResponseMessage response = null;
@@ -1533,7 +2727,7 @@ namespace Minax.Web.Translation
 				values["big5_lang"] = "yes"; // translated to Chinese Traditional
 
 			if (clientMobile.DefaultRequestHeaders.UserAgent.Count <= 0)
-				clientMobile.DefaultRequestHeaders.Add( "User-Agent", "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.71 Mobile Safari/537.36" );
+				clientMobile.DefaultRequestHeaders.Add( sUserAgentCookieName, sUserAgentMobile1 );
 
 			int xlatedSectionCnt = 0;
 			foreach( var section in sections ) {
@@ -1543,7 +2737,7 @@ namespace Minax.Web.Translation
 					yield break;
 
 				if( xlatedSectionCnt > 0 ) {
-					Thread.Sleep( rnd.Next( 500, 1000 ) );
+					Task.Delay( rnd.Next( 500, 1000 ), cancelToken ).Wait( cancelToken );
 				}
 
 				HttpResponseMessage response = null;
@@ -1667,18 +2861,24 @@ namespace Minax.Web.Translation
 					yield break;
 
 				if( xlatedSectionCnt > 0 ) {
-					Thread.Sleep( rnd.Next( 500, 1000 ) );
+					Task.Delay( rnd.Next( 500, 1000 ), cancelToken ).Wait( cancelToken );
 				}
 
 				sb.Clear();
 				HttpResponseMessage response = null;
 				try {
 					response = client.PostAsync( defLoc, new FormUrlEncodedContent( values ), cancelToken ).Result;
+
+					if( response.IsSuccessStatusCode != true ) {
+						Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
+						yield break;
+					}
 				}
 				catch( Exception ex ) {
 					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
 					yield break;
 				}
+
 				string responseString = response.Content.ReadAsStringAsync().Result;
 
 				if( string.IsNullOrWhiteSpace( responseString ) )
@@ -1686,6 +2886,10 @@ namespace Minax.Web.Translation
 
 				mHtmlDoc.LoadHtml( responseString );
 				var inputXlatedText = mHtmlDoc.GetElementbyId( "translatedText" );
+				if( inputXlatedText == null ) {
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
+					yield break;
+				}
 				var translatedText = inputXlatedText.GetAttributeValue( "value", string.Empty );
 				if( translatedText != null && string.IsNullOrWhiteSpace( translatedText ) == false ) {
 					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional )
@@ -1720,6 +2924,262 @@ namespace Minax.Web.Translation
 			}
 		}
 
+		public static IEnumerable<YieldResult> TranslateByGoogleMobile( string sourceText,
+															SupportedSourceLanguage sourceLanguage,
+															SupportedTargetLanguage targetLanguage,
+															CancellationToken cancelToken,
+															IProgress<ProgressInfo> progress ) {
+			// prepare default location, source language, target language parameters for HttpClient
+			string defLoc = sLocGoogleMobileFree, srcLang, tgtLang = "zh-TW";
+			switch( sourceLanguage ) {
+				case SupportedSourceLanguage.ChineseSimplified:
+					srcLang = "zh-Hans";
+					break;
+				case SupportedSourceLanguage.ChineseTraditional:
+					srcLang = "zh-Hant";
+					break;
+				case SupportedSourceLanguage.English:
+					srcLang = "en";
+					break;
+				case SupportedSourceLanguage.Japanese:
+					srcLang = "ja";
+					break;
+				default:
+					yield break;
+			}
+			switch( targetLanguage ) {
+				case SupportedTargetLanguage.English:
+					tgtLang = "en";
+					break;
+			}
+
+			// same language is non-sense...
+			if( srcLang == tgtLang )
+				yield break;
+
+			var text = sourceText;
+			var sb = new StringBuilder();
+			var tmpList = ReplaceBeforeXlation( text, sourceLanguage, "[{0}]", null, ref sb );
+			if( tmpList == null || sb.Length <= 0 )
+				yield break;
+
+			text = sb.ToString();
+			sb.Clear();
+
+			// slice to some sections. each section maxlength="2048"
+			List<string> sections = null;
+			if( false == SliceSections( text, Profiles.MaxWords.Google + 500, out sections ) ||
+				sections == null || sections.Count <= 0 )
+				yield break;
+
+			if( cancelToken.IsCancellationRequested )
+				yield break;
+
+			//if( clientGoogle.DefaultRequestHeaders.Accept.Count <= 0 )
+			//	clientGoogle.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "application/json" ) );
+			if( clientMobile.DefaultRequestHeaders.UserAgent.Count <= 0 )
+				clientMobile.DefaultRequestHeaders.Add( sUserAgentCookieName, sUserAgentMobile1 );
+
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
+
+			// prepare form values
+			int xlatedSectionCnt = 0;
+			foreach( var section in sections ) {
+				if( cancelToken.IsCancellationRequested )
+					yield break;
+
+				if( xlatedSectionCnt > 0 ) {
+					Task.Delay( rnd.Next( 500, 1000 ), cancelToken ).Wait( cancelToken );
+				}
+
+				HttpResponseMessage response = null;
+				try {
+					var loc = $"{defLoc}?tl={tgtLang}&q={Uri.EscapeDataString(section)}";
+					response = clientMobile.GetAsync( loc, cancelToken ).Result;
+				}
+				catch( Exception ex ) {
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
+					yield break;
+				}
+
+				if( response == null || response.IsSuccessStatusCode == false )
+					continue;
+
+				string responseString = response.Content.ReadAsStringAsync().Result;
+				if( string.IsNullOrWhiteSpace( responseString ) )
+					continue;
+
+				mHtmlDoc.LoadHtml( responseString );
+				var nodes = mHtmlDoc.DocumentNode.SelectNodes( "//div[@class='result-container']" );
+
+				if( nodes != null && nodes.Count > 0 ) {
+					sb.Clear();
+					foreach( HtmlNode node in nodes ) {
+						sb.Append( node.InnerText );
+					}
+
+					// replace mis-translated text
+					sb.Replace( " ]", "]" );
+					sb.Replace( "[ ", "[" );
+
+					List<IReadOnlyList<(string From, string To)>> afterTgtLangs = new List<IReadOnlyList<(string From, string To)>>();
+					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional ) {
+						afterTgtLangs.Add( Profiles.GoogleXlationAfter2Cht );
+					}
+					if( false == ReplaceAfterXlation( sb, tmpList, afterTgtLangs, null, null ) )
+						continue;
+
+					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
+
+					yield return new YieldResult {
+						OriginalSection = section,
+						TranslatedSection = sb.ToString(),
+						PercentOrErrorCode = percent,
+					};
+				}
+				else {
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
+					yield break;
+				}
+			}
+		}
+
+		public static IEnumerable<YieldResult> TranslateByYoudaoMobile( string sourceText,
+															SupportedSourceLanguage sourceLanguage,
+															SupportedTargetLanguage targetLanguage,
+															CancellationToken cancelToken,
+															IProgress<ProgressInfo> progress ) {
+			// prepare default location
+			string defLoc = sLocYoudaoMobileFree, srcLang2TgtLang = "JA2ZH_CN"; // from Japanese to Chinese...CJ
+
+			// Only support Japanese <-> ChineseSimp., English <-> ChineseSimp.
+			switch( sourceLanguage ) {
+				case SupportedSourceLanguage.Japanese:
+					// default is Japanese -> ChineseSimp.
+					//if( targetLanguage == SupportedTargetLanguage.English ) {
+					//	srcLang2TgtLang = "JA2EN";
+					//}
+					break;
+
+				//case SupportedSourceLanguage.English:
+				//	if( targetLanguage == SupportedTargetLanguage.ChineseSimplified ) {
+				//		srcLang2TgtLang = "EN2ZH_CN";
+				//	} else {
+				//		yield break;
+				//	}
+				//	break;
+
+				default:
+					yield break;
+			}
+
+			var text = sourceText;
+			var sb = new StringBuilder();
+			var tmpList = ReplaceBeforeXlation( text, sourceLanguage, "{0}", 7.1, ref sb );
+			if( tmpList == null || sb.Length <= 0 )
+				yield break;
+
+			text = sb.ToString();
+			sb.Clear();
+
+			// slice to some sections
+			List<string> sections = null;
+			if( false == SliceSections( text, Profiles.MaxWords.YoudaoMobile, out sections ) ||
+				sections == null || sections.Count <= 0 )
+				yield break;
+
+			if( cancelToken.IsCancellationRequested )
+				yield break;
+
+			Report( progress, 1, Languages.WebXlator.Str0PreparingTranslation, null );
+
+			if( clientMobile.DefaultRequestHeaders.UserAgent.Count <= 0 )
+				clientMobile.DefaultRequestHeaders.Add( sUserAgentCookieName, sUserAgentMobile1 );
+
+
+			// prepare form values
+			var values = new Dictionary<string, string> {
+							{ "type", srcLang2TgtLang }, // from Source Language to Target Language
+						};
+
+			int xlatedSectionCnt = 0;
+			foreach( var section in sections ) {
+				values["inputtext"] = section; // words to be translated
+
+				if( cancelToken.IsCancellationRequested )
+					yield break;
+
+				if( xlatedSectionCnt > 0 ) {
+					Task.Delay( rnd.Next( 500, 1000 ), cancelToken ).Wait( cancelToken );
+				}
+
+				sb.Clear();
+				HttpResponseMessage response = null;
+				try {
+					response = clientMobile.PostAsync( defLoc, new FormUrlEncodedContent( values ), cancelToken ).Result;
+				}
+				catch( Exception ex ) {
+					Report( progress, -1, string.Format( Languages.Global.Str1GotException, ex.Message ), ex );
+					yield break;
+				}
+
+				if( response.IsSuccessStatusCode != true ) {
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
+					yield break;
+				}
+
+				var stream = response.Content.ReadAsStreamAsync().Result;
+				var ms = new MemoryStream();
+				stream.CopyTo( ms );
+				string responseString = Encoding.UTF8.GetString( ms.GetBuffer() );
+				//string responseString = Encoding.UTF8.GetString( ms.ToArray() );
+				//string responseString = response.Content.ReadAsStringAsync().Result;  // exception why???
+
+				if( string.IsNullOrWhiteSpace( responseString ) )
+					continue;
+
+				mHtmlDoc.LoadHtml( responseString );
+				var translateResult = mHtmlDoc.GetElementbyId( "translateResult" );
+				if( translateResult == null ) {
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
+					yield break;
+				}
+
+				var translatedText = translateResult.InnerText;
+				if( translatedText != null && string.IsNullOrWhiteSpace( translatedText ) == false ) {
+					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional )
+						sb.AppendLine( ChineseConverter.Convert( translatedText,
+										ChineseConversionDirection.SimplifiedToTraditional ) );
+					else
+						sb.AppendLine( translatedText );
+
+					List<IReadOnlyList<(string From, string To)>> afterTgtLangs = new List<IReadOnlyList<(string From, string To)>>();
+					if( targetLanguage == SupportedTargetLanguage.ChineseTraditional ) {
+						afterTgtLangs.Add( Profiles.YoudaoXlationAfter2Cht );
+						afterTgtLangs.Add( Profiles.XlationAfterMsConvert2Cht );
+					}
+					if( false == ReplaceAfterXlation( sb, tmpList, afterTgtLangs, null, null ) )
+						continue;
+
+					int percent = (int)(++xlatedSectionCnt * 100 / sections.Count);
+					Report( progress, percent, string.Format( Languages.WebXlator.Str2FractionsTranslated, xlatedSectionCnt, sections.Count ), section );
+
+					yield return new YieldResult {
+						OriginalSection = section,
+						TranslatedSection = sb.ToString(),
+						PercentOrErrorCode = percent,
+					};
+
+				}
+
+				if( sb.Length <= 0 ) {
+					Report( progress, -1, string.Format( Languages.WebXlator.Str1TranslateError, response.StatusCode ), response );
+					yield break;
+				}
+			}
+		}
+
 		#endregion
 
 		public static bool SliceSections( string text, int maxWords, out List<string> sections )
@@ -1731,15 +3191,15 @@ namespace Minax.Web.Translation
 
 			sections = new List<string>();
 
-			int nlcnt = Environment.NewLine.Length;
+			int NLLEN = Environment.NewLine.Length;
 			StringBuilder sb = new StringBuilder();
 			using( System.IO.StringReader reader = new System.IO.StringReader( text ) ) {
 				try {
 					string line = null;
 					while( (line = reader.ReadLine()) != null ) {
 
-						if( line.Length + nlcnt > maxWords ) {
-							// a single line is large than maxWords
+						if( line.Length + NLLEN > maxWords ) {
+							// a single line is larger than maxWords
 							if( sb.Length > 0 ) {
 								sections.Add( sb.ToString() );
 								sb.Clear();
@@ -1757,8 +3217,10 @@ namespace Minax.Web.Translation
 								idx += maxWords;
 							}
 						}
-						else if( sb.Length + line.Length + nlcnt > maxWords ||
-								  sb.Length + nlcnt > maxWords ) {
+						else if( sb.Length + line.Length + NLLEN > maxWords ||
+								  sb.Length + NLLEN > maxWords ) {
+							if( sb.Length >= NLLEN )
+								sb.Remove( sb.Length - NLLEN, NLLEN ); // remove tail NewLine
 							sections.Add( sb.ToString() );
 							sb.Clear();
 							sb.AppendLine( line );
@@ -1857,6 +3319,11 @@ namespace Minax.Web.Translation
 		private static readonly string[] sNewLineSeparator = new string[] { "\r\n", "\r", "\n" };
 		private static readonly string[] sNewLineSeparatorHtml = new[] { "<br>" };
 
+		private static readonly string sUserAgentCookieName = "User-Agent";
+		private static readonly string sUserAgent1 = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0";
+		private static readonly string sUserAgentMobile1 = "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.71 Mobile Safari/537.36";
+		private static readonly string sUserAgentCurl1 = "curl/7.47.7";
+
 		private static readonly Random rnd = new Random();
 
 		//private static readonly string sLocExciteCht = "https://www.excite.co.jp/world/fantizi/";
@@ -1867,18 +3334,34 @@ namespace Minax.Web.Translation
 		private static readonly string sLocCrossLang = "http://cross.transer.com/";
 		private static readonly HtmlAgilityPack.HtmlDocument mHtmlDoc = new HtmlAgilityPack.HtmlDocument();
 
-		private static readonly HttpClient client = new HttpClient(), clientXLang = new HttpClient(), clientBaidu = new HttpClient( handlerBaidu ) { Timeout = TimeSpan.FromSeconds( 30 ) }, clientYoudao = new HttpClient();
+		private static readonly HttpClient client = new HttpClient(), clientXLang = new HttpClient();
+		public static readonly HttpClient clientYoudao = new HttpClient(), clientTencent = new HttpClient( handlerTencent );
+		private static readonly HttpClient clientLingoCloud = new HttpClient(), clientPapago = new HttpClient();
 		private static readonly HttpClient clientGoogle = new HttpClient(), clientBing = new HttpClient();
 		private static readonly HttpClient clientMobile = new HttpClient();
+		private static readonly HttpClient clientBaidu = new HttpClient( handlerBaidu ) { Timeout = TimeSpan.FromSeconds( 30 ) },
+									clientMiraiXlate = new HttpClient( handlerMirai ) { Timeout = TimeSpan.FromSeconds( 30 ) };
 
 		private static readonly string sLocCrossLangFree = "http://cross.transer.com/text/exec_tran";
+		private static readonly string sLocMiraiXlateFree = "https://trial.miraitranslate.com/trial/api/translate.php";
+		private static readonly string sLoclMiraiXlator = "https://miraitranslate.com/trial/";
 		private static readonly string sLocBaiduFree = "https://fanyi.baidu.com/v2transapi";
+		private static readonly string sLocBaiduMobileFree = "https://fanyi.baidu.com/basetrans";
 		private static readonly string sLocBaiduFreeDetectLang = "https://fanyi.baidu.com/langdetect"; // [Form Data] query: xxxxx
-		private static readonly string sLocYoudaoFree = "https://fanyi.youdao.com/translate";
+		private static readonly string sLocIcibaFree = "https://ifanyi.iciba.com/index.php";
+		private static readonly string sLocLingoCloudFree = "https://api.interpreter.caiyunai.com/v1/translator";
+		private static readonly string sLocLingoCloudGen = "https://api.interpreter.caiyunai.com/v1/user/jwt/generate";
+		//private static readonly string sLocYoudaoFree = "https://fanyi.youdao.com/translate";
+		private static readonly string sLocYoudaoFree = "https://aidemo.youdao.com/trans";
+		private static readonly string sLocYoudaoMobileFree = "https://m.youdao.com/translate";
+		private static readonly string sLocTencentFree = "https://fanyi.qq.com/api/translate";
+		private static readonly string sLocPapagoFree = "https://papago.naver.com/apis/n2mt/translate";
 		private static readonly string sLocGoogleFree = "https://translate.google.com/translate_a/single";
+		private static readonly string sLocGoogleMobileFree = "https://translate.google.com/m";
 
 		// useless... often encounter   Message: AppId is over the quota
 		//private static readonly string sLocBingFree = "https://api.microsofttranslator.com/v2/Http.svc/Translate?appId=AFC76A66CF4F434ED080D245C30CF1E71C22959C&from=&to=zh-TW&text=レシピ";
+		private static readonly string sLocBingFree = "https://www.bing.com/ttranslatev3?isVertical=1"; // https://www.bing.com/ttranslatev3?isVertical=1&IG={{bing_ig}}&IID={{bing_iid}}
 
 
 		// https://api.fanyi.baidu.com/api/trans/product/index   AppId, Secret   // appid + salt + sign
@@ -1888,6 +3371,7 @@ namespace Minax.Web.Translation
 		private static readonly string sLocBaiduChargedDetectLang = "https://fanyi-api.baidu.com/api/trans/vip/language";
 
 		private static readonly string sLocYoudaoChargedCommon = "https://openapi.youdao.com/api";
+		private static readonly string sLocYoudaoChargedV2 = "https://openapi.youdao.com/v2/api"; // batch procssing
 
 		// https://cloud.google.com/translate/
 		//    https://cloud.google.com/translate/docs/reference/rest/v2/translate
@@ -1901,7 +3385,7 @@ namespace Minax.Web.Translation
 		private static readonly string sLocBingChargedV3 = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0";
 
 
-		private static readonly string sLocBaidu = "https://fanyi.baidu.com/#jp/cht/まさか";
+		private static readonly string sLocBaiduXlator = "https://fanyi.baidu.com/#jp/cht/まさか";
 		private static readonly string jsBaiduToken = @"
 function a(r, o) {
     for (var t = 0; t < o.length - 2; t += 3) {
@@ -1940,7 +3424,6 @@ var token = function( r, _gtk ) {
 				Message = message,
 				InfoObject = infoObject
 			} );
-
 		}
 
 		private static List<(string OrigText, string TmpText, string MappingText)>
@@ -2033,6 +3516,5 @@ var token = function( r, _gtk ) {
 			}
 			return true;
 		}
-
 	}
 }

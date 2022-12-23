@@ -110,20 +110,28 @@ namespace MinaxWebTranslator.Views
 				return;
 
 			// prepare TranslatorSelector models
-			var srcExcite = ImageSource.FromResource( "MinaxWebTranslator.Resources.Excite.png" );
+			//var srcExcite = ImageSource.FromResource( "MinaxWebTranslator.Resources.Excite.png" );
 			//var srcCrossLang = ImageSource.FromResource( "MinaxWebTranslator.Resources.CrossLanguage.png" );
+			var srcMirai = ImageSource.FromResource( "MinaxWebTranslator.Resources.MiraiTranslate.png" );
 			var srcWeblio = ImageSource.FromResource( "MinaxWebTranslator.Resources.WeblioTranslator.png" );
 			var srcBaidu = ImageSource.FromResource( "MinaxWebTranslator.Resources.BaiduTranslator.png" );
+			var srcIciba = ImageSource.FromResource( "MinaxWebTranslator.Resources.IcibaTranslator.png" );
+			var srcLingoCloud = ImageSource.FromResource( "MinaxWebTranslator.Resources.LingoCloud.png" );
 			var srcYoudao = ImageSource.FromResource( "MinaxWebTranslator.Resources.YoudaoTranslator.png" );
+			var srcPapago = ImageSource.FromResource( "MinaxWebTranslator.Resources.NaverPapago.png" );
 			var srcGoogle = ImageSource.FromResource( "MinaxWebTranslator.Resources.GoogleTranslator.png" );
 			var srcMicrosoft = ImageSource.FromResource( "MinaxWebTranslator.Resources.Microsoft.png" );
 
 			var list = new ObservableList<TranslatorSelector> {
-				new TranslatorSelector { RemoteType = RemoteType.Excite, Header="Excite", Checked = true, Icon = srcExcite, Description = Languages.WebXlator.Str0ExciteXlatorJapan },
+				//new TranslatorSelector { RemoteType = RemoteType.Excite, Header="Excite", Checked = true, Icon = srcExcite, Description = Languages.WebXlator.Str0ExciteXlatorJapan },
 				//new TranslatorSelector { RemoteType = RemoteType.CrossLanguageFree, Header="CROSS-Transer", Checked = false, Icon = srcCrossLang, Description = Languages.WebXlator.Str0XTranserXlatorJapan },
+				new TranslatorSelector { RemoteType = RemoteType.MiraiTranslateFree, Header=Languages.WebXlator.Str0Mirai, Checked = true, Icon = srcMirai, Description = Languages.WebXlator.Str0MiraiXlationJapan },
 				new TranslatorSelector { RemoteType = RemoteType.Weblio, Header="Weblio", Checked = false, Icon = srcWeblio, Description = Languages.WebXlator.Str0WeblioXlatorJapan },
-				//new TranslatorSelector { RemoteType = RemoteType.BaiduFree, Header="Baidu", Checked = false, Icon = srcBaidu, Description = Languages.WebXlator.Str0BaiduXlatorChina },
+				//new TranslatorSelector { RemoteType = RemoteType.BaiduFree, Header=Languages.WebXlator.Str0Baidu, Checked = false, Icon = srcBaidu, Description = Languages.WebXlator.Str0BaiduXlatorChina },
+				new TranslatorSelector { RemoteType = RemoteType.IcibaFree, Header=Languages.WebXlator.Str0Iciba, Checked = false, Icon = srcIciba, Description = Languages.WebXlator.Str0IcibaXlationChina },
+				new TranslatorSelector { RemoteType = RemoteType.LingoCloudFree, Header=Languages.WebXlator.Str0LingoCloud, Checked = false, Icon = srcLingoCloud, Description = Languages.WebXlator.Str0LingoCloudXlationChina },
 				new TranslatorSelector { RemoteType = RemoteType.YoudaoFree, Header=Languages.WebXlator.Str0Youdao, Checked = false, Icon = srcYoudao, Description = Languages.WebXlator.Str0YoudaoXlatorChina },
+				new TranslatorSelector { RemoteType = RemoteType.PapagoFree, Header=Languages.WebXlator.Str0Papago, Checked = false, Icon = srcPapago, Description = Languages.WebXlator.Str0PapagoXlationKorea },
 				new TranslatorSelector { RemoteType = RemoteType.GoogleFree, Header="Google", Checked = false, Icon = srcGoogle, Description = Languages.WebXlator.Str0GoogleXlatorAmerica },
 
 				new TranslatorSelector { IsSeparator = true },
