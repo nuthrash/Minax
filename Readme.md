@@ -30,10 +30,10 @@ See [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebT
 <br />
 
 ## Build Environment
-- Microsoft Visual Studio 2022 17.2.x
+- Microsoft Visual Studio 2022 17.4.x
 - .Net Framework 4.7 SDK
 - .Net 6.0
-- Android SDK Platform 30 (Android 11.0)
+- Android SDK Platform 31 (Android 12.0)
 
 
 <br />
@@ -41,6 +41,15 @@ See [MinaxWebTranslator](https://github.com/nuthrash/Minax/tree/master/MinaxWebT
 ## Change Logs
 
 ### Minax Web Translator
+
+#### v0.0.8
+1. Add MiraiTranslate, iCIBA, LingoCloud, Papago translation support.
+2. Update the target SDK version to 31(Android 12.0) of MinaxWebTranslator.Android according by Google Play's suggestion.
+3. Update nuget packages.
+4. Change some web translators AJAX version to web page version.
+5. Change CROSS-Transer quick translation to Weblio of MinaxWebTranslator.Android.
+6. Suspend Excite web translator support until it resume.
+7. Fix unable open hyperlink of Credits page of of MinaxWebTranslator.Desktop net6-windows version.
 
 #### v0.0.7
 1. Update .Net 6.0 related facilities.
@@ -91,6 +100,11 @@ Initial release
 <br />
 
 ### Minax.Shared
+
+#### v0.0.8
+1. Add MiraiTranslate, iCIBA, LingoCloud, Papago translation support.
+2. Update nuget packages.
+3. Change some arguments according the new version of Youdao web translator.
 
 #### v0.0.7
 1. Update new flow of Excite web translator of MinaxWebTranslator.

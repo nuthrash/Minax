@@ -1,47 +1,49 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>概觀</title>
-</head>
-<body>
-
-    <h1 id="section">概觀</h1>
-<p>Minax 是為了讓我個人使用的一系列子專案和 App。</p>
-<br />
+﻿<h1 id="-">概觀</h1>
+<p>Minax 是為了讓我個人使用的一系列子專案和 App。  </p>
+<p><br /></p>
 <h2 id="minax-web-translator">Minax Web Translator</h2>
 <ul>
-<li>為取用遠端網路翻譯器而設計的App，包含 Windows 和 Android 版等</li>
+<li>為取用遠端網路翻譯器而設計的App，包含 Windows 和 Android 版等 </li>
 </ul>
 <p>參見 <a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/">MinaxWebTranslator</a></p>
-<p><img src="./Assets/Images/ScreenShots/MWT-WinDesktop-Target3-note.zh-Hant.jpg" alt="MWT-WinDesktop-Target3-note.jpg" title="Minax Web Translator 桌面版" /></p>
+<p><img src="./Assets/Images/ScreenShots/MWT-WinDesktop-Target3-note.zh-Hant.jpg" alt="MWT-WinDesktop-Target3-note.jpg" title="Minax Web Translator 桌面版"> </p>
 <ul>
 <li><a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator#windows-desktop">Windows 桌面版</a></li>
 <li><a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator#android">Android 版</a></li>
 </ul>
-<br />
-<h2 id="minax.shared">Minax.Shared</h2>
+<p><br /></p>
+<h2 id="minax-shared">Minax.Shared</h2>
 <ul>
 <li>在 Minax 子專案間共用的函式庫</li>
-<li>包含共通功能、函式與一些定義（Profiles）<br />
-<br /></li>
+<li>包含共通功能、函式與一些定義（Profiles）<br><br /></li>
 </ul>
 <h2 id="minax-inventory-manager">Minax Inventory Manager</h2>
 <ul>
 <li>一個類似 Memento Database (Android) 簡單的庫存管理 App</li>
-<li>待設計...<br />
-<br /></li>
+<li>待設計...<br><br /></li>
 </ul>
-<h2 id="section-1">編譯環境</h2>
+<h2 id="-">編譯環境</h2>
 <ul>
-<li>微軟 Visual Studio 2022 17.2.x</li>
+<li>微軟 Visual Studio 2022 17.4.x</li>
 <li>.Net Framework 4.7 SDK</li>
 <li>.Net 6.0</li>
-<li>Android SDK Platform 30 (Android 11.0)</li>
+<li>Android SDK Platform 31 (Android 12.0)</li>
 </ul>
-<br />
-<h2 id="section-2">更新紀錄</h2>
-<h3 id="minax-web-translator-1">Minax Web Translator</h3>
-<h4 id="v0.0.7">v0.0.7</h4>
+<p><br /></p>
+<h2 id="-">更新紀錄</h2>
+<h3 id="minax-web-translator">Minax Web Translator</h3>
+<h4 id="v0-0-8">v0.0.8</h4>
+<ol>
+<li>新增 MiraiTranslate、愛詞霸（iCIBA）、彩雲小譯（LingoCloud）、Papago 等線上翻譯。</li>
+<li>更新 MinaxWebTranslator.Android 使用的 Android SDK 版本為31（Android 12.0），這是依據 Google Play 上的建議。</li>
+<li>更新使用到的 nuget 套件版本。</li>
+<li>變更某些翻譯器的呼叫版本由 AJAX 為 WebPage 版。</li>
+<li>變更有道翻譯的參數設定，依據新版網頁內容。</li>
+<li>變更 MinaxWebTranslator.Android 中 CROSS-Transer 快速翻譯項目為 Weblio。</li>
+<li>暫停 Excite 翻譯器相關功能直到它的網站回復功能。</li>
+<li>修正 MinaxWebTranslator.Desktop 中「致謝」頁面中某些超連結無法點擊問題。 </li>
+</ol>
+<h4 id="v0-0-7">v0.0.7</h4>
 <ol>
 <li>升級 .Net 6.0 相關程式碼。</li>
 <li>升級 nuget 套件並將 net6.0 加到 TargetFramework 宣告以便支援 .Net 6.0。</li>
@@ -49,7 +51,7 @@
 <li>丟棄 Baidu、Google和 Microsoft/Bing 翻譯器對 MinaxWebTranslator.Desktop 的 WebPage 版本，這是因為 Internet Explorer 11 已終止支援（這將導致 AJAX 處理流程功能失常）。</li>
 <li>暫停 CrossLanguage 翻譯器的支援直到它更新完成。</li>
 </ol>
-<h4 id="v0.0.6">v0.0.6</h4>
+<h4 id="v0-0-6">v0.0.6</h4>
 <ol>
 <li>升級 .Net 5.0 相關程式碼。</li>
 <li>升級 MahApps.Metro nuget 版本為 v2.3.4 並更新相關程式碼。</li>
@@ -58,14 +60,14 @@
 <li>變更 MinaxWebTranslator.Desktop 中關於百度翻譯器的取代模板與字串。</li>
 <li>隱藏 MinaxWebTranslator.Desktop 中以瀏覽器為基礎的翻譯器。</li>
 </ol>
-<h4 id="v0.0.5">v0.0.5</h4>
+<h4 id="v0-0-5">v0.0.5</h4>
 <ol>
 <li>升級 .Net Core 3.1 正式發行版的相關程式碼。</li>
 <li>升級 MahApps.Metro nuget 版本為 v2.2.0 並更新相關程式碼。</li>
 <li>升級 Dirkster.AvalonDock nuget 版本為 v4.3.0 並更新相關程式碼。</li>
 <li>修正 MinaxWebTranslator.Desktop 中的 MainWindow.xaml.cs 未正確儲存與讀取某些專案檔案欄位的錯誤。</li>
 </ol>
-<h4 id="v0.0.4">v0.0.4</h4>
+<h4 id="v0-0-4">v0.0.4</h4>
 <ol>
 <li>升級 .Net Core 3.0 正式發行版的相關程式碼。</li>
 <li>升級 MahApps.Metro nuget 版本為 v2.0.0-alpha0490 並更新相關程式碼。</li>
@@ -78,55 +80,57 @@
 <li>修正 MinaxWebTranslator.Desktop 中關於「當檔案變更時自動整合 Monitor 內容」應用程式設定選項的缺失並變更其敘述為「當檔案加入、刪除或是變動時，自動整併 Glossary Mapping 條目而不一一詢問」。</li>
 <li>修正 MinaxWebTranslator.Desktop 中 SourceDockingPanel.cs 來源面板中未正確擷取來源文字的錯誤。</li>
 </ol>
-<h4 id="v0.0.3">v0.0.3</h4>
+<h4 id="v0-0-3">v0.0.3</h4>
 <ol>
 <li>於 MinaxWebTranslator 的讀我檔中加入「Mapping 概念」段落。</li>
 <li>於 MinaxWebTranslator.Desktop 的 MiCopyAndQuickXlateSelection MenuItem 的來源面板修改說明文字並修正未正確加入的複製文字動作。</li>
 <li>於 MinaxWebTranslator.Desktop 的 MainWindow.cs 修改 RtbSrcTgt_ScrollChanged() 演算法。</li>
 </ol>
-<h4 id="v0.0.2">v0.0.2</h4>
+<h4 id="v0-0-2">v0.0.2</h4>
 <ol>
 <li>加入 zh-Hant (繁體中文) 語系和文件</li>
 <li>修正手動輸入來源輸入框文字後，目標翻譯鍵未正確啟用問題</li>
 <li>修正其他錯誤和一些錯字</li>
 </ol>
-<h4 id="v0.0.1">v0.0.1</h4>
+<h4 id="v0-0-1">v0.0.1</h4>
 <p>初始發行</p>
-<br />
-<h3 id="minax.shared-1">Minax.Shared</h3>
-<h4 id="v0.0.7-1">v0.0.7</h4>
+<p><br /></p>
+<h3 id="minax-shared">Minax.Shared</h3>
+<h4 id="v0-0-8">v0.0.8</h4>
+<ol>
+<li>新增 MiraiTranslate、愛詞霸（iCIBA）、彩雲小譯（LingoCloud）、Papago 等線上翻譯。</li>
+<li>更新使用到的 nuget 套件版本。</li>
+<li>變更有道翻譯的參數設定，依據新版網頁內容。</li>
+</ol>
+<h4 id="v0-0-7">v0.0.7</h4>
 <ol>
 <li>更新 MinaxWebTranslator 相關的 Excite 翻譯器新通訊流程。</li>
 <li>變更 MinaxWebTranslator 相關的 Excite 翻譯器一些新參數內容。</li>
 <li>變更 MinaxWebTranslator 相關的有道翻譯器一些新參數內容。</li>
 </ol>
-<h4 id="v0.0.6-1">v0.0.6</h4>
+<h4 id="v0-0-6">v0.0.6</h4>
 <ol>
 <li>變更 RemoteAgents.cs 中關於百度翻譯器的取代模板與字串。</li>
 <li>修正 Profiles.cs 中 JapaneseEscapeHtmlText 錯誤取代日文HTML字元的程式碼。</li>
 </ol>
-<h4 id="v0.0.5-1">v0.0.5</h4>
+<h4 id="v0-0-5">v0.0.5</h4>
 <ol>
 <li>變更 TranslationProject.cs 中 TranslationProject 類別的預設值</li>
 </ol>
-<h4 id="v0.0.4-1">v0.0.4</h4>
+<h4 id="v0-0-4">v0.0.4</h4>
 <ol>
 <li>變更百度 API 的文句替換模式、重試邏輯、替換字句與 BaiduTranslatorFormat2 格式。</li>
 </ol>
-<h4 id="v0.0.3-1">v0.0.3</h4>
+<h4 id="v0-0-3">v0.0.3</h4>
 <ol>
 <li>於 Profiles.cs 中加入一些百度翻譯用的取代字。</li>
 <li>修改 RemoteAgents.cs 中 Excite 翻譯器的位址。</li>
 </ol>
-<h4 id="v0.0.2-1">v0.0.2</h4>
+<h4 id="v0-0-2">v0.0.2</h4>
 <ol>
 <li>加入 zh-Hant (繁體中文) 語系和文件</li>
 <li>修正 Profiles 中 DefaultEngineFolders 的 Microsoft 目錄名稱</li>
 <li>修正其他錯誤和一些錯字</li>
 </ol>
-<h4 id="v0.0.1-1">v0.0.1</h4>
+<h4 id="v0-0-1">v0.0.1</h4>
 <p>初始發行</p>
-
-
-</body>
-</html>

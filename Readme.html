@@ -1,48 +1,49 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>Overview</title>
-</head>
-<body>
-
-    <h1 id="overview">Overview</h1>
-<p>Minax is a series of sub-projects and Apps for myself.</p>
+﻿<h1 id="overview">Overview</h1>
+<p>Minax is a series of sub-projects and Apps for myself.  </p>
 <p><a href="./Readme.zh-Hant.md">Readme - 繁體中文版</a></p>
-<br />
+<p><br /></p>
 <h2 id="minax-web-translator">Minax Web Translator</h2>
 <ul>
-<li>The Windows and Android Apps for remote Web Translator.</li>
+<li>The Windows and Android Apps for remote Web Translator.  </li>
 </ul>
 <p>See <a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator/">MinaxWebTranslator</a></p>
-<p><img src="./Assets/Images/ScreenShots/MWT-WinDesktop-Target3-note.jpg" alt="MWT-WinDesktop-Target3-note.jpg" title="Minax Web Translator Desktop version" /></p>
+<p><img src="./Assets/Images/ScreenShots/MWT-WinDesktop-Target3-note.jpg" alt="MWT-WinDesktop-Target3-note.jpg" title="Minax Web Translator Desktop version"> </p>
 <ul>
 <li><a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator#windows-desktop">Windows Desktop version</a></li>
 <li><a href="https://github.com/nuthrash/Minax/tree/master/MinaxWebTranslator#android">Android version</a></li>
 </ul>
-<br />
-<h2 id="minax.shared">Minax.Shared</h2>
+<p><br /></p>
+<h2 id="minax-shared">Minax.Shared</h2>
 <ul>
 <li>The shared library among Minax sub-projects</li>
-<li>Contains common facilities, functionality, or profiles.<br />
-<br /></li>
+<li>Contains common facilities, functionality, or profiles.<br><br /></li>
 </ul>
 <h2 id="minax-inventory-manager">Minax Inventory Manager</h2>
 <ul>
 <li>A simple inventory manager app like Memento Database (Android).</li>
-<li>To Be Designed...<br />
-<br /></li>
+<li>To Be Designed...<br><br /></li>
 </ul>
 <h2 id="build-environment">Build Environment</h2>
 <ul>
-<li>Microsoft Visual Studio 2022 17.2.x</li>
+<li>Microsoft Visual Studio 2022 17.4.x</li>
 <li>.Net Framework 4.7 SDK</li>
 <li>.Net 6.0</li>
-<li>Android SDK Platform 30 (Android 11.0)</li>
+<li>Android SDK Platform 31 (Android 12.0)</li>
 </ul>
-<br />
+<p><br /></p>
 <h2 id="change-logs">Change Logs</h2>
-<h3 id="minax-web-translator-1">Minax Web Translator</h3>
-<h4 id="v0.0.7">v0.0.7</h4>
+<h3 id="minax-web-translator">Minax Web Translator</h3>
+<h4 id="v0-0-8">v0.0.8</h4>
+<ol>
+<li>Add MiraiTranslate, iCIBA, LingoCloud, Papago translation support.</li>
+<li>Update the target SDK version to 31(Android 12.0) of MinaxWebTranslator.Android according by Google Play&#39;s suggestion.</li>
+<li>Update nuget packages.</li>
+<li>Change some web translators AJAX version to web page version.</li>
+<li>Change CROSS-Transer quick translation to Weblio of MinaxWebTranslator.Android.</li>
+<li>Suspend Excite web translator support until it resume.</li>
+<li>Fix unable open hyperlink of Credits page of of MinaxWebTranslator.Desktop net6-windows version.</li>
+</ol>
+<h4 id="v0-0-7">v0.0.7</h4>
 <ol>
 <li>Update .Net 6.0 related facilities.</li>
 <li>Update nuget packages and add net6.0 to TargetFramework declaration to support .Net 6.0.</li>
@@ -50,7 +51,7 @@
 <li>Drop WebPage version of Baidu, Google and Microsoft/Bing web translators support of MinaxWebTranslator.Desktop because of Internet Explorer 11 being retired(that would cause AJAX processing flow misfunction).</li>
 <li>Suspend CrossLanguage web translator support until it upgraded.</li>
 </ol>
-<h4 id="v0.0.6">v0.0.6</h4>
+<h4 id="v0-0-6">v0.0.6</h4>
 <ol>
 <li>Update .Net 5.0 related facilities.</li>
 <li>Update MahApps.Metro nuget version to v2.3.4 and update all its related facilities.</li>
@@ -59,75 +60,77 @@
 <li>Change replacing pattern, and replacing words of Baidu API in TranslaterHelpers.cs of MinaxWebTranslator.Desktop.</li>
 <li>Hide web-browser-based translators in TranslaterSelectorPanel.xaml.cs of MinaxWebTranslator.Desktop.</li>
 </ol>
-<h4 id="v0.0.5">v0.0.5</h4>
+<h4 id="v0-0-5">v0.0.5</h4>
 <ol>
 <li>Update .Net Core 3.1 related facilities.</li>
 <li>Update MahApps.Metro nuget version to v2.2.0 and update all its related facilities.</li>
 <li>Update Dirkster.AvalonDock nuget version to v4.3.0 and update all its related facilities.</li>
 <li>Fix missing restoring and saving some fields of Project File in MainWindow.xaml.cs of MinaxWebTranslator.Desktop.</li>
 </ol>
-<h4 id="v0.0.4">v0.0.4</h4>
+<h4 id="v0-0-4">v0.0.4</h4>
 <ol>
 <li>Update .Net Core 3 final version related facilities.</li>
 <li>Update MahApps.Metro nuget version to v2.0.0-alpha0490 and update all its related facilities.</li>
 <li>Add text search boxes of Mapping panel of MinaxWebTranslator.Desktop.</li>
-<li>Change some zh-Hant locale's words of MinaxWebTranslator.Desktop.</li>
+<li>Change some zh-Hant locale&#39;s words of MinaxWebTranslator.Desktop.</li>
 <li>Remove section of &quot;system.diagnostics&quot; in the app.config of MinaxWebTranslator.Desktop to fit .Net Core 3.</li>
-<li>Change DataGridCell's single-click editing code and flow of MinaxWebTranslator.Desktop.</li>
+<li>Change DataGridCell&#39;s single-click editing code and flow of MinaxWebTranslator.Desktop.</li>
 <li>Fix add items range error of _ModifyBindingWhenFileChanged() in MappingDockingPanel.xaml.cs of MinaxWebTranslator.Desktop.</li>
 <li>Fix un-usable Bing Translator selector of MinaxWebTranslator.Desktop to reflect changed official Bing Translator web page code.</li>
 <li>Fix missing App setting about &quot;Monitor Auto Merge When File Changed&quot; option and its text to &quot;Auto merge Glossary Mapping entries without asking, when file added, deleted, changed&quot; of MinaxWebTranslator.Desktop.</li>
 <li>Fix error of getting source text of Source Panel in SourceDockingPanel.cs of MinaxWebTranslator.Desktop.</li>
 </ol>
-<h4 id="v0.0.3">v0.0.3</h4>
+<h4 id="v0-0-3">v0.0.3</h4>
 <ol>
-<li>Add &quot;The meaning of Mapping&quot; section of MinaxWebTranslator's readme.</li>
-<li>Change text and missing copy action for MiCopyAndQuickXlateSelection MenuItem of MinaxWebTranslator.Desktop's Source panel</li>
+<li>Add &quot;The meaning of Mapping&quot; section of MinaxWebTranslator&#39;s readme.</li>
+<li>Change text and missing copy action for MiCopyAndQuickXlateSelection MenuItem of MinaxWebTranslator.Desktop&#39;s Source panel</li>
 <li>Change RtbSrcTgt_ScrollChanged() algorithm of MainWindow.cs of MinaxWebTranslator.Desktop.</li>
 </ol>
-<h4 id="v0.0.2">v0.0.2</h4>
+<h4 id="v0-0-2">v0.0.2</h4>
 <ol>
 <li>Add zh-Hant (繁體中文) locale and documents.</li>
 <li>Fix MinaxWebTranslator Target translate button does not enabled after Source box key some text.</li>
 <li>Fix other bugs and some mis-typed words.</li>
 </ol>
-<h4 id="v0.0.1">v0.0.1</h4>
+<h4 id="v0-0-1">v0.0.1</h4>
 <p>Initial release</p>
-<br />
-<h3 id="minax.shared-1">Minax.Shared</h3>
-<h4 id="v0.0.7-1">v0.0.7</h4>
+<p><br /></p>
+<h3 id="minax-shared">Minax.Shared</h3>
+<h4 id="v0-0-8">v0.0.8</h4>
+<ol>
+<li>Add MiraiTranslate, iCIBA, LingoCloud, Papago translation support.</li>
+<li>Update nuget packages.</li>
+<li>Change some arguments according the new version of Youdao web translator.</li>
+</ol>
+<h4 id="v0-0-7">v0.0.7</h4>
 <ol>
 <li>Update new flow of Excite web translator of MinaxWebTranslator.</li>
 <li>Change some arguments according the new version of Excite web translator.</li>
 <li>Change some arguments according the new version of Youdao web translator.</li>
 </ol>
-<h4 id="v0.0.6-1">v0.0.6</h4>
+<h4 id="v0-0-6">v0.0.6</h4>
 <ol>
 <li>Change replacing pattern, and replacing words of Baidu API in RemoteAgents.cs.</li>
 <li>Fix error of replacing Japanese HTML characters of JapaneseEscapeHtmlText in Profiles.cs.</li>
 </ol>
-<h4 id="v0.0.5-1">v0.0.5</h4>
+<h4 id="v0-0-5">v0.0.5</h4>
 <ol>
 <li>Change default values of TranslationProject class in TranslationProject.cs.</li>
 </ol>
-<h4 id="v0.0.4-1">v0.0.4</h4>
+<h4 id="v0-0-4">v0.0.4</h4>
 <ol>
 <li>Change replacing pattern, retry logic, replacing words and BaiduTranslatorFormat2 format of Baidu API.</li>
 </ol>
-<h4 id="v0.0.3-1">v0.0.3</h4>
+<h4 id="v0-0-3">v0.0.3</h4>
 <ol>
 <li>Add some replacing text for Baidu translator of Profiles.cs.</li>
 <li>Change Excite translator location of RemoteAgents.cs.</li>
 </ol>
-<h4 id="v0.0.2-1">v0.0.2</h4>
+<h4 id="v0-0-2">v0.0.2</h4>
 <ol>
 <li>Add zh-Hant (繁體中文) locale and documents.</li>
-<li>Fix Minax.Shared Profiles DefaultEngineFolders' Microsoft folder name</li>
+<li>Fix Minax.Shared Profiles DefaultEngineFolders&#39; Microsoft folder name</li>
 <li>Fix other bugs and some mis-typed words.</li>
 </ol>
-<h4 id="v0.0.1-1">v0.0.1</h4>
+<h4 id="v0-0-1">v0.0.1</h4>
 <p>Initial release</p>
-
-
-</body>
-</html>

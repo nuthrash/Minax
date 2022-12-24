@@ -28,10 +28,10 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 <br />
 
 ## 編譯環境
-- 微軟 Visual Studio 2022 17.2.x
+- 微軟 Visual Studio 2022 17.4.x
 - .Net Framework 4.7 SDK
 - .Net 6.0
-- Android SDK Platform 30 (Android 11.0)
+- Android SDK Platform 31 (Android 12.0)
 
 
 <br />
@@ -39,6 +39,16 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 ## 更新紀錄
 
 ### Minax Web Translator
+
+#### v0.0.8
+1. 新增 MiraiTranslate、愛詞霸（iCIBA）、彩雲小譯（LingoCloud）、Papago 等線上翻譯。
+2. 更新 MinaxWebTranslator.Android 使用的 Android SDK 版本為31（Android 12.0），這是依據 Google Play 上的建議。
+3. 更新使用到的 nuget 套件版本。
+4. 變更某些翻譯器的呼叫版本由 AJAX 為 WebPage 版。
+5. 變更有道翻譯的參數設定，依據新版網頁內容。
+6. 變更 MinaxWebTranslator.Android 中 CROSS-Transer 快速翻譯項目為 Weblio。
+7. 暫停 Excite 翻譯器相關功能直到它的網站回復功能。
+8. 修正 MinaxWebTranslator.Desktop 中「致謝」頁面中某些超連結無法點擊問題。 
 
 #### v0.0.7
 1. 升級 .Net 6.0 相關程式碼。
@@ -89,6 +99,11 @@ Minax 是為了讓我個人使用的一系列子專案和 App。
 <br />
 
 ### Minax.Shared
+
+#### v0.0.8
+1. 新增 MiraiTranslate、愛詞霸（iCIBA）、彩雲小譯（LingoCloud）、Papago 等線上翻譯。
+2. 更新使用到的 nuget 套件版本。
+3. 變更有道翻譯的參數設定，依據新版網頁內容。
 
 #### v0.0.7
 1. 更新 MinaxWebTranslator 相關的 Excite 翻譯器新通訊流程。

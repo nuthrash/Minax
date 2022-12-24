@@ -22,6 +22,21 @@
   - License: [Public Domain](https://en.wikipedia.org/wiki/Wikipedia:Public_domain)
   - Note: Shrinked and changed color by Minax Project. Not used.
 
+- [LingoCloud.png](./LingoCloud.png) <img src="./LingoCloud.png" width="24" title="LingoCloud Logo">
+  - Source Link: https://zh.wikipedia.org/wiki/File:LingoCloud_logo.png
+  - Title: LingoCloud Logo
+  - Author: ColorfulClouds Tech.
+  - License: [Public Domain](https://en.wikipedia.org/wiki/Wikipedia:Public_domain)
+  - Note: Shrinked by Minax Project.
+
+- [NaverPapago.png](./NaverPapago.png) <img src="./NaverPapago.png" width="24" title="LingoCloud Logo">
+  - Source Link: https://papago.naver.com/97ec80a681e94540414daf2fb855ba3b.svg
+  - Title: LingoCloud Logo
+  - Author: NAVER Corporation
+  - License: [Public Domain](https://en.wikipedia.org/wiki/Wikipedia:Public_domain)
+  - Note: Shrinked and converted to 256x256 .png by Minax Project.
+
+
 ## Redrawn by Minax Project
 - *.pdn
   - File Format: Paint.Net
