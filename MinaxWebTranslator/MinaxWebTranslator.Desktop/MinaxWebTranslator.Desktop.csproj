@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -77,7 +77,7 @@
   
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows' ">
     <PackageReference Include="CHTCHSConv" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.6" />
   </ItemGroup>
   
   <ItemGroup>
